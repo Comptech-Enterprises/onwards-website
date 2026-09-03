@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useInView,
+  useScroll,
+  useSpring,
+} from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -33,6 +39,271 @@ import {
   HelpCircle,
   MessageSquare,
 } from "lucide-react";
+
+/* ═══════════════════════════════════════════════════════════════
+   ANIMATION PRIMITIVES & HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+
+function FadeUp({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function ScaleReveal({
+  children,
+  delay = 0,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const duration = 1200;
+    const stepTime = 16;
+    const steps = duration / stepTime;
+    const increment = target / steps;
+
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, stepTime);
+
+    return () => clearInterval(timer);
+  }, [inView, target]);
+
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
+}
+
+function InfiniteMarquee({
+  children,
+  speed = 25,
+}: {
+  children: React.ReactNode;
+  speed?: number;
+}) {
+  return (
+    <div className="overflow-hidden whitespace-nowrap flex select-none">
+      <motion.div
+        className="flex gap-12 sm:gap-16 shrink-0 items-center"
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+      >
+        {children}
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+
+function FlowingCurvyWire({ className = "" }: { className?: string }) {
+  return (
+    <div className={`absolute inset-0 pointer-events-none overflow-hidden ${className}`}>
+      <svg
+        viewBox="0 0 1440 600"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="w-full h-full object-cover opacity-60"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          {/* Glowing gradient for the traveling pulse */}
+          <linearGradient id="wirePulseOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#d9531e" stopOpacity="0" />
+            <stop offset="30%" stopColor="#d9531e" stopOpacity="0.8" />
+            <stop offset="50%" stopColor="#ffedd5" stopOpacity="1" />
+            <stop offset="70%" stopColor="#f59e0b" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#d9531e" stopOpacity="0" />
+          </linearGradient>
+
+          <linearGradient id="wirePulseAmber" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#f59e0b" stopOpacity="0" />
+            <stop offset="40%" stopColor="#d9531e" stopOpacity="0.7" />
+            <stop offset="60%" stopColor="#ffffff" stopOpacity="1" />
+            <stop offset="80%" stopColor="#ea580c" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+          </linearGradient>
+
+          {/* Glow filter for neon wire effect */}
+          <filter id="wireGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* ─── PRIMARY CURVY ZIG-ZAG WIRE TRACK ─── */}
+        <path
+          d="M -100 160 C 180 30, 320 440, 580 220 C 820 40, 1020 490, 1260 210 C 1380 90, 1480 320, 1600 180"
+          stroke="#fed7aa"
+          strokeWidth="1.5"
+          strokeDasharray="4 6"
+          className="opacity-40"
+        />
+
+        {/* Animated Traveling Electric Pulse on Primary Wire */}
+        <motion.path
+          d="M -100 160 C 180 30, 320 440, 580 220 C 820 40, 1020 490, 1260 210 C 1380 90, 1480 320, 1600 180"
+          stroke="url(#wirePulseOrange)"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          filter="url(#wireGlow)"
+          strokeDasharray="180 800"
+          animate={{ strokeDashoffset: [980, 0] }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+
+        {/* ─── SECONDARY HARMONIC CURVY BRANCH ─── */}
+        <path
+          d="M -80 340 C 220 520, 460 100, 720 380 C 940 560, 1180 140, 1420 360 C 1520 440, 1580 280, 1650 320"
+          stroke="#e2e8f0"
+          strokeWidth="1.5"
+          strokeDasharray="3 5"
+          className="opacity-50"
+        />
+
+        {/* Animated Traveling Electric Pulse on Secondary Wire */}
+        <motion.path
+          d="M -80 340 C 220 520, 460 100, 720 380 C 940 560, 1180 140, 1420 360 C 1520 440, 1580 280, 1650 320"
+          stroke="url(#wirePulseAmber)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          filter="url(#wireGlow)"
+          strokeDasharray="140 700"
+          animate={{ strokeDashoffset: [840, 0] }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "linear",
+            delay: 1.5,
+          }}
+        />
+
+        {/* ─── GLOWING INTERSECTION NODES / BEACONS ─── */}
+        {[
+          { cx: 580, cy: 220, label: "Delhi Node" },
+          { cx: 720, cy: 380, label: "Gurgaon Hub" },
+          { cx: 1260, cy: 210, label: "Noida Fiber" },
+        ].map((node, i) => (
+          <g key={node.label}>
+            {/* Pulsing ring */}
+            <motion.circle
+              cx={node.cx}
+              cy={node.cy}
+              r="12"
+              fill="none"
+              stroke="#d9531e"
+              strokeWidth="1.5"
+              animate={{
+                r: [6, 18, 6],
+                opacity: [0.8, 0, 0.8],
+              }}
+              transition={{
+                duration: 2.4,
+                repeat: Infinity,
+                delay: i * 0.7,
+                ease: "easeInOut",
+              }}
+            />
+            {/* Core dot */}
+            <circle
+              cx={node.cx}
+              cy={node.cy}
+              r="4"
+              fill="#d9531e"
+              className="drop-shadow-sm"
+            />
+            <circle
+              cx={node.cx}
+              cy={node.cy}
+              r="2"
+              fill="#ffffff"
+            />
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+function HyperframeMesh() {
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none -z-0 opacity-40">
+      <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+      <motion.div
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.15, 0.25, 0.15],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-orange-400/20 to-amber-300/30 rounded-full blur-3xl pointer-events-none"
+      />
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════════════════════════
    AUTHENTIC ONWARD WORKSPACES DATA
@@ -365,17 +636,17 @@ function WorkplacePhoto({
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className={`relative overflow-hidden rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center ${className}`}>
+    <div className={`relative overflow-hidden rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center group ${className}`}>
       {src && !imgError ? (
         <img
           src={src}
           alt={alt}
           onError={() => setImgError(true)}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
       ) : (
         <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-slate-100">
-          <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#d9531e] shadow-sm mb-2">
+          <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#d9531e] shadow-sm mb-2 group-hover:scale-110 transition-transform">
             <Icon className="w-6 h-6" />
           </div>
           <span className="text-xs font-semibold text-slate-700">{alt}</span>
@@ -392,7 +663,7 @@ function WorkplacePhoto({
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MAIN COMPONENT: AUTHENTIC CLASSIC WORKSPACE PORTAL UX
+   MAIN COMPONENT: AUTHENTIC CLASSIC WORKSPACE PORTAL UX WITH MOTION
    ═══════════════════════════════════════════════════════════════ */
 
 export default function Home() {
@@ -401,6 +672,14 @@ export default function Home() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [selectedFaqCategory, setSelectedFaqCategory] = useState<string>("All Topics");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
+  // Scroll progress bar
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   // Spaces Slider Ref
   const spacesSliderRef = useRef<HTMLDivElement>(null);
@@ -440,10 +719,16 @@ export default function Home() {
   const activeHub = currentCityHubs[activeHubIndex] || currentCityHubs[0];
 
   return (
-    <div className="min-h-screen bg-white text-slate-800 font-sans antialiased selection:bg-[#d9531e] selection:text-white">
+    <div className="min-h-screen bg-white text-slate-800 font-sans antialiased selection:bg-[#d9531e] selection:text-white relative">
       
+      {/* ━━━ SCROLL PROGRESS BAR ━━━ */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#d9531e] via-amber-500 to-[#d9531e] origin-left z-50 pointer-events-none"
+        style={{ scaleX }}
+      />
+
       {/* ━━━ TOP UTILITY BAR (PHONE • LOCATIONS • PASS ANNOUNCEMENT) ━━━ */}
-      <div className="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+      <div className="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800 relative z-40">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           
           <div className="flex items-center gap-4 text-slate-300">
@@ -457,12 +742,12 @@ export default function Home() {
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 text-amber-300 font-medium text-[11px] sm:text-xs">
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
               <span>Complimentary 2-Day Workspace Trial Pass</span>
             </div>
             <button
               onClick={() => openBookingModal("All NCR Hubs", true)}
-              className="bg-[#d9531e] hover:bg-[#c24614] text-white px-2.5 py-0.5 rounded text-[11px] font-bold transition-colors"
+              className="bg-[#d9531e] hover:bg-[#c24614] text-white px-2.5 py-0.5 rounded text-[11px] font-bold transition-transform active:scale-95"
             >
               Claim Pass
             </button>
@@ -472,12 +757,12 @@ export default function Home() {
       </div>
 
       {/* ━━━ CLASSIC FULL-WIDTH HEADER ━━━ */}
-      <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
           
           {/* Logo Brand */}
-          <a href="#home" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center p-1.5 shadow-2xs">
+          <a href="#home" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center p-1.5 shadow-2xs group-hover:scale-105 transition-transform">
               <img
                 src="/onward-logo.png"
                 alt="Onward Workspaces"
@@ -485,7 +770,7 @@ export default function Home() {
               />
             </div>
             <div>
-              <div className="text-xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <div className="text-xl font-extrabold text-slate-900 tracking-tight leading-tight group-hover:text-[#d9531e] transition-colors">
                 ONWARD
               </div>
               <div className="text-[9px] font-bold text-[#d9531e] tracking-[0.2em] uppercase">
@@ -496,23 +781,29 @@ export default function Home() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-700">
-            <a href="#spaces" className="hover:text-[#d9531e] transition-colors">
-              Workspace Formats
+            <a href="#spaces" className="hover:text-[#d9531e] transition-colors relative py-1 group">
+              <span>Workspace Formats</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9531e] transition-all duration-200 group-hover:w-full" />
             </a>
-            <a href="#locations" className="hover:text-[#d9531e] transition-colors">
-              Locations & Metro
+            <a href="#locations" className="hover:text-[#d9531e] transition-colors relative py-1 group">
+              <span>Locations & Metro</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9531e] transition-all duration-200 group-hover:w-full" />
             </a>
-            <a href="#amenities" className="hover:text-[#d9531e] transition-colors">
-              Amenities
+            <a href="#amenities" className="hover:text-[#d9531e] transition-colors relative py-1 group">
+              <span>Amenities</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9531e] transition-all duration-200 group-hover:w-full" />
             </a>
-            <a href="#clients" className="hover:text-[#d9531e] transition-colors">
-              Clients
+            <a href="#clients" className="hover:text-[#d9531e] transition-colors relative py-1 group">
+              <span>Clients</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9531e] transition-all duration-200 group-hover:w-full" />
             </a>
-            <a href="#faq" className="hover:text-[#d9531e] transition-colors">
-              FAQ
+            <a href="#faq" className="hover:text-[#d9531e] transition-colors relative py-1 group">
+              <span>FAQ</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9531e] transition-all duration-200 group-hover:w-full" />
             </a>
-            <a href="#contact" className="hover:text-[#d9531e] transition-colors">
-              Contact
+            <a href="#contact" className="hover:text-[#d9531e] transition-colors relative py-1 group">
+              <span>Contact</span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#d9531e] transition-all duration-200 group-hover:w-full" />
             </a>
           </nav>
 
@@ -528,7 +819,7 @@ export default function Home() {
 
             <button
               onClick={() => openBookingModal(undefined, false)}
-              className="bg-[#d9531e] hover:bg-[#c24614] text-white px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
+              className="bg-[#d9531e] hover:bg-[#c24614] text-white px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 hover:scale-102 active:scale-98"
             >
               <span>Schedule a Tour</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -547,281 +838,320 @@ export default function Home() {
         </div>
 
         {/* Mobile Nav Dropdown */}
-        {mobileNavOpen && (
-          <div className="lg:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-3 shadow-md">
-            <div className="grid grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
-              <a href="#spaces" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-                Workspace Formats
-              </a>
-              <a href="#locations" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-                Locations & Metro
-              </a>
-              <a href="#amenities" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-                Amenities
-              </a>
-              <a href="#clients" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
-                Clients
-              </a>
-              <a href="#faq" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 col-span-2">
-                Frequently Asked Questions
-              </a>
-            </div>
+        <AnimatePresence>
+          {mobileNavOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              className="lg:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-3 shadow-md overflow-hidden"
+            >
+              <div className="grid grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
+                <a href="#spaces" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                  Workspace Formats
+                </a>
+                <a href="#locations" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                  Locations & Metro
+                </a>
+                <a href="#amenities" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                  Amenities
+                </a>
+                <a href="#clients" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                  Clients
+                </a>
+                <a href="#faq" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 col-span-2">
+                  Frequently Asked Questions
+                </a>
+              </div>
 
-            <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-              <a href="tel:+919910668152" className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
-                <span>+91 9910668152</span>
-              </a>
-              <button
-                onClick={() => openBookingModal(undefined, true)}
-                className="bg-[#d9531e] text-white px-3 py-1.5 rounded-lg text-xs font-bold"
-              >
-                Claim Free Pass
-              </button>
-            </div>
-          </div>
-        )}
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <a href="tel:+919910668152" className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
+                  <span>+91 9910668152</span>
+                </a>
+                <button
+                  onClick={() => openBookingModal(undefined, true)}
+                  className="bg-[#d9531e] text-white px-3 py-1.5 rounded-lg text-xs font-bold"
+                >
+                  Claim Free Pass
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      {/* ━━━ HERO SECTION WITH EMBEDDED REAL-ESTATE LEAD CAPTURE FORM ━━━ */}
-      <section id="home" className="relative bg-slate-50 border-b border-slate-200 py-12 sm:py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ━━━ HERO SECTION WITH EMBEDDED REAL-ESTATE LEAD CAPTURE FORM & MOTION ━━━ */}
+      <section id="home" className="relative bg-slate-50 border-b border-slate-200 py-12 sm:py-16 lg:py-20 overflow-hidden">
+        
+        {/* Subtle Hyperframe Background Grid */}
+        <HyperframeMesh />
+
+        {/* Dynamic Zig-Zag Flowing Curvy Wire with Electric Light Pulse */}
+        <FlowingCurvyWire className="opacity-70" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
             {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-5">
               
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-xs font-bold text-[#d9531e]">
-                <span className="w-2 h-2 rounded-full bg-[#d9531e] animate-pulse" />
-                <span>Premium Managed Offices & Coworking Across Delhi NCR</span>
-              </div>
+              <FadeUp delay={0.05}>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200 text-xs font-bold text-[#d9531e] shadow-2xs">
+                  <span className="w-2 h-2 rounded-full bg-[#d9531e] animate-pulse" />
+                  <span>Premium Managed Offices & Coworking Across Delhi NCR</span>
+                </div>
+              </FadeUp>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-                Fully Managed Workspaces Designed for <span className="text-[#d9531e]">Focus & Team Growth</span>.
-              </h1>
+              <FadeUp delay={0.1}>
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+                  Fully Managed Workspaces Designed for <span className="text-[#d9531e]">Focus & Team Growth</span>.
+                </h1>
+              </FadeUp>
 
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
-                Move into ready-to-use private suites, custom managed floors, or shared workspaces across Delhi, Gurgaon, and Noida. Handpicked locations under 2 minutes from major metro stations with zero construction CAPEX.
-              </p>
+              <FadeUp delay={0.15}>
+                <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-xl">
+                  Move into ready-to-use private suites, custom managed floors, or shared workspaces across Delhi, Gurgaon, and Noida. Handpicked locations under 2 minutes from major metro stations with zero construction CAPEX.
+                </p>
+              </FadeUp>
 
               {/* Trust Value Points */}
-              <div className="grid sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
-                  <span>15+ Prime Metro-Connected Hubs</span>
+              <FadeUp delay={0.2}>
+                <div className="grid sm:grid-cols-2 gap-3 pt-2">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                    <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                    <span>15+ Prime Metro-Connected Hubs</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                    <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                    <span>100% Dual DG Power & 1Gbps Fiber</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                    <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                    <span>Same-Day Move-In Ready</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                    <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                    <span>Zero Hidden Maintenance Overheads</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
-                  <span>100% Dual DG Power & 1Gbps Fiber</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
-                  <span>Same-Day Move-In Ready</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
-                  <span>Zero Hidden Maintenance Overheads</span>
-                </div>
-              </div>
+              </FadeUp>
 
-              {/* Stat Counters */}
-              <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-4 text-center sm:text-left">
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">15+</div>
-                  <div className="text-xs text-slate-500 font-medium">NCR Hubs</div>
+              {/* Stat Animated Counters */}
+              <FadeUp delay={0.25}>
+                <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-4 text-center sm:text-left">
+                  <div className="p-3 rounded-xl bg-white/70 backdrop-blur-xs border border-slate-200/60 shadow-2xs">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                      <AnimatedCounter target={15} suffix="+" />
+                    </div>
+                    <div className="text-xs text-slate-500 font-medium mt-0.5">NCR Hubs</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/70 backdrop-blur-xs border border-slate-200/60 shadow-2xs">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                      <AnimatedCounter target={250} suffix="+" />
+                    </div>
+                    <div className="text-xs text-slate-500 font-medium mt-0.5">Active Teams</div>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white/70 backdrop-blur-xs border border-slate-200/60 shadow-2xs">
+                    <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+                      <AnimatedCounter target={1} suffix="M+ Sq.Ft" />
+                    </div>
+                    <div className="text-xs text-slate-500 font-medium mt-0.5">Managed</div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">250+</div>
-                  <div className="text-xs text-slate-500 font-medium">Active Teams</div>
-                </div>
-                <div>
-                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">1M+</div>
-                  <div className="text-xs text-slate-500 font-medium">Sq. Ft. Managed</div>
-                </div>
-              </div>
+              </FadeUp>
 
             </div>
 
             {/* Right Column: High-Converting Embedded Lead Form Box */}
             <div className="lg:col-span-5">
-              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-lg">
-                
-                <div className="border-b border-slate-100 pb-4 mb-5">
-                  <div className="inline-block text-[11px] font-extrabold text-[#d9531e] uppercase tracking-wider mb-1">
-                    Book A Tour Or Free Trial
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900">Experience Onward Firsthand</h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Fill in your details below and our on-site team will confirm your visit.
-                  </p>
-                </div>
-
-                {!isFormSubmitted ? (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setIsFormSubmitted(true);
-                    }}
-                    className="space-y-3.5"
-                  >
-                    <div>
-                      <label className="text-xs font-bold text-slate-700 block mb-1">Full Name</label>
-                      <input
-                        type="text"
-                        required
-                        value={formName}
-                        onChange={(e) => setFormName(e.target.value)}
-                        placeholder="e.g. Vikram Sharma"
-                        className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
-                      />
+              <ScaleReveal delay={0.15}>
+                <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xl relative">
+                  
+                  <div className="border-b border-slate-100 pb-4 mb-5">
+                    <div className="inline-block text-[11px] font-extrabold text-[#d9531e] uppercase tracking-wider mb-1">
+                      Book A Tour Or Free Trial
                     </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">Work Email</label>
-                        <input
-                          type="email"
-                          required
-                          value={formEmail}
-                          onChange={(e) => setFormEmail(e.target.value)}
-                          placeholder="vikram@company.com"
-                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">Phone Number</label>
-                        <input
-                          type="tel"
-                          required
-                          value={formPhone}
-                          onChange={(e) => setFormPhone(e.target.value)}
-                          placeholder="+91 9910668152"
-                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">Preferred Location</label>
-                        <select
-                          value={formLocation}
-                          onChange={(e) => setFormLocation(e.target.value)}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white"
-                        >
-                          <option value="Okhla Phase II, Delhi">Okhla Phase II (Delhi)</option>
-                          <option value="Okhla Phase III, Delhi">Okhla Phase III (Delhi)</option>
-                          <option value="Mohan Cooperative, Delhi">Mohan Cooperative (Delhi)</option>
-                          <option value="Connaught Place, Delhi">Connaught Place (Delhi)</option>
-                          <option value="DLF Cyber City, Gurgaon">DLF Cyber City (Gurgaon)</option>
-                          <option value="Udyog Vihar, Gurgaon">Udyog Vihar (Gurgaon)</option>
-                          <option value="Sector 62, Noida">Sector 62 IT Hub (Noida)</option>
-                          <option value="Sector 16, Noida">Sector 16 (Noida)</option>
-                          <option value="Sector 132, Noida">Sector 132 Expressway (Noida)</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="text-xs font-bold text-slate-700 block mb-1">Team Size</label>
-                        <select
-                          value={formTeamSize}
-                          onChange={(e) => setFormTeamSize(e.target.value)}
-                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white"
-                        >
-                          <option value="1-4 Desks">1 - 4 Desks</option>
-                          <option value="5-15 Desks">5 - 15 Desks</option>
-                          <option value="16-50 Desks">16 - 50 Desks</option>
-                          <option value="50+ Custom Floor">50+ Custom Floor</option>
-                          <option value="Virtual Office">Virtual Office / GST</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full mt-2 py-3 bg-[#d9531e] hover:bg-[#c24614] text-white font-bold text-xs sm:text-sm rounded-lg transition-all shadow-sm flex items-center justify-center gap-2"
-                    >
-                      <span>Claim Free 2-Day Pass & Book Tour</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-
-                    <div className="text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5 pt-1">
-                      <Lock className="w-3 h-3 text-slate-400" />
-                      <span>Zero Spam. 100% Confidential.</span>
-                    </div>
-                  </form>
-                ) : (
-                  <div className="text-center py-8 space-y-3">
-                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                      <Check className="w-6 h-6" />
-                    </div>
-                    <h4 className="text-lg font-bold text-slate-900">Thank you, {formName || "there"}!</h4>
-                    <p className="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
-                      Your tour request for <span className="font-semibold text-slate-800">{formLocation}</span> has been received. Our team will reach out at <span className="font-semibold text-slate-800">{formPhone}</span> to confirm your slot.
+                    <h3 className="text-xl font-bold text-slate-900">Experience Onward Firsthand</h3>
+                    <p className="text-xs text-slate-500 mt-1">
+                      Fill in your details below and our on-site team will confirm your visit.
                     </p>
-                    <button
-                      onClick={() => setIsFormSubmitted(false)}
-                      className="text-xs font-bold text-[#d9531e] hover:underline pt-2"
-                    >
-                      Submit another inquiry
-                    </button>
                   </div>
-                )}
 
-              </div>
+                  {!isFormSubmitted ? (
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        setIsFormSubmitted(true);
+                      }}
+                      className="space-y-3.5"
+                    >
+                      <div>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Full Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={formName}
+                          onChange={(e) => setFormName(e.target.value)}
+                          placeholder="e.g. Vikram Sharma"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 block mb-1">Work Email</label>
+                          <input
+                            type="email"
+                            required
+                            value={formEmail}
+                            onChange={(e) => setFormEmail(e.target.value)}
+                            placeholder="vikram@company.com"
+                            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 block mb-1">Phone Number</label>
+                          <input
+                            type="tel"
+                            required
+                            value={formPhone}
+                            onChange={(e) => setFormPhone(e.target.value)}
+                            placeholder="+91 9910668152"
+                            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 block mb-1">Preferred Location</label>
+                          <select
+                            value={formLocation}
+                            onChange={(e) => setFormLocation(e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white"
+                          >
+                            <option value="Okhla Phase II, Delhi">Okhla Phase II (Delhi)</option>
+                            <option value="Okhla Phase III, Delhi">Okhla Phase III (Delhi)</option>
+                            <option value="Mohan Cooperative, Delhi">Mohan Cooperative (Delhi)</option>
+                            <option value="Connaught Place, Delhi">Connaught Place (Delhi)</option>
+                            <option value="DLF Cyber City, Gurgaon">DLF Cyber City (Gurgaon)</option>
+                            <option value="Udyog Vihar, Gurgaon">Udyog Vihar (Gurgaon)</option>
+                            <option value="Sector 62, Noida">Sector 62 IT Hub (Noida)</option>
+                            <option value="Sector 16, Noida">Sector 16 (Noida)</option>
+                            <option value="Sector 132, Noida">Sector 132 Expressway (Noida)</option>
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-slate-700 block mb-1">Team Size</label>
+                          <select
+                            value={formTeamSize}
+                            onChange={(e) => setFormTeamSize(e.target.value)}
+                            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white"
+                          >
+                            <option value="1-4 Desks">1 - 4 Desks</option>
+                            <option value="5-15 Desks">5 - 15 Desks</option>
+                            <option value="16-50 Desks">16 - 50 Desks</option>
+                            <option value="50+ Custom Floor">50+ Custom Floor</option>
+                            <option value="Virtual Office">Virtual Office / GST</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="w-full mt-2 py-3 bg-[#d9531e] hover:bg-[#c24614] text-white font-bold text-xs sm:text-sm rounded-lg transition-all shadow-md flex items-center justify-center gap-2 hover:scale-102 active:scale-98"
+                      >
+                        <span>Claim Free 2-Day Pass & Book Tour</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+
+                      <div className="text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5 pt-1">
+                        <Lock className="w-3 h-3 text-slate-400" />
+                        <span>Zero Spam. 100% Confidential.</span>
+                      </div>
+                    </form>
+                  ) : (
+                    <div className="text-center py-8 space-y-3">
+                      <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                        <Check className="w-6 h-6" />
+                      </div>
+                      <h4 className="text-lg font-bold text-slate-900">Thank you, {formName || "there"}!</h4>
+                      <p className="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
+                        Your tour request for <span className="font-semibold text-slate-800">{formLocation}</span> has been received. Our team will reach out at <span className="font-semibold text-slate-800">{formPhone}</span> to confirm your slot.
+                      </p>
+                      <button
+                        onClick={() => setIsFormSubmitted(false)}
+                        className="text-xs font-bold text-[#d9531e] hover:underline pt-2"
+                      >
+                        Submit another inquiry
+                      </button>
+                    </div>
+                  )}
+
+                </div>
+              </ScaleReveal>
             </div>
 
           </div>
         </div>
       </section>
 
-      {/* ━━━ WORKSPACE FORMATS SECTION ━━━ */}
-      <section id="spaces" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+      {/* ━━━ WORKSPACE FORMATS SECTION WITH MOTION ━━━ */}
+      <section id="spaces" className="py-16 sm:py-24 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-            <div>
-              <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
-                Workspace Solutions
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Designed for Teams of Every Size
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                From private team cabins to custom 500-seat enterprise floorplates.
-              </p>
-            </div>
+          <FadeUp>
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+              <div>
+                <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+                  Workspace Solutions
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  Designed for Teams of Every Size
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  From private team cabins to custom 500-seat enterprise floorplates.
+                </p>
+              </div>
 
-            {/* Slider Navigation Controls */}
-            <div className="flex items-center gap-2 self-start md:self-auto">
-              <button
-                onClick={() => scrollSpaces("left")}
-                className="p-2.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 transition-colors"
-                aria-label="Previous spaces"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => scrollSpaces("right")}
-                className="p-2.5 rounded-lg bg-[#d9531e] hover:bg-[#c24614] text-white transition-colors"
-                aria-label="Next spaces"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+              {/* Slider Navigation Controls */}
+              <div className="flex items-center gap-2 self-start md:self-auto">
+                <button
+                  onClick={() => scrollSpaces("left")}
+                  className="p-2.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 transition-colors active:scale-95"
+                  aria-label="Previous spaces"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => scrollSpaces("right")}
+                  className="p-2.5 rounded-lg bg-[#d9531e] hover:bg-[#c24614] text-white transition-colors active:scale-95 shadow-xs"
+                  aria-label="Next spaces"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-          </div>
+          </FadeUp>
 
           {/* Horizontal Slider Track */}
           <div
             ref={spacesSliderRef}
             className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 cursor-grab active:cursor-grabbing"
           >
-            {workspaceSpaces.map((space) => {
+            {workspaceSpaces.map((space, idx) => {
               const Icon = space.icon;
               return (
-                <div
+                <motion.div
                   key={space.id}
-                  className="w-[300px] sm:w-[360px] flex-shrink-0 bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:border-[#d9531e] hover:shadow-md transition-all group"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: 0.08 * idx }}
+                  whileHover={{ y: -6 }}
+                  className="w-[300px] sm:w-[360px] flex-shrink-0 bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:border-[#d9531e] hover:shadow-lg transition-all group"
                 >
                   <div>
                     {/* Visual Preview */}
@@ -860,13 +1190,13 @@ export default function Home() {
                     <span className="text-xs text-slate-400">Available at all 15+ hubs</span>
                     <button
                       onClick={() => openBookingModal(space.title)}
-                      className="text-xs font-bold text-[#d9531e] hover:text-[#c24614] flex items-center gap-1"
+                      className="text-xs font-bold text-[#d9531e] hover:text-[#c24614] flex items-center gap-1 group/btn"
                     >
                       <span>Inquire Now</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -874,43 +1204,49 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ LOCATIONS SECTION WITH CITY TABS ━━━ */}
-      <section id="locations" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-            <div>
-              <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
-                Strategic NCR Locations
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Walk to Work from Major Metro Stations
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                {locationsByCity[selectedCity].blurb}
-              </p>
-            </div>
+      {/* ━━━ LOCATIONS SECTION WITH CITY TABS & SMOOTH TRANSITIONS ━━━ */}
+      <section id="locations" className="py-16 sm:py-24 bg-slate-50 border-b border-slate-200 relative overflow-hidden">
+        
+        {/* Dynamic Zig-Zag Flowing Curvy Wire */}
+        <FlowingCurvyWire className="opacity-40" />
 
-            {/* City Tabs */}
-            <div className="flex bg-white p-1 rounded-lg border border-slate-200 shadow-2xs self-start sm:self-auto">
-              {(["delhi", "gurgaon", "noida"] as const).map((city) => (
-                <button
-                  key={city}
-                  onClick={() => {
-                    setSelectedCity(city);
-                    setActiveHubIndex(0);
-                  }}
-                  className={`px-5 py-2 rounded-md text-xs font-bold capitalize transition-all ${
-                    selectedCity === city
-                      ? "bg-[#d9531e] text-white shadow-2xs"
-                      : "text-slate-600 hover:text-slate-900"
-                  }`}
-                >
-                  {city}
-                </button>
-              ))}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          
+          <FadeUp>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+              <div>
+                <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+                  Strategic NCR Locations
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  Walk to Work from Major Metro Stations
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  {locationsByCity[selectedCity].blurb}
+                </p>
+              </div>
+
+              {/* City Tabs */}
+              <div className="flex bg-white p-1 rounded-lg border border-slate-200 shadow-2xs self-start sm:self-auto">
+                {(["delhi", "gurgaon", "noida"] as const).map((city) => (
+                  <button
+                    key={city}
+                    onClick={() => {
+                      setSelectedCity(city);
+                      setActiveHubIndex(0);
+                    }}
+                    className={`px-5 py-2 rounded-md text-xs font-bold capitalize transition-all ${
+                      selectedCity === city
+                        ? "bg-[#d9531e] text-white shadow-2xs scale-102"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    {city}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </FadeUp>
 
           {/* 2-Column Location Explorer */}
           <div className="grid lg:grid-cols-12 gap-8 items-start">
@@ -920,14 +1256,18 @@ export default function Home() {
               {currentCityHubs.map((hub, idx) => {
                 const isActive = activeHubIndex === idx;
                 return (
-                  <div
+                  <motion.div
                     key={hub.id}
+                    layout
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.05 * idx }}
                     onMouseEnter={() => setActiveHubIndex(idx)}
                     onClick={() => setActiveHubIndex(idx)}
                     className={`p-6 rounded-xl border transition-all cursor-pointer ${
                       isActive
-                        ? "bg-white border-[#d9531e] shadow-md"
-                        : "bg-white border-slate-200 hover:border-slate-300"
+                        ? "bg-white border-[#d9531e] shadow-md scale-[1.01]"
+                        : "bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50/60"
                     }`}
                   >
                     <div className="flex items-center justify-between pb-2 border-b border-slate-100">
@@ -964,59 +1304,68 @@ export default function Home() {
                           e.stopPropagation();
                           openBookingModal(hub.name);
                         }}
-                        className="text-xs font-bold text-[#d9531e] hover:text-[#c24614] flex items-center gap-1"
+                        className="text-xs font-bold text-[#d9531e] hover:text-[#c24614] flex items-center gap-1 group/btn"
                       >
                         <span>Schedule Walkthrough</span>
-                        <ArrowUpRight className="w-3.5 h-3.5" />
+                        <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
 
             {/* Right Column: Sticky Preview Card */}
             <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
-              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-md space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                  <div>
-                    <span className="text-[10px] font-bold text-[#d9531e] uppercase tracking-wider block">
-                      Centre Preview
-                    </span>
-                    <h4 className="text-base font-bold text-slate-900 mt-0.5">{activeHub.name}</h4>
-                  </div>
-                  <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Open for Visits
-                  </span>
-                </div>
-
-                <WorkplacePhoto
-                  src={activeHub.image}
-                  alt={activeHub.name}
-                  badge={activeHub.size}
-                  className="aspect-[16/11]"
-                />
-
-                <div className="bg-slate-50 rounded-lg p-3.5 border border-slate-200 space-y-2 text-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500 font-medium">Metro Transit</span>
-                    <span className="text-[#d9531e] font-bold">{activeHub.metro}</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-slate-500 font-medium">Full Address</span>
-                    <span className="text-slate-700 font-semibold truncate max-w-[200px]">{activeHub.address}</span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => openBookingModal(activeHub.name)}
-                  className="w-full py-3 bg-slate-900 hover:bg-[#d9531e] text-white font-bold text-xs rounded-lg transition-colors flex items-center justify-center gap-2"
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeHub.id}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.25 }}
+                  className="bg-white rounded-xl border border-slate-200 p-6 shadow-md space-y-4"
                 >
-                  <span>Book a Tour at {activeHub.name.split(" ")[0]}</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span className="text-[10px] font-bold text-[#d9531e] uppercase tracking-wider block">
+                        Centre Preview
+                      </span>
+                      <h4 className="text-base font-bold text-slate-900 mt-0.5">{activeHub.name}</h4>
+                    </div>
+                    <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Open for Visits
+                    </span>
+                  </div>
+
+                  <WorkplacePhoto
+                    src={activeHub.image}
+                    alt={activeHub.name}
+                    badge={activeHub.size}
+                    className="aspect-[16/11]"
+                  />
+
+                  <div className="bg-slate-50 rounded-lg p-3.5 border border-slate-200 space-y-2 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500 font-medium">Metro Transit</span>
+                      <span className="text-[#d9531e] font-bold">{activeHub.metro}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-500 font-medium">Full Address</span>
+                      <span className="text-slate-700 font-semibold truncate max-w-[200px]">{activeHub.address}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => openBookingModal(activeHub.name)}
+                    className="w-full py-3 bg-slate-900 hover:bg-[#d9531e] text-white font-bold text-xs rounded-lg transition-all shadow-sm flex items-center justify-center gap-2 hover:scale-102 active:scale-98"
+                  >
+                    <span>Book a Tour at {activeHub.name.split(" ")[0]}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
           </div>
@@ -1024,41 +1373,45 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ EVERYDAY AMENITIES / INCLUSIONS ━━━ */}
-      <section id="amenities" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+      {/* ━━━ EVERYDAY AMENITIES / INCLUSIONS WITH MOTION ━━━ */}
+      <section id="amenities" className="py-16 sm:py-24 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
-              Everything Included
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Comprehensive Enterprise Amenities
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1.5">
-              Consolidated into a single transparent monthly membership with zero surprise bills.
-            </p>
-          </div>
+          <FadeUp>
+            <div className="text-center max-w-2xl mx-auto mb-14">
+              <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+                Everything Included
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Comprehensive Enterprise Amenities
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1.5">
+                Consolidated into a single transparent monthly membership with zero surprise bills.
+              </p>
+            </div>
+          </FadeUp>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {everydayAmenities.map((amenity) => {
+            {everydayAmenities.map((amenity, idx) => {
               const Icon = amenity.icon;
               return (
-                <div
-                  key={amenity.title}
-                  className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#d9531e] mb-4 shadow-2xs">
-                      <Icon className="w-5 h-5" />
+                <FadeUp key={amenity.title} delay={0.06 * idx}>
+                  <motion.div
+                    whileHover={{ y: -5 }}
+                    className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 hover:bg-white hover:shadow-md transition-all flex flex-col justify-between h-full group"
+                  >
+                    <div>
+                      <div className="w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#d9531e] mb-4 shadow-2xs group-hover:scale-110 group-hover:bg-[#d9531e] group-hover:text-white transition-all">
+                        <Icon className="w-5 h-5" />
+                      </div>
+                      <h3 className="text-base font-bold text-slate-900 group-hover:text-[#d9531e] transition-colors">{amenity.title}</h3>
+                      <p className="text-xs text-slate-600 mt-2 leading-relaxed">{amenity.desc}</p>
                     </div>
-                    <h3 className="text-base font-bold text-slate-900">{amenity.title}</h3>
-                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">{amenity.desc}</p>
-                  </div>
-                  <div className="mt-5 pt-3 border-t border-slate-200/60 text-[11px] font-semibold text-slate-400">
-                    Standard at all 15+ hubs
-                  </div>
-                </div>
+                    <div className="mt-5 pt-3 border-t border-slate-200/60 text-[11px] font-semibold text-slate-400">
+                      Standard at all 15+ hubs
+                    </div>
+                  </motion.div>
+                </FadeUp>
               );
             })}
           </div>
@@ -1066,63 +1419,72 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ CLIENT BRANDS & TESTIMONIALS ━━━ */}
-      <section id="clients" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+      {/* ━━━ CLIENT BRANDS & TESTIMONIALS WITH INFINITE MARQUEE ━━━ */}
+      <section id="clients" className="py-16 sm:py-24 bg-slate-50 border-b border-slate-200 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
-              Trusted by Fast-Growing Companies
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Where Leading Teams Operate
-            </h2>
-          </div>
-
-          {/* Client Logos Bar */}
-          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-60 mb-12">
-            {clientBrands.map((brand) => (
-              <span key={brand} className="text-xs sm:text-sm font-bold tracking-widest text-slate-600 uppercase">
-                {brand}
+          <FadeUp>
+            <div className="text-center max-w-xl mx-auto mb-10">
+              <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+                Trusted by Fast-Growing Companies
               </span>
-            ))}
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Where Leading Teams Operate
+              </h2>
+            </div>
+          </FadeUp>
+
+          {/* Client Animated Marquee Ticker */}
+          <div className="mb-14 py-4 border-y border-slate-200/80 bg-white/50 backdrop-blur-xs">
+            <InfiniteMarquee speed={30}>
+              {clientBrands.map((brand) => (
+                <span
+                  key={brand}
+                  className="text-xs sm:text-sm font-extrabold tracking-widest text-slate-500 uppercase px-6 hover:text-[#d9531e] transition-colors cursor-default"
+                >
+                  {brand}
+                </span>
+              ))}
+            </InfiniteMarquee>
           </div>
 
           {/* Testimonials */}
           <div className="grid md:grid-cols-3 gap-6">
-            {clientTestimonials.map((story) => (
-              <div
-                key={story.author}
-                className="p-6 rounded-xl bg-white border border-slate-200 shadow-2xs flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex gap-1 mb-3 text-amber-500">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-500" />
-                    ))}
-                  </div>
-                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
-                    &ldquo;{story.quote}&rdquo;
-                  </p>
-                </div>
-
-                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center">
-                    {story.author[0]}
-                  </div>
+            {clientTestimonials.map((story, idx) => (
+              <FadeUp key={story.author} delay={0.08 * idx}>
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  className="p-6 rounded-xl bg-white border border-slate-200 shadow-2xs hover:shadow-md transition-all flex flex-col justify-between h-full"
+                >
                   <div>
-                    <div className="font-bold text-xs text-slate-900">{story.author}</div>
-                    <div className="text-[11px] text-slate-500">{story.role}, {story.company}</div>
+                    <div className="flex gap-1 mb-3 text-amber-500">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-amber-500" />
+                      ))}
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+                      &ldquo;{story.quote}&rdquo;
+                    </p>
                   </div>
-                </div>
-              </div>
+
+                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                      {story.author[0]}
+                    </div>
+                    <div>
+                      <div className="font-bold text-xs text-slate-900">{story.author}</div>
+                      <div className="text-[11px] text-slate-500">{story.role}, {story.company}</div>
+                    </div>
+                  </div>
+                </motion.div>
+              </FadeUp>
             ))}
           </div>
 
         </div>
       </section>
 
-      {/* ━━━ 2-COLUMN SPLIT KNOWLEDGE HUB & FAQ ━━━ */}
+      {/* ━━━ 2-COLUMN SPLIT KNOWLEDGE HUB & FAQ WITH MOTION ━━━ */}
       <section id="faq" className="py-16 sm:py-24 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -1130,80 +1492,86 @@ export default function Home() {
             
             {/* Left Column: Knowledge Hub Sticky Header & Category Filter */}
             <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
-              <div>
-                <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-[#d9531e] uppercase tracking-wider bg-orange-50 px-2.5 py-1 rounded-md border border-orange-200 mb-3">
-                  <HelpCircle className="w-3.5 h-3.5" />
-                  <span>Help & Knowledge Base</span>
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                  Frequently Asked Questions
-                </h2>
-                <p className="text-sm text-slate-600 mt-2.5 leading-relaxed">
-                  Everything you need to know about team leases, move-in timelines, GST legal paperwork, and complimentary passes.
-                </p>
-              </div>
+              <FadeUp>
+                <div>
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-[#d9531e] uppercase tracking-wider bg-orange-50 px-2.5 py-1 rounded-md border border-orange-200 mb-3 shadow-2xs">
+                    <HelpCircle className="w-3.5 h-3.5" />
+                    <span>Help & Knowledge Base</span>
+                  </span>
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                    Frequently Asked Questions
+                  </h2>
+                  <p className="text-sm text-slate-600 mt-2.5 leading-relaxed">
+                    Everything you need to know about team leases, move-in timelines, GST legal paperwork, and complimentary passes.
+                  </p>
+                </div>
+              </FadeUp>
 
               {/* Category Filter Pills */}
-              <div className="space-y-2">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                  Filter by Topic
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {faqCategories.map((category) => {
-                    const count = category === "All Topics"
-                      ? faqs.length
-                      : faqs.filter((f) => f.category === category).length;
-                    const isActive = selectedFaqCategory === category;
-                    return (
-                      <button
-                        key={category}
-                        onClick={() => {
-                          setSelectedFaqCategory(category);
-                          setOpenFaqIndex(0);
-                        }}
-                        className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
-                          isActive
-                            ? "bg-[#d9531e] text-white shadow-xs scale-102"
-                            : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
-                        }`}
-                      >
-                        <span>{category}</span>
-                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                          isActive ? "bg-white/20 text-white" : "bg-white text-slate-500 border border-slate-200"
-                        }`}>
-                          {count}
-                        </span>
-                      </button>
-                    );
-                  })}
+              <FadeUp delay={0.1}>
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                    Filter by Topic
+                  </span>
+                  <div className="flex flex-wrap gap-2">
+                    {faqCategories.map((category) => {
+                      const count = category === "All Topics"
+                        ? faqs.length
+                        : faqs.filter((f) => f.category === category).length;
+                      const isActive = selectedFaqCategory === category;
+                      return (
+                        <button
+                          key={category}
+                          onClick={() => {
+                            setSelectedFaqCategory(category);
+                            setOpenFaqIndex(0);
+                          }}
+                          className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                            isActive
+                              ? "bg-[#d9531e] text-white shadow-xs scale-102"
+                              : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
+                          }`}
+                        >
+                          <span>{category}</span>
+                          <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                            isActive ? "bg-white/20 text-white" : "bg-white text-slate-500 border border-slate-200"
+                          }`}>
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              </FadeUp>
 
               {/* Concierge Help Box */}
-              <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
-                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
-                  <MessageSquare className="w-4 h-4 text-[#d9531e]" />
-                  <span>Have a customized requirement?</span>
+              <FadeUp delay={0.15}>
+                <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3 shadow-xs">
+                  <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                    <MessageSquare className="w-4 h-4 text-[#d9531e]" />
+                    <span>Have a customized requirement?</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Speak directly with our workspace advisors to discuss custom floorplate buildouts or schedule private site walkthroughs.
+                  </p>
+                  <div className="flex items-center gap-3 pt-1">
+                    <a
+                      href="tel:+919910668152"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 bg-white hover:bg-slate-100 px-3 py-2 rounded-lg border border-slate-200 transition-colors shadow-2xs"
+                    >
+                      <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
+                      <span>+91 9910668152</span>
+                    </a>
+                    <button
+                      onClick={() => openBookingModal(undefined, false)}
+                      className="text-xs font-bold text-[#d9531e] hover:underline"
+                    >
+                      Schedule Tour →
+                    </button>
+                  </div>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Speak directly with our workspace advisors to discuss custom floorplate buildouts or schedule private site walkthroughs.
-                </p>
-                <div className="flex items-center gap-3 pt-1">
-                  <a
-                    href="tel:+919910668152"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 bg-white hover:bg-slate-100 px-3 py-2 rounded-lg border border-slate-200 transition-colors shadow-2xs"
-                  >
-                    <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
-                    <span>+91 9910668152</span>
-                  </a>
-                  <button
-                    onClick={() => openBookingModal(undefined, false)}
-                    className="text-xs font-bold text-[#d9531e] hover:underline"
-                  >
-                    Schedule Tour →
-                  </button>
-                </div>
-              </div>
+              </FadeUp>
 
             </div>
 
@@ -1215,8 +1583,12 @@ export default function Home() {
               ).map((faq, idx) => {
                 const isOpen = openFaqIndex === idx;
                 return (
-                  <div
+                  <motion.div
                     key={faq.id}
+                    layout
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.25, delay: 0.04 * idx }}
                     className={`rounded-xl border transition-all duration-200 overflow-hidden ${
                       isOpen
                         ? "bg-slate-50 border-slate-300 border-l-4 border-l-[#d9531e] shadow-sm"
@@ -1266,7 +1638,7 @@ export default function Home() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
