@@ -5,7 +5,6 @@ import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
-  Check,
   Building2,
   Users,
   Award,
@@ -20,6 +19,8 @@ import {
   Zap,
   Sparkles,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   X,
   Star,
   Clock,
@@ -41,6 +42,8 @@ const workspaceSpaces = [
       "Acoustically treated, lockable private suites designed to foster deep collaboration and team identity without external noise.",
     icon: Users,
     badge: "Same-Day Move In",
+    image: "/spaces/private-suite.jpg",
+    placeholderBg: "from-amber-900/20 to-orange-950/40",
     highlights: [
       "Double-glazed acoustic glass partitions (42dB sound reduction)",
       "Ergonomic mesh seating & private lockable pedestals",
@@ -57,6 +60,8 @@ const workspaceSpaces = [
       "Your own branded commercial floorplate designed, built, and managed end-to-end. Zero upfront construction CAPEX, delivered in 3 to 4 weeks.",
     icon: Building2,
     badge: "Turnkey Architecture",
+    image: "/spaces/managed-office.jpg",
+    placeholderBg: "from-blue-950/30 to-indigo-950/40",
     highlights: [
       "Custom branded reception, director cabins & team pods",
       "Dedicated IT server hall with dual active multi-ISP fiber",
@@ -73,6 +78,8 @@ const workspaceSpaces = [
       "Quiet, dignified executive offices tailored for strategic thinking, high-stakes client negotiations, and private leadership discussions.",
     icon: Award,
     badge: "Leadership Class",
+    image: "/spaces/director-cabin.jpg",
+    placeholderBg: "from-stone-900/30 to-amber-950/40",
     highlights: [
       "Supple Italian leather seating & private discussion table",
       "Acoustic double-glazed privacy with sound-dampened door",
@@ -89,6 +96,8 @@ const workspaceSpaces = [
       "A legally certified Grade-A Delhi NCR commercial business address for company incorporation, GST filing, and official mail handling.",
     icon: Globe2,
     badge: "100% MCA & ROC Compliant",
+    image: "/spaces/virtual-office.jpg",
+    placeholderBg: "from-emerald-950/30 to-teal-950/40",
     highlights: [
       "Complete documentation: Registered Rent Agreement & Landlord NOC",
       "Fully compliant with GST Department & ROC requirements",
@@ -104,39 +113,47 @@ const locationsByCity = {
     blurb: "Flagship central hubs with immediate access to Violet, Magenta, and Blue line metro stations.",
     hubs: [
       {
+        id: "delhi-okhla-2",
         name: "Okhla Phase II (Flagship HQ)",
         metro: "2 min walk from Harkesh Nagar Okhla Metro",
         metroLine: "Violet Line",
         lineColor: "bg-purple-600 text-white",
         address: "Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020",
         size: "45,000 sq.ft campus",
+        image: "/locations/okhla-phase-2.jpg",
         perks: ["Flagship Lounge", "Café Terrace", "Ample Car Parking", "EV Charging"],
       },
       {
+        id: "delhi-okhla-3",
         name: "Okhla Phase III",
         metro: "3 min from NSIC Okhla Metro",
         metroLine: "Magenta Line",
         lineColor: "bg-pink-600 text-white",
         address: "B-216, Okhla Phase III, New Delhi, 110020",
         size: "38,000 sq.ft",
+        image: "/locations/okhla-phase-3.jpg",
         perks: ["Tech Corridor", "Soundproof Cabins", "Quiet Phone Pods"],
       },
       {
+        id: "delhi-mohan",
         name: "Mohan Cooperative",
         metro: "1 min walk from Mohan Estate Metro",
         metroLine: "Violet Line",
         lineColor: "bg-purple-600 text-white",
         address: "Mathura Road, Mohan Cooperative Industrial Estate, New Delhi",
         size: "60,000 sq.ft",
+        image: "/locations/mohan-cooperative.jpg",
         perks: ["Large Floorplates", "Event Auditorium", "Green Terraces"],
       },
       {
+        id: "delhi-cp",
         name: "Connaught Place",
         metro: "Direct from Rajiv Chowk Interchange",
         metroLine: "Yellow & Blue Line",
         lineColor: "bg-amber-600 text-white",
         address: "Outer Circle, Connaught Place, Central Delhi",
         size: "25,000 sq.ft",
+        image: "/locations/connaught-place.jpg",
         perks: ["Central CBD Address", "Executive Cabins", "Steps to Cafes"],
       },
     ],
@@ -146,30 +163,36 @@ const locationsByCity = {
     blurb: "Prime corporate corridors adjacent to DLF CyberHub and major expressways.",
     hubs: [
       {
+        id: "gurgaon-cybercity",
         name: "DLF Cyber City",
         metro: "2 min from Cyber City Rapid Metro",
         metroLine: "Rapid Metro",
         lineColor: "bg-blue-600 text-white",
         address: "DLF Cyber City, Sector 24, Gurugram, Haryana",
         size: "55,000 sq.ft",
+        image: "/locations/dlf-cybercity.jpg",
         perks: ["CyberHub Adjacent", "Sky Lounge", "Dedicated Leased Line"],
       },
       {
+        id: "gurgaon-udyog",
         name: "Udyog Vihar Phase IV",
         metro: "5 min from Shankar Chowk",
         metroLine: "CyberHub Corridor",
         lineColor: "bg-indigo-600 text-white",
         address: "Plot 304, Udyog Vihar Phase-IV, Gurugram",
         size: "40,000 sq.ft",
+        image: "/locations/udyog-vihar.jpg",
         perks: ["Startup Cluster", "24/7 Access", "Conference Center"],
       },
       {
+        id: "gurgaon-golfcourse",
         name: "Golf Course Extension Road",
         metro: "Sector 55-56 Rapid Metro",
         metroLine: "Rapid Metro",
         lineColor: "bg-blue-600 text-white",
         address: "Golf Course Extension Road, Sector 65, Gurugram",
         size: "32,000 sq.ft",
+        image: "/locations/golf-course-ext.jpg",
         perks: ["Premium Business Corridor", "EV Charging", "Wellness Deck"],
       },
     ],
@@ -179,30 +202,36 @@ const locationsByCity = {
     blurb: "Institutional campuses across prime expressway and metro belts.",
     hubs: [
       {
+        id: "noida-sec62",
         name: "Sector 62 IT Hub",
         metro: "3 min from Electronic City Metro",
         metroLine: "Blue Line",
         lineColor: "bg-blue-700 text-white",
         address: "C-Block, Institutional Area, Sector 62, Noida",
         size: "50,000 sq.ft",
+        image: "/locations/noida-sector-62.jpg",
         perks: ["IT District", "Spacious Cafeteria", "Enterprise Floorplates"],
       },
       {
+        id: "noida-sec16",
         name: "Sector 16 Metro Belt",
         metro: "1 min walk from Sector 16 Metro",
         metroLine: "Blue Line",
         lineColor: "bg-blue-700 text-white",
         address: "Film City Marg, Sector 16, Noida",
         size: "30,000 sq.ft",
+        image: "/locations/noida-sector-16.jpg",
         perks: ["Film City Belt", "Instant Move-in", "Direct Metro Access"],
       },
       {
+        id: "noida-sec132",
         name: "Sector 132 Expressway",
         metro: "Expressway Corporate Park",
         metroLine: "Expressway Corridor",
         lineColor: "bg-emerald-700 text-white",
         address: "Expressway Corporate Park, Sector 132, Noida",
         size: "65,000 sq.ft",
+        image: "/locations/noida-sector-132.jpg",
         perks: ["Mega Campus", "Green Surroundings", "Executive Boardrooms"],
       },
     ],
@@ -335,13 +364,64 @@ function SoftReveal({
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   IMAGE PLACEHOLDER COMPONENT WITH GRACEFUL FALLBACK
+   ═══════════════════════════════════════════════════════════════ */
+
+function ArchitecturalImage({
+  src,
+  alt,
+  className = "aspect-[16/10]",
+  icon: Icon = Building2,
+  badgeText,
+}: {
+  src?: string;
+  alt: string;
+  className?: string;
+  icon?: any;
+  badgeText?: string;
+}) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div className={`relative overflow-hidden rounded-2xl bg-[#f0eae1] border border-[#ede8e1] flex items-center justify-center group ${className}`}>
+      {src && !imgError ? (
+        <img
+          src={src}
+          alt={alt}
+          onError={() => setImgError(true)}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#faf8f5] to-[#ece5dc] relative">
+          <div className="w-12 h-12 rounded-2xl bg-white border border-[#ede8e1] flex items-center justify-center text-[#d4622b] shadow-2xs mb-2 group-hover:scale-108 transition-transform">
+            <Icon className="w-6 h-6" />
+          </div>
+          <span className="text-xs font-bold text-[#1a1a2e]">{alt}</span>
+        </div>
+      )}
+
+      {badgeText && (
+        <div className="absolute top-3 left-3 bg-[#1a1a2e]/85 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20">
+          {badgeText}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════
    MAIN COMPONENT: HUMAN, PRECIOUS & ATTRACTIVE
    ═══════════════════════════════════════════════════════════════ */
 
 export default function Home() {
+  const [showTopBanner, setShowTopBanner] = useState(true);
   const [selectedCity, setSelectedCity] = useState<"delhi" | "gurgaon" | "noida">("delhi");
+  const [activeStickyHubIndex, setActiveStickyHubIndex] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const [scrolled, setScrolled] = useState(false);
+
+  // Spaces Slider Ref
+  const spacesSliderRef = useRef<HTMLDivElement>(null);
 
   // Booking Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -362,20 +442,71 @@ export default function Home() {
     setIsModalOpen(true);
   };
 
+  const scrollSpaces = (direction: "left" | "right") => {
+    if (spacesSliderRef.current) {
+      spacesSliderRef.current.scrollBy({
+        left: direction === "right" ? 380 : -380,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const currentCityHubs = locationsByCity[selectedCity].hubs;
+  const activeHub = currentCityHubs[activeStickyHubIndex] || currentCityHubs[0];
+
   return (
     <div className="min-h-screen bg-[#faf8f5] text-[#1a1a2e] font-sans antialiased selection:bg-[#d4622b] selection:text-white pb-20 overflow-x-hidden">
       
+      {/* ━━━ TOP ANNOUNCEMENT BANNER (FREE PASS PROMO) ━━━ */}
+      {showTopBanner && (
+        <div className="bg-[#1a1a2e] text-white text-xs py-2 px-4 border-b border-gray-800 relative z-50 transition-all">
+          <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 mx-auto sm:mx-0">
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <span className="text-gray-300 font-medium">
+                Complimentary Pass: Experience working from any of our 15+ Delhi, Gurgaon & Noida hubs for 2 days.
+              </span>
+              <button
+                onClick={() => openBooking("All NCR Centres", true)}
+                className="hidden sm:inline-flex items-center gap-1 font-bold text-[#d4622b] hover:text-amber-400 underline underline-offset-2 ml-1"
+              >
+                <span>Claim Free Pass</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => openBooking("All NCR Centres", true)}
+                className="sm:hidden font-bold text-[#d4622b] underline text-[11px]"
+              >
+                Claim Pass
+              </button>
+              <button
+                onClick={() => setShowTopBanner(false)}
+                className="text-gray-400 hover:text-white p-0.5 rounded transition-colors"
+                aria-label="Close notification"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ━━━ REFINED PRECIOUS HEADER ━━━ */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
+          showTopBanner ? "top-[37px]" : "top-0"
+        } ${
           scrolled
-            ? "bg-[#faf8f5]/90 backdrop-blur-md border-b border-[#ede8e1] py-3.5 shadow-2xs"
-            : "bg-transparent py-5"
+            ? "bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#ede8e1] py-3 shadow-2xs"
+            : "bg-transparent py-4"
         }`}
       >
         <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between">
           
-          {/* Brand Logo with Fine Detailing */}
+          {/* Brand Logo */}
           <a href="#home" className="flex items-center gap-3 group">
             <div className="w-9 h-9 rounded-xl bg-white border border-[#ede8e1] flex items-center justify-center shadow-2xs group-hover:border-[#d4622b]/40 transition-colors p-1.5">
               <img
@@ -385,7 +516,9 @@ export default function Home() {
               />
             </div>
             <div className="leading-none">
-              <span className="text-lg font-bold tracking-tight text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+              <span className={`text-lg font-bold tracking-tight transition-colors ${
+                scrolled ? "text-[#1a1a2e]" : "text-white drop-shadow-xs"
+              } group-hover:text-[#d4622b]`}>
                 Onward
               </span>
               <span className="block text-[8px] font-bold tracking-[0.2em] text-[#d4622b] uppercase mt-0.5">
@@ -395,7 +528,9 @@ export default function Home() {
           </a>
 
           {/* Minimalist Navigation */}
-          <nav className="hidden md:flex items-center gap-8 text-xs font-semibold text-gray-600">
+          <nav className={`hidden md:flex items-center gap-8 text-xs font-semibold ${
+            scrolled ? "text-gray-600" : "text-gray-200"
+          }`}>
             <a href="#spaces" className="hover:text-[#d4622b] transition-colors">
               Our Spaces
             </a>
@@ -417,7 +552,11 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <a
               href="tel:+919910668152"
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-gray-700 bg-white border border-[#ede8e1] px-3.5 py-2 rounded-full hover:border-[#d4622b]/40 transition-colors shadow-2xs"
+              className={`hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-full border transition-colors shadow-2xs ${
+                scrolled
+                  ? "bg-white border-[#ede8e1] text-gray-700 hover:border-[#d4622b]/40"
+                  : "bg-white/10 border-white/20 text-white hover:bg-white/20"
+              }`}
             >
               <Phone className="w-3.5 h-3.5 text-[#d4622b]" />
               <span>+91 9910668152</span>
@@ -425,9 +564,13 @@ export default function Home() {
 
             <button
               onClick={() => openBooking(undefined, true)}
-              className="inline-flex items-center gap-1.5 bg-[#d4622b] text-white px-4 py-2 rounded-full text-xs font-semibold hover:bg-[#b8501f] transition-all shadow-xs hover:scale-102 active:scale-98"
+              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all shadow-xs hover:scale-102 active:scale-98 ${
+                scrolled
+                  ? "bg-[#d4622b] text-white hover:bg-[#b8501f]"
+                  : "bg-white text-[#1a1a2e] hover:bg-gray-100"
+              }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+              <Sparkles className="w-3.5 h-3.5" />
               <span>Try 2 Days Free</span>
             </button>
           </div>
@@ -435,38 +578,47 @@ export default function Home() {
         </div>
       </header>
 
-      {/* ━━━ HERO: WARM, ATTRACTIVE & ARTISANAL ━━━ */}
-      <section id="home" className="pt-32 sm:pt-40 pb-20 border-b border-[#ede8e1] relative">
+      {/* ━━━ HERO SECTION (WITH EDITORIAL BACKGROUND IMAGE SUPPORT) ━━━ */}
+      <section
+        id="home"
+        className="relative pt-36 sm:pt-44 pb-24 border-b border-[#ede8e1] overflow-hidden bg-[#1a1a2e]"
+      >
+        {/* Customizable Hero Background Image with Editorial Gradient Overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center -z-0 opacity-40 mix-blend-luminosity"
+          style={{
+            backgroundImage: "url('/hero-bg.jpg'), linear-gradient(135deg, #1a1a2e 0%, #2d2621 100%)",
+          }}
+        />
         
-        {/* Soft Ambient Light Gradient */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-radial from-[#fae8dc]/50 via-transparent to-transparent pointer-events-none -z-10" />
+        {/* Warm Ambient Vignette Glow */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a2e]/95 via-[#1a1a2e]/85 to-[#1a1a2e]/70 -z-0 pointer-events-none" />
 
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10 text-white">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column: Human Story & Typography */}
             <div className="lg:col-span-7 space-y-6">
               
               <SoftReveal>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#ede8e1] text-xs font-semibold text-gray-700 shadow-2xs">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-gray-200 shadow-2xs">
                   <span className="w-2 h-2 rounded-full bg-[#d4622b] animate-pulse" />
-                  <span className="text-[#d4622b] font-bold">Delhi • Gurgaon • Noida</span>
-                  <span className="text-gray-300">•</span>
-                  <span className="text-gray-500 font-normal">Metro-Connected Workspaces</span>
+                  <span className="text-amber-400 font-bold">Delhi • Gurgaon • Noida</span>
+                  <span className="text-gray-400">•</span>
+                  <span className="text-gray-300 font-normal">Metro-Connected Workspaces</span>
                 </div>
               </SoftReveal>
 
               <SoftReveal delay={0.08}>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] tracking-tight leading-[1.12]">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.12]">
                   Workspaces crafted for{" "}
-                  <span className="font-serif italic font-normal text-[#d4622b]">uninterrupted clarity</span>{" "}
+                  <span className="font-serif italic font-normal text-amber-300">uninterrupted clarity</span>{" "}
                   and ambition.
                 </h1>
               </SoftReveal>
 
               <SoftReveal delay={0.14}>
-                <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-normal max-w-xl">
+                <p className="text-base sm:text-lg text-gray-300 leading-relaxed font-normal max-w-xl">
                   Private team suites, custom managed floors, and meeting spaces across Delhi NCR — all hand-picked within a 2-minute walk from major metro lines. No setup headaches, zero surprise utility bills.
                 </p>
               </SoftReveal>
@@ -476,7 +628,7 @@ export default function Home() {
                 <div className="flex flex-wrap items-center gap-3 pt-2">
                   <button
                     onClick={() => openBooking(undefined, false)}
-                    className="px-6 py-3.5 rounded-full bg-[#d4622b] text-white font-semibold text-xs sm:text-sm hover:bg-[#b8501f] transition-all flex items-center gap-2 shadow-xs hover:scale-102 active:scale-98"
+                    className="px-6 py-3.5 rounded-full bg-[#d4622b] text-white font-semibold text-xs sm:text-sm hover:bg-[#b8501f] transition-all flex items-center gap-2 shadow-lg hover:scale-102 active:scale-98"
                   >
                     <span>Schedule a Visit & Grab Coffee</span>
                     <ArrowRight className="w-4 h-4" />
@@ -484,74 +636,74 @@ export default function Home() {
 
                   <button
                     onClick={() => openBooking(undefined, true)}
-                    className="px-5 py-3.5 rounded-full bg-white border border-[#ede8e1] text-gray-800 font-semibold text-xs sm:text-sm hover:border-[#d4622b] transition-colors shadow-2xs"
+                    className="px-5 py-3.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 text-white font-semibold text-xs sm:text-sm transition-colors shadow-2xs"
                   >
                     <span>Claim Free 2-Day Pass</span>
                   </button>
                 </div>
               </SoftReveal>
 
-              {/* Real Metric Highlights */}
+              {/* Metric Highlights */}
               <SoftReveal delay={0.26}>
-                <div className="pt-6 border-t border-[#ede8e1] grid grid-cols-3 gap-6">
+                <div className="pt-6 border-t border-gray-700/80 grid grid-cols-3 gap-6">
                   <div>
-                    <div className="text-2xl font-bold text-[#1a1a2e]">15+</div>
-                    <div className="text-xs text-gray-500 mt-0.5">NCR Metro Hubs</div>
+                    <div className="text-2xl font-bold text-white">15+</div>
+                    <div className="text-xs text-gray-400 mt-0.5">NCR Metro Hubs</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-[#1a1a2e]">250+</div>
-                    <div className="text-xs text-gray-500 mt-0.5">Growing Teams</div>
+                    <div className="text-2xl font-bold text-white">250+</div>
+                    <div className="text-xs text-gray-400 mt-0.5">Growing Teams</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-[#1a1a2e]">1M+</div>
-                    <div className="text-xs text-gray-500 mt-0.5">Sq. Ft. Managed</div>
+                    <div className="text-2xl font-bold text-white">1M+</div>
+                    <div className="text-xs text-gray-400 mt-0.5">Sq. Ft. Managed</div>
                   </div>
                 </div>
               </SoftReveal>
 
             </div>
 
-            {/* Right Column: Precious Architectural Showcase Vignette */}
+            {/* Right Column: Architectural Showcase Vignette */}
             <div className="lg:col-span-5">
               <SoftReveal delay={0.18}>
-                <div className="relative rounded-3xl bg-white border border-[#ede8e1] p-6 sm:p-7 shadow-xs space-y-5">
+                <div className="relative rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-7 shadow-2xl space-y-5 text-white">
                   
                   {/* Card Header */}
-                  <div className="flex items-center justify-between pb-4 border-b border-gray-100">
+                  <div className="flex items-center justify-between pb-4 border-b border-white/15">
                     <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-xs font-bold text-[#1a1a2e]">Okhla Flagship Campus</span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs font-bold text-white">Okhla Flagship Campus</span>
                     </div>
-                    <span className="text-[10px] font-semibold text-[#d4622b] bg-[#faf8f5] px-2.5 py-1 rounded-full border border-gray-200">
+                    <span className="text-[10px] font-semibold text-amber-300 bg-white/10 px-2.5 py-1 rounded-full border border-white/15">
                       45,000 sq.ft
                     </span>
                   </div>
 
                   {/* Architectural Blueprint Stamp */}
-                  <div className="aspect-[16/10] rounded-2xl bg-[#faf8f5] border border-[#ede8e1] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden group">
-                    <div className="w-12 h-12 rounded-2xl bg-white border border-[#ede8e1] flex items-center justify-center text-[#d4622b] shadow-2xs mb-3 group-hover:scale-105 transition-transform">
+                  <div className="aspect-[16/10] rounded-2xl bg-black/30 border border-white/15 flex flex-col items-center justify-center p-6 text-center relative overflow-hidden group">
+                    <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-amber-400 shadow-2xs mb-3 group-hover:scale-108 transition-transform">
                       <Building2 className="w-6 h-6" />
                     </div>
-                    <div className="font-bold text-sm text-[#1a1a2e]">Private Suites & Managed Floors</div>
-                    <div className="text-xs text-gray-500 mt-0.5">2 min walk from Harkesh Nagar Okhla Metro</div>
+                    <div className="font-bold text-sm text-white">Private Suites & Managed Floors</div>
+                    <div className="text-xs text-gray-300 mt-0.5">2 min walk from Harkesh Nagar Okhla Metro</div>
                   </div>
 
                   {/* Curated Space Features */}
-                  <div className="grid grid-cols-2 gap-2.5 pt-1 text-[11px] text-gray-700">
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-[#faf8f5] border border-gray-100">
-                      <Coffee className="w-3.5 h-3.5 text-[#d4622b]" />
+                  <div className="grid grid-cols-2 gap-2.5 pt-1 text-[11px] text-gray-200">
+                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                      <Coffee className="w-3.5 h-3.5 text-amber-400" />
                       <span>Barista Roastery</span>
                     </div>
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-[#faf8f5] border border-gray-100">
-                      <Headphones className="w-3.5 h-3.5 text-[#d4622b]" />
+                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                      <Headphones className="w-3.5 h-3.5 text-amber-400" />
                       <span>Acoustic Zoom Pods</span>
                     </div>
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-[#faf8f5] border border-gray-100">
-                      <Zap className="w-3.5 h-3.5 text-[#d4622b]" />
+                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                      <Zap className="w-3.5 h-3.5 text-amber-400" />
                       <span>100% Dual DG Backup</span>
                     </div>
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-[#faf8f5] border border-gray-100">
-                      <Lock className="w-3.5 h-3.5 text-[#d4622b]" />
+                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
+                      <Lock className="w-3.5 h-3.5 text-amber-400" />
                       <span>24/7 Smart Access</span>
                     </div>
                   </div>
@@ -559,7 +711,7 @@ export default function Home() {
                   {/* Direct Tour Trigger */}
                   <button
                     onClick={() => openBooking("Okhla Phase II (Flagship HQ)")}
-                    className="w-full py-3 rounded-full bg-[#1a1a2e] hover:bg-[#d4622b] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
+                    className="w-full py-3 rounded-full bg-[#d4622b] hover:bg-[#b8501f] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
                   >
                     <span>Tour this Flagship Hub</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -570,78 +722,103 @@ export default function Home() {
             </div>
 
           </div>
-
         </div>
       </section>
 
-      {/* ━━━ OUR SPACES: BEAUTIFUL & CURATED EDITIONS ━━━ */}
+      {/* ━━━ OUR SPACES: "DESIGNED FOR HOW REAL TEAMS BUILD" (HORIZONTAL IMAGE SLIDER) ━━━ */}
       <section id="spaces" className="py-20 sm:py-28 bg-white border-b border-[#ede8e1]">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           
-          <div className="max-w-2xl mb-14">
-            <SoftReveal>
-              <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
-                Curated Formats
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] tracking-tight">
-                Designed for how real teams build.
-              </h2>
-              <p className="text-sm text-gray-500 mt-2 font-normal">
-                Whether you need a sound-insulated 4-person suite or a 200-desk custom headquarters, every format is delivered turnkey with zero friction.
-              </p>
-            </SoftReveal>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <SoftReveal>
+                <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
+                  Curated Formats
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] tracking-tight">
+                  Designed for how real teams build.
+                </h2>
+                <p className="text-sm text-gray-500 mt-2 font-normal max-w-xl">
+                  Whether you need a sound-insulated 4-person suite or a 200-desk custom headquarters, every format is delivered turnkey with zero friction.
+                </p>
+              </SoftReveal>
+            </div>
+
+            {/* Slider Navigation Arrows */}
+            <div className="flex items-center gap-2 self-start md:self-auto">
+              <button
+                onClick={() => scrollSpaces("left")}
+                className="w-10 h-10 rounded-full bg-[#faf8f5] border border-[#ede8e1] flex items-center justify-center text-gray-700 hover:text-[#d4622b] hover:border-[#d4622b]/40 transition-colors shadow-2xs active:scale-95"
+                aria-label="Previous spaces"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => scrollSpaces("right")}
+                className="w-10 h-10 rounded-full bg-[#d4622b] text-white flex items-center justify-center hover:bg-[#b8501f] transition-colors shadow-2xs active:scale-95"
+                aria-label="Next spaces"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
+          {/* Horizontal Drag/Scroll Spaces Carousel */}
+          <div
+            ref={spacesSliderRef}
+            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
+          >
             {workspaceSpaces.map((space, idx) => {
               const Icon = space.icon;
               return (
-                <SoftReveal key={space.id} delay={0.06 * idx}>
-                  <div className="p-8 rounded-3xl bg-[#faf8f5] border border-[#ede8e1] flex flex-col justify-between h-full hover:border-[#d4622b]/40 hover:bg-white hover:shadow-xs transition-all group">
-                    <div>
-                      <div className="flex items-center justify-between mb-5">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs font-extrabold text-[#d4622b]/50">{space.num}</span>
-                          <div className="w-10 h-10 rounded-2xl bg-white border border-[#ede8e1] flex items-center justify-center text-[#d4622b] shadow-2xs group-hover:bg-[#d4622b] group-hover:text-white transition-colors">
-                            <Icon className="w-5 h-5" />
-                          </div>
-                        </div>
-                        <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-white text-gray-700 border border-[#ede8e1] shadow-2xs">
-                          {space.badge}
-                        </span>
-                      </div>
+                <div
+                  key={space.id}
+                  className="w-[320px] sm:w-[380px] flex-shrink-0 rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-6 sm:p-7 flex flex-col justify-between hover:border-[#d4622b]/40 hover:bg-white hover:shadow-xs transition-all group"
+                >
+                  <div>
+                    {/* Space Image Placeholder Preview */}
+                    <ArchitecturalImage
+                      src={space.image}
+                      alt={space.title}
+                      icon={Icon}
+                      badgeText={space.badge}
+                      className="aspect-[16/10] mb-5 shadow-2xs"
+                    />
 
-                      <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                        {space.title}
-                      </h3>
-                      <div className="text-xs font-semibold text-[#d4622b] mt-0.5">{space.forWhom}</div>
-                      
-                      <p className="text-xs sm:text-sm text-gray-600 mt-3 leading-relaxed font-normal">
-                        {space.description}
-                      </p>
-
-                      <div className="mt-6 pt-5 border-t border-gray-200/60 space-y-2.5">
-                        {space.highlights.map((item) => (
-                          <div key={item} className="flex items-start gap-2.5 text-xs text-gray-700">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#d4622b] shrink-0 mt-0.5" />
-                            <span>{item}</span>
-                          </div>
-                        ))}
-                      </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs font-extrabold text-[#d4622b]">{space.num}</span>
+                      <span className="text-[11px] font-semibold text-gray-500">{space.forWhom}</span>
                     </div>
 
-                    <div className="mt-8 pt-4 border-t border-gray-200/60 flex items-center justify-between">
-                      <span className="text-xs text-gray-400 font-medium">Available across all 15+ hubs</span>
-                      <button
-                        onClick={() => openBooking(space.title)}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#d4622b] hover:text-[#b8501f]"
-                      >
-                        <span>Inquire About Format</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
+                    <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+                      {space.title}
+                    </h3>
+                    
+                    <p className="text-xs sm:text-sm text-gray-600 mt-2.5 leading-relaxed font-normal">
+                      {space.description}
+                    </p>
+
+                    <div className="mt-5 pt-4 border-t border-gray-200/60 space-y-2">
+                      {space.highlights.map((item) => (
+                        <div key={item} className="flex items-start gap-2 text-xs text-gray-700">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#d4622b] shrink-0 mt-0.5" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </SoftReveal>
+
+                  <div className="mt-7 pt-4 border-t border-gray-200/60 flex items-center justify-between">
+                    <span className="text-xs text-gray-400 font-medium">Ready across 15+ hubs</span>
+                    <button
+                      onClick={() => openBooking(space.title)}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#d4622b] hover:text-[#b8501f]"
+                    >
+                      <span>Inquire About Format</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -649,11 +826,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ CENTRES & COMMUTES (EASY MORNINGS) ━━━ */}
+      {/* ━━━ LOCATIONS SECTION (TEXT ON LEFT, STICKY SCROLLING IMAGE ON RIGHT) ━━━ */}
       <section id="locations" className="py-20 sm:py-28 bg-[#faf8f5] border-b border-[#ede8e1]">
         <div className="max-w-6xl mx-auto px-5 sm:px-8">
           
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-12">
+          {/* Section Header & City Switcher */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
             <div>
               <SoftReveal>
                 <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
@@ -673,7 +851,10 @@ export default function Home() {
               {(["delhi", "gurgaon", "noida"] as const).map((city) => (
                 <button
                   key={city}
-                  onClick={() => setSelectedCity(city)}
+                  onClick={() => {
+                    setSelectedCity(city);
+                    setActiveStickyHubIndex(0);
+                  }}
                   className={`px-5 py-2 rounded-full text-xs font-bold capitalize transition-all ${
                     selectedCity === city
                       ? "bg-[#d4622b] text-white shadow-2xs"
@@ -686,17 +867,30 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hub Cards Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {locationsByCity[selectedCity].hubs.map((hub, idx) => (
-              <SoftReveal key={hub.name} delay={0.06 * idx}>
-                <div className="p-7 rounded-3xl bg-white border border-[#ede8e1] flex flex-col justify-between h-full hover:border-[#d4622b]/40 hover:shadow-xs transition-all group">
-                  <div>
+          {/* Sticky Scrolling 2-Column Container */}
+          <div className="grid lg:grid-cols-12 gap-10 items-start relative">
+            
+            {/* Left Column: Location Cards List (Scrolls Normally) */}
+            <div className="lg:col-span-7 space-y-6">
+              {currentCityHubs.map((hub, idx) => {
+                const isActive = activeStickyHubIndex === idx;
+                return (
+                  <div
+                    key={hub.id}
+                    onMouseEnter={() => setActiveStickyHubIndex(idx)}
+                    onClick={() => setActiveStickyHubIndex(idx)}
+                    className={`p-7 sm:p-8 rounded-3xl transition-all duration-300 border cursor-pointer ${
+                      isActive
+                        ? "bg-white border-[#d4622b] shadow-md scale-[1.01]"
+                        : "bg-white/70 border-[#ede8e1] hover:border-gray-300 hover:bg-white"
+                    }`}
+                  >
                     <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-                      <span className="text-sm font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                        {hub.name}
-                      </span>
-                      <span className="text-[10px] font-semibold text-gray-600 bg-[#faf8f5] px-2.5 py-0.5 rounded-md border border-gray-200">
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-2 h-2 rounded-full bg-[#d4622b]" />
+                        <h3 className="text-base sm:text-lg font-bold text-[#1a1a2e]">{hub.name}</h3>
+                      </div>
+                      <span className="text-[11px] font-semibold text-gray-600 bg-[#faf8f5] px-2.5 py-0.5 rounded-md border border-gray-200">
                         {hub.size}
                       </span>
                     </div>
@@ -704,34 +898,98 @@ export default function Home() {
                     <div className="mt-3.5 flex items-center gap-2 text-xs font-semibold text-[#d4622b]">
                       <Clock className="w-3.5 h-3.5 shrink-0" />
                       <span>{hub.metro}</span>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${hub.lineColor}`}>
+                        {hub.metroLine}
+                      </span>
                     </div>
 
-                    <p className="mt-2.5 text-xs text-gray-500 leading-relaxed font-normal">
+                    <p className="mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
                       {hub.address}
                     </p>
 
                     <div className="mt-5 flex flex-wrap gap-1.5">
                       {hub.perks.map((p) => (
-                        <span key={p} className="text-[10px] font-medium px-2.5 py-1 rounded-md bg-[#faf8f5] text-gray-600 border border-gray-200">
+                        <span key={p} className="text-[11px] font-medium px-2.5 py-1 rounded-md bg-[#faf8f5] text-gray-700 border border-gray-200">
                           {p}
                         </span>
                       ))}
                     </div>
+
+                    <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                      <span className="text-xs text-gray-400 font-medium">Click to inspect view</span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          openBooking(hub.name);
+                        }}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#d4622b] hover:text-[#b8501f]"
+                      >
+                        <span>Schedule Walkthrough</span>
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Right Column: Sticky Image Container (Pins on scroll, changes image smoothly, then scrolls away) */}
+            <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-4">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeHub.id}
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.25 }}
+                  className="rounded-3xl bg-white border border-[#ede8e1] p-6 shadow-md space-y-5"
+                >
+                  <div className="flex items-center justify-between pb-3 border-b border-gray-100">
+                    <div>
+                      <span className="text-[10px] font-bold text-[#d4622b] uppercase tracking-wider block">
+                        Live Preview
+                      </span>
+                      <h4 className="text-base font-bold text-[#1a1a2e] mt-0.5">{activeHub.name}</h4>
+                    </div>
+                    <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Open for Visits
+                    </span>
                   </div>
 
-                  <div className="mt-7 pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <span className="text-[11px] text-gray-400 font-medium">Ready for Visits</span>
-                    <button
-                      onClick={() => openBooking(hub.name)}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-[#d4622b] hover:text-[#b8501f]"
-                    >
-                      <span>Book a Walkthrough</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </button>
+                  {/* Sticky Image Preview */}
+                  <ArchitecturalImage
+                    src={activeHub.image}
+                    alt={activeHub.name}
+                    className="aspect-[16/11] shadow-2xs"
+                    badgeText={activeHub.size}
+                  />
+
+                  {/* Proximity Highlights */}
+                  <div className="p-3.5 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] space-y-2 text-xs">
+                    <div className="flex items-center justify-between text-gray-700 font-semibold">
+                      <span className="text-gray-500">Metro Transit</span>
+                      <span className="text-[#d4622b] font-bold">{activeHub.metro}</span>
+                    </div>
+                    <div className="flex items-center justify-between text-gray-700 font-semibold">
+                      <span className="text-gray-500">Commute Belt</span>
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${activeHub.lineColor}`}>
+                        {activeHub.metroLine}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </SoftReveal>
-            ))}
+
+                  <button
+                    onClick={() => openBooking(activeHub.name)}
+                    className="w-full py-3 rounded-full bg-[#1a1a2e] hover:bg-[#d4622b] text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
+                  >
+                    <span>Book a Tour at {activeHub.name.split(" ")[0]}</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
           </div>
 
         </div>
@@ -1238,7 +1496,7 @@ export default function Home() {
               ) : (
                 <div className="text-center py-6 space-y-3">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                    <Check className="w-6 h-6" />
+                    <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <h3 className="text-xl font-bold text-[#1a1a2e]">We&apos;ve received your request!</h3>
                   <p className="text-xs text-gray-600 max-w-xs mx-auto leading-relaxed font-normal">
