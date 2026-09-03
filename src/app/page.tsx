@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -25,11 +25,17 @@ import {
   Star,
   Clock,
   CheckCircle2,
+  Check,
   Lock,
+  Menu,
+  Plus,
+  Minus,
+  HelpCircle,
+  MessageSquare,
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════
-   PREVIOUS & HUMAN-CRAFTED BRAND DATA
+   AUTHENTIC ONWARD WORKSPACES DATA
    ═══════════════════════════════════════════════════════════════ */
 
 const workspaceSpaces = [
@@ -37,72 +43,68 @@ const workspaceSpaces = [
     num: "01",
     id: "suites",
     title: "Private Team Suites",
-    forWhom: "Crafted for focused teams of 4 to 40",
+    forWhom: "Teams of 4 to 50 members",
     description:
-      "Acoustically treated, lockable private suites designed to foster deep collaboration and team identity without external noise.",
+      "Fully furnished, lockable private offices with premium acoustic glass partitions, private storage, and dedicated boardroom credits.",
     icon: Users,
-    badge: "Same-Day Move In",
+    badge: "Immediate Move-In",
     image: "/spaces/private-suite.jpg",
-    placeholderBg: "from-amber-900/20 to-orange-950/40",
-    highlights: [
-      "Double-glazed acoustic glass partitions (42dB sound reduction)",
-      "Ergonomic mesh seating & private lockable pedestals",
-      "Dedicated high-speed Wi-Fi with isolated private VLAN",
-      "Complimentary monthly 4K boardroom & meeting credits",
+    features: [
+      "Sound-insulated 42dB double-glazed glass",
+      "Ergonomic mesh chairs & lockable pedestals",
+      "High-speed dedicated Wi-Fi & private LAN",
+      "Complimentary monthly meeting room credits",
     ],
   },
   {
     num: "02",
     id: "managed",
     title: "Custom Managed Floors",
-    forWhom: "Bespoke headquarters for 50 to 500+ desks",
+    forWhom: "Enterprises of 50 to 500+ desks",
     description:
-      "Your own branded commercial floorplate designed, built, and managed end-to-end. Zero upfront construction CAPEX, delivered in 3 to 4 weeks.",
+      "Custom-designed and operated private floorplates built to your brand specifications. Zero capital expenditure, delivered turnkey in 30 days.",
     icon: Building2,
-    badge: "Turnkey Architecture",
+    badge: "Bespoke Enterprise",
     image: "/spaces/managed-office.jpg",
-    placeholderBg: "from-blue-950/30 to-indigo-950/40",
-    highlights: [
-      "Custom branded reception, director cabins & team pods",
-      "Dedicated IT server hall with dual active multi-ISP fiber",
-      "Private executive cafeteria, pantry & wellness nooks",
-      "Comprehensive daily housekeeping, security & maintenance",
+    features: [
+      "Custom reception, director cabins & team bays",
+      "Dedicated server room with dual active ISP",
+      "Private executive cafeteria & pantry",
+      "Complete facility management & daily upkeep",
     ],
   },
   {
     num: "03",
     id: "cabins",
     title: "Executive Director Cabins",
-    forWhom: "Private sanctuaries for founders & counsel",
+    forWhom: "Founders, CXOs & Consultants",
     description:
-      "Quiet, dignified executive offices tailored for strategic thinking, high-stakes client negotiations, and private leadership discussions.",
+      "Quiet, prestigious private offices equipped with executive Italian leather seating, private discussion tables, and concierge beverage service.",
     icon: Award,
-    badge: "Leadership Class",
+    badge: "Executive Class",
     image: "/spaces/director-cabin.jpg",
-    placeholderBg: "from-stone-900/30 to-amber-950/40",
-    highlights: [
-      "Supple Italian leather seating & private discussion table",
-      "Acoustic double-glazed privacy with sound-dampened door",
-      "White-glove guest concierge and premium beverage service",
-      "24/7 dedicated biometric suite access",
+    features: [
+      "Acoustic sound dampening & private entry",
+      "Dedicated high-speed connectivity",
+      "White-glove reception guest service",
+      "24/7 smart biometric access",
     ],
   },
   {
     num: "04",
     id: "virtual",
     title: "Virtual Office & GST Registration",
-    forWhom: "Prestigious presence for remote & hybrid firms",
+    forWhom: "Remote & Expanding Companies",
     description:
-      "A legally certified Grade-A Delhi NCR commercial business address for company incorporation, GST filing, and official mail handling.",
+      "A legally compliant Prime Commercial Address in Delhi NCR for company incorporation, GST filing, and business mailing with official documentation.",
     icon: Globe2,
-    badge: "100% MCA & ROC Compliant",
+    badge: "100% ROC & GST Compliant",
     image: "/spaces/virtual-office.jpg",
-    placeholderBg: "from-emerald-950/30 to-teal-950/40",
-    highlights: [
-      "Complete documentation: Registered Rent Agreement & Landlord NOC",
-      "Fully compliant with GST Department & ROC requirements",
-      "Courier & parcel receiving with instant digital scan notifications",
-      "Monthly complimentary day passes to work from any centre",
+    features: [
+      "Registered Rent Agreement & Owner NOC",
+      "Utility Bill for GST & ROC filing",
+      "Mail & courier handling with digital alerts",
+      "Complimentary day passes to work from any hub",
     ],
   },
 ];
@@ -110,164 +112,154 @@ const workspaceSpaces = [
 const locationsByCity = {
   delhi: {
     name: "Delhi",
-    blurb: "Flagship central hubs with immediate access to Violet, Magenta, and Blue line metro stations.",
+    blurb: "Prime central and South Delhi commercial hubs with walking distance to Violet, Magenta, and Blue line metro stations.",
     hubs: [
       {
         id: "delhi-okhla-2",
         name: "Okhla Phase II (Flagship HQ)",
         metro: "2 min walk from Harkesh Nagar Okhla Metro",
         metroLine: "Violet Line",
-        lineColor: "bg-purple-600 text-white",
         address: "Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020",
-        size: "45,000 sq.ft campus",
+        size: "45,000 sq.ft Campus",
         image: "/locations/okhla-phase-2.jpg",
-        perks: ["Flagship Lounge", "Café Terrace", "Ample Car Parking", "EV Charging"],
+        amenities: ["Flagship Cafeteria", "Terrace Lounge", "EV Charging", "Ample Parking"],
       },
       {
         id: "delhi-okhla-3",
         name: "Okhla Phase III",
         metro: "3 min from NSIC Okhla Metro",
         metroLine: "Magenta Line",
-        lineColor: "bg-pink-600 text-white",
         address: "B-216, Okhla Phase III, New Delhi, 110020",
         size: "38,000 sq.ft",
         image: "/locations/okhla-phase-3.jpg",
-        perks: ["Tech Corridor", "Soundproof Cabins", "Quiet Phone Pods"],
+        amenities: ["Tech Corridor", "Soundproof Cabins", "Quiet Call Pods"],
       },
       {
         id: "delhi-mohan",
         name: "Mohan Cooperative",
         metro: "1 min walk from Mohan Estate Metro",
         metroLine: "Violet Line",
-        lineColor: "bg-purple-600 text-white",
         address: "Mathura Road, Mohan Cooperative Industrial Estate, New Delhi",
         size: "60,000 sq.ft",
         image: "/locations/mohan-cooperative.jpg",
-        perks: ["Large Floorplates", "Event Auditorium", "Green Terraces"],
+        amenities: ["Large Enterprise Floors", "Conference Auditorium", "Green Terraces"],
       },
       {
         id: "delhi-cp",
         name: "Connaught Place",
         metro: "Direct from Rajiv Chowk Interchange",
         metroLine: "Yellow & Blue Line",
-        lineColor: "bg-amber-600 text-white",
         address: "Outer Circle, Connaught Place, Central Delhi",
         size: "25,000 sq.ft",
         image: "/locations/connaught-place.jpg",
-        perks: ["Central CBD Address", "Executive Cabins", "Steps to Cafes"],
+        amenities: ["Central CBD Address", "Executive Cabins", "Steps to Restaurants"],
       },
     ],
   },
   gurgaon: {
     name: "Gurgaon",
-    blurb: "Prime corporate corridors adjacent to DLF CyberHub and major expressways.",
+    blurb: "High-demand business districts near DLF CyberHub, NH-8, and major corporate corridors.",
     hubs: [
       {
         id: "gurgaon-cybercity",
         name: "DLF Cyber City",
         metro: "2 min from Cyber City Rapid Metro",
         metroLine: "Rapid Metro",
-        lineColor: "bg-blue-600 text-white",
         address: "DLF Cyber City, Sector 24, Gurugram, Haryana",
         size: "55,000 sq.ft",
         image: "/locations/dlf-cybercity.jpg",
-        perks: ["CyberHub Adjacent", "Sky Lounge", "Dedicated Leased Line"],
+        amenities: ["CyberHub Adjacent", "Sky Lounge", "Dedicated Fiber"],
       },
       {
         id: "gurgaon-udyog",
         name: "Udyog Vihar Phase IV",
         metro: "5 min from Shankar Chowk",
-        metroLine: "CyberHub Corridor",
-        lineColor: "bg-indigo-600 text-white",
+        metroLine: "Cyber Corridor",
         address: "Plot 304, Udyog Vihar Phase-IV, Gurugram",
         size: "40,000 sq.ft",
         image: "/locations/udyog-vihar.jpg",
-        perks: ["Startup Cluster", "24/7 Access", "Conference Center"],
+        amenities: ["Startup Hub", "24/7 Access", "Conference Center"],
       },
       {
         id: "gurgaon-golfcourse",
         name: "Golf Course Extension Road",
         metro: "Sector 55-56 Rapid Metro",
         metroLine: "Rapid Metro",
-        lineColor: "bg-blue-600 text-white",
         address: "Golf Course Extension Road, Sector 65, Gurugram",
         size: "32,000 sq.ft",
         image: "/locations/golf-course-ext.jpg",
-        perks: ["Premium Business Corridor", "EV Charging", "Wellness Deck"],
+        amenities: ["Premium Commercial Corridor", "EV Charging", "Wellness Nooks"],
       },
     ],
   },
   noida: {
     name: "Noida",
-    blurb: "Institutional campuses across prime expressway and metro belts.",
+    blurb: "Established corporate parks across Sector 62 IT corridor, Sector 16, and Noida-Greater Noida Expressway.",
     hubs: [
       {
         id: "noida-sec62",
         name: "Sector 62 IT Hub",
         metro: "3 min from Electronic City Metro",
         metroLine: "Blue Line",
-        lineColor: "bg-blue-700 text-white",
         address: "C-Block, Institutional Area, Sector 62, Noida",
         size: "50,000 sq.ft",
         image: "/locations/noida-sector-62.jpg",
-        perks: ["IT District", "Spacious Cafeteria", "Enterprise Floorplates"],
+        amenities: ["IT Corridor", "Large Cafeteria", "Enterprise Floorplates"],
       },
       {
         id: "noida-sec16",
         name: "Sector 16 Metro Belt",
         metro: "1 min walk from Sector 16 Metro",
         metroLine: "Blue Line",
-        lineColor: "bg-blue-700 text-white",
         address: "Film City Marg, Sector 16, Noida",
         size: "30,000 sq.ft",
         image: "/locations/noida-sector-16.jpg",
-        perks: ["Film City Belt", "Instant Move-in", "Direct Metro Access"],
+        amenities: ["Film City Belt", "Direct Metro Connectivity", "Plug & Play"],
       },
       {
         id: "noida-sec132",
         name: "Sector 132 Expressway",
         metro: "Expressway Corporate Park",
-        metroLine: "Expressway Corridor",
-        lineColor: "bg-emerald-700 text-white",
+        metroLine: "Expressway",
         address: "Expressway Corporate Park, Sector 132, Noida",
         size: "65,000 sq.ft",
         image: "/locations/noida-sector-132.jpg",
-        perks: ["Mega Campus", "Green Surroundings", "Executive Boardrooms"],
+        amenities: ["Large Campus", "Green Surroundings", "Boardroom Facilities"],
       },
     ],
   },
 };
 
-const everydayInclusions = [
+const everydayAmenities = [
   {
     icon: Wifi,
-    title: "1Gbps Redundant Multi-ISP Fiber",
-    desc: "Dual active enterprise connections with instant automated failover so you never drop a client presentation or live call.",
+    title: "High-Speed Enterprise Internet",
+    desc: "Dual active 1Gbps multi-ISP connections with automatic failover for zero disruption.",
   },
   {
     icon: Coffee,
-    title: "Artisanal Barista Roastery",
-    desc: "Freshly ground single-origin coffees, artisanal espresso blends, and organic teas brewed fresh all day long.",
+    title: "Unlimited Barista Coffee & Teas",
+    desc: "Freshly brewed artisan coffee, espresso blends, green teas, and infused water all day.",
   },
   {
     icon: Headphones,
-    title: "Acoustic Zoom & Call Pods",
-    desc: "Soundproof booths engineered for confidential 1-on-1 calls, investor pitches, and private conversations.",
+    title: "Soundproof Calling Booths",
+    desc: "Private acoustic pods for focused video calls, sales pitches, and confidential conversations.",
   },
   {
     icon: Zap,
-    title: "Zero-Downtime Power Grid",
-    desc: "Heavy-duty dual generator sets and industrial online UPS systems ensuring zero-second cutover backup.",
+    title: "100% DG Power Backup",
+    desc: "Heavy-duty dual generator sets with seamless online UPS for non-stop productivity.",
   },
   {
     icon: ShieldCheck,
-    title: "24/7 Smart Biometrics & CCTV",
-    desc: "Touchless biometric entry, round-the-clock trained concierge staff, and comprehensive HD security coverage.",
+    title: "24/7 Biometric Access & CCTV",
+    desc: "Round-the-clock secure entry, trained on-site security, and complete HD monitoring.",
   },
   {
     icon: Sparkles,
-    title: "Meticulous Daily Housekeeping",
-    desc: "Spotlessly cleaned workstations, fresh washrooms, and responsive on-site community managers.",
+    title: "Daily Housekeeping & Upkeep",
+    desc: "Meticulous sanitization, daily trash removal, and on-site hospitality managers.",
   },
 ];
 
@@ -282,127 +274,117 @@ const clientBrands = [
   "NexGen AI",
 ];
 
-const customerStories = [
+const clientTestimonials = [
   {
     quote:
-      "Onward has been a genuine partner in our expansion. The offices are impeccable, the internet is flawless, and our team genuinely looks forward to coming in every morning.",
+      "Onward has been a fantastic workplace partner. The locations are right by the metro, the facilities are spotless, and the team handles everything seamlessly so we can focus 100% on growing our business.",
     author: "Varun Puri",
     role: "Founder",
     company: "Dangal Games",
   },
   {
     quote:
-      "The metro proximity and professional front-desk hospitality made relocating our regional team to Onward effortless. It just works.",
+      "Relocating our regional team to Onward's Okhla hub was completely smooth. Move-in took 24 hours, internet is lightning fast, and client meetings in their boardroom always leave a strong impression.",
     author: "Abhinay Nagwekar",
     role: "Procurement Lead",
     company: "Aramex",
   },
   {
     quote:
-      "Whenever clients visit us at Onward, the impression is always exceptional. The design aesthetic, boardroom tech, and attentive staff make running our enterprise seamless.",
+      "Whenever clients or partners visit us at Onward, the impression is always top-notch. The staff is polite and attentive, the coffee is great, and monthly billing is completely transparent.",
     author: "Prasenjit Das Gupta",
     role: "Head Commercial",
     company: "Thermax",
   },
 ];
 
-const simpleFaqs = [
+const faqCategories = ["All Topics", "Trial Pass", "Move-In & Leases", "GST & Legal", "Pricing & Amenities"];
+
+const faqs = [
   {
-    category: "2-DAY TRIAL",
-    q: "How does the 2-Day Free Trial work and who is eligible?",
-    a: "It's simple: choose any Onward location in Delhi, Gurgaon, or Noida, and come experience the space with your team for 2 full consecutive days at zero cost. You will have full access to high-speed fiber Wi-Fi, private workstations, meeting rooms, and our barista coffee bar with zero credit card required.",
+    id: 1,
+    category: "Trial Pass",
+    categoryLabel: "2-DAY TRIAL",
+    q: "How does the 2-Day Free Trial Pass work?",
+    a: "Select your preferred Onward centre in Delhi, Gurgaon, or Noida, and come experience working from our workspace with your team for 2 full consecutive days. You will have complete access to high-speed fiber Wi-Fi, ergonomic workstations, private phone pods, and our barista coffee bar with zero credit card or upfront deposit required.",
   },
   {
-    category: "MOVE-IN READY",
-    q: "How quickly can our team move into a Private Suite?",
-    a: "Private Suites and Executive Cabins are 100% plug-and-play furnished. Your team can move in on the same day or within 24 hours of completing verification. For custom-built managed offices (50 to 500+ desks), we deliver bespoke branded floorplates in 3 to 4 weeks.",
+    id: 2,
+    category: "Move-In & Leases",
+    categoryLabel: "MOVE-IN READY",
+    q: "How quickly can my team move into a Private Suite?",
+    a: "Private Suites and Executive Cabins are 100% plug-and-play furnished and ready for same-day move-in or within 24 hours of agreement signing. For custom enterprise managed floorplates (50 to 500+ desks), our in-house design and projects team delivers bespoke branded spaces in 3 to 4 weeks.",
   },
   {
-    category: "GST & ROC",
+    id: 3,
+    category: "GST & Legal",
+    categoryLabel: "GST & ROC",
     q: "What documentation is provided for Virtual Office & GST registration?",
-    a: "We provide complete, legally certified paperwork including a registered Rent Agreement, NOC from the property owner, and the latest commercial Electricity Bill. These are 100% compliant with GST Department registration, ROC company incorporation, and MCA bank verification.",
+    a: "We provide complete legal paperwork including a registered Rent Agreement, NOC from the property owner, and the latest commercial Electricity Bill. These documents are 100% compliant with GST Department registration, ROC company incorporation, and MCA bank account setup.",
   },
   {
-    category: "TRANSPARENCY",
-    q: "Are there any hidden maintenance or utility charges?",
-    a: "None whatsoever. Everything is consolidated into a single transparent monthly membership invoice: ergonomic workstations, high-speed fiber internet, electricity, air conditioning, daily housekeeping, security, and unlimited beverages.",
+    id: 4,
+    category: "Pricing & Amenities",
+    categoryLabel: "TRANSPARENT BILLING",
+    q: "Are there any hidden electricity, AC, or maintenance overheads?",
+    a: "No. Everything is consolidated into a single transparent monthly membership invoice. This includes all utilities: electricity, central air-conditioning, high-speed fiber internet, daily housekeeping, 24/7 security, and unlimited beverages.",
   },
   {
-    category: "BOARDROOMS",
-    q: "Can we use meeting rooms across different locations?",
-    a: "Yes. All members receive monthly meeting room credits that can be reserved across any of our 15+ centres in Delhi, Gurgaon, and Noida whenever you need to host a meeting in another part of town.",
+    id: 5,
+    category: "Pricing & Amenities",
+    categoryLabel: "BOARDROOM CREDITS",
+    q: "Can our team use meeting rooms across other Onward locations?",
+    a: "Yes. All members receive complimentary monthly meeting room credits that can be reserved across any of our 15+ centres in Delhi, Gurgaon, and Noida whenever you need to host a client meeting or interview in another part of town.",
+  },
+  {
+    id: 6,
+    category: "Move-In & Leases",
+    categoryLabel: "AGREEMENT TERMS",
+    q: "What are the lock-in periods and security deposit terms?",
+    a: "We offer flexible agreement terms tailored to your stage of growth. For private suites, terms start from flexible short-term options with minimal security deposit. For bespoke custom floors, agreements range from 1 to 3 years with standard commercial terms.",
   },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
-   PREVIOUS GENTLE SCROLL REVEAL HELPER
+   IMAGE PLACEHOLDER COMPONENT
    ═══════════════════════════════════════════════════════════════ */
 
-function SoftReveal({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-30px" });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 16 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   IMAGE PLACEHOLDER COMPONENT WITH GRACEFUL FALLBACK
-   ═══════════════════════════════════════════════════════════════ */
-
-function ArchitecturalImage({
+function WorkplacePhoto({
   src,
   alt,
   className = "aspect-[16/10]",
   icon: Icon = Building2,
-  badgeText,
+  badge,
 }: {
   src?: string;
   alt: string;
   className?: string;
   icon?: any;
-  badgeText?: string;
+  badge?: string;
 }) {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className={`relative overflow-hidden rounded-2xl bg-[#f0eae1] border border-[#ede8e1] flex items-center justify-center group ${className}`}>
+    <div className={`relative overflow-hidden rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center ${className}`}>
       {src && !imgError ? (
         <img
           src={src}
           alt={alt}
           onError={() => setImgError(true)}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover"
         />
       ) : (
-        <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-[#faf8f5] to-[#ece5dc] relative">
-          <div className="w-12 h-12 rounded-2xl bg-white border border-[#ede8e1] flex items-center justify-center text-[#d4622b] shadow-2xs mb-2 group-hover:scale-108 transition-transform">
+        <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-slate-100">
+          <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-[#d9531e] shadow-sm mb-2">
             <Icon className="w-6 h-6" />
           </div>
-          <span className="text-xs font-bold text-[#1a1a2e]">{alt}</span>
+          <span className="text-xs font-semibold text-slate-700">{alt}</span>
         </div>
       )}
 
-      {badgeText && (
-        <div className="absolute top-3 left-3 bg-[#1a1a2e]/85 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20">
-          {badgeText}
+      {badge && (
+        <div className="absolute top-3 left-3 bg-slate-900/90 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-md border border-white/10 shadow-sm">
+          {badge}
         </div>
       )}
     </div>
@@ -410,352 +392,418 @@ function ArchitecturalImage({
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MAIN COMPONENT: HUMAN, PRECIOUS & ATTRACTIVE
+   MAIN COMPONENT: AUTHENTIC CLASSIC WORKSPACE PORTAL UX
    ═══════════════════════════════════════════════════════════════ */
 
 export default function Home() {
-  const [showTopBanner, setShowTopBanner] = useState(true);
   const [selectedCity, setSelectedCity] = useState<"delhi" | "gurgaon" | "noida">("delhi");
-  const [activeStickyHubIndex, setActiveStickyHubIndex] = useState(0);
+  const [activeHubIndex, setActiveHubIndex] = useState(0);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const [scrolled, setScrolled] = useState(false);
+  const [selectedFaqCategory, setSelectedFaqCategory] = useState<string>("All Topics");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   // Spaces Slider Ref
   const spacesSliderRef = useRef<HTMLDivElement>(null);
 
-  // Booking Modal
+  // Tour Form State
+  const [formName, setFormName] = useState("");
+  const [formEmail, setFormEmail] = useState("");
+  const [formPhone, setFormPhone] = useState("");
+  const [formLocation, setFormLocation] = useState("Okhla Phase II, Delhi");
+  const [formTeamSize, setFormTeamSize] = useState("1-10 Desks");
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+
+  // Quick Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("Okhla Phase II (Flagship HQ)");
   const [isFreeTrial, setIsFreeTrial] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [modalSubmitted, setModalSubmitted] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const openBooking = (title?: string, trial = false) => {
+  const openBookingModal = (title?: string, trial = false) => {
     if (title) setModalTitle(title);
     setIsFreeTrial(trial);
-    setIsSubmitted(false);
+    setModalSubmitted(false);
     setIsModalOpen(true);
+    setMobileNavOpen(false);
   };
 
   const scrollSpaces = (direction: "left" | "right") => {
     if (spacesSliderRef.current) {
       spacesSliderRef.current.scrollBy({
-        left: direction === "right" ? 380 : -380,
+        left: direction === "right" ? 360 : -360,
         behavior: "smooth",
       });
     }
   };
 
   const currentCityHubs = locationsByCity[selectedCity].hubs;
-  const activeHub = currentCityHubs[activeStickyHubIndex] || currentCityHubs[0];
+  const activeHub = currentCityHubs[activeHubIndex] || currentCityHubs[0];
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] text-[#1a1a2e] font-sans antialiased selection:bg-[#d4622b] selection:text-white pb-20 overflow-x-hidden">
+    <div className="min-h-screen bg-white text-slate-800 font-sans antialiased selection:bg-[#d9531e] selection:text-white">
       
-      {/* ━━━ TOP ANNOUNCEMENT BANNER (FREE PASS PROMO) ━━━ */}
-      {showTopBanner && (
-        <div className="bg-[#1a1a2e] text-white text-xs py-2 px-4 border-b border-gray-800 relative z-50 transition-all">
-          <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2 mx-auto sm:mx-0">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-              <span className="text-gray-300 font-medium">
-                Complimentary Pass: Experience working from any of our 15+ Delhi, Gurgaon & Noida hubs for 2 days.
-              </span>
-              <button
-                onClick={() => openBooking("All NCR Centres", true)}
-                className="hidden sm:inline-flex items-center gap-1 font-bold text-[#d4622b] hover:text-amber-400 underline underline-offset-2 ml-1"
-              >
-                <span>Claim Free Pass</span>
-                <ArrowRight className="w-3 h-3" />
-              </button>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => openBooking("All NCR Centres", true)}
-                className="sm:hidden font-bold text-[#d4622b] underline text-[11px]"
-              >
-                Claim Pass
-              </button>
-              <button
-                onClick={() => setShowTopBanner(false)}
-                className="text-gray-400 hover:text-white p-0.5 rounded transition-colors"
-                aria-label="Close notification"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ━━━ REFINED PRECIOUS HEADER ━━━ */}
-      <header
-        className={`fixed left-0 right-0 z-40 transition-all duration-300 ${
-          showTopBanner ? "top-[37px]" : "top-0"
-        } ${
-          scrolled
-            ? "bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#ede8e1] py-3 shadow-2xs"
-            : "bg-transparent py-4"
-        }`}
-      >
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex items-center justify-between">
+      {/* ━━━ TOP UTILITY BAR (PHONE • LOCATIONS • PASS ANNOUNCEMENT) ━━━ */}
+      <div className="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           
-          {/* Brand Logo */}
-          <a href="#home" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-xl bg-white border border-[#ede8e1] flex items-center justify-center shadow-2xs group-hover:border-[#d4622b]/40 transition-colors p-1.5">
+          <div className="flex items-center gap-4 text-slate-300">
+            <a href="tel:+919910668152" className="flex items-center gap-1.5 hover:text-white transition-colors">
+              <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
+              <span className="font-semibold">+91 9910668152</span>
+            </a>
+            <span className="text-slate-600 hidden md:inline">|</span>
+            <span className="hidden md:inline text-slate-400">Delhi • Gurgaon • Noida (15+ Prime Metro Hubs)</span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 text-amber-300 font-medium text-[11px] sm:text-xs">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Complimentary 2-Day Workspace Trial Pass</span>
+            </div>
+            <button
+              onClick={() => openBookingModal("All NCR Hubs", true)}
+              className="bg-[#d9531e] hover:bg-[#c24614] text-white px-2.5 py-0.5 rounded text-[11px] font-bold transition-colors"
+            >
+              Claim Pass
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      {/* ━━━ CLASSIC FULL-WIDTH HEADER ━━━ */}
+      <header className="sticky top-0 z-40 bg-white border-b border-slate-200 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+          
+          {/* Logo Brand */}
+          <a href="#home" className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center p-1.5 shadow-2xs">
               <img
                 src="/onward-logo.png"
                 alt="Onward Workspaces"
                 className="w-full h-full object-contain"
               />
             </div>
-            <div className="leading-none">
-              <span className={`text-lg font-bold tracking-tight transition-colors ${
-                scrolled ? "text-[#1a1a2e]" : "text-white drop-shadow-xs"
-              } group-hover:text-[#d4622b]`}>
-                Onward
-              </span>
-              <span className="block text-[8px] font-bold tracking-[0.2em] text-[#d4622b] uppercase mt-0.5">
-                Workspaces
-              </span>
+            <div>
+              <div className="text-xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                ONWARD
+              </div>
+              <div className="text-[9px] font-bold text-[#d9531e] tracking-[0.2em] uppercase">
+                WORKSPACES
+              </div>
             </div>
           </a>
 
-          {/* Minimalist Navigation */}
-          <nav className={`hidden md:flex items-center gap-8 text-xs font-semibold ${
-            scrolled ? "text-gray-600" : "text-gray-200"
-          }`}>
-            <a href="#spaces" className="hover:text-[#d4622b] transition-colors">
-              Our Spaces
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-semibold text-slate-700">
+            <a href="#spaces" className="hover:text-[#d9531e] transition-colors">
+              Workspace Formats
             </a>
-            <a href="#locations" className="hover:text-[#d4622b] transition-colors">
-              Centres & Commutes
+            <a href="#locations" className="hover:text-[#d9531e] transition-colors">
+              Locations & Metro
             </a>
-            <a href="#inclusions" className="hover:text-[#d4622b] transition-colors">
-              What&apos;s Included
+            <a href="#amenities" className="hover:text-[#d9531e] transition-colors">
+              Amenities
             </a>
-            <a href="#stories" className="hover:text-[#d4622b] transition-colors">
-              Community
+            <a href="#clients" className="hover:text-[#d9531e] transition-colors">
+              Clients
             </a>
-            <a href="#faq" className="hover:text-[#d4622b] transition-colors">
+            <a href="#faq" className="hover:text-[#d9531e] transition-colors">
               FAQ
+            </a>
+            <a href="#contact" className="hover:text-[#d9531e] transition-colors">
+              Contact
             </a>
           </nav>
 
-          {/* Contact & CTA Buttons */}
+          {/* CTA Group */}
           <div className="flex items-center gap-3">
             <a
               href="tel:+919910668152"
-              className={`hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-full border transition-colors shadow-2xs ${
-                scrolled
-                  ? "bg-white border-[#ede8e1] text-gray-700 hover:border-[#d4622b]/40"
-                  : "bg-white/10 border-white/20 text-white hover:bg-white/20"
-              }`}
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 bg-slate-100 hover:bg-slate-200 border border-slate-200 px-3.5 py-2 rounded-lg transition-colors"
             >
-              <Phone className="w-3.5 h-3.5 text-[#d4622b]" />
-              <span>+91 9910668152</span>
+              <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
+              <span>Call Us</span>
             </a>
 
             <button
-              onClick={() => openBooking(undefined, true)}
-              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold transition-all shadow-xs hover:scale-102 active:scale-98 ${
-                scrolled
-                  ? "bg-[#d4622b] text-white hover:bg-[#b8501f]"
-                  : "bg-white text-[#1a1a2e] hover:bg-gray-100"
-              }`}
+              onClick={() => openBookingModal(undefined, false)}
+              className="bg-[#d9531e] hover:bg-[#c24614] text-white px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-xs flex items-center gap-1.5"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Try 2 Days Free</span>
+              <span>Schedule a Tour</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Mobile Menu Toggle */}
+            <button
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              className="lg:hidden p-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100"
+              aria-label="Toggle navigation"
+            >
+              {mobileNavOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
 
         </div>
+
+        {/* Mobile Nav Dropdown */}
+        {mobileNavOpen && (
+          <div className="lg:hidden bg-white border-t border-slate-200 px-4 py-4 space-y-3 shadow-md">
+            <div className="grid grid-cols-2 gap-2 text-xs font-semibold text-slate-800">
+              <a href="#spaces" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                Workspace Formats
+              </a>
+              <a href="#locations" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                Locations & Metro
+              </a>
+              <a href="#amenities" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                Amenities
+              </a>
+              <a href="#clients" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200">
+                Clients
+              </a>
+              <a href="#faq" onClick={() => setMobileNavOpen(false)} className="p-2.5 rounded-lg bg-slate-50 border border-slate-200 col-span-2">
+                Frequently Asked Questions
+              </a>
+            </div>
+
+            <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+              <a href="tel:+919910668152" className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
+                <span>+91 9910668152</span>
+              </a>
+              <button
+                onClick={() => openBookingModal(undefined, true)}
+                className="bg-[#d9531e] text-white px-3 py-1.5 rounded-lg text-xs font-bold"
+              >
+                Claim Free Pass
+              </button>
+            </div>
+          </div>
+        )}
       </header>
 
-      {/* ━━━ HERO SECTION (WITH EDITORIAL BACKGROUND IMAGE SUPPORT) ━━━ */}
-      <section
-        id="home"
-        className="relative pt-36 sm:pt-44 pb-24 border-b border-[#ede8e1] overflow-hidden bg-[#1a1a2e]"
-      >
-        {/* Customizable Hero Background Image with Editorial Gradient Overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center -z-0 opacity-40 mix-blend-luminosity"
-          style={{
-            backgroundImage: "url('/hero-bg.jpg'), linear-gradient(135deg, #1a1a2e 0%, #2d2621 100%)",
-          }}
-        />
-        
-        {/* Warm Ambient Vignette Glow */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1a1a2e]/95 via-[#1a1a2e]/85 to-[#1a1a2e]/70 -z-0 pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10 text-white">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+      {/* ━━━ HERO SECTION WITH EMBEDDED REAL-ESTATE LEAD CAPTURE FORM ━━━ */}
+      <section id="home" className="relative bg-slate-50 border-b border-slate-200 py-12 sm:py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
-            {/* Left Column: Human Story & Typography */}
-            <div className="lg:col-span-7 space-y-6">
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 space-y-5">
               
-              <SoftReveal>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-gray-200 shadow-2xs">
-                  <span className="w-2 h-2 rounded-full bg-[#d4622b] animate-pulse" />
-                  <span className="text-amber-400 font-bold">Delhi • Gurgaon • Noida</span>
-                  <span className="text-gray-400">•</span>
-                  <span className="text-gray-300 font-normal">Metro-Connected Workspaces</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-xs font-bold text-[#d9531e]">
+                <span className="w-2 h-2 rounded-full bg-[#d9531e] animate-pulse" />
+                <span>Premium Managed Offices & Coworking Across Delhi NCR</span>
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
+                Fully Managed Workspaces Designed for <span className="text-[#d9531e]">Focus & Team Growth</span>.
+              </h1>
+
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+                Move into ready-to-use private suites, custom managed floors, or shared workspaces across Delhi, Gurgaon, and Noida. Handpicked locations under 2 minutes from major metro stations with zero construction CAPEX.
+              </p>
+
+              {/* Trust Value Points */}
+              <div className="grid sm:grid-cols-2 gap-3 pt-2">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                  <span>15+ Prime Metro-Connected Hubs</span>
                 </div>
-              </SoftReveal>
-
-              <SoftReveal delay={0.08}>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.12]">
-                  Workspaces crafted for{" "}
-                  <span className="font-serif italic font-normal text-amber-300">uninterrupted clarity</span>{" "}
-                  and ambition.
-                </h1>
-              </SoftReveal>
-
-              <SoftReveal delay={0.14}>
-                <p className="text-base sm:text-lg text-gray-300 leading-relaxed font-normal max-w-xl">
-                  Private team suites, custom managed floors, and meeting spaces across Delhi NCR — all hand-picked within a 2-minute walk from major metro lines. No setup headaches, zero surprise utility bills.
-                </p>
-              </SoftReveal>
-
-              {/* Action Buttons */}
-              <SoftReveal delay={0.2}>
-                <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <button
-                    onClick={() => openBooking(undefined, false)}
-                    className="px-6 py-3.5 rounded-full bg-[#d4622b] text-white font-semibold text-xs sm:text-sm hover:bg-[#b8501f] transition-all flex items-center gap-2 shadow-lg hover:scale-102 active:scale-98"
-                  >
-                    <span>Schedule a Visit & Grab Coffee</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                  <button
-                    onClick={() => openBooking(undefined, true)}
-                    className="px-5 py-3.5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 text-white font-semibold text-xs sm:text-sm transition-colors shadow-2xs"
-                  >
-                    <span>Claim Free 2-Day Pass</span>
-                  </button>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                  <span>100% Dual DG Power & 1Gbps Fiber</span>
                 </div>
-              </SoftReveal>
-
-              {/* Metric Highlights */}
-              <SoftReveal delay={0.26}>
-                <div className="pt-6 border-t border-gray-700/80 grid grid-cols-3 gap-6">
-                  <div>
-                    <div className="text-2xl font-bold text-white">15+</div>
-                    <div className="text-xs text-gray-400 mt-0.5">NCR Metro Hubs</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-white">250+</div>
-                    <div className="text-xs text-gray-400 mt-0.5">Growing Teams</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-white">1M+</div>
-                    <div className="text-xs text-gray-400 mt-0.5">Sq. Ft. Managed</div>
-                  </div>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                  <span>Same-Day Move-In Ready</span>
                 </div>
-              </SoftReveal>
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-[#d9531e] shrink-0" />
+                  <span>Zero Hidden Maintenance Overheads</span>
+                </div>
+              </div>
+
+              {/* Stat Counters */}
+              <div className="pt-6 border-t border-slate-200 grid grid-cols-3 gap-4 text-center sm:text-left">
+                <div>
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">15+</div>
+                  <div className="text-xs text-slate-500 font-medium">NCR Hubs</div>
+                </div>
+                <div>
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">250+</div>
+                  <div className="text-xs text-slate-500 font-medium">Active Teams</div>
+                </div>
+                <div>
+                  <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">1M+</div>
+                  <div className="text-xs text-slate-500 font-medium">Sq. Ft. Managed</div>
+                </div>
+              </div>
 
             </div>
 
-            {/* Right Column: Architectural Showcase Vignette */}
+            {/* Right Column: High-Converting Embedded Lead Form Box */}
             <div className="lg:col-span-5">
-              <SoftReveal delay={0.18}>
-                <div className="relative rounded-3xl bg-white/10 backdrop-blur-md border border-white/20 p-6 sm:p-7 shadow-2xl space-y-5 text-white">
-                  
-                  {/* Card Header */}
-                  <div className="flex items-center justify-between pb-4 border-b border-white/15">
-                    <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-xs font-bold text-white">Okhla Flagship Campus</span>
-                    </div>
-                    <span className="text-[10px] font-semibold text-amber-300 bg-white/10 px-2.5 py-1 rounded-full border border-white/15">
-                      45,000 sq.ft
-                    </span>
+              <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-lg">
+                
+                <div className="border-b border-slate-100 pb-4 mb-5">
+                  <div className="inline-block text-[11px] font-extrabold text-[#d9531e] uppercase tracking-wider mb-1">
+                    Book A Tour Or Free Trial
                   </div>
-
-                  {/* Architectural Blueprint Stamp */}
-                  <div className="aspect-[16/10] rounded-2xl bg-black/30 border border-white/15 flex flex-col items-center justify-center p-6 text-center relative overflow-hidden group">
-                    <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-amber-400 shadow-2xs mb-3 group-hover:scale-108 transition-transform">
-                      <Building2 className="w-6 h-6" />
-                    </div>
-                    <div className="font-bold text-sm text-white">Private Suites & Managed Floors</div>
-                    <div className="text-xs text-gray-300 mt-0.5">2 min walk from Harkesh Nagar Okhla Metro</div>
-                  </div>
-
-                  {/* Curated Space Features */}
-                  <div className="grid grid-cols-2 gap-2.5 pt-1 text-[11px] text-gray-200">
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
-                      <Coffee className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Barista Roastery</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
-                      <Headphones className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Acoustic Zoom Pods</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
-                      <Zap className="w-3.5 h-3.5 text-amber-400" />
-                      <span>100% Dual DG Backup</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 p-2 rounded-xl bg-white/5 border border-white/10">
-                      <Lock className="w-3.5 h-3.5 text-amber-400" />
-                      <span>24/7 Smart Access</span>
-                    </div>
-                  </div>
-
-                  {/* Direct Tour Trigger */}
-                  <button
-                    onClick={() => openBooking("Okhla Phase II (Flagship HQ)")}
-                    className="w-full py-3 rounded-full bg-[#d4622b] hover:bg-[#b8501f] text-white font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-xs"
-                  >
-                    <span>Tour this Flagship Hub</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
-
+                  <h3 className="text-xl font-bold text-slate-900">Experience Onward Firsthand</h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Fill in your details below and our on-site team will confirm your visit.
+                  </p>
                 </div>
-              </SoftReveal>
+
+                {!isFormSubmitted ? (
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      setIsFormSubmitted(true);
+                    }}
+                    className="space-y-3.5"
+                  >
+                    <div>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">Full Name</label>
+                      <input
+                        type="text"
+                        required
+                        value={formName}
+                        onChange={(e) => setFormName(e.target.value)}
+                        placeholder="e.g. Vikram Sharma"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Work Email</label>
+                        <input
+                          type="email"
+                          required
+                          value={formEmail}
+                          onChange={(e) => setFormEmail(e.target.value)}
+                          placeholder="vikram@company.com"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Phone Number</label>
+                        <input
+                          type="tel"
+                          required
+                          value={formPhone}
+                          onChange={(e) => setFormPhone(e.target.value)}
+                          placeholder="+91 9910668152"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white transition-colors"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Preferred Location</label>
+                        <select
+                          value={formLocation}
+                          onChange={(e) => setFormLocation(e.target.value)}
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white"
+                        >
+                          <option value="Okhla Phase II, Delhi">Okhla Phase II (Delhi)</option>
+                          <option value="Okhla Phase III, Delhi">Okhla Phase III (Delhi)</option>
+                          <option value="Mohan Cooperative, Delhi">Mohan Cooperative (Delhi)</option>
+                          <option value="Connaught Place, Delhi">Connaught Place (Delhi)</option>
+                          <option value="DLF Cyber City, Gurgaon">DLF Cyber City (Gurgaon)</option>
+                          <option value="Udyog Vihar, Gurgaon">Udyog Vihar (Gurgaon)</option>
+                          <option value="Sector 62, Noida">Sector 62 IT Hub (Noida)</option>
+                          <option value="Sector 16, Noida">Sector 16 (Noida)</option>
+                          <option value="Sector 132, Noida">Sector 132 Expressway (Noida)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Team Size</label>
+                        <select
+                          value={formTeamSize}
+                          onChange={(e) => setFormTeamSize(e.target.value)}
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e] focus:bg-white"
+                        >
+                          <option value="1-4 Desks">1 - 4 Desks</option>
+                          <option value="5-15 Desks">5 - 15 Desks</option>
+                          <option value="16-50 Desks">16 - 50 Desks</option>
+                          <option value="50+ Custom Floor">50+ Custom Floor</option>
+                          <option value="Virtual Office">Virtual Office / GST</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full mt-2 py-3 bg-[#d9531e] hover:bg-[#c24614] text-white font-bold text-xs sm:text-sm rounded-lg transition-all shadow-sm flex items-center justify-center gap-2"
+                    >
+                      <span>Claim Free 2-Day Pass & Book Tour</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+
+                    <div className="text-[11px] text-slate-400 text-center flex items-center justify-center gap-1.5 pt-1">
+                      <Lock className="w-3 h-3 text-slate-400" />
+                      <span>Zero Spam. 100% Confidential.</span>
+                    </div>
+                  </form>
+                ) : (
+                  <div className="text-center py-8 space-y-3">
+                    <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                      <Check className="w-6 h-6" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900">Thank you, {formName || "there"}!</h4>
+                    <p className="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
+                      Your tour request for <span className="font-semibold text-slate-800">{formLocation}</span> has been received. Our team will reach out at <span className="font-semibold text-slate-800">{formPhone}</span> to confirm your slot.
+                    </p>
+                    <button
+                      onClick={() => setIsFormSubmitted(false)}
+                      className="text-xs font-bold text-[#d9531e] hover:underline pt-2"
+                    >
+                      Submit another inquiry
+                    </button>
+                  </div>
+                )}
+
+              </div>
             </div>
 
           </div>
         </div>
       </section>
 
-      {/* ━━━ OUR SPACES: "DESIGNED FOR HOW REAL TEAMS BUILD" (HORIZONTAL IMAGE SLIDER) ━━━ */}
-      <section id="spaces" className="py-20 sm:py-28 bg-white border-b border-[#ede8e1]">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      {/* ━━━ WORKSPACE FORMATS SECTION ━━━ */}
+      <section id="spaces" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <div>
-              <SoftReveal>
-                <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
-                  Curated Formats
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] tracking-tight">
-                  Designed for how real teams build.
-                </h2>
-                <p className="text-sm text-gray-500 mt-2 font-normal max-w-xl">
-                  Whether you need a sound-insulated 4-person suite or a 200-desk custom headquarters, every format is delivered turnkey with zero friction.
-                </p>
-              </SoftReveal>
+              <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+                Workspace Solutions
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Designed for Teams of Every Size
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                From private team cabins to custom 500-seat enterprise floorplates.
+              </p>
             </div>
 
-            {/* Slider Navigation Arrows */}
+            {/* Slider Navigation Controls */}
             <div className="flex items-center gap-2 self-start md:self-auto">
               <button
                 onClick={() => scrollSpaces("left")}
-                className="w-10 h-10 rounded-full bg-[#faf8f5] border border-[#ede8e1] flex items-center justify-center text-gray-700 hover:text-[#d4622b] hover:border-[#d4622b]/40 transition-colors shadow-2xs active:scale-95"
+                className="p-2.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-700 transition-colors"
                 aria-label="Previous spaces"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => scrollSpaces("right")}
-                className="w-10 h-10 rounded-full bg-[#d4622b] text-white flex items-center justify-center hover:bg-[#b8501f] transition-colors shadow-2xs active:scale-95"
+                className="p-2.5 rounded-lg bg-[#d9531e] hover:bg-[#c24614] text-white transition-colors"
                 aria-label="Next spaces"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -763,58 +811,58 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Horizontal Drag/Scroll Spaces Carousel */}
+          {/* Horizontal Slider Track */}
           <div
             ref={spacesSliderRef}
-            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
+            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 cursor-grab active:cursor-grabbing"
           >
-            {workspaceSpaces.map((space, idx) => {
+            {workspaceSpaces.map((space) => {
               const Icon = space.icon;
               return (
                 <div
                   key={space.id}
-                  className="w-[320px] sm:w-[380px] flex-shrink-0 rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-6 sm:p-7 flex flex-col justify-between hover:border-[#d4622b]/40 hover:bg-white hover:shadow-xs transition-all group"
+                  className="w-[300px] sm:w-[360px] flex-shrink-0 bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:border-[#d9531e] hover:shadow-md transition-all group"
                 >
                   <div>
-                    {/* Space Image Placeholder Preview */}
-                    <ArchitecturalImage
+                    {/* Visual Preview */}
+                    <WorkplacePhoto
                       src={space.image}
                       alt={space.title}
                       icon={Icon}
-                      badgeText={space.badge}
-                      className="aspect-[16/10] mb-5 shadow-2xs"
+                      badge={space.badge}
+                      className="aspect-[16/10] mb-4"
                     />
 
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-extrabold text-[#d4622b]">{space.num}</span>
-                      <span className="text-[11px] font-semibold text-gray-500">{space.forWhom}</span>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-xs font-bold text-[#d9531e]">{space.num}</span>
+                      <span className="text-[11px] font-semibold text-slate-500">{space.forWhom}</span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#d9531e] transition-colors">
                       {space.title}
                     </h3>
                     
-                    <p className="text-xs sm:text-sm text-gray-600 mt-2.5 leading-relaxed font-normal">
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">
                       {space.description}
                     </p>
 
-                    <div className="mt-5 pt-4 border-t border-gray-200/60 space-y-2">
-                      {space.highlights.map((item) => (
-                        <div key={item} className="flex items-start gap-2 text-xs text-gray-700">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#d4622b] shrink-0 mt-0.5" />
-                          <span>{item}</span>
+                    <div className="mt-4 pt-3 border-t border-slate-100 space-y-2">
+                      {space.features.map((feat) => (
+                        <div key={feat} className="flex items-start gap-2 text-xs text-slate-700">
+                          <Check className="w-3.5 h-3.5 text-[#d9531e] shrink-0 mt-0.5" />
+                          <span>{feat}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="mt-7 pt-4 border-t border-gray-200/60 flex items-center justify-between">
-                    <span className="text-xs text-gray-400 font-medium">Ready across 15+ hubs</span>
+                  <div className="mt-6 pt-3 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs text-slate-400">Available at all 15+ hubs</span>
                     <button
-                      onClick={() => openBooking(space.title)}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#d4622b] hover:text-[#b8501f]"
+                      onClick={() => openBookingModal(space.title)}
+                      className="text-xs font-bold text-[#d9531e] hover:text-[#c24614] flex items-center gap-1"
                     >
-                      <span>Inquire About Format</span>
+                      <span>Inquire Now</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
@@ -826,39 +874,36 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ LOCATIONS SECTION (TEXT ON LEFT, STICKY SCROLLING IMAGE ON RIGHT) ━━━ */}
-      <section id="locations" className="py-20 sm:py-28 bg-[#faf8f5] border-b border-[#ede8e1]">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      {/* ━━━ LOCATIONS SECTION WITH CITY TABS ━━━ */}
+      <section id="locations" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* Section Header & City Switcher */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
             <div>
-              <SoftReveal>
-                <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
-                  Strategic Hubs
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] tracking-tight">
-                  Locations made for effortless commutes.
-                </h2>
-                <p className="text-xs sm:text-sm text-gray-500 mt-1.5 max-w-md font-normal">
-                  {locationsByCity[selectedCity].blurb}
-                </p>
-              </SoftReveal>
+              <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+                Strategic NCR Locations
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Walk to Work from Major Metro Stations
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                {locationsByCity[selectedCity].blurb}
+              </p>
             </div>
 
             {/* City Tabs */}
-            <div className="flex bg-white p-1 rounded-full border border-[#ede8e1] shadow-2xs self-start sm:self-auto">
+            <div className="flex bg-white p-1 rounded-lg border border-slate-200 shadow-2xs self-start sm:self-auto">
               {(["delhi", "gurgaon", "noida"] as const).map((city) => (
                 <button
                   key={city}
                   onClick={() => {
                     setSelectedCity(city);
-                    setActiveStickyHubIndex(0);
+                    setActiveHubIndex(0);
                   }}
-                  className={`px-5 py-2 rounded-full text-xs font-bold capitalize transition-all ${
+                  className={`px-5 py-2 rounded-md text-xs font-bold capitalize transition-all ${
                     selectedCity === city
-                      ? "bg-[#d4622b] text-white shadow-2xs"
-                      : "text-gray-600 hover:text-[#1a1a2e]"
+                      ? "bg-[#d9531e] text-white shadow-2xs"
+                      : "text-slate-600 hover:text-slate-900"
                   }`}
                 >
                   {city}
@@ -867,62 +912,59 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Sticky Scrolling 2-Column Container */}
-          <div className="grid lg:grid-cols-12 gap-10 items-start relative">
+          {/* 2-Column Location Explorer */}
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
             
-            {/* Left Column: Location Cards List (Scrolls Normally) */}
-            <div className="lg:col-span-7 space-y-6">
+            {/* Left Column: Hub Cards List */}
+            <div className="lg:col-span-7 space-y-4">
               {currentCityHubs.map((hub, idx) => {
-                const isActive = activeStickyHubIndex === idx;
+                const isActive = activeHubIndex === idx;
                 return (
                   <div
                     key={hub.id}
-                    onMouseEnter={() => setActiveStickyHubIndex(idx)}
-                    onClick={() => setActiveStickyHubIndex(idx)}
-                    className={`p-7 sm:p-8 rounded-3xl transition-all duration-300 border cursor-pointer ${
+                    onMouseEnter={() => setActiveHubIndex(idx)}
+                    onClick={() => setActiveHubIndex(idx)}
+                    className={`p-6 rounded-xl border transition-all cursor-pointer ${
                       isActive
-                        ? "bg-white border-[#d4622b] shadow-md scale-[1.01]"
-                        : "bg-white/70 border-[#ede8e1] hover:border-gray-300 hover:bg-white"
+                        ? "bg-white border-[#d9531e] shadow-md"
+                        : "bg-white border-slate-200 hover:border-slate-300"
                     }`}
                   >
-                    <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-                      <div className="flex items-center gap-2.5">
-                        <span className="w-2 h-2 rounded-full bg-[#d4622b]" />
-                        <h3 className="text-base sm:text-lg font-bold text-[#1a1a2e]">{hub.name}</h3>
+                    <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                      <div className="flex items-center gap-2">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#d9531e]" />
+                        <h3 className="text-base font-bold text-slate-900">{hub.name}</h3>
                       </div>
-                      <span className="text-[11px] font-semibold text-gray-600 bg-[#faf8f5] px-2.5 py-0.5 rounded-md border border-gray-200">
+                      <span className="text-[11px] font-semibold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded border border-slate-200">
                         {hub.size}
                       </span>
                     </div>
 
-                    <div className="mt-3.5 flex items-center gap-2 text-xs font-semibold text-[#d4622b]">
+                    <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-[#d9531e]">
                       <Clock className="w-3.5 h-3.5 shrink-0" />
                       <span>{hub.metro}</span>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${hub.lineColor}`}>
-                        {hub.metroLine}
-                      </span>
                     </div>
 
-                    <p className="mt-2.5 text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
+                    <p className="mt-2 text-xs text-slate-600 leading-relaxed font-normal">
                       {hub.address}
                     </p>
 
-                    <div className="mt-5 flex flex-wrap gap-1.5">
-                      {hub.perks.map((p) => (
-                        <span key={p} className="text-[11px] font-medium px-2.5 py-1 rounded-md bg-[#faf8f5] text-gray-700 border border-gray-200">
-                          {p}
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {hub.amenities.map((item) => (
+                        <span key={item} className="text-[11px] font-medium px-2.5 py-1 rounded bg-slate-100 text-slate-700 border border-slate-200">
+                          {item}
                         </span>
                       ))}
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                      <span className="text-xs text-gray-400 font-medium">Click to inspect view</span>
+                    <div className="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <span className="text-xs text-slate-400">Click to view location</span>
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
-                          openBooking(hub.name);
+                          openBookingModal(hub.name);
                         }}
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#d4622b] hover:text-[#b8501f]"
+                        className="text-xs font-bold text-[#d9531e] hover:text-[#c24614] flex items-center gap-1"
                       >
                         <span>Schedule Walkthrough</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -933,61 +975,48 @@ export default function Home() {
               })}
             </div>
 
-            {/* Right Column: Sticky Image Container (Pins on scroll, changes image smoothly, then scrolls away) */}
-            <div className="lg:col-span-5 lg:sticky lg:top-32 space-y-4">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeHub.id}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.25 }}
-                  className="rounded-3xl bg-white border border-[#ede8e1] p-6 shadow-md space-y-5"
-                >
-                  <div className="flex items-center justify-between pb-3 border-b border-gray-100">
-                    <div>
-                      <span className="text-[10px] font-bold text-[#d4622b] uppercase tracking-wider block">
-                        Live Preview
-                      </span>
-                      <h4 className="text-base font-bold text-[#1a1a2e] mt-0.5">{activeHub.name}</h4>
-                    </div>
-                    <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Open for Visits
+            {/* Right Column: Sticky Preview Card */}
+            <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+              <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-md space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                  <div>
+                    <span className="text-[10px] font-bold text-[#d9531e] uppercase tracking-wider block">
+                      Centre Preview
                     </span>
+                    <h4 className="text-base font-bold text-slate-900 mt-0.5">{activeHub.name}</h4>
                   </div>
+                  <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    Open for Visits
+                  </span>
+                </div>
 
-                  {/* Sticky Image Preview */}
-                  <ArchitecturalImage
-                    src={activeHub.image}
-                    alt={activeHub.name}
-                    className="aspect-[16/11] shadow-2xs"
-                    badgeText={activeHub.size}
-                  />
+                <WorkplacePhoto
+                  src={activeHub.image}
+                  alt={activeHub.name}
+                  badge={activeHub.size}
+                  className="aspect-[16/11]"
+                />
 
-                  {/* Proximity Highlights */}
-                  <div className="p-3.5 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] space-y-2 text-xs">
-                    <div className="flex items-center justify-between text-gray-700 font-semibold">
-                      <span className="text-gray-500">Metro Transit</span>
-                      <span className="text-[#d4622b] font-bold">{activeHub.metro}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-gray-700 font-semibold">
-                      <span className="text-gray-500">Commute Belt</span>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md ${activeHub.lineColor}`}>
-                        {activeHub.metroLine}
-                      </span>
-                    </div>
+                <div className="bg-slate-50 rounded-lg p-3.5 border border-slate-200 space-y-2 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-500 font-medium">Metro Transit</span>
+                    <span className="text-[#d9531e] font-bold">{activeHub.metro}</span>
                   </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-500 font-medium">Full Address</span>
+                    <span className="text-slate-700 font-semibold truncate max-w-[200px]">{activeHub.address}</span>
+                  </div>
+                </div>
 
-                  <button
-                    onClick={() => openBooking(activeHub.name)}
-                    className="w-full py-3 rounded-full bg-[#1a1a2e] hover:bg-[#d4622b] text-white font-semibold text-xs flex items-center justify-center gap-2 transition-colors shadow-xs"
-                  >
-                    <span>Book a Tour at {activeHub.name.split(" ")[0]}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </motion.div>
-              </AnimatePresence>
+                <button
+                  onClick={() => openBookingModal(activeHub.name)}
+                  className="w-full py-3 bg-slate-900 hover:bg-[#d9531e] text-white font-bold text-xs rounded-lg transition-colors flex items-center justify-center gap-2"
+                >
+                  <span>Book a Tour at {activeHub.name.split(" ")[0]}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
 
           </div>
@@ -995,43 +1024,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ CRAFT & HOSPITALITY (WHAT'S INCLUDED) ━━━ */}
-      <section id="inclusions" className="py-20 sm:py-28 bg-white border-b border-[#ede8e1]">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      {/* ━━━ EVERYDAY AMENITIES / INCLUSIONS ━━━ */}
+      <section id="amenities" className="py-16 sm:py-20 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <SoftReveal>
-              <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
-                Everyday Inclusions
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] tracking-tight">
-                Everything taken care of. Zero headaches.
-              </h2>
-              <p className="text-xs sm:text-sm text-gray-500 mt-2 font-normal">
-                Consolidated into a single transparent monthly invoice with zero surprise overheads.
-              </p>
-            </SoftReveal>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+              Everything Included
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Comprehensive Enterprise Amenities
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 mt-1.5">
+              Consolidated into a single transparent monthly membership with zero surprise bills.
+            </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {everydayInclusions.map((item, idx) => {
-              const Icon = item.icon;
+            {everydayAmenities.map((amenity) => {
+              const Icon = amenity.icon;
               return (
-                <SoftReveal key={item.title} delay={0.05 * idx}>
-                  <div className="p-7 rounded-3xl bg-[#faf8f5] border border-[#ede8e1] flex flex-col justify-between h-full hover:border-[#d4622b]/30 transition-all">
-                    <div>
-                      <div className="w-11 h-11 rounded-2xl bg-white border border-[#ede8e1] flex items-center justify-center text-[#d4622b] mb-4 shadow-2xs">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <h3 className="text-base font-bold text-[#1a1a2e]">{item.title}</h3>
-                      <p className="text-xs text-gray-600 mt-2 leading-relaxed font-normal">{item.desc}</p>
+                <div
+                  key={amenity.title}
+                  className="p-6 rounded-xl bg-slate-50 border border-slate-200 hover:border-slate-300 transition-colors flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-[#d9531e] mb-4 shadow-2xs">
+                      <Icon className="w-5 h-5" />
                     </div>
-
-                    <div className="mt-5 pt-3.5 border-t border-gray-200/60 text-[11px] font-semibold text-gray-400">
-                      Standard at all 15+ centres
-                    </div>
+                    <h3 className="text-base font-bold text-slate-900">{amenity.title}</h3>
+                    <p className="text-xs text-slate-600 mt-2 leading-relaxed">{amenity.desc}</p>
                   </div>
-                </SoftReveal>
+                  <div className="mt-5 pt-3 border-t border-slate-200/60 text-[11px] font-semibold text-slate-400">
+                    Standard at all 15+ hubs
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -1039,25 +1066,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ COMMUNITY STORIES & CLIENT BRANDS ━━━ */}
-      <section id="stories" className="py-20 sm:py-24 bg-[#faf8f5] border-b border-[#ede8e1]">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
+      {/* ━━━ CLIENT BRANDS & TESTIMONIALS ━━━ */}
+      <section id="clients" className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-xl mx-auto mb-12">
-            <SoftReveal>
-              <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
-                Trusted by Founders
-              </span>
-              <h2 className="text-3xl font-bold text-[#1a1a2e] tracking-tight">
-                Where great teams grow.
-              </h2>
-            </SoftReveal>
+          <div className="text-center max-w-xl mx-auto mb-10">
+            <span className="text-xs font-bold text-[#d9531e] uppercase tracking-wider block mb-1">
+              Trusted by Fast-Growing Companies
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+              Where Leading Teams Operate
+            </h2>
           </div>
 
-          {/* Client Logos Ribbon */}
-          <div className="mb-12 flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-50">
+          {/* Client Logos Bar */}
+          <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-60 mb-12">
             {clientBrands.map((brand) => (
-              <span key={brand} className="text-xs sm:text-sm font-bold tracking-widest text-gray-500 uppercase">
+              <span key={brand} className="text-xs sm:text-sm font-bold tracking-widest text-slate-600 uppercase">
                 {brand}
               </span>
             ))}
@@ -1065,84 +1090,164 @@ export default function Home() {
 
           {/* Testimonials */}
           <div className="grid md:grid-cols-3 gap-6">
-            {customerStories.map((story, idx) => (
-              <SoftReveal key={story.author} delay={0.08 * idx}>
-                <div className="p-8 rounded-3xl bg-white border border-[#ede8e1] flex flex-col justify-between h-full shadow-2xs">
-                  <div>
-                    <div className="flex gap-1 mb-4 text-[#d4622b]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-[#d4622b]" />
-                      ))}
-                    </div>
-                    <p className="text-xs sm:text-sm text-gray-700 leading-relaxed italic font-normal">
-                      &ldquo;{story.quote}&rdquo;
-                    </p>
+            {clientTestimonials.map((story) => (
+              <div
+                key={story.author}
+                className="p-6 rounded-xl bg-white border border-slate-200 shadow-2xs flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex gap-1 mb-3 text-amber-500">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-amber-500" />
+                    ))}
                   </div>
+                  <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic">
+                    &ldquo;{story.quote}&rdquo;
+                  </p>
+                </div>
 
-                  <div className="mt-6 pt-4 border-t border-gray-100 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#1a1a2e] text-white font-bold text-xs flex items-center justify-center">
-                      {story.author[0]}
-                    </div>
-                    <div>
-                      <div className="font-bold text-xs text-[#1a1a2e]">{story.author}</div>
-                      <div className="text-[10px] text-gray-500">{story.role}, {story.company}</div>
-                    </div>
+                <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-slate-900 text-white font-bold text-xs flex items-center justify-center">
+                    {story.author[0]}
+                  </div>
+                  <div>
+                    <div className="font-bold text-xs text-slate-900">{story.author}</div>
+                    <div className="text-[11px] text-slate-500">{story.role}, {story.company}</div>
                   </div>
                 </div>
-              </SoftReveal>
+              </div>
             ))}
           </div>
 
         </div>
       </section>
 
-      {/* ━━━ COMMON QUESTIONS (FAQ) ━━━ */}
-      <section id="faq" className="py-20 sm:py-28 bg-white border-b border-[#ede8e1]">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+      {/* ━━━ 2-COLUMN SPLIT KNOWLEDGE HUB & FAQ ━━━ */}
+      <section id="faq" className="py-16 sm:py-24 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-xl mx-auto mb-14">
-            <SoftReveal>
-              <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
-                Common Inquiries
-              </span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] tracking-tight">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-xs sm:text-sm text-gray-500 mt-1.5">
-                Clear, straightforward answers about team leases, move-in timelines, and GST filings.
-              </p>
-            </SoftReveal>
-          </div>
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+            
+            {/* Left Column: Knowledge Hub Sticky Header & Category Filter */}
+            <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
+              <div>
+                <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-[#d9531e] uppercase tracking-wider bg-orange-50 px-2.5 py-1 rounded-md border border-orange-200 mb-3">
+                  <HelpCircle className="w-3.5 h-3.5" />
+                  <span>Help & Knowledge Base</span>
+                </span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                  Frequently Asked Questions
+                </h2>
+                <p className="text-sm text-slate-600 mt-2.5 leading-relaxed">
+                  Everything you need to know about team leases, move-in timelines, GST legal paperwork, and complimentary passes.
+                </p>
+              </div>
 
-          <div className="space-y-3.5">
-            {simpleFaqs.map((faq, idx) => {
-              const isOpen = openFaqIndex === idx;
-              return (
-                <SoftReveal key={faq.q} delay={0.04 * idx}>
+              {/* Category Filter Pills */}
+              <div className="space-y-2">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                  Filter by Topic
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {faqCategories.map((category) => {
+                    const count = category === "All Topics"
+                      ? faqs.length
+                      : faqs.filter((f) => f.category === category).length;
+                    const isActive = selectedFaqCategory === category;
+                    return (
+                      <button
+                        key={category}
+                        onClick={() => {
+                          setSelectedFaqCategory(category);
+                          setOpenFaqIndex(0);
+                        }}
+                        className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                          isActive
+                            ? "bg-[#d9531e] text-white shadow-xs scale-102"
+                            : "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
+                        }`}
+                      >
+                        <span>{category}</span>
+                        <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                          isActive ? "bg-white/20 text-white" : "bg-white text-slate-500 border border-slate-200"
+                        }`}>
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Concierge Help Box */}
+              <div className="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
+                <div className="flex items-center gap-2 text-slate-900 font-bold text-sm">
+                  <MessageSquare className="w-4 h-4 text-[#d9531e]" />
+                  <span>Have a customized requirement?</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Speak directly with our workspace advisors to discuss custom floorplate buildouts or schedule private site walkthroughs.
+                </p>
+                <div className="flex items-center gap-3 pt-1">
+                  <a
+                    href="tel:+919910668152"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 bg-white hover:bg-slate-100 px-3 py-2 rounded-lg border border-slate-200 transition-colors shadow-2xs"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#d9531e]" />
+                    <span>+91 9910668152</span>
+                  </a>
+                  <button
+                    onClick={() => openBookingModal(undefined, false)}
+                    className="text-xs font-bold text-[#d9531e] hover:underline"
+                  >
+                    Schedule Tour →
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Column: Modern Expandable Accordion List */}
+            <div className="lg:col-span-7 space-y-3.5">
+              {(selectedFaqCategory === "All Topics"
+                ? faqs
+                : faqs.filter((f) => f.category === selectedFaqCategory)
+              ).map((faq, idx) => {
+                const isOpen = openFaqIndex === idx;
+                return (
                   <div
-                    className={`rounded-2xl border transition-all ${
+                    key={faq.id}
+                    className={`rounded-xl border transition-all duration-200 overflow-hidden ${
                       isOpen
-                        ? "bg-[#faf8f5] border-[#d4622b]/50 shadow-2xs"
-                        : "bg-[#faf8f5] border-[#ede8e1] hover:border-gray-300"
+                        ? "bg-slate-50 border-slate-300 border-l-4 border-l-[#d9531e] shadow-sm"
+                        : "bg-white border-slate-200 hover:border-slate-300 hover:shadow-2xs"
                     }`}
                   >
                     <button
                       onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                      className="w-full p-5 text-left flex items-center justify-between gap-4 font-bold text-sm text-[#1a1a2e] hover:text-[#d4622b] transition-colors"
+                      className="w-full p-5 sm:p-6 text-left flex items-start justify-between gap-4 group"
                     >
-                      <div className="space-y-1">
-                        <span className="text-[9px] font-extrabold text-[#d4622b] bg-white px-2 py-0.5 rounded border border-gray-200">
-                          {faq.category}
+                      <div className="space-y-1.5 pr-2">
+                        <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded border uppercase tracking-wider ${
+                          isOpen
+                            ? "bg-orange-100 text-[#d9531e] border-orange-200"
+                            : "bg-slate-100 text-slate-500 border-slate-200"
+                        }`}>
+                          {faq.categoryLabel}
                         </span>
-                        <div className="text-sm font-bold text-[#1a1a2e] mt-1">{faq.q}</div>
+                        <h3 className={`text-sm sm:text-base font-bold transition-colors leading-snug ${
+                          isOpen ? "text-slate-900" : "text-slate-800 group-hover:text-[#d9531e]"
+                        }`}>
+                          {faq.q}
+                        </h3>
                       </div>
 
-                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border transition-all ${
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 border transition-all duration-200 ${
                         isOpen
-                          ? "bg-[#d4622b] text-white border-[#d4622b] rotate-180"
-                          : "bg-white text-gray-500 border-gray-200"
+                          ? "bg-[#d9531e] text-white border-[#d9531e]"
+                          : "bg-slate-100 text-slate-600 border-slate-200 group-hover:bg-[#d9531e] group-hover:text-white group-hover:border-[#d9531e]"
                       }`}>
-                        <ChevronDown className="w-4 h-4" />
+                        {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                       </div>
                     </button>
 
@@ -1152,252 +1257,92 @@ export default function Home() {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <div className="px-5 pb-5 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-200/60 pt-3 font-normal">
+                          <div className="px-5 sm:px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/70 font-normal">
                             {faq.a}
                           </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
-                </SoftReveal>
-              );
-            })}
+                );
+              })}
+            </div>
+
           </div>
 
         </div>
       </section>
 
-      {/* ━━━ DROP BY FOR A VISIT & HELPLINE ━━━ */}
-      <section id="contact" className="py-20 sm:py-28 bg-[#faf8f5]">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            
-            <div className="lg:col-span-5 space-y-5">
-              <SoftReveal>
-                <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block">
-                  Drop By For A Visit
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a2e] leading-tight">
-                  Come see the space and grab a coffee with us.
-                </h2>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed font-normal">
-                  We would love to show you around any of our Delhi, Gurgaon, or Noida centres. Share your details and our team will get in touch to confirm a time that suits you best.
-                </p>
-
-                <div className="space-y-3 pt-3">
-                  <div className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#ede8e1] shadow-2xs">
-                    <MapPin className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" />
-                    <div className="text-xs text-gray-700">
-                      <span className="font-bold text-[#1a1a2e] block">Registered Flagship Campus</span>
-                      Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020
-                    </div>
-                  </div>
-
-                  <a
-                    href="tel:+919910668152"
-                    className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors shadow-2xs"
-                  >
-                    <Phone className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" />
-                    <div className="text-xs text-gray-700">
-                      <span className="font-bold text-[#1a1a2e] block">Direct Phone Line</span>
-                      +91 9910668152
-                    </div>
-                  </a>
-
-                  <a
-                    href="mailto:info@onwardworkspaces.com"
-                    className="flex items-start gap-3 p-4 rounded-2xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors shadow-2xs"
-                  >
-                    <Mail className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" />
-                    <div className="text-xs text-gray-700">
-                      <span className="font-bold text-[#1a1a2e] block">Direct Email</span>
-                      info@onwardworkspaces.com
-                    </div>
-                  </a>
-                </div>
-              </SoftReveal>
-            </div>
-
-            {/* Visit Form */}
-            <div className="lg:col-span-7">
-              <SoftReveal delay={0.15}>
-                <div className="p-8 sm:p-10 rounded-3xl bg-white border border-[#ede8e1] shadow-xs">
-                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-1">Book a Walkthrough or Free Pass</h3>
-                  <p className="text-xs text-gray-500 mb-6">No payment info needed. We&apos;ll confirm your visit over phone.</p>
-
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setIsSubmitted(true);
-                      setIsModalOpen(true);
-                    }}
-                    className="space-y-4"
-                  >
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Your Name</label>
-                        <input
-                          type="text"
-                          required
-                          placeholder="Vikram Sharma"
-                          className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Work Email</label>
-                        <input
-                          type="email"
-                          required
-                          placeholder="vikram@company.com"
-                          className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Phone Number</label>
-                        <input
-                          type="tel"
-                          required
-                          placeholder="+91 9910668152"
-                          className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Target Centre</label>
-                        <select className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]">
-                          <option value="Okhla Phase II, Delhi">Okhla Phase II (Delhi Flagship)</option>
-                          <option value="Okhla Phase III, Delhi">Okhla Phase III (Delhi)</option>
-                          <option value="Mohan Cooperative, Delhi">Mohan Cooperative (Delhi)</option>
-                          <option value="Connaught Place, Delhi">Connaught Place (Central Delhi)</option>
-                          <option value="DLF Cyber City, Gurgaon">DLF Cyber City (Gurgaon)</option>
-                          <option value="Udyog Vihar, Gurgaon">Udyog Vihar Phase IV (Gurgaon)</option>
-                          <option value="Sector 62, Noida">Sector 62 IT Hub (Noida)</option>
-                          <option value="Sector 16, Noida">Sector 16 Metro Belt (Noida)</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-xs font-semibold text-gray-700 block mb-1">Tell us about your team</label>
-                      <textarea
-                        rows={3}
-                        placeholder="Team size, target move-in date, or any specific requirements..."
-                        className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] resize-none"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      className="w-full py-3.5 rounded-full bg-[#d4622b] text-white font-semibold text-xs hover:bg-[#b8501f] transition-all shadow-xs"
-                    >
-                      Confirm Walkthrough Request
-                    </button>
-                  </form>
-                </div>
-              </SoftReveal>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ━━━ FOOTER ━━━ */}
-      <footer className="bg-[#1a1a2e] text-gray-400 py-16 text-xs">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      {/* ━━━ CONTACT & FOOTER ━━━ */}
+      <footer id="contact" className="bg-slate-900 text-slate-400 py-14 text-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
             
             <div>
-              <div className="flex items-center gap-2.5 mb-4">
+              <div className="flex items-center gap-2.5 mb-3">
                 <img src="/onward-logo.png" alt="Onward Logo" className="w-8 h-8" />
                 <div>
-                  <span className="text-lg font-bold text-white tracking-tight">Onward</span>
-                  <span className="block text-[8px] text-gray-400 tracking-widest uppercase">Workspaces</span>
+                  <span className="text-lg font-bold text-white tracking-tight">ONWARD</span>
+                  <span className="block text-[8px] text-slate-400 tracking-widest uppercase">WORKSPACES</span>
                 </div>
               </div>
-              <p className="text-xs text-gray-400 leading-relaxed font-normal">
-                Thoughtfully crafted workspaces across Delhi NCR for teams that love getting things done.
+              <p className="text-xs text-slate-400 leading-relaxed">
+                Grade-A managed coworking spaces and enterprise floorplates across Delhi, Gurgaon, and Noida.
               </p>
-              <div className="mt-3 text-xs font-semibold text-[#d4622b]">
+              <div className="mt-3 text-xs font-semibold text-[#d9531e]">
                 ONWARD COWORKX PRIVATE LIMITED
               </div>
             </div>
 
             <div>
-              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Spaces</h4>
-              <ul className="space-y-2 text-xs font-normal">
-                <li><a href="#spaces" className="hover:text-[#d4622b] transition-colors">Private Team Suites</a></li>
-                <li><a href="#spaces" className="hover:text-[#d4622b] transition-colors">Custom Managed Floors</a></li>
-                <li><a href="#spaces" className="hover:text-[#d4622b] transition-colors">Executive Cabins</a></li>
-                <li><a href="#spaces" className="hover:text-[#d4622b] transition-colors">Virtual Office & GST</a></li>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Workspace Formats</h4>
+              <ul className="space-y-2 text-xs">
+                <li><a href="#spaces" className="hover:text-[#d9531e] transition-colors">Private Team Suites</a></li>
+                <li><a href="#spaces" className="hover:text-[#d9531e] transition-colors">Custom Managed Floors</a></li>
+                <li><a href="#spaces" className="hover:text-[#d9531e] transition-colors">Executive Director Cabins</a></li>
+                <li><a href="#spaces" className="hover:text-[#d9531e] transition-colors">Virtual Office & GST Registration</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Centres</h4>
-              <ul className="space-y-2 text-xs font-normal">
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Okhla Phase II & III</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Mohan Cooperative</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Connaught Place</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">DLF Cyber City Gurgaon</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Sector 62 & 16 Noida</a></li>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Key Hubs</h4>
+              <ul className="space-y-2 text-xs">
+                <li><a href="#locations" className="hover:text-[#d9531e] transition-colors">Okhla Phase II & III, Delhi</a></li>
+                <li><a href="#locations" className="hover:text-[#d9531e] transition-colors">Mohan Cooperative, Delhi</a></li>
+                <li><a href="#locations" className="hover:text-[#d9531e] transition-colors">Connaught Place, Delhi</a></li>
+                <li><a href="#locations" className="hover:text-[#d9531e] transition-colors">DLF Cyber City, Gurgaon</a></li>
+                <li><a href="#locations" className="hover:text-[#d9531e] transition-colors">Sector 62 & 16, Noida</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Get In Touch</h4>
-              <p className="text-xs text-gray-400 leading-relaxed mb-3 font-normal">
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-3">Direct Contact</h4>
+              <p className="text-xs text-slate-400 leading-relaxed mb-3">
                 Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020
               </p>
               <div className="space-y-1 font-semibold text-white">
-                <div>+91 9910668152</div>
-                <div className="text-gray-400">info@onwardworkspaces.com</div>
+                <a href="tel:+919910668152" className="block hover:text-[#d9531e]">+91 9910668152</a>
+                <a href="mailto:info@onwardworkspaces.com" className="block text-slate-400 hover:text-white">info@onwardworkspaces.com</a>
               </div>
             </div>
 
           </div>
 
-          <div className="pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] text-gray-500">
+          <div className="pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] text-slate-500">
             <p>&copy; {new Date().getFullYear()} Onward Workspaces (Onward Coworkx Pvt. Ltd.). All rights reserved.</p>
             <div className="flex gap-5">
-              <a href="#" className="hover:text-[#d4622b] transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-[#d4622b] transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-[#d4622b] transition-colors">GST Compliance</a>
+              <a href="#" className="hover:text-[#d9531e] transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-[#d9531e] transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-[#d9531e] transition-colors">GST Compliance</a>
             </div>
           </div>
+
         </div>
       </footer>
-
-      {/* ━━━ FLOATING CONCIERGE CAPSULE DOCK ━━━ */}
-      <div className="fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
-        <div className="bg-[#1a1a2e]/90 backdrop-blur-md text-white border border-gray-700/60 rounded-full px-5 py-2.5 shadow-2xl flex items-center gap-4 pointer-events-auto text-xs">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="font-semibold text-gray-200 hidden sm:inline">15+ NCR Hubs Open Today</span>
-          </div>
-
-          <div className="h-3.5 w-px bg-gray-600 hidden sm:block" />
-
-          <button
-            onClick={() => openBooking(undefined, true)}
-            className="px-3.5 py-1.5 rounded-full bg-[#d4622b] hover:bg-[#b8501f] text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-            <span>2-Day Free Pass</span>
-          </button>
-
-          <button
-            onClick={() => openBooking(undefined, false)}
-            className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-colors"
-          >
-            Schedule Tour
-          </button>
-        </div>
-      </div>
 
       {/* ━━━ TOUR / TRIAL MODAL ━━━ */}
       <AnimatePresence>
@@ -1407,76 +1352,76 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
-              className="relative w-full max-w-lg rounded-3xl bg-white border border-[#ede8e1] p-7 shadow-xl overflow-hidden"
+              className="relative w-full max-w-lg rounded-2xl bg-white border border-slate-200 p-7 shadow-2xl overflow-hidden"
             >
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
+                className="absolute top-5 right-5 p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
 
-              {!isSubmitted ? (
+              {!modalSubmitted ? (
                 <div className="space-y-4">
                   <div>
-                    <span className="text-[10px] font-bold text-[#d4622b] uppercase tracking-wider">
-                      {isFreeTrial ? "2-Day Free Trial" : "Schedule a Tour"}
+                    <span className="text-[10px] font-bold text-[#d9531e] uppercase tracking-wider">
+                      {isFreeTrial ? "2-Day Free Trial Pass" : "Schedule a Tour"}
                     </span>
-                    <h3 className="text-xl font-bold text-[#1a1a2e] mt-0.5">
-                      {isFreeTrial ? "Claim Your 2-Day Trial Pass" : `Visit ${modalTitle}`}
+                    <h3 className="text-xl font-bold text-slate-900 mt-0.5">
+                      {isFreeTrial ? "Claim Your Free 2-Day Trial" : `Visit ${modalTitle}`}
                     </h3>
                   </div>
 
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      setIsSubmitted(true);
+                      setModalSubmitted(true);
                     }}
                     className="space-y-3.5"
                   >
                     <div>
-                      <label className="text-xs font-semibold text-gray-700 block mb-1">Your Name</label>
+                      <label className="text-xs font-bold text-slate-700 block mb-1">Your Name</label>
                       <input
                         type="text"
                         required
                         placeholder="John Doe"
-                        className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e]"
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Work Email</label>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Work Email</label>
                         <input
                           type="email"
                           required
                           placeholder="john@company.com"
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e]"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Phone</label>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Phone</label>
                         <input
                           type="tel"
                           required
                           placeholder="+91 9910668152"
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e]"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Preferred Date</label>
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Preferred Date</label>
                         <input
                           type="date"
                           required
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                          className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e]"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-semibold text-gray-700 block mb-1">Time Slot</label>
-                        <select className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]">
+                        <label className="text-xs font-bold text-slate-700 block mb-1">Time Slot</label>
+                        <select className="w-full bg-slate-50 border border-slate-300 rounded-lg px-3.5 py-2 text-xs text-slate-900 focus:outline-none focus:border-[#d9531e]">
                           <option>10:00 AM - 12:00 PM</option>
                           <option>12:00 PM - 02:00 PM</option>
                           <option>02:00 PM - 04:00 PM</option>
@@ -1487,7 +1432,7 @@ export default function Home() {
 
                     <button
                       type="submit"
-                      className="w-full py-3 rounded-full bg-[#d4622b] text-white font-bold text-xs hover:bg-[#b8501f] transition-all"
+                      className="w-full py-3 bg-[#d9531e] hover:bg-[#c24614] text-white font-bold text-xs rounded-lg transition-colors shadow-xs"
                     >
                       {isFreeTrial ? "Claim Free 2-Day Pass" : "Confirm Tour Reservation"}
                     </button>
@@ -1496,15 +1441,15 @@ export default function Home() {
               ) : (
                 <div className="text-center py-6 space-y-3">
                   <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-6 h-6" />
+                    <Check className="w-6 h-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#1a1a2e]">We&apos;ve received your request!</h3>
-                  <p className="text-xs text-gray-600 max-w-xs mx-auto leading-relaxed font-normal">
-                    Thank you. Our community team will call you shortly to confirm your visit time and give you directions.
+                  <h3 className="text-xl font-bold text-slate-900">Request Received!</h3>
+                  <p className="text-xs text-slate-600 max-w-xs mx-auto leading-relaxed">
+                    Thank you. Our community manager will call you shortly to confirm your visit time.
                   </p>
                   <button
                     onClick={() => setIsModalOpen(false)}
-                    className="px-5 py-2 rounded-full bg-[#1a1a2e] text-white font-semibold text-xs mt-2"
+                    className="px-5 py-2 bg-slate-900 text-white font-semibold text-xs rounded-lg mt-2"
                   >
                     Done
                   </button>
