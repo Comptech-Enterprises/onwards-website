@@ -382,9 +382,358 @@ const faqItems = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════
-   PLACEHOLDER COMPONENT
+   3D WIREFRAME, INFLOW STREAM & HYPERFRAME ANIMATION ENGINES
    ═══════════════════════════════════════════════════════════════ */
 
+/* 1. 3D Interactive Isometric Wiring & Inflow Canvas */
+function InflowWireGrid() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    // Inflow particle wires
+    const wiresCount = 18;
+    const wires: Array<{
+      x: number;
+      speed: number;
+      length: number;
+      offset: number;
+      color: string;
+      width: number;
+      amplitude: number;
+      frequency: number;
+    }> = [];
+
+    for (let i = 0; i < wiresCount; i++) {
+      wires.push({
+        x: (width / wiresCount) * i + (Math.random() * 60 - 30),
+        speed: 0.8 + Math.random() * 1.6,
+        length: 120 + Math.random() * 220,
+        offset: Math.random() * height,
+        color: i % 3 === 0 ? "rgba(212, 98, 43, " : i % 2 === 0 ? "rgba(26, 26, 46, " : "rgba(232, 133, 90, ",
+        width: 1 + Math.random() * 1.5,
+        amplitude: 15 + Math.random() * 30,
+        frequency: 0.003 + Math.random() * 0.005,
+      });
+    }
+
+    // 3D Isometric Nodes
+    const gridSpacing = 90;
+    let time = 0;
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      time += 0.015;
+
+      // Draw subtle isometric background wireframe mesh
+      ctx.strokeStyle = "rgba(212, 98, 43, 0.04)";
+      ctx.lineWidth = 1;
+
+      for (let x = -width; x < width * 2; x += gridSpacing) {
+        ctx.beginPath();
+        // 30 degree isometric diagonal wires
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x + height * 0.8, height);
+        ctx.stroke();
+
+        ctx.beginPath();
+        // Opposite diagonal wires
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x - height * 0.8, height);
+        ctx.stroke();
+      }
+
+      // Draw Inflow Streaming Energy Pulses (coming from top to bottom)
+      wires.forEach((w) => {
+        w.offset = (w.offset + w.speed) % (height + w.length);
+
+        const gradient = ctx.createLinearGradient(
+          w.x,
+          w.offset - w.length,
+          w.x,
+          w.offset
+        );
+        gradient.addColorStop(0, `${w.color}0)`);
+        gradient.addColorStop(0.7, `${w.color}0.4)`);
+        gradient.addColorStop(1, `${w.color}0.9)`);
+
+        ctx.beginPath();
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = w.width;
+
+        // Draw sinusoidal wire flow
+        const startY = Math.max(0, w.offset - w.length);
+        const endY = Math.min(height, w.offset);
+
+        ctx.moveTo(w.x + Math.sin(startY * w.frequency + time) * w.amplitude, startY);
+
+        for (let y = startY + 10; y <= endY; y += 10) {
+          const currentX = w.x + Math.sin(y * w.frequency + time) * w.amplitude;
+          ctx.lineTo(currentX, y);
+        }
+        ctx.stroke();
+
+        // Glowing pulse head
+        if (w.offset <= height) {
+          const headX = w.x + Math.sin(w.offset * w.frequency + time) * w.amplitude;
+          ctx.beginPath();
+          ctx.arc(headX, w.offset, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = "#d4622b";
+          ctx.shadowColor = "#d4622b";
+          ctx.shadowBlur = 10;
+          ctx.fill();
+          ctx.shadowBlur = 0; // reset
+        }
+      });
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-0 opacity-70"
+    />
+  );
+}
+
+/* 2. Rotating 3D Hyperframe Wireframe Polyhedron */
+function Floating3DCage({ size = 80, className = "" }: { size?: number; className?: string }) {
+  return (
+    <div className={`relative flex items-center justify-center ${className}`} style={{ width: size, height: size, perspective: 800 }}>
+      <motion.div
+        animate={{
+          rotateX: [0, 360],
+          rotateY: [0, 360],
+          rotateZ: [0, 180],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        style={{ transformStyle: "preserve-3d" }}
+        className="relative w-full h-full"
+      >
+        {/* Wireframe Cube Faces */}
+        {[
+          { transform: `translateZ(${size / 2}px)` },
+          { transform: `rotateY(180deg) translateZ(${size / 2}px)` },
+          { transform: `rotateY(90deg) translateZ(${size / 2}px)` },
+          { transform: `rotateY(-90deg) translateZ(${size / 2}px)` },
+          { transform: `rotateX(90deg) translateZ(${size / 2}px)` },
+          { transform: `rotateX(-90deg) translateZ(${size / 2}px)` },
+        ].map((face, idx) => (
+          <div
+            key={idx}
+            style={face}
+            className="absolute inset-0 border border-[#d4622b]/30 bg-[#d4622b]/[0.03] backdrop-blur-[1px] rounded-lg"
+          >
+            {/* Corner Node Dots */}
+            <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full -translate-x-1/2 -translate-y-1/2 shadow-xs" />
+            <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full translate-x-1/2 -translate-y-1/2 shadow-xs" />
+            <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full -translate-x-1/2 translate-y-1/2 shadow-xs" />
+            <span className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full translate-x-1/2 translate-y-1/2 shadow-xs" />
+          </div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
+/* 3. Interactive 3D Architectural Wireframe Model (Hero Showcase) */
+function Architectural3DVisual({ onExploreClick }: { onExploreClick: () => void }) {
+  const [activeFloor, setActiveFloor] = useState<1 | 2 | 3>(2);
+
+  return (
+    <div className="relative rounded-3xl p-6 bg-white border border-[#ede8e1] shadow-[0_20px_60px_-15px_rgba(212,98,43,0.14)] overflow-hidden">
+      
+      {/* Top Controls Bar */}
+      <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-100">
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+          <span className="text-xs font-extrabold text-[#1a1a2e] uppercase tracking-wider">
+            3D Hyperframe Live Topology
+          </span>
+        </div>
+        
+        {/* Tier Selector */}
+        <div className="flex bg-[#faf8f5] p-1 rounded-xl border border-gray-200 text-[11px] font-bold text-gray-500">
+          {[
+            { id: 1, label: "L1: Lounge & Café" },
+            { id: 2, label: "L2: Private Suites" },
+            { id: 3, label: "L3: Boardrooms" },
+          ].map((floor) => (
+            <button
+              key={floor.id}
+              onClick={() => setActiveFloor(floor.id as any)}
+              className={`px-2.5 py-1 rounded-lg transition-all ${
+                activeFloor === floor.id
+                  ? "bg-[#d4622b] text-white shadow-xs"
+                  : "hover:text-[#1a1a2e]"
+              }`}
+            >
+              {floor.label.split(":")[0]}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 3D Isometric Viewport Container */}
+      <div className="relative h-[280px] sm:h-[320px] bg-gradient-to-b from-[#faf8f5] to-[#f5f0eb] rounded-2xl border border-gray-200/80 flex items-center justify-center overflow-hidden">
+        
+        {/* Background Radial Radar Ring */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-64 h-64 border border-[#d4622b]/15 rounded-full animate-[spin_30s_linear_infinite]" />
+          <div className="w-48 h-48 border border-dashed border-[#d4622b]/20 rounded-full animate-[spin_20s_linear_infinite_reverse]" />
+          <div className="w-32 h-32 border border-[#d4622b]/25 rounded-full" />
+        </div>
+
+        {/* 3D Isometric Stacking Platform */}
+        <div
+          className="relative w-64 h-48 transition-transform duration-700"
+          style={{
+            transform: "rotateX(60deg) rotateZ(-45deg)",
+            transformStyle: "preserve-3d",
+          }}
+        >
+          {/* Level 1: Ground Floor / Café Deck */}
+          <motion.div
+            animate={{
+              translateZ: activeFloor === 1 ? 40 : 0,
+              opacity: activeFloor === 1 ? 1 : 0.45,
+            }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 rounded-2xl border-2 border-gray-400 bg-white/70 backdrop-blur-sm shadow-md flex items-center justify-center"
+          >
+            {/* Grid Floor Lines */}
+            <div className="absolute inset-2 grid grid-cols-4 grid-rows-3 gap-1 opacity-30">
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className="border border-gray-500/40 rounded-xs" />
+              ))}
+            </div>
+            <span className="text-[10px] font-extrabold text-gray-700 bg-white px-2 py-0.5 rounded-full border shadow-xs -rotate-45">
+              L1: Barista Café & Hot Desks
+            </span>
+          </motion.div>
+
+          {/* Level 2: Private Team Suites */}
+          <motion.div
+            animate={{
+              translateZ: activeFloor === 2 ? 70 : 35,
+              opacity: activeFloor === 2 ? 1 : 0.6,
+            }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 rounded-2xl border-2 border-[#d4622b] bg-white/80 backdrop-blur-md shadow-xl flex items-center justify-center"
+          >
+            <div className="absolute inset-2 grid grid-cols-3 grid-rows-2 gap-2">
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="border border-[#d4622b]/40 bg-[#d4622b]/10 rounded-sm flex items-center justify-center"
+                >
+                  <span className="w-1 h-1 bg-[#d4622b] rounded-full animate-ping" />
+                </div>
+              ))}
+            </div>
+            <span className="relative text-[10px] font-extrabold text-[#d4622b] bg-white px-2.5 py-1 rounded-full border border-[#d4622b]/30 shadow-xs -rotate-45">
+              L2: Sound-Insulated Team Cabins
+            </span>
+          </motion.div>
+
+          {/* Level 3: Executive Boardrooms */}
+          <motion.div
+            animate={{
+              translateZ: activeFloor === 3 ? 105 : 70,
+              opacity: activeFloor === 3 ? 1 : 0.45,
+            }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 rounded-2xl border-2 border-[#1a1a2e] bg-white/75 backdrop-blur-sm shadow-md flex items-center justify-center"
+          >
+            <div className="absolute inset-3 border border-dashed border-[#1a1a2e]/40 rounded-lg flex items-center justify-center">
+              <span className="text-[10px] font-extrabold text-[#1a1a2e] bg-white px-2 py-0.5 rounded-full border shadow-xs -rotate-45">
+                L3: 4K Hybrid Boardroom
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Inflow Fiber Wire Laser Pulse */}
+          <motion.div
+            animate={{
+              translateZ: [0, 110, 0],
+              opacity: [0.2, 1, 0.2],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#d4622b] shadow-[0_0_20px_#d4622b]"
+          />
+        </div>
+
+        {/* Floating Telemetry Badges */}
+        <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-gray-200 text-[10px] font-bold text-gray-700 shadow-xs">
+          <span className="text-[#d4622b]">⚡ Multi-ISP Inflow:</span> 1.0 Gbps Sync
+        </div>
+        <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-gray-200 text-[10px] font-bold text-emerald-600 shadow-xs">
+          ● Dual Generator Online (0s Failover)
+        </div>
+      </div>
+
+      {/* Specs Strip */}
+      <div className="grid grid-cols-3 gap-3 p-3.5 bg-[#faf8f5] rounded-2xl mt-4 border border-gray-100 text-center">
+        <div>
+          <div className="text-xs font-extrabold text-[#d4622b]">Turnkey</div>
+          <div className="text-[10px] text-gray-500">Modular Fit-out</div>
+        </div>
+        <div>
+          <div className="text-xs font-extrabold text-[#1a1a2e]">Acoustic</div>
+          <div className="text-[10px] text-gray-500">Sound-Isolated</div>
+        </div>
+        <div>
+          <div className="text-xs font-extrabold text-emerald-600">Grade-A</div>
+          <div className="text-[10px] text-gray-500">Verified Campus</div>
+        </div>
+      </div>
+
+      {/* Action Button */}
+      <button
+        onClick={onExploreClick}
+        className="w-full mt-3 py-3 rounded-xl bg-[#1a1a2e] hover:bg-[#d4622b] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors duration-300"
+      >
+        <span>Schedule Live Physical Inspection</span>
+        <ArrowUpRight className="w-3.5 h-3.5" />
+      </button>
+
+    </div>
+  );
+}
+
+/* 4. Elegant Placeholder with Wireframe Geometric Grid */
 function ElegantPlaceholder({
   title,
   subtitle,
@@ -400,13 +749,17 @@ function ElegantPlaceholder({
     <div
       className={`relative rounded-2xl bg-gradient-to-br from-[#faf8f5] via-[#f5f0eb] to-[#ede8e1] border border-gray-200/80 flex flex-col items-center justify-center p-6 text-center overflow-hidden group ${className}`}
     >
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 light-grid opacity-40 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-24 h-24 bg-[#d4622b]/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+      {/* Dynamic Wireframe Grid Accent */}
+      <div className="absolute inset-0 light-grid opacity-50 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-28 h-28 bg-[#d4622b]/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
 
-      {/* Icon Badge */}
+      {/* Inflow laser wire line across bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4622b]/40 to-transparent group-hover:via-[#d4622b] transition-all" />
+
+      {/* Icon Badge with 3D Ring */}
       <div className="relative w-14 h-14 rounded-2xl bg-white border border-gray-200 shadow-xs flex items-center justify-center text-[#d4622b] group-hover:scale-110 group-hover:border-[#d4622b]/40 transition-all duration-300 mb-3">
         <Icon className="w-7 h-7" />
+        <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#d4622b] rounded-full animate-ping opacity-75" />
       </div>
 
       {title && (
@@ -554,7 +907,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#faf8f5] text-[#1a1a2e] font-sans relative overflow-x-hidden selection:bg-[#d4622b] selection:text-white">
       
-      {/* ━━━ BACKGROUND AMBIENT GLOW & SUBTLE GRID ━━━ */}
+      {/* ━━━ BACKGROUND AMBIENT GLOW & 3D ISOMETRIC INFLOW WIRE CANVAS ━━━ */}
+      <InflowWireGrid />
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[-5%] right-[-5%] w-[600px] h-[600px] bg-[#d4622b]/5 rounded-full blur-[140px]" />
         <div className="absolute bottom-[10%] left-[-5%] w-[600px] h-[600px] bg-[#d4622b]/4 rounded-full blur-[150px]" />
@@ -786,48 +1140,13 @@ export default function Home() {
 
             </div>
 
-            {/* Right Column: Hero Visual Showcase (Placeholder Card) */}
+            {/* Right Column: Hero Visual Showcase (3D Architectural Wireframe Hyperframe) */}
             <motion.div
               style={{ y: heroY, opacity: heroOpacity }}
               className="lg:col-span-5 relative"
             >
               <FadeUp delay={0.35}>
-                <div className="relative rounded-3xl p-3 bg-white border border-[#ede8e1] shadow-[0_20px_60px_-15px_rgba(212,98,43,0.12)]">
-                  
-                  {/* Styled Placeholder Container */}
-                  <ElegantPlaceholder
-                    title="Okhla Phase II (Flagship Centre)"
-                    subtitle="Grade-A Managed Floorplate • New Delhi"
-                    icon={Building2}
-                    className="aspect-[4/3]"
-                  />
-
-                  {/* Highlights Grid inside Card */}
-                  <div className="grid grid-cols-3 gap-3 p-4 bg-[#faf8f5] rounded-2xl mt-3 border border-gray-100">
-                    <div className="text-center">
-                      <div className="text-base font-extrabold text-[#d4622b]">1Gbps</div>
-                      <div className="text-[10px] font-medium text-gray-500">Fiber Wi-Fi</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-base font-extrabold text-[#1a1a2e]">24/7</div>
-                      <div className="text-[10px] font-medium text-gray-500">Bio Access</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-base font-extrabold text-emerald-600">99.9%</div>
-                      <div className="text-[10px] font-medium text-gray-500">Power SLA</div>
-                    </div>
-                  </div>
-
-                  {/* Card Action */}
-                  <button
-                    onClick={() => openBookingModal("Okhla Phase II (Flagship HQ)")}
-                    className="w-full mt-3 py-3 rounded-xl bg-[#1a1a2e] hover:bg-[#d4622b] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors duration-300"
-                  >
-                    <span>Schedule Visit for this Centre</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </button>
-
-                </div>
+                <Architectural3DVisual onExploreClick={() => openBookingModal("Okhla Phase II (Flagship HQ)")} />
               </FadeUp>
             </motion.div>
 
@@ -1000,12 +1319,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
             
-            {/* Left Sticky Column */}
-            <div className="lg:sticky lg:top-32 space-y-6">
+            {/* Left Sticky Column with Floating 3D Hyperframe */}
+            <div className="lg:sticky lg:top-32 space-y-6 relative">
               <FadeUp>
-                <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block">
-                  Why Onward
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block">
+                    Why Onward
+                  </span>
+                  <Floating3DCage size={55} className="hidden sm:flex opacity-70" />
+                </div>
                 <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1a1a2e] mt-3 leading-tight tracking-tight">
                   Not just a desk.<br />
                   <span className="text-[#d4622b]">A launchpad.</span>
