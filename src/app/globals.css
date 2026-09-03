@@ -1,19 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary: #d4622b;
-  --primary-dark: #b8501f;
-  --secondary: #1a1a2e;
-  --accent: #f5f0eb;
-  --muted: #6b7280;
+  --background: #090d16;
+  --foreground: #f8fafc;
+  --primary: #ea580c;
+  --primary-glow: #f97316;
+  --primary-dark: #c2410c;
+  --secondary: #0b0f19;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --accent: #ffedd5;
+  --muted: #94a3b8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
+  --color-primary-glow: var(--primary-glow);
   --color-primary-dark: var(--primary-dark);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
@@ -23,16 +27,63 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  background: #07090e;
+  color: #f1f5f9;
+  font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: #ea580c;
+  color: #ffffff;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+/* Custom Scrollbar Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hyperframe Neon Glow Utilities */
+.glow-primary {
+  box-shadow: 0 0 40px -10px rgba(234, 88, 12, 0.35);
+}
+
+.glow-subtle {
+  box-shadow: 0 0 60px -20px rgba(234, 88, 12, 0.15);
+}
+
+.glass-panel {
+  background: rgba(15, 20, 32, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hyper-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.hyper-dots {
+  background-image: radial-gradient(rgba(234, 88, 12, 0.22) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s infinite ease-in-out;
 }

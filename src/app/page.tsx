@@ -1,784 +1,1809 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import {
   motion,
   AnimatePresence,
   useInView,
   useScroll,
   useTransform,
-  useMotionValue,
-  useSpring,
 } from "framer-motion";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+  ShieldCheck,
+  Wifi,
+  Coffee,
+  Users,
+  Building2,
+  MapPin,
+  Sparkles,
+  Phone,
+  Mail,
+  Calendar,
+  Layers,
+  Zap,
+  Clock,
+  Star,
+  X,
+  Sliders,
+  Monitor,
+  Lock,
+  Headphones,
+  Check,
+  ChevronDown,
+  Globe2,
+  Flame,
+} from "lucide-react";
 
-/* ═══════════════════════════════════════════
-   PRIMITIVES
-   ═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   DATA STRUCTURES & CONTENT
+   ═══════════════════════════════════════════════════════════════ */
 
-function RevealText({ children, className = "", delay = 0 }: { children: string; className?: string; delay?: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+const dynamicRotatingWords = [
+  "Enterprise HQs",
+  "Private Suites",
+  "High-Growth Teams",
+  "Unicorn Founders",
+];
+
+const statsData = [
+  { value: 15, suffix: "+", label: "Prime NCR Centres", desc: "Delhi • Noida • Gurgaon" },
+  { value: 1, suffix: "M+", label: "Sq. Ft. Managed", desc: "Grade-A Workspaces" },
+  { value: 250, suffix: "+", label: "Enterprise Brands", desc: "MNCs, Unicorns & Scaleups" },
+  { value: 99, suffix: ".9%", label: "Power & Fiber SLA", desc: "Uninterrupted Uptime" },
+];
+
+const workspaceSolutions = [
+  {
+    id: "managed-hq",
+    category: "enterprise",
+    categoryLabel: "Enterprise HQ",
+    title: "Managed Enterprise Office",
+    subtitle: "Custom-built, fully branded private floorplates for 50–500+ seats.",
+    tagline: "Bespoke Architecture",
+    badge: "Most Popular for MNCs",
+    specs: ["Custom Brand Identity", "Dedicated Biometric Access", "Private Boardrooms & Executive Cabins", "Tailored IT Infrastructure & Firewall"],
+    pricing: "Custom Quote",
+    popular: true,
+    capacity: "50 – 500+ Desks",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "private-suite",
+    category: "teams",
+    categoryLabel: "Team Cabins",
+    title: "Dedicated Private Suites",
+    subtitle: "Lockable, acoustically isolated suites crafted for teams of 4–40.",
+    tagline: "Plug & Play Agility",
+    badge: "Zero Setup Cost",
+    specs: ["Ergonomic Workstations", "Private Whiteboards & Smart TV", "Unlimited Barista Coffee & Pantry", "Complimentary Meeting Room Credits"],
+    pricing: "From ₹9,999 / desk",
+    popular: false,
+    capacity: "4 – 40 Seats",
+    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "executive-cabin",
+    category: "executive",
+    categoryLabel: "Leadership",
+    title: "Executive Director Cabins",
+    subtitle: "Prestigious corner suites for founders, C-suite executives, and partners.",
+    tagline: "C-Level Prestige",
+    badge: "Acoustic Isolation",
+    specs: ["Italian Leather Seating", "Private Meeting Table", "High-Security Access Control", "Concierge Priority Support"],
+    pricing: "From ₹24,999 / mo",
+    popular: false,
+    capacity: "1 – 4 Leaders",
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "coworking-desk",
+    category: "flexible",
+    categoryLabel: "Dedicated Desks",
+    title: "Dedicated Coworking Desks",
+    subtitle: "Your reserved high-productivity workstation in a vibrant community.",
+    tagline: "Community & Focus",
+    badge: "24/7 Access",
+    specs: ["Ergonomic Task Chair & Lockers", "1Gbps Redundant Multi-ISP Wi-Fi", "Networking Events & Community App", "Free Printing & Scanning Access"],
+    pricing: "From ₹7,499 / mo",
+    popular: false,
+    capacity: "1 – 10 Seats",
+    image: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "virtual-office",
+    category: "flexible",
+    categoryLabel: "Virtual Address",
+    title: "Virtual Office & GST Plan",
+    subtitle: "Prime commercial business address with GST & MCA compliant documentation.",
+    tagline: "Prestigious Compliance",
+    badge: "Instant Registration",
+    specs: ["Prime Delhi NCR Business Address", "Courier & Mail Handling Services", "Complimentary Day Pass Credits", "Dedicated Landline Answering"],
+    pricing: "From ₹1,299 / mo",
+    popular: false,
+    capacity: "Virtual / Remote",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "conference-hub",
+    category: "enterprise",
+    categoryLabel: "On-Demand",
+    title: "High-Tech Boardrooms & Events",
+    subtitle: "State-of-the-art meeting rooms and amphitheaters with 4K AV conferencing.",
+    tagline: "4K Hybrid Tech",
+    badge: "Hourly & Full Day",
+    specs: ["4K Polycom/Logitech AV Systems", "Wireless Casting & Digital Boards", "Catering & Beverage Concierge", "Flexible Seating from 6 to 80 Pax"],
+    pricing: "From ₹799 / hr",
+    popular: false,
+    capacity: "6 – 80 Pax",
+    image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=800&q=80",
+  },
+];
+
+const locationHubs = {
+  delhi: {
+    city: "Delhi",
+    description: "Capital city hubs strategically connected to Magenta, Violet & Blue Metro lines.",
+    centres: [
+      {
+        name: "Okhla Phase II",
+        metro: "2 mins from Harkesh Nagar Okhla Metro",
+        address: "D-184, Okhla Industrial Area, Phase-II, New Delhi",
+        sqft: "45,000+ sq.ft",
+        tags: ["Metro Adjacent", "Enterprise Floorplates", "Gaming Lounge"],
+        rating: "4.9",
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+      },
+      {
+        name: "Okhla Phase III",
+        metro: "3 mins from NSIC Okhla Metro",
+        address: "B-216, Okhla Phase III, New Delhi",
+        sqft: "38,000+ sq.ft",
+        tags: ["Tech Cluster", "Private Suites", "Café Terrace"],
+        rating: "4.8",
+        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
+      },
+      {
+        name: "Mohan Cooperative",
+        metro: "1 min from Mohan Estate Metro",
+        address: "Mathura Road, Mohan Cooperative Industrial Estate, New Delhi",
+        sqft: "60,000+ sq.ft",
+        tags: ["Large Format HQ", "Ample Parking", "Auditorium"],
+        rating: "4.9",
+        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80",
+      },
+      {
+        name: "Connaught Place",
+        metro: "Rajiv Chowk Interchange",
+        address: "Outer Circle, Connaught Place, Central Delhi",
+        sqft: "25,000+ sq.ft",
+        tags: ["Central CBD", "Executive Cabins", "VIP Boardrooms"],
+        rating: "5.0",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
+      },
+    ],
+  },
+  gurgaon: {
+    city: "Gurgaon",
+    description: "Corporate nerve center in Millennium City near DLF CyberHub & Expressway.",
+    centres: [
+      {
+        name: "Cyber City / DLF",
+        metro: "2 mins from IndusInd Cyber City Rapid Metro",
+        address: "DLF Cyber City, Sector 24, Gurugram",
+        sqft: "55,000+ sq.ft",
+        tags: ["Fortune 500 Corridor", "Dedicated High-Speed Fiber", "Rooftop Deck"],
+        rating: "4.9",
+        image: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=600&q=80",
+      },
+      {
+        name: "Udyog Vihar Phase IV",
+        metro: "5 mins from Shankar Chowk / CyberHub",
+        address: "Plot 304, Udyog Vihar Phase-IV, Gurugram",
+        sqft: "40,000+ sq.ft",
+        tags: ["Startup Hub", "24/7 Security", "Podcast Studio"],
+        rating: "4.8",
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+      },
+      {
+        name: "Golf Course Extension",
+        metro: "Sector 55-56 Rapid Metro",
+        address: "Golf Course Ext Rd, Sector 65, Gurugram",
+        sqft: "32,000+ sq.ft",
+        tags: ["Ultra Premium", "Wellness Zone", "EV Charging"],
+        rating: "4.9",
+        image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=600&q=80",
+      },
+    ],
+  },
+  noida: {
+    city: "Noida",
+    description: "High-tech expressway corridors with seamless connectivity to Central Delhi.",
+    centres: [
+      {
+        name: "Sector 62 IT Hub",
+        metro: "Electronic City Metro Station (3 mins)",
+        address: "C-Block, Institutional Area, Sector 62, Noida",
+        sqft: "50,000+ sq.ft",
+        tags: ["IT Park", "MNC Floorplates", "Artisan Cafeteria"],
+        rating: "4.8",
+        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
+      },
+      {
+        name: "Sector 16 Metro Corridor",
+        metro: "1 min walk from Sector 16 Metro",
+        address: "Film City Marg, Sector 16, Noida",
+        sqft: "30,000+ sq.ft",
+        tags: ["Media Hub", "Turnkey Cabins", "Zero Commute Delay"],
+        rating: "4.9",
+        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80",
+      },
+      {
+        name: "Sector 132 Expressway",
+        metro: "Noida-Greater Noida Expressway",
+        address: "Expressway Corporate Park, Sector 132, Noida",
+        sqft: "65,000+ sq.ft",
+        tags: ["Mega Campus", "Green Building", "Executive Suites"],
+        rating: "4.9",
+        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
+      },
+    ],
+  },
+};
+
+const enterpriseAmenities = [
+  {
+    icon: Wifi,
+    title: "1Gbps Redundant Fiber",
+    desc: "Dual-ISP enterprise lines with automatic failover and dedicated firewall protection.",
+    accent: "from-amber-500/20 to-orange-500/10",
+  },
+  {
+    icon: Headphones,
+    title: "Acoustic Zoom & Call Pods",
+    desc: "Studio-engineered soundproof phone booths for uninterrupted client and investor calls.",
+    accent: "from-blue-500/20 to-cyan-500/10",
+  },
+  {
+    icon: Coffee,
+    title: "Artisan Barista & Pantry",
+    desc: "Unlimited organic coffees, gourmet herbal teas, micro-kitchens, and healthy snacking stations.",
+    accent: "from-emerald-500/20 to-teal-500/10",
+  },
+  {
+    icon: Lock,
+    title: "24/7 Biometric Security",
+    desc: "AI facial recognition turnstiles, 360° HD surveillance, and smart access cards for your team.",
+    accent: "from-purple-500/20 to-indigo-500/10",
+  },
+  {
+    icon: Monitor,
+    title: "4K Hybrid Boardrooms",
+    desc: "Interactive touch display boards, Polycom 4K studio cameras, and automated booking.",
+    accent: "from-rose-500/20 to-pink-500/10",
+  },
+  {
+    icon: Zap,
+    title: "100% Power Redundancy",
+    desc: "Tier-3 dual diesel generator backup + industrial online UPS ensuring 0-second blackout downtime.",
+    accent: "from-yellow-500/20 to-amber-500/10",
+  },
+];
+
+const testimonialsData = [
+  {
+    name: "Varun Puri",
+    role: "Founder & CEO",
+    company: "Dangal Games",
+    quote: "Onward transformed how our 120-person engineering and product team operates. The seamless IT infrastructure, acoustic cabins, and vibrant environment gave us the agility to scale rapidly across NCR.",
+    rating: 5,
+    seats: "120 Seats Managed",
+  },
+  {
+    name: "Abhinay Nagwekar",
+    role: "Head of Procurement & Infra",
+    company: "Aramex India",
+    quote: "Switching our regional headquarters to Onward Workspaces was the best strategic real estate decision. Zero setup headaches, 100% uptime, and meticulous hospitality for our leadership team.",
+    rating: 5,
+    seats: "Enterprise Wing",
+  },
+  {
+    name: "Prasenjit Das Gupta",
+    role: "Head Commercial Operations",
+    company: "Thermax Limited",
+    quote: "The strategic location near the metro, top-tier meeting facilities, and transparent terms made Onward an easy choice. Our clients and leadership are always impressed when they visit.",
+    rating: 5,
+    seats: "Custom Corporate Floor",
+  },
+];
+
+const enterpriseLogos = [
+  "Dangal Games",
+  "Aramex",
+  "Thermax",
+  "Razorpay",
+  "InnovateLabs",
+  "GlobalSoft Technologies",
+  "NexGen AI",
+  "FinVeda Capital",
+];
+
+const faqItems = [
+  {
+    q: "How fast can my team move into an Onward Workspace?",
+    a: "For Private Suites and Dedicated Desks, you can move in immediately within 24 hours. For custom-built Enterprise Managed Offices (50–500+ seats), our design and build team delivers bespoke turnkeys in 3 to 5 weeks.",
+  },
+  {
+    q: "What is included in the monthly workspace membership fee?",
+    a: "Everything is covered in one consolidated invoice: ergonomic furniture, 1Gbps redundant internet, electricity & 100% power backup, daily housekeeping, security, unlimited barista coffee & tea, reception services, and meeting room credits.",
+  },
+  {
+    q: "Can I get GST and MCA company registration documents for a Virtual Office?",
+    a: "Yes. Our Virtual Office packages provide complete legal documentation including Rent Agreement, NOC, and Electricity Bill for GST registration, ROC filings, and bank account opening in Delhi NCR.",
+  },
+  {
+    q: "Do you offer flexible lease terms instead of 3-year lock-ins?",
+    a: "Yes! We offer flexible tenures ranging from monthly rolling passes to 6-month, 1-year, or multi-year enterprise managed agreements with zero hidden maintenance charges.",
+  },
+  {
+    q: "How can I book a free physical tour of the centres?",
+    a: "You can click any 'Book a Tour' button on this page, choose your preferred hub and date, or directly call our team at +91 9910668152 to schedule an executive walkthrough with complimentary day-pass access.",
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════════
+   HELPER ANIMATION PRIMITIVES
+   ═══════════════════════════════════════════════════════════════ */
+
+function RevealMotion({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
   return (
-    <span ref={ref} className={`inline-block overflow-hidden ${className}`}>
-      <motion.span
-        className="inline-block"
-        initial={{ y: "110%" }}
-        animate={inView ? { y: 0 } : {}}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
-      >
-        {children}
-      </motion.span>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 35 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1], delay }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function CounterNumber({ target, suffix = "" }: { target: number; suffix?: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const duration = 1400;
+    const steps = 60;
+    const stepVal = target / steps;
+    const intervalTime = duration / steps;
+    const timer = setInterval(() => {
+      start += stepVal;
+      if (start >= target) {
+        setCount(target);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
+      }
+    }, intervalTime);
+    return () => clearInterval(timer);
+  }, [inView, target]);
+
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
     </span>
   );
 }
 
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+/* ═══════════════════════════════════════════════════════════════
+   MAIN COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
 
-function Counter({ target, suffix }: { target: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
+export default function Home() {
+  const [heroIndex, setHeroIndex] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSolutionCategory, setActiveSolutionCategory] = useState<string>("all");
+  const [activeCityTab, setActiveCityTab] = useState<"delhi" | "gurgaon" | "noida">("delhi");
+  const [activeFaq, setActiveFaq] = useState<number | null>(0);
+
+  // Space Estimator State
+  const [teamSize, setTeamSize] = useState<number>(25);
+  const [estimatorCity, setEstimatorCity] = useState<string>("Delhi");
+  const [workspaceType, setWorkspaceType] = useState<"managed" | "private" | "desk">("managed");
+
+  // Tour Booking Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalSelectedHub, setModalSelectedHub] = useState("Okhla Phase II, Delhi");
+  const [bookingStep, setBookingStep] = useState<"form" | "success">("form");
+
+  // Horizontal Solutions Slider Ref & Drag State
+  const solutionsTrackRef = useRef<HTMLDivElement>(null);
+  const [solutionScrollProgress, setSolutionScrollProgress] = useState(0);
+
+  // Horizontal Locations Slider Ref
+  const locationsTrackRef = useRef<HTMLDivElement>(null);
+
+  // Scroll hero animation
+  const heroContainerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroContainerRef, offset: ["start start", "end start"] });
+  const heroParallaxY = useTransform(scrollYProgress, [0, 1], [0, 160]);
+
+  // Dynamic Word Switcher & Scroll Event
   useEffect(() => {
-    if (!inView) return;
-    let start = 0;
-    const step = target / 120;
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(Math.floor(start));
-    }, 16);
-    return () => clearInterval(timer);
-  }, [inView, target]);
-  return <span ref={ref}>{count}{suffix}</span>;
-}
+    const wordTimer = setInterval(() => {
+      setHeroIndex((prev) => (prev + 1) % dynamicRotatingWords.length);
+    }, 2500);
 
-function Marquee({ children, speed = 30 }: { children: React.ReactNode; speed?: number }) {
-  return (
-    <div className="overflow-hidden whitespace-nowrap">
-      <motion.div
-        className="inline-flex gap-16"
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
-      >
-        {children}
-        {children}
-      </motion.div>
-    </div>
-  );
-}
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      clearInterval(wordTimer);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
-function AutoSlider({ children, interval = 3000, className = "", dotColor = "light" }: { children: React.ReactNode[]; interval?: number; className?: string; dotColor?: "light" | "dark" }) {
-  const [current, setCurrent] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const total = children.length;
-  const trackRef = useRef<HTMLDivElement>(null);
-  const startX = useRef(0);
+  // Filtered Solutions
+  const filteredSolutions = useMemo(() => {
+    if (activeSolutionCategory === "all") return workspaceSolutions;
+    return workspaceSolutions.filter((s) => s.category === activeSolutionCategory);
+  }, [activeSolutionCategory]);
 
-  useEffect(() => {
-    if (paused) return;
-    const timer = setInterval(() => setCurrent((p) => (p + 1) % total), interval);
-    return () => clearInterval(timer);
-  }, [paused, total, interval]);
+  // Solution Track Horizontal Scroll listener
+  const handleSolutionScroll = () => {
+    if (solutionsTrackRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = solutionsTrackRef.current;
+      const progress = scrollLeft / (scrollWidth - clientWidth);
+      setSolutionScrollProgress(Math.min(Math.max(progress, 0), 1));
+    }
+  };
 
-  const handleTouchStart = (e: React.TouchEvent) => { startX.current = e.touches[0].clientX; setPaused(true); };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const diff = startX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) setCurrent((p) => diff > 0 ? (p + 1) % total : (p - 1 + total) % total);
-    setPaused(false);
+  const scrollSolutions = (direction: "left" | "right") => {
+    if (solutionsTrackRef.current) {
+      const offset = 420;
+      solutionsTrackRef.current.scrollBy({
+        left: direction === "right" ? offset : -offset,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  const scrollLocations = (direction: "left" | "right") => {
+    if (locationsTrackRef.current) {
+      const offset = 380;
+      locationsTrackRef.current.scrollBy({
+        left: direction === "right" ? offset : -offset,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Estimated Calculations
+  const calculatedSpecs = useMemo(() => {
+    let sqft = teamSize * 70;
+    if (workspaceType === "managed") sqft = teamSize * 85;
+    if (workspaceType === "desk") sqft = teamSize * 45;
+
+    const cabins = Math.max(1, Math.floor(teamSize / 10));
+    const meetingRooms = Math.max(1, Math.floor(teamSize / 18));
+    const phonePods = Math.max(1, Math.floor(teamSize / 12));
+
+    return {
+      sqft: sqft.toLocaleString(),
+      cabins,
+      meetingRooms,
+      phonePods,
+      estMonthly: (teamSize * (workspaceType === "managed" ? 11500 : workspaceType === "private" ? 9500 : 7500)).toLocaleString(),
+    };
+  }, [teamSize, workspaceType]);
+
+  const openBookingModal = (hubName?: string) => {
+    if (hubName) setModalSelectedHub(hubName);
+    setBookingStep("form");
+    setIsModalOpen(true);
   };
 
   return (
-    <div className={className || "md:hidden"}>
-      <div className="overflow-hidden" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
-        <motion.div
-          ref={trackRef}
-          className="flex"
-          animate={{ x: `${-current * 100}%` }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {children.map((child, i) => (
-            <div key={i} className="w-full flex-shrink-0 px-2">{child}</div>
-          ))}
-        </motion.div>
+    <div className="min-h-screen bg-[#07090e] text-slate-100 selection:bg-[#ea580c] selection:text-white font-sans relative overflow-x-hidden">
+      
+      {/* ━━━ AMBIENT HYPERFRAME GLOW OVERLAYS ━━━ */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-[#ea580c]/12 rounded-full blur-[140px] animate-pulse-slow" />
+        <div className="absolute top-[35%] right-[-10%] w-[550px] h-[550px] bg-[#f97316]/8 rounded-full blur-[160px] animate-pulse-slow" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[700px] h-[700px] bg-[#c2410c]/10 rounded-full blur-[180px]" />
+        <div className="absolute inset-0 hyper-grid opacity-30" />
       </div>
-      <div className="flex justify-center gap-2 mt-6">
-        {children.map((_, i) => (
-          <button key={i} onClick={() => { setCurrent(i); setPaused(false); }} className={`h-1.5 rounded-full transition-all duration-300 ${current === i ? "w-8 bg-[#d4622b]" : `w-1.5 ${dotColor === "dark" ? "bg-white/30" : "bg-gray-300"}`}`} />
-        ))}
-      </div>
-    </div>
-  );
-}
 
-function MagneticButton({ children, className = "", href = "#" }: { children: React.ReactNode; className?: string; href?: string }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 300, damping: 20 });
-  const springY = useSpring(y, { stiffness: 300, damping: 20 });
-
-  const handleMouse = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    x.set((e.clientX - rect.left - rect.width / 2) * 0.3);
-    y.set((e.clientY - rect.top - rect.height / 2) * 0.3);
-  }, [x, y]);
-
-  const reset = useCallback(() => { x.set(0); y.set(0); }, [x, y]);
-
-  return (
-    <motion.a
-      href={href}
-      onMouseMove={handleMouse}
-      onMouseLeave={reset}
-      style={{ x: springX, y: springY }}
-      whileTap={{ scale: 0.95 }}
-      className={className}
-    >
-      {children}
-    </motion.a>
-  );
-}
-
-/* ═══════════════════════════════════════════
-   DATA
-   ═══════════════════════════════════════════ */
-
-const heroWords = ["Ambition", "Brand", "People", "Vision"];
-
-const stats = [
-  { value: 3, suffix: "+", label: "Cities", sub: "and growing" },
-  { value: 15, suffix: "+", label: "Centres", sub: "across NCR" },
-  { value: 250, suffix: "+", label: "Clients", sub: "trusted us" },
-  { value: 1, suffix: "M+", label: "Sq. Ft.", sub: "of workspace" },
-];
-
-const solutions = [
-  { title: "Managed Office", desc: "Customised workspace for Enterprise, MNCs & Unicorns", tag: "ENTERPRISE", size: "lg" },
-  { title: "Private Suites", desc: "Fully-managed private cabins for teams", tag: "TEAMS", size: "sm" },
-  { title: "Private Cabins", desc: "Fully-equipped space for directors", tag: "EXECUTIVE", size: "sm" },
-  { title: "Virtual Office", desc: "Virtual HQ with zero overhead costs", tag: "REMOTE", size: "md" },
-  { title: "On-Demand", desc: "Meeting rooms & day pass on the go", tag: "FLEXIBLE", size: "md" },
-  { title: "Custom Built", desc: "Bespoke design tailored to your brand", tag: "BESPOKE", size: "lg" },
-];
-
-const features = [
-  { num: "01", title: "Strategic Locations", desc: "Vibrant business centers across Delhi, Noida, and Gurgaon — right where opportunity lives." },
-  { num: "02", title: "Built for Triumph", desc: "Every element crafted to fuel productivity, inspire creativity, and drive your team forward." },
-  { num: "03", title: "Beyond Ordinary", desc: "Futuristic tech, premium amenities, and tailor-made workspaces that amplify how you work." },
-];
-
-const cities = [
-  { name: "Delhi", spots: ["Connaught Place", "Nehru Place", "Saket"] },
-  { name: "Noida", spots: ["Sector 62", "Sector 16", "Sector 132"] },
-  { name: "Gurgaon", spots: ["Cyber City", "Golf Course Rd", "Sohna Road"] },
-];
-
-const testimonials = [
-  { name: "Varun Puri", role: "Founder, Dangal Games", text: "Onward has been a game-changer for our team. The perfect office space for our growth journey." },
-  { name: "Abhinay Nagwekar", role: "Procurement Lead, Aramex", text: "Onward exceeded all expectations — meticulously designed spaces with unwavering support." },
-  { name: "Prasenjit Das Gupta", role: "Head Commercial, Thermax", text: "Transitioning to Onward was our best decision. The environment fosters real collaboration." },
-];
-
-const logos = ["Dangal Games", "Aramex", "Thermax", "Razorpay", "InnovateLabs", "GlobalSoft", "TechCorp", "NexGen"];
-
-/* ═══════════════════════════════════════════
-   CARD COMPONENTS (extracted for reuse in grid + slider)
-   ═══════════════════════════════════════════ */
-
-function SolutionCard({ sol }: { sol: typeof solutions[number] }) {
-  return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      className="relative bg-white rounded-3xl p-8 h-full min-h-[220px] cursor-pointer group overflow-hidden border border-gray-100 hover:border-[#d4622b]/20 transition-all duration-500 hover:shadow-[0_20px_60px_-20px_rgba(212,98,43,0.15)]"
-    >
-      <div className="absolute top-0 right-0 w-32 h-32 bg-[#d4622b]/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-[3] transition-transform duration-700" />
-      <span className="relative text-[10px] font-bold tracking-[0.2em] text-[#d4622b] bg-[#d4622b]/8 px-3 py-1 rounded-full">{sol.tag}</span>
-      <h3 className="relative mt-6 text-2xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">{sol.title}</h3>
-      <p className="relative mt-3 text-gray-500 leading-relaxed">{sol.desc}</p>
-      <div className="relative mt-6 flex items-center gap-2 text-[#d4622b] text-sm font-semibold opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-        Explore <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-      </div>
-    </motion.div>
-  );
-}
-
-function TestimonialCard({ t }: { t: typeof testimonials[number] }) {
-  return (
-    <div className="relative p-8 rounded-3xl bg-[#faf8f5] border border-gray-100 h-full group hover:border-[#d4622b]/20 transition-all duration-500 hover:shadow-[0_20px_60px_-20px_rgba(212,98,43,0.1)]">
-      <div className="flex gap-1 mb-6">
-        {[...Array(5)].map((_, j) => (
-          <svg key={j} className="w-4 h-4 text-[#d4622b]" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-        ))}
-      </div>
-      <p className="text-gray-600 leading-relaxed text-[15px]">&ldquo;{t.text}&rdquo;</p>
-      <div className="mt-8 flex items-center gap-4">
-        <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#d4622b] to-[#e8855a] flex items-center justify-center text-white font-bold text-sm">{t.name.split(" ").map(n => n[0]).join("")}</div>
-        <div>
-          <div className="font-semibold text-[#1a1a2e] text-sm">{t.name}</div>
-          <div className="text-gray-400 text-xs">{t.role}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LocationCard({ spot, city, delay }: { spot: string; city: string; delay: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay }}
-      whileHover={{ y: -6, scale: 1.02 }}
-      className="relative group cursor-pointer"
-    >
-      <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-gray-100 to-gray-50 border border-gray-200 overflow-hidden flex items-center justify-center">
-        <div className="text-center">
-          <svg className="w-12 h-12 text-gray-300 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-          <span className="text-gray-400 text-xs mt-2 block">Image Placeholder</span>
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </div>
-      <div className="mt-4">
-        <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">{spot}</h3>
-        <p className="text-gray-400 text-sm">{city}</p>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ═══════════════════════════════════════════
-   PAGE
-   ═══════════════════════════════════════════ */
-
-export default function Home() {
-  const [heroWord, setHeroWord] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenu, setMobileMenu] = useState(false);
-  const [activeCity, setActiveCity] = useState(0);
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
-
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  useEffect(() => {
-    const wt = setInterval(() => setHeroWord((p) => (p + 1) % heroWords.length), 2200);
-    const sh = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", sh);
-    return () => { clearInterval(wt); window.removeEventListener("scroll", sh); };
-  }, []);
-
-  return (
-    <>
-      {/* ━━━ NAV ━━━ */}
+      {/* ━━━ TOP FLOATING DYNAMIC ISLAND NAVIGATION ━━━ */}
       <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-white/90 backdrop-blur-xl shadow-lg" : "bg-white/70 backdrop-blur-sm"
-        }`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 pt-4 pb-2 transition-all duration-300"
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
-          <a href="#" className="flex items-center gap-2.5 group">
-            <img src="/onward-logo.png" alt="Onward" className="w-9 h-9 group-hover:rotate-6 transition-transform" />
-            <div className="leading-none">
-              <span className="text-xl font-bold tracking-tight text-[#1a1a2e]">Onward</span>
-              <span className="block text-[9px] tracking-[0.25em] text-gray-400">WORKSPACES</span>
+        <div
+          className={`max-w-7xl mx-auto rounded-2xl transition-all duration-300 px-5 sm:px-7 py-3 flex items-center justify-between ${
+            scrolled
+              ? "bg-[#0c101b]/85 backdrop-blur-xl border border-white/10 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]"
+              : "bg-[#0f1422]/60 backdrop-blur-md border border-white/5"
+          }`}
+        >
+          {/* Brand Logo */}
+          <a href="#home" className="flex items-center gap-3 group">
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#ea580c] to-[#9a3412] p-0.5 shadow-[0_0_20px_rgba(234,88,12,0.4)] group-hover:scale-105 transition-transform duration-300">
+              <div className="w-full h-full bg-[#0b0e17] rounded-[10px] flex items-center justify-center">
+                <img src="/onward-logo.png" alt="Onward Logo" className="w-6 h-6 object-contain" />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold tracking-tight text-white group-hover:text-[#ea580c] transition-colors">
+                  Onward
+                </span>
+                <span className="text-[9px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-[#ea580c]/20 text-[#f97316] border border-[#ea580c]/30">
+                  DEMO HQ
+                </span>
+              </div>
+              <span className="block text-[10px] tracking-[0.25em] text-slate-400 font-medium -mt-0.5">
+                WORKSPACES
+              </span>
             </div>
           </a>
 
-          <nav className="hidden lg:flex items-center gap-10">
-            {["Home", "About", "Solutions", "Locations", "Contact"].map((l) => (
-              <a key={l} href={`#${l.toLowerCase()}`} className="text-sm font-medium text-gray-600 transition-colors hover:text-[#d4622b]">
-                {l}
-              </a>
-            ))}
+          {/* Desktop Nav Links */}
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+            <a href="#solutions" className="hover:text-[#ea580c] transition-colors flex items-center gap-1.5">
+              <span>Solutions</span>
+              <span className="text-[10px] bg-white/10 text-slate-300 px-1.5 py-0.5 rounded-full">6</span>
+            </a>
+            <a href="#estimator" className="hover:text-[#ea580c] transition-colors flex items-center gap-1.5">
+              <span>Space Calculator</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ea580c] animate-ping" />
+            </a>
+            <a href="#locations" className="hover:text-[#ea580c] transition-colors">
+              NCR Hubs
+            </a>
+            <a href="#amenities" className="hover:text-[#ea580c] transition-colors">
+              Enterprise Specs
+            </a>
+            <a href="#reviews" className="hover:text-[#ea580c] transition-colors">
+              Clients
+            </a>
           </nav>
 
-          <div className="flex items-center gap-4">
-            <MagneticButton href="#contact" className="hidden lg:flex bg-[#d4622b] text-white px-7 py-3 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-colors">
-              Get Started
-            </MagneticButton>
-            <button onClick={() => setMobileMenu(!mobileMenu)} className="lg:hidden">
-              <div className="w-7 h-5 flex flex-col justify-between">
-                <span className={`block h-0.5 bg-gray-800 transition-all origin-center ${mobileMenu ? "rotate-45 translate-y-[9px]" : ""}`} />
-                <span className={`block h-0.5 bg-gray-800 transition-all ${mobileMenu ? "opacity-0" : ""}`} />
-                <span className={`block h-0.5 bg-gray-800 transition-all origin-center ${mobileMenu ? "-rotate-45 -translate-y-[9px]" : ""}`} />
-              </div>
+          {/* Right Action Buttons */}
+          <div className="flex items-center gap-3">
+            <a
+              href="tel:+919910668152"
+              className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 transition-all"
+            >
+              <Phone className="w-3.5 h-3.5 text-[#ea580c]" />
+              <span>+91 9910668152</span>
+            </a>
+
+            <button
+              onClick={() => openBookingModal()}
+              className="relative group overflow-hidden rounded-xl bg-gradient-to-r from-[#ea580c] to-[#c2410c] px-5 py-2.5 text-xs font-bold text-white shadow-[0_0_25px_rgba(234,88,12,0.35)] hover:shadow-[0_0_35px_rgba(234,88,12,0.5)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+            >
+              <span className="relative z-10 flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                <span>Book Free Tour</span>
+              </span>
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+            </button>
+
+            {/* Mobile Menu Trigger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2.5 rounded-xl bg-white/5 text-slate-300 hover:text-white border border-white/10"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <div className="w-5 h-4 flex flex-col justify-between"><span className="w-full h-0.5 bg-white rounded-full"/><span className="w-3/4 h-0.5 bg-white rounded-full"/><span className="w-full h-0.5 bg-white rounded-full"/></div>}
             </button>
           </div>
         </div>
 
+        {/* Mobile Navigation Drawer */}
         <AnimatePresence>
-          {mobileMenu && (
+          {mobileMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white border-t overflow-hidden"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25 }}
+              className="lg:hidden mt-2 p-5 rounded-2xl bg-[#0c101b]/95 backdrop-blur-2xl border border-white/10 shadow-2xl space-y-4"
             >
-              <div className="px-6 py-6 space-y-4">
-                {["Home", "About", "Solutions", "Locations", "Contact"].map((l) => (
-                  <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMobileMenu(false)} className="block text-gray-700 font-medium text-lg">{l}</a>
+              <div className="grid grid-cols-2 gap-2 text-sm font-medium">
+                {[
+                  { name: "Solutions", href: "#solutions" },
+                  { name: "Space Calculator", href: "#estimator" },
+                  { name: "NCR Hubs", href: "#locations" },
+                  { name: "Amenities", href: "#amenities" },
+                  { name: "Testimonials", href: "#reviews" },
+                  { name: "Contact", href: "#contact" },
+                ].map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="p-3 rounded-xl bg-white/5 text-slate-200 hover:bg-[#ea580c]/20 hover:text-white transition-colors"
+                  >
+                    {item.name}
+                  </a>
                 ))}
-                <a href="#contact" onClick={() => setMobileMenu(false)} className="block bg-[#d4622b] text-white text-center py-3.5 rounded-full font-semibold">Get Started</a>
+              </div>
+
+              <div className="pt-2 border-t border-white/10 flex flex-col gap-2">
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    openBookingModal();
+                  }}
+                  className="w-full py-3 rounded-xl bg-gradient-to-r from-[#ea580c] to-[#c2410c] text-white font-bold text-center text-sm shadow-lg flex items-center justify-center gap-2"
+                >
+                  <Calendar className="w-4 h-4" />
+                  Schedule Workspace Tour
+                </button>
+                <a
+                  href="tel:+919910668152"
+                  className="w-full py-2.5 rounded-xl bg-white/5 text-slate-300 font-semibold text-center text-xs flex items-center justify-center gap-2"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#ea580c]" />
+                  Call Support: +91 9910668152
+                </a>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </motion.header>
 
-      {/* ━━━ HERO ━━━ */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center bg-white overflow-hidden" id="home">
-        {/* Animated grid background */}
-        <div className="absolute inset-0 opacity-[0.4]">
-          <div className="absolute inset-0" style={{
-            backgroundImage: "linear-gradient(rgba(212,98,43,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(212,98,43,.05) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }} />
-        </div>
+      {/* ━━━ HERO SECTION (HYPERFRAME SPLIT SCREEN) ━━━ */}
+      <section
+        id="home"
+        ref={heroContainerRef}
+        className="relative pt-32 sm:pt-40 pb-20 lg:pb-32 z-10 overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+            
+            {/* Left Column: Bold Headline & CTAs */}
+            <div className="lg:col-span-7 space-y-8">
+              <RevealMotion delay={0.1}>
+                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ea580c] opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-[#ea580c]" />
+                  </span>
+                  <span className="text-xs font-semibold text-slate-200">
+                    Premium Managed & Coworking Offices in Delhi NCR
+                  </span>
+                </div>
+              </RevealMotion>
 
-        {/* Floating orbs */}
-        <motion.div animate={{ y: [-20, 20, -20], x: [-10, 15, -10] }} transition={{ duration: 8, repeat: Infinity }} className="absolute top-1/4 right-[15%] w-72 h-72 bg-[#d4622b]/10 rounded-full blur-[100px]" />
-        <motion.div animate={{ y: [20, -20, 20], x: [10, -15, 10] }} transition={{ duration: 10, repeat: Infinity }} className="absolute bottom-1/4 left-[10%] w-96 h-96 bg-[#d4622b]/5 rounded-full blur-[120px]" />
-
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-20">
-          <div className="max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="inline-flex items-center gap-3 bg-[#d4622b]/5 border border-[#d4622b]/10 rounded-full px-5 py-2 mb-10"
-            >
-              <span className="w-2 h-2 bg-[#d4622b] rounded-full animate-pulse" />
-              <span className="text-[#d4622b] text-sm font-medium">2 Day Free Trial Available</span>
-            </motion.div>
-
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold text-[#1a1a2e] leading-[1.05] tracking-tight">
-              <div className="overflow-hidden">
-                <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}>
-                  Workspace built
-                </motion.div>
-              </div>
-              <div className="overflow-hidden">
-                <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}>
-                  around{" "}
-                  <span className="relative inline-block">
+              <RevealMotion delay={0.2}>
+                <h1 className="text-4xl sm:text-6xl lg:text-[4.25rem] font-extrabold tracking-tight text-white leading-[1.08]">
+                  Architected for{" "}
+                  <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-[#ea580c] via-[#fb923c] to-[#f97316]">
                     <AnimatePresence mode="wait">
                       <motion.span
-                        key={heroWord}
-                        initial={{ y: 40, opacity: 0, rotateX: -40 }}
-                        animate={{ y: 0, opacity: 1, rotateX: 0 }}
-                        exit={{ y: -40, opacity: 0, rotateX: 40 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="inline-block text-[#d4622b]"
-                        style={{ transformOrigin: "bottom" }}
+                        key={heroIndex}
+                        initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, y: -30, filter: "blur(8px)" }}
+                        transition={{ duration: 0.45 }}
+                        className="inline-block"
                       >
-                        {heroWords[heroWord]}
+                        {dynamicRotatingWords[heroIndex]}
                       </motion.span>
                     </AnimatePresence>
-                    <motion.span
-                      className="absolute -bottom-2 left-0 h-1 bg-[#d4622b] rounded-full"
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: 1, duration: 0.8 }}
-                    />
                   </span>
-                </motion.div>
-              </div>
-            </h1>
+                  <br />
+                  that refuse to settle.
+                </h1>
+              </RevealMotion>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="mt-8 text-lg sm:text-xl text-gray-500 max-w-xl leading-relaxed"
-            >
-              Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
-            </motion.p>
+              <RevealMotion delay={0.3}>
+                <p className="text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
+                  Turnkey private suites, custom-managed enterprise floorplates, and vibrant coworking hubs across prime locations in Delhi, Noida, and Gurgaon. Equipped with Tier-1 infrastructure and zero setup overhead.
+                </p>
+              </RevealMotion>
 
+              {/* Action Buttons */}
+              <RevealMotion delay={0.4}>
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <button
+                    onClick={() => openBookingModal()}
+                    className="flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl bg-gradient-to-r from-[#ea580c] to-[#c2410c] text-white font-bold text-sm sm:text-base shadow-[0_0_35px_rgba(234,88,12,0.4)] hover:shadow-[0_0_50px_rgba(234,88,12,0.6)] hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  >
+                    <span>Schedule an Executive Tour</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  <a
+                    href="#estimator"
+                    className="flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white border border-white/10 font-semibold text-sm transition-all"
+                  >
+                    <Sliders className="w-4 h-4 text-[#ea580c]" />
+                    <span>Calculate Space & Budget</span>
+                  </a>
+                </div>
+              </RevealMotion>
+
+              {/* Trust Micro-Metrics */}
+              <RevealMotion delay={0.5}>
+                <div className="pt-6 border-t border-white/10 flex flex-wrap items-center gap-6 sm:gap-10 text-xs text-slate-400">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#ea580c]" />
+                    <span>Zero Brokerage & Setup Cost</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#ea580c]" />
+                    <span>100% Power & Fiber SLA</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#ea580c]" />
+                    <span>2-Day Free Trial Available</span>
+                  </div>
+                </div>
+              </RevealMotion>
+            </div>
+
+            {/* Right Column: Hyperframe Interactive Visual Showcase */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.6 }}
-              className="mt-10 flex flex-col sm:flex-row gap-4"
+              style={{ y: heroParallaxY }}
+              className="lg:col-span-5 relative"
             >
-              <MagneticButton href="#contact" className="inline-flex items-center justify-center bg-[#d4622b] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]">
-                Book a Tour
-                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-              </MagneticButton>
-              <a href="tel:9910668152" className="inline-flex items-center justify-center gap-3 text-gray-500 hover:text-[#d4622b] px-8 py-4 rounded-full border border-gray-200 hover:border-[#d4622b]/30 transition-all">
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
-                +91 9910668152
-              </a>
+              <RevealMotion delay={0.35}>
+                <div className="relative rounded-3xl p-1 bg-gradient-to-b from-white/15 via-white/5 to-transparent shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9)]">
+                  
+                  {/* Glassmorphic Card Body */}
+                  <div className="rounded-[22px] bg-[#0c111e]/90 backdrop-blur-xl border border-white/10 p-6 space-y-6 overflow-hidden relative">
+                    
+                    {/* Floating Glow Inside Card */}
+                    <div className="absolute top-0 right-0 w-48 h-48 bg-[#ea580c]/20 rounded-full blur-[80px] pointer-events-none" />
+
+                    {/* Card Header */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-[#ea580c]/15 border border-[#ea580c]/30 flex items-center justify-center text-[#ea580c]">
+                          <Building2 className="w-5 h-5" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-white">Okhla Phase II Campus</div>
+                          <div className="text-[11px] text-slate-400 flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-[#ea580c]" /> New Delhi • Metro Connected
+                          </div>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        ● 98.4% Occupancy
+                      </span>
+                    </div>
+
+                    {/* Image Mockup with Badge Overlay */}
+                    <div className="relative rounded-2xl overflow-hidden aspect-[16/10] group">
+                      <img
+                        src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
+                        alt="Onward Managed Workspace"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#07090e] via-transparent to-transparent opacity-80" />
+
+                      {/* Floating Inset Badge */}
+                      <div className="absolute bottom-3 left-3 right-3 p-3 rounded-xl bg-[#0b0f19]/80 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-2">
+                          <Flame className="w-4 h-4 text-[#ea580c]" />
+                          <span className="font-semibold text-white">Executive Suite 402</span>
+                        </div>
+                        <span className="text-[#ea580c] font-bold">Available Now</span>
+                      </div>
+                    </div>
+
+                    {/* Interactive Live Metrics Grid */}
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
+                        <div className="text-lg font-extrabold text-[#ea580c]">1Gbps</div>
+                        <div className="text-[10px] text-slate-400">Fiber Speed</div>
+                      </div>
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
+                        <div className="text-lg font-extrabold text-white">24/7</div>
+                        <div className="text-[10px] text-slate-400">Bio Access</div>
+                      </div>
+                      <div className="p-3 rounded-xl bg-white/5 border border-white/5 text-center">
+                        <div className="text-lg font-extrabold text-emerald-400">Grade A</div>
+                        <div className="text-[10px] text-slate-400">Facility</div>
+                      </div>
+                    </div>
+
+                    {/* Quick Action Button inside preview */}
+                    <button
+                      onClick={() => openBookingModal("Okhla Phase II, Delhi")}
+                      className="w-full py-3 rounded-xl bg-white/10 hover:bg-[#ea580c] text-white font-bold text-xs flex items-center justify-center gap-2 transition-all duration-300"
+                    >
+                      <span>Explore this Centre Details</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </RevealMotion>
             </motion.div>
           </div>
 
-          {/* Stats strip at bottom of hero */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.7 }}
-            className="mt-20 lg:mt-28 grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-100 rounded-2xl overflow-hidden"
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="bg-white p-6 sm:p-8 text-center group hover:bg-[#faf8f5] transition-colors">
-                <div className="text-3xl sm:text-4xl font-bold text-[#d4622b]">
-                  <Counter target={s.value} suffix={s.suffix} />
-                </div>
-                <div className="text-gray-600 text-sm mt-1">{s.label}</div>
-                <div className="text-gray-400 text-xs mt-0.5 group-hover:text-[#d4622b]/60 transition-colors">{s.sub}</div>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-gray-400 text-xs tracking-widest uppercase">Scroll</span>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-8 bg-gradient-to-b from-[#d4622b]/40 to-transparent" />
-        </motion.div>
-      </section>
-
-      {/* ━━━ SOLUTIONS — BENTO GRID ━━━ */}
-      <section id="solutions" className="py-24 lg:py-32 bg-[#faf8f5]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
-            <div>
-              <FadeUp>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">Solutions</span>
-              </FadeUp>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight">
-                <RevealText>Space that fits</RevealText>
-                <br />
-                <RevealText delay={0.15}>your ambition</RevealText>
-              </h2>
-            </div>
-            <FadeUp delay={0.3}>
-              <p className="text-gray-500 max-w-md text-lg">Flexible office solutions aligned with your business needs and growth trajectory.</p>
-            </FadeUp>
-          </div>
-
-          {/* Desktop grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {solutions.map((sol, i) => (
-              <FadeUp key={sol.title} delay={i * 0.08} className={sol.size === "lg" ? "lg:col-span-1" : ""}>
-                <SolutionCard sol={sol} />
-              </FadeUp>
-            ))}
-          </div>
-          {/* Mobile auto-slider */}
-          <AutoSlider interval={3500}>
-            {solutions.map((sol) => (
-              <SolutionCard key={sol.title} sol={sol} />
-            ))}
-          </AutoSlider>
-        </div>
-      </section>
-
-      {/* ━━━ FEATURES — NUMBERED LIST ━━━ */}
-      <section id="about" className="py-24 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-            <div className="lg:sticky lg:top-32">
-              <FadeUp>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">Why Onward</span>
-              </FadeUp>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight">
-                <RevealText>Not just a desk.</RevealText>
-                <br />
-                <RevealText delay={0.15}>A launchpad.</RevealText>
-              </h2>
-              <FadeUp delay={0.3}>
-                <p className="mt-6 text-gray-500 text-lg leading-relaxed">We don&apos;t rent space. We build environments where ambitious teams do their life&apos;s work.</p>
-              </FadeUp>
-              <FadeUp delay={0.4}>
-                <MagneticButton href="#contact" className="inline-flex items-center gap-2 mt-8 bg-[#d4622b] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#b8501f] transition-colors">
-                  See it for yourself
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                </MagneticButton>
-              </FadeUp>
-            </div>
-
-            <div className="space-y-0">
-              {features.map((f, i) => (
-                <FadeUp key={f.num} delay={i * 0.15}>
-                  <div className="group py-10 border-b border-gray-100 last:border-0 cursor-pointer">
-                    <div className="flex gap-6 items-start">
-                      <span className="text-5xl font-bold text-[#d4622b]/10 group-hover:text-[#d4622b]/30 transition-colors shrink-0 leading-none">{f.num}</span>
-                      <div>
-                        <h3 className="text-2xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">{f.title}</h3>
-                        <p className="mt-3 text-gray-500 leading-relaxed max-w-md">{f.desc}</p>
-                      </div>
+          {/* Bottom Stats Strip with Animated Numbers */}
+          <div className="mt-16 sm:mt-24 pt-8 border-t border-white/10">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+              {statsData.map((stat, i) => (
+                <RevealMotion key={stat.label} delay={0.1 * i}>
+                  <div className="relative p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-[#ea580c]/30 transition-colors group">
+                    <div className="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#ea580c]">
+                      <CounterNumber target={stat.value} suffix={stat.suffix} />
                     </div>
+                    <div className="text-sm font-bold text-white mt-1">{stat.label}</div>
+                    <div className="text-xs text-slate-400 mt-0.5">{stat.desc}</div>
                   </div>
-                </FadeUp>
+                </RevealMotion>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ━━━ LOCATIONS ━━━ */}
-      <section id="locations" className="py-24 lg:py-32 bg-[#faf8f5] relative overflow-hidden">
-        <motion.div animate={{ rotate: 360 }} transition={{ duration: 120, repeat: Infinity, ease: "linear" }} className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] border border-[#d4622b]/[0.04] rounded-full" />
-        <motion.div animate={{ rotate: -360 }} transition={{ duration: 90, repeat: Infinity, ease: "linear" }} className="absolute -bottom-1/3 -left-1/4 w-[600px] h-[600px] border border-[#d4622b]/[0.04] rounded-full" />
+      {/* ━━━ HORIZONTAL WORKSPACE SOLUTIONS SLIDER ━━━ */}
+      <section id="solutions" className="py-24 sm:py-32 relative z-10 bg-[#090d16] border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          
+          {/* Section Header with Category Tabs & Controls */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea580c]/10 text-[#ea580c] text-xs font-bold uppercase tracking-wider mb-3">
+                <Layers className="w-3.5 h-3.5" />
+                Flexible Workspace Configurations
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Designed for your team&apos;s <span className="text-[#ea580c]">momentum.</span>
+              </h2>
+            </div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
-            <FadeUp>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">Locations</span>
-            </FadeUp>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3">
-              <RevealText>Find us everywhere</RevealText>
-            </h2>
+            {/* Navigation Buttons for Horizontal Scroll */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => scrollSolutions("left")}
+                className="w-12 h-12 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center border border-white/10 transition-colors active:scale-95"
+                aria-label="Previous solution"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={() => scrollSolutions("right")}
+                className="w-12 h-12 rounded-xl bg-[#ea580c] hover:bg-[#c2410c] text-white flex items-center justify-center shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-colors active:scale-95"
+                aria-label="Next solution"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
-          <div className="flex justify-center gap-2 mb-14">
-            {cities.map((c, i) => (
-              <motion.button
-                key={c.name}
-                onClick={() => setActiveCity(i)}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-8 py-3 rounded-full text-sm font-semibold transition-all duration-300 ${
-                  activeCity === i
-                    ? "bg-[#d4622b] text-white shadow-[0_0_30px_rgba(212,98,43,0.2)]"
-                    : "text-gray-500 hover:text-[#d4622b] border border-gray-200 hover:border-[#d4622b]/30"
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-4 mb-6">
+            {[
+              { id: "all", label: "All Formats" },
+              { id: "enterprise", label: "Enterprise & Managed HQ" },
+              { id: "teams", label: "Private Team Suites" },
+              { id: "executive", label: "Executive Cabins" },
+              { id: "flexible", label: "Coworking & Virtual" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveSolutionCategory(tab.id)}
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-300 ${
+                  activeSolutionCategory === tab.id
+                    ? "bg-[#ea580c] text-white shadow-[0_0_20px_rgba(234,88,12,0.35)]"
+                    : "bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 border border-white/5"
                 }`}
               >
-                {c.name}
-              </motion.button>
+                {tab.label}
+              </button>
             ))}
           </div>
 
-          {/* Desktop grid */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCity}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
-              transition={{ duration: 0.4 }}
-              className="hidden sm:grid sm:grid-cols-3 gap-5"
-            >
-              {cities[activeCity].spots.map((spot, i) => (
-                <LocationCard key={spot} spot={spot} city={cities[activeCity].name} delay={i * 0.12} />
-              ))}
-            </motion.div>
-          </AnimatePresence>
-          {/* Mobile auto-slider */}
-          <AutoSlider interval={3000} className="sm:hidden" dotColor="light">
-            {cities[activeCity].spots.map((spot) => (
-              <LocationCard key={spot} spot={spot} city={cities[activeCity].name} delay={0} />
-            ))}
-          </AutoSlider>
-        </div>
-      </section>
-
-      {/* ━━━ GALLERY — PLACEHOLDER STRIP ━━━ */}
-      <section className="py-24 lg:py-32 bg-[#faf8f5] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-14">
-          <FadeUp>
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">Gallery</span>
-          </FadeUp>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3">
-            <RevealText>See the space</RevealText>
-          </h2>
-        </div>
-        <div className="flex gap-4 px-6">
-          {[...Array(6)].map((_, i) => (
-            <FadeUp key={i} delay={i * 0.08} className="shrink-0">
-              <motion.div
-                whileHover={{ scale: 1.03, rotate: i % 2 === 0 ? 1 : -1 }}
-                className={`${i % 3 === 0 ? "w-80 h-96" : i % 3 === 1 ? "w-64 h-80" : "w-72 h-72"} bg-gradient-to-br from-gray-200 to-gray-300 rounded-3xl flex items-center justify-center cursor-pointer overflow-hidden group`}
+          {/* Horizontal Drag/Scroll Track */}
+          <div
+            ref={solutionsTrackRef}
+            onScroll={handleSolutionScroll}
+            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-8 pt-2 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
+          >
+            {filteredSolutions.map((sol) => (
+              <div
+                key={sol.id}
+                className="w-[340px] sm:w-[400px] flex-shrink-0 rounded-3xl bg-[#0d121f] border border-white/10 hover:border-[#ea580c]/50 p-6 flex flex-col justify-between group transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(234,88,12,0.15)] relative overflow-hidden"
               >
-                <div className="text-gray-400 text-center">
-                  <svg className="w-12 h-12 mx-auto mb-2 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="0.8"><rect x="3" y="3" width="18" height="18" rx="3" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" /></svg>
-                  <span className="text-xs">Workspace {i + 1}</span>
-                </div>
-              </motion.div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
+                {/* Background Ambient Glow */}
+                <div className="absolute top-0 right-0 w-36 h-36 bg-[#ea580c]/5 rounded-full blur-[60px] group-hover:bg-[#ea580c]/15 transition-all duration-500" />
 
-      {/* ━━━ TESTIMONIALS ━━━ */}
-      <section className="py-24 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <FadeUp>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">Testimonials</span>
-            </FadeUp>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3">
-              <RevealText>Leaders trust Onward</RevealText>
-            </h2>
-          </div>
+                <div>
+                  {/* Top Image Preview */}
+                  <div className="relative rounded-2xl overflow-hidden aspect-[16/10] mb-5">
+                    <img
+                      src={sol.image}
+                      alt={sol.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d121f] via-transparent to-transparent opacity-70" />
+                    
+                    {/* Badge */}
+                    <div className="absolute top-3 left-3">
+                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-[#0b0e17]/80 backdrop-blur-md text-[#ea580c] border border-[#ea580c]/30">
+                        {sol.badge}
+                      </span>
+                    </div>
 
-          {/* Desktop grid */}
-          <div className="hidden md:grid md:grid-cols-3 gap-6">
-            {testimonials.map((t, i) => (
-              <FadeUp key={t.name} delay={i * 0.12}>
-                <TestimonialCard t={t} />
-              </FadeUp>
-            ))}
-          </div>
-          {/* Mobile auto-slider */}
-          <AutoSlider interval={4000}>
-            {testimonials.map((t) => (
-              <TestimonialCard key={t.name} t={t} />
-            ))}
-          </AutoSlider>
-        </div>
-      </section>
+                    <div className="absolute bottom-3 right-3 text-xs font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg">
+                      {sol.capacity}
+                    </div>
+                  </div>
 
-      {/* ━━━ LOGO MARQUEE ━━━ */}
-      <section className="py-16 bg-[#faf8f5] border-y border-gray-100">
-        <Marquee speed={25}>
-          {logos.map((l) => (
-            <span key={l} className="text-2xl font-bold text-gray-300/60 tracking-wider whitespace-nowrap">{l}</span>
-          ))}
-        </Marquee>
-      </section>
+                  {/* Title & Tagline */}
+                  <div className="text-[11px] font-bold text-[#ea580c] uppercase tracking-widest mb-1">
+                    {sol.tagline}
+                  </div>
+                  <h3 className="text-xl font-bold text-white group-hover:text-[#ea580c] transition-colors">
+                    {sol.title}
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                    {sol.subtitle}
+                  </p>
 
-      {/* ━━━ CONTACT ━━━ */}
-      <section id="contact" className="py-24 lg:py-32 bg-white relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#d4622b]/5 rounded-full blur-[150px]" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-[1fr,1.1fr] gap-16 lg:gap-24">
-            <div>
-              <FadeUp>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">Contact</span>
-              </FadeUp>
-              <h2 className="text-4xl sm:text-5xl font-bold text-[#1a1a2e] mt-3 leading-tight">
-                <RevealText>Ready to move</RevealText>
-                <br />
-                <RevealText delay={0.15}>forward?</RevealText>
-              </h2>
-              <FadeUp delay={0.3}>
-                <p className="mt-6 text-gray-500 text-lg leading-relaxed">Transform your work life. Fill in the form and our team will reach out within 24 hours.</p>
-              </FadeUp>
-
-              <FadeUp delay={0.4}>
-                <div className="mt-10 space-y-6">
-                  {[
-                    { icon: "M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z", label: "Phone", value: "+91 9910668152" },
-                    { icon: "M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75", label: "Email", value: "info@onwardworkspaces.com" },
-                    { icon: "M15 10.5a3 3 0 11-6 0 3 3 0 016 0z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z", label: "Address", value: "Delhi NCR, India" },
-                  ].map((item) => (
-                    <div key={item.label} className="flex items-start gap-4 group">
-                      <div className="w-12 h-12 rounded-2xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-[#d4622b]/30 transition-colors">
-                        <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d={item.icon} /></svg>
+                  {/* Spec Checklist */}
+                  <div className="mt-5 space-y-2.5 pt-4 border-t border-white/5">
+                    {sol.specs.map((spec) => (
+                      <div key={spec} className="flex items-start gap-2 text-xs text-slate-300">
+                        <Check className="w-3.5 h-3.5 text-[#ea580c] shrink-0 mt-0.5" />
+                        <span>{spec}</span>
                       </div>
-                      <div>
-                        <div className="text-gray-400 text-xs uppercase tracking-wider">{item.label}</div>
-                        <div className="text-[#1a1a2e] mt-0.5">{item.value}</div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer Pricing & CTA */}
+                <div className="mt-8 pt-5 border-t border-white/10 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] uppercase text-slate-400 block font-medium">Pricing</span>
+                    <span className="text-sm font-extrabold text-white">{sol.pricing}</span>
+                  </div>
+
+                  <button
+                    onClick={() => openBookingModal(sol.title)}
+                    className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-white/10 hover:bg-[#ea580c] text-white text-xs font-bold transition-all group-hover:shadow-[0_0_20px_rgba(234,88,12,0.35)]"
+                  >
+                    <span>Reserve</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Horizontal Scroll Track Bar */}
+          <div className="mt-6 flex items-center gap-4 max-w-xs mx-auto">
+            <div className="h-1 flex-1 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#ea580c] transition-all duration-150"
+                style={{ width: `${Math.max(15, solutionScrollProgress * 100)}%` }}
+              />
+            </div>
+            <span className="text-[10px] font-semibold text-slate-400">Swipe to explore</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ INTERACTIVE SPACE & PRICING ESTIMATOR ━━━ */}
+      <section id="estimator" className="py-24 sm:py-32 relative z-10 bg-[#07090e]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <RevealMotion>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea580c]/10 text-[#ea580c] text-xs font-bold uppercase tracking-wider mb-3">
+                <Sliders className="w-3.5 h-3.5" />
+                Interactive Workspace Estimator
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Calculate your ideal <span className="text-[#ea580c]">floorplate</span> & budget.
+              </h2>
+              <p className="text-slate-400 text-sm sm:text-base mt-4">
+                Slide your team size to view recommended area footprint, cabin requirements, meeting zones, and estimated turnkey package.
+              </p>
+            </RevealMotion>
+          </div>
+
+          {/* Interactive Calculator Box */}
+          <RevealMotion delay={0.2}>
+            <div className="rounded-3xl bg-[#0e1322] border border-white/10 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#ea580c]/10 rounded-full blur-[120px] pointer-events-none" />
+
+              <div className="grid lg:grid-cols-12 gap-10 items-center">
+                
+                {/* Left Column: Interactive Controls */}
+                <div className="lg:col-span-6 space-y-8">
+                  
+                  {/* Slider: Team Size */}
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <label className="text-sm font-bold text-white flex items-center gap-2">
+                        <Users className="w-4 h-4 text-[#ea580c]" /> Team Size
+                      </label>
+                      <span className="text-xl font-extrabold text-[#ea580c] px-3 py-1 rounded-xl bg-[#ea580c]/10 border border-[#ea580c]/20">
+                        {teamSize} Members
+                      </span>
+                    </div>
+
+                    <input
+                      type="range"
+                      min={1}
+                      max={150}
+                      value={teamSize}
+                      onChange={(e) => setTeamSize(Number(e.target.value))}
+                      className="w-full h-2.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-[#ea580c]"
+                    />
+                    <div className="flex justify-between text-[11px] text-slate-500 mt-2 font-medium">
+                      <span>1 Seat (Founder)</span>
+                      <span>50 Seats (Growth)</span>
+                      <span>150+ Seats (Enterprise)</span>
+                    </div>
+                  </div>
+
+                  {/* Workspace Format Selector */}
+                  <div>
+                    <label className="text-sm font-bold text-white block mb-3">
+                      Workspace Preference
+                    </label>
+                    <div className="grid grid-cols-3 gap-2.5">
+                      {[
+                        { id: "managed", label: "Managed HQ", desc: "Custom Private Floor" },
+                        { id: "private", label: "Private Suite", desc: "Lockable Cabin" },
+                        { id: "desk", label: "Dedicated Desks", desc: "Shared Floor" },
+                      ].map((type) => (
+                        <button
+                          key={type.id}
+                          onClick={() => setWorkspaceType(type.id as any)}
+                          className={`p-3 rounded-2xl text-left border transition-all ${
+                            workspaceType === type.id
+                              ? "bg-[#ea580c]/15 border-[#ea580c] text-white shadow-[0_0_20px_rgba(234,88,12,0.2)]"
+                              : "bg-white/5 border-white/5 text-slate-400 hover:bg-white/10"
+                          }`}
+                        >
+                          <div className="text-xs font-bold text-white">{type.label}</div>
+                          <div className="text-[10px] text-slate-400 mt-0.5">{type.desc}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* City Hub Selector */}
+                  <div>
+                    <label className="text-sm font-bold text-white block mb-3">
+                      Preferred NCR City
+                    </label>
+                    <div className="grid grid-cols-3 gap-2.5">
+                      {["Delhi", "Gurgaon", "Noida"].map((city) => (
+                        <button
+                          key={city}
+                          onClick={() => setEstimatorCity(city)}
+                          className={`py-2.5 rounded-xl text-xs font-bold border transition-all text-center ${
+                            estimatorCity === city
+                              ? "bg-white/15 border-white/30 text-white"
+                              : "bg-white/5 border-white/5 text-slate-400 hover:text-white"
+                          }`}
+                        >
+                          {city}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column: Dynamic Live Estimate Blueprint */}
+                <div className="lg:col-span-6 rounded-2xl bg-[#090c16] border border-white/10 p-6 sm:p-8 space-y-6">
+                  <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-slate-400">Architectural Recommendation</span>
+                      <h4 className="text-lg font-bold text-white">Estimated Layout for {teamSize} Pax</h4>
+                    </div>
+                    <span className="text-xs font-bold text-[#ea580c] bg-[#ea580c]/10 px-3 py-1 rounded-full">
+                      {estimatorCity}
+                    </span>
+                  </div>
+
+                  {/* Specs Matrix */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div className="p-3.5 rounded-xl bg-white/5 text-center">
+                      <div className="text-xs text-slate-400">Estimated Area</div>
+                      <div className="text-base font-extrabold text-white mt-1">{calculatedSpecs.sqft} sq.ft</div>
+                    </div>
+                    <div className="p-3.5 rounded-xl bg-white/5 text-center">
+                      <div className="text-xs text-slate-400">Private Cabins</div>
+                      <div className="text-base font-extrabold text-white mt-1">{calculatedSpecs.cabins} Cabins</div>
+                    </div>
+                    <div className="p-3.5 rounded-xl bg-white/5 text-center">
+                      <div className="text-xs text-slate-400">Meeting Rooms</div>
+                      <div className="text-base font-extrabold text-white mt-1">{calculatedSpecs.meetingRooms} Hubs</div>
+                    </div>
+                    <div className="p-3.5 rounded-xl bg-white/5 text-center">
+                      <div className="text-xs text-slate-400">Phone Pods</div>
+                      <div className="text-base font-extrabold text-white mt-1">{calculatedSpecs.phonePods} Pods</div>
+                    </div>
+                  </div>
+
+                  {/* Perks Checklist */}
+                  <div className="space-y-2 text-xs text-slate-300">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <span>Includes 1Gbps Redundant Tier-1 Fiber & Wi-Fi 6</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <span>Unlimited Artisanal Espresso, Green Teas & Pantry Supplies</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <span>Dedicated Housekeeping, Biometric Control & Reception Support</span>
+                    </div>
+                  </div>
+
+                  {/* Estimate CTA */}
+                  <div className="pt-4 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <span className="text-[10px] uppercase text-slate-400">Estimated Turnkey Package</span>
+                      <div className="text-xl font-extrabold text-[#ea580c]">
+                        ₹{calculatedSpecs.estMonthly} <span className="text-xs text-slate-400 font-normal">/ month (approx)</span>
                       </div>
                     </div>
-                  ))}
+
+                    <button
+                      onClick={() => openBookingModal(`Custom ${teamSize}-Seat Plan in ${estimatorCity}`)}
+                      className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#ea580c] to-[#c2410c] text-white font-bold text-xs shadow-lg hover:scale-102 transition-all flex items-center justify-center gap-1.5"
+                    >
+                      <span>Lock In Custom Proposal</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-              </FadeUp>
+
+              </div>
+            </div>
+          </RevealMotion>
+
+        </div>
+      </section>
+
+      {/* ━━━ HORIZONTAL LOCATION HUBS NAVIGATOR ━━━ */}
+      <section id="locations" className="py-24 sm:py-32 relative z-10 bg-[#090d16] border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea580c]/10 text-[#ea580c] text-xs font-bold uppercase tracking-wider mb-3">
+                <MapPin className="w-3.5 h-3.5" />
+                Strategic NCR Connectivity
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Our Prime Hubs across <span className="text-[#ea580c]">Delhi NCR.</span>
+              </h2>
             </div>
 
-            <FadeUp delay={0.2}>
-              <form onSubmit={(e) => e.preventDefault()} className="bg-[#faf8f5] border border-gray-200 rounded-3xl p-8 lg:p-10 space-y-5">
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2">Name</label>
-                    <input type="text" placeholder="John Doe" className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors" />
-                  </div>
-                  <div>
-                    <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2">Email</label>
-                    <input type="email" placeholder="john@company.com" className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors" />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2">Phone</label>
-                  <input type="tel" placeholder="+91 XXXXX XXXXX" className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors" />
-                </div>
-                <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2">Solution</label>
-                  <select className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-gray-400 focus:outline-none focus:border-[#d4622b]/50 transition-colors">
-                    <option value="">Select a solution</option>
-                    {solutions.map((s) => <option key={s.title} value={s.title}>{s.title}</option>)}
-                  </select>
-                </div>
-                <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2">Message</label>
-                  <textarea placeholder="Tell us about your requirements..." rows={4} className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors resize-none" />
-                </div>
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-[#d4622b] text-white py-4 rounded-xl font-semibold text-lg hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.2)]"
+            {/* City Tabs & Arrows */}
+            <div className="flex items-center gap-4">
+              <div className="flex p-1 rounded-xl bg-white/5 border border-white/10">
+                {(["delhi", "gurgaon", "noida"] as const).map((cityKey) => (
+                  <button
+                    key={cityKey}
+                    onClick={() => setActiveCityTab(cityKey)}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold capitalize transition-all ${
+                      activeCityTab === cityKey
+                        ? "bg-[#ea580c] text-white shadow-md"
+                        : "text-slate-400 hover:text-white"
+                    }`}
+                  >
+                    {cityKey}
+                  </button>
+                ))}
+              </div>
+
+              <div className="hidden sm:flex items-center gap-2">
+                <button
+                  onClick={() => scrollLocations("left")}
+                  className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center border border-white/10"
+                  aria-label="Previous location"
                 >
-                  Send Message
-                </motion.button>
-              </form>
-            </FadeUp>
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => scrollLocations("right")}
+                  className="w-10 h-10 rounded-xl bg-[#ea580c] hover:bg-[#c2410c] text-white flex items-center justify-center"
+                  aria-label="Next location"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Subtitle Description */}
+          <p className="text-slate-400 text-sm mb-8 max-w-2xl">
+            {locationHubs[activeCityTab].description}
+          </p>
+
+          {/* Horizontal Track of Centres */}
+          <div
+            ref={locationsTrackRef}
+            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-8 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
+          >
+            {locationHubs[activeCityTab].centres.map((centre) => (
+              <div
+                key={centre.name}
+                className="w-[320px] sm:w-[360px] flex-shrink-0 rounded-3xl bg-[#0e1322] border border-white/10 hover:border-[#ea580c]/40 p-5 flex flex-col justify-between group transition-all duration-300 hover:shadow-2xl"
+              >
+                <div>
+                  {/* Image */}
+                  <div className="relative rounded-2xl overflow-hidden aspect-[16/10] mb-4">
+                    <img
+                      src={centre.image}
+                      alt={centre.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0e1322] via-transparent to-transparent opacity-80" />
+                    
+                    <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] font-bold text-white flex items-center gap-1">
+                      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                      <span>{centre.rating} Rating</span>
+                    </div>
+
+                    <div className="absolute bottom-3 right-3 text-[10px] font-semibold text-slate-200 bg-white/10 backdrop-blur-md px-2 py-0.5 rounded">
+                      {centre.sqft}
+                    </div>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white group-hover:text-[#ea580c] transition-colors">
+                    {centre.name}
+                  </h3>
+
+                  <div className="mt-2 text-xs text-[#f97316] font-medium flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 shrink-0" />
+                    <span>{centre.metro}</span>
+                  </div>
+
+                  <p className="mt-2 text-xs text-slate-400 leading-relaxed">
+                    {centre.address}
+                  </p>
+
+                  {/* Highlights Tags */}
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {centre.tags.map((tag) => (
+                      <span key={tag} className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/5">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Footer Action */}
+                <div className="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-300">Open for Tours</span>
+                  <button
+                    onClick={() => openBookingModal(`${centre.name}, ${locationHubs[activeCityTab].city}`)}
+                    className="flex items-center gap-1 text-xs font-bold text-[#ea580c] hover:text-white transition-colors"
+                  >
+                    <span>Schedule Visit</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ━━━ ENTERPRISE SPECS & AMENITIES BENTO GRID ━━━ */}
+      <section id="amenities" className="py-24 sm:py-32 relative z-10 bg-[#07090e]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <RevealMotion>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea580c]/10 text-[#ea580c] text-xs font-bold uppercase tracking-wider mb-3">
+                <Sparkles className="w-3.5 h-3.5" />
+                Enterprise Infrastructure
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+                Built to elevate <span className="text-[#ea580c]">focus & productivity.</span>
+              </h2>
+              <p className="text-slate-400 text-sm sm:text-base mt-4">
+                Engineered with enterprise grade power redundancy, studio acoustic isolation, and premium hospitality.
+              </p>
+            </RevealMotion>
+          </div>
+
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {enterpriseAmenities.map((amenity, i) => {
+              const IconComp = amenity.icon;
+              return (
+                <RevealMotion key={amenity.title} delay={0.08 * i}>
+                  <div className="h-full rounded-3xl bg-[#0c101d] border border-white/10 p-8 flex flex-col justify-between group hover:border-[#ea580c]/40 transition-all duration-300 hover:shadow-[0_15px_40px_-10px_rgba(234,88,12,0.15)] relative overflow-hidden">
+                    <div className={`absolute -right-10 -top-10 w-40 h-40 rounded-full bg-gradient-to-br ${amenity.accent} blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none`} />
+
+                    <div>
+                      <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-[#ea580c] group-hover:scale-110 transition-transform mb-6">
+                        <IconComp className="w-6 h-6" />
+                      </div>
+
+                      <h3 className="text-xl font-bold text-white group-hover:text-[#ea580c] transition-colors">
+                        {amenity.title}
+                      </h3>
+
+                      <p className="mt-3 text-sm text-slate-400 leading-relaxed">
+                        {amenity.desc}
+                      </p>
+                    </div>
+
+                    <div className="mt-8 pt-4 border-t border-white/5 flex items-center gap-2 text-xs font-semibold text-slate-400 group-hover:text-slate-200 transition-colors">
+                      <span>Enterprise Grade Inclusion</span>
+                      <Check className="w-3.5 h-3.5 text-[#ea580c]" />
+                    </div>
+                  </div>
+                </RevealMotion>
+              );
+            })}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ━━━ CLIENT LOGOS & TESTIMONIALS ━━━ */}
+      <section id="reviews" className="py-24 relative z-10 bg-[#090d16] border-y border-white/5 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-14 text-center">
+          <RevealMotion>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea580c]/10 text-[#ea580c] text-xs font-bold uppercase tracking-wider mb-3">
+              <Star className="w-3.5 h-3.5 fill-[#ea580c]" />
+              Trusted by 250+ Enterprise Leaders
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+              Real stories from high-growth founders.
+            </h2>
+          </RevealMotion>
+        </div>
+
+        {/* Enterprise Logos Marquee */}
+        <div className="mb-16 overflow-hidden whitespace-nowrap opacity-60">
+          <motion.div
+            className="inline-flex gap-16"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+          >
+            {[...enterpriseLogos, ...enterpriseLogos].map((logo, idx) => (
+              <span key={idx} className="text-xl font-bold tracking-widest text-slate-400 hover:text-white transition-colors uppercase">
+                {logo}
+              </span>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Testimonials Cards Grid */}
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 grid md:grid-cols-3 gap-6">
+          {testimonialsData.map((t, idx) => (
+            <RevealMotion key={t.name} delay={0.1 * idx}>
+              <div className="h-full rounded-3xl bg-[#0e1322] border border-white/10 p-8 flex flex-col justify-between group hover:border-[#ea580c]/30 transition-all">
+                <div>
+                  <div className="flex items-center gap-1 mb-6 text-amber-400">
+                    {[...Array(t.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-amber-400" />
+                    ))}
+                  </div>
+
+                  <p className="text-slate-300 text-sm leading-relaxed italic">
+                    &ldquo;{t.quote}&rdquo;
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-white/10 flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#ea580c] to-[#9a3412] flex items-center justify-center text-white font-extrabold text-sm">
+                    {t.name.split(" ").map((n) => n[0]).join("")}
+                  </div>
+                  <div>
+                    <div className="font-bold text-white text-sm">{t.name}</div>
+                    <div className="text-xs text-[#ea580c] font-medium">{t.role}, {t.company}</div>
+                    <div className="text-[10px] text-slate-400">{t.seats}</div>
+                  </div>
+                </div>
+              </div>
+            </RevealMotion>
+          ))}
+        </div>
+      </section>
+
+      {/* ━━━ INTERACTIVE FAQ ACCORDION ━━━ */}
+      <section className="py-24 sm:py-32 relative z-10 bg-[#07090e]">
+        <div className="max-w-4xl mx-auto px-5 sm:px-8">
+          <div className="text-center mb-16">
+            <RevealMotion>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-slate-400 text-sm mt-3">
+                Everything you need to know about leases, onboarding, and workspace amenities.
+              </p>
+            </RevealMotion>
+          </div>
+
+          <div className="space-y-4">
+            {faqItems.map((item, idx) => (
+              <div
+                key={idx}
+                className="rounded-2xl bg-[#0c101c] border border-white/10 overflow-hidden transition-colors"
+              >
+                <button
+                  onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
+                  className="w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-white text-base hover:text-[#ea580c] transition-colors"
+                >
+                  <span>{item.q}</span>
+                  <ChevronDown
+                    className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${
+                      activeFaq === idx ? "rotate-180 text-[#ea580c]" : ""
+                    }`}
+                  />
+                </button>
+                <AnimatePresence>
+                  {activeFaq === idx && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-6 pb-6 text-sm text-slate-400 leading-relaxed border-t border-white/5 pt-4">
+                        {item.a}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ CONTACT & TOUR BOOKING SECTION ━━━ */}
+      <section id="contact" className="py-24 sm:py-32 relative z-10 bg-[#090d16] border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Contact Info */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#ea580c]/10 text-[#ea580c] text-xs font-bold uppercase tracking-wider">
+                <Calendar className="w-3.5 h-3.5" />
+                Schedule a Visit
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
+                Ready to upgrade your workspace?
+              </h2>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Connect with our commercial leasing team for a tailored workspace walkthrough, floor plans, and instant pricing proposals.
+              </p>
+
+              <div className="space-y-4 pt-4">
+                <a
+                  href="tel:+919910668152"
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-[#ea580c]/50 transition-colors group"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-[#ea580c]/15 text-[#ea580c] flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Phone className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-400">Direct Leasing Line</div>
+                    <div className="text-base font-bold text-white">+91 9910668152</div>
+                  </div>
+                </a>
+
+                <a
+                  href="mailto:info@onwardworkspaces.com"
+                  className="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-[#ea580c]/50 transition-colors group"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-slate-400">Official Correspondence</div>
+                    <div className="text-base font-bold text-white">info@onwardworkspaces.com</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Consultation Form */}
+            <div className="lg:col-span-7">
+              <div className="rounded-3xl bg-[#0e1322] border border-white/10 p-8 sm:p-10 shadow-2xl">
+                <h3 className="text-xl font-bold text-white mb-2">Book an On-Site Hub Tour</h3>
+                <p className="text-xs text-slate-400 mb-6">Receive a complimentary day pass and coffee with your consultation.</p>
+
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    setBookingStep("success");
+                    setIsModalOpen(true);
+                  }}
+                  className="space-y-4"
+                >
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-slate-300 font-semibold block mb-1.5">Full Name</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Vikram Sharma"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ea580c] transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs text-slate-300 font-semibold block mb-1.5">Work Email</label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="vikram@company.com"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ea580c] transition-colors"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs text-slate-300 font-semibold block mb-1.5">Phone Number</label>
+                      <input
+                        type="tel"
+                        required
+                        placeholder="+91 98765 43210"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ea580c] transition-colors"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-xs text-slate-300 font-semibold block mb-1.5">Preferred Centre</label>
+                      <select
+                        className="w-full bg-[#0d111b] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-[#ea580c] transition-colors"
+                      >
+                        <option value="Okhla Phase II, Delhi">Okhla Phase II (Delhi)</option>
+                        <option value="Okhla Phase III, Delhi">Okhla Phase III (Delhi)</option>
+                        <option value="Mohan Cooperative, Delhi">Mohan Cooperative (Delhi)</option>
+                        <option value="Connaught Place, Delhi">Connaught Place (Central Delhi)</option>
+                        <option value="Cyber City, Gurgaon">DLF Cyber City (Gurgaon)</option>
+                        <option value="Udyog Vihar, Gurgaon">Udyog Vihar (Gurgaon)</option>
+                        <option value="Sector 62, Noida">Sector 62 (Noida)</option>
+                        <option value="Sector 16, Noida">Sector 16 (Noida)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-xs text-slate-300 font-semibold block mb-1.5">Team Size & Specific Requirements</label>
+                    <textarea
+                      rows={3}
+                      placeholder="e.g. 35 workstations, 2 director cabins, need move-in next month..."
+                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-[#ea580c] transition-colors resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-4 rounded-xl bg-gradient-to-r from-[#ea580c] to-[#c2410c] text-white font-bold text-sm shadow-[0_0_30px_rgba(234,88,12,0.35)] hover:shadow-[0_0_45px_rgba(234,88,12,0.5)] transition-all duration-300"
+                  >
+                    Confirm Tour Reservation
+                  </button>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* ━━━ FOOTER ━━━ */}
-      <footer className="bg-[#faf8f5] text-gray-400 py-20 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            <div>
-              <a href="#" className="flex items-center gap-2.5 mb-5">
-                <img src="/onward-logo.png" alt="Onward" className="w-9 h-9" />
-                <div className="leading-none">
-                  <span className="text-xl font-bold text-[#1a1a2e] tracking-tight">Onward</span>
-                  <span className="block text-[9px] text-gray-400 tracking-[0.25em]">WORKSPACES</span>
+      <footer className="bg-[#05070a] border-t border-white/10 py-16 text-slate-400 text-xs">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
+            
+            <div className="col-span-2 space-y-4">
+              <div className="flex items-center gap-3">
+                <img src="/onward-logo.png" alt="Onward Logo" className="w-8 h-8 object-contain" />
+                <div>
+                  <span className="text-base font-bold text-white">Onward Workspaces</span>
+                  <span className="block text-[9px] tracking-[0.2em] text-slate-500 font-semibold">DELHI NCR</span>
                 </div>
-              </a>
-              <p className="text-sm leading-relaxed">Premium coworking spaces built around your brand, ambition, and people.</p>
-            </div>
-            {[
-              { title: "Solutions", links: ["Managed Office", "Private Suites", "Virtual Office", "On-Demand", "Custom Built"] },
-              { title: "Locations", links: ["Delhi", "Noida", "Gurgaon", "All Locations"] },
-              { title: "Company", links: ["About Us", "Blog", "Careers", "Enterprise", "Contact"] },
-            ].map((col) => (
-              <div key={col.title}>
-                <h4 className="text-[#1a1a2e] font-semibold text-sm mb-5 uppercase tracking-wider">{col.title}</h4>
-                <ul className="space-y-3 text-sm">
-                  {col.links.map((l) => <li key={l}><a href="#" className="hover:text-[#d4622b] transition-colors">{l}</a></li>)}
-                </ul>
               </div>
-            ))}
+              <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
+                Premium managed and coworking environments across Delhi, Noida, and Gurgaon. Fueling innovation, enterprise productivity, and community.
+              </p>
+              <div className="text-xs text-[#ea580c] font-semibold flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5" /> +91 9910668152
+              </div>
+            </div>
+
+            <div>
+              <h5 className="font-bold text-white mb-4 uppercase tracking-wider text-[11px]">Solutions</h5>
+              <ul className="space-y-2.5">
+                <li><a href="#solutions" className="hover:text-[#ea580c] transition-colors">Managed Office</a></li>
+                <li><a href="#solutions" className="hover:text-[#ea580c] transition-colors">Private Suites</a></li>
+                <li><a href="#solutions" className="hover:text-[#ea580c] transition-colors">Executive Cabins</a></li>
+                <li><a href="#solutions" className="hover:text-[#ea580c] transition-colors">Virtual Office & GST</a></li>
+                <li><a href="#solutions" className="hover:text-[#ea580c] transition-colors">Meeting Rooms</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-bold text-white mb-4 uppercase tracking-wider text-[11px]">NCR Locations</h5>
+              <ul className="space-y-2.5">
+                <li><a href="#locations" className="hover:text-[#ea580c] transition-colors">Okhla Phase II & III</a></li>
+                <li><a href="#locations" className="hover:text-[#ea580c] transition-colors">Mohan Cooperative</a></li>
+                <li><a href="#locations" className="hover:text-[#ea580c] transition-colors">Connaught Place</a></li>
+                <li><a href="#locations" className="hover:text-[#ea580c] transition-colors">Cyber City Gurgaon</a></li>
+                <li><a href="#locations" className="hover:text-[#ea580c] transition-colors">Noida Sector 62 & 16</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h5 className="font-bold text-white mb-4 uppercase tracking-wider text-[11px]">Company</h5>
+              <ul className="space-y-2.5">
+                <li><a href="#home" className="hover:text-[#ea580c] transition-colors">About Us</a></li>
+                <li><a href="#estimator" className="hover:text-[#ea580c] transition-colors">Space Calculator</a></li>
+                <li><a href="#amenities" className="hover:text-[#ea580c] transition-colors">Enterprise SLA</a></li>
+                <li><a href="#reviews" className="hover:text-[#ea580c] transition-colors">Member Reviews</a></li>
+                <li><a href="#contact" className="hover:text-[#ea580c] transition-colors">Book a Tour</a></li>
+              </ul>
+            </div>
+
           </div>
-          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-            <p>&copy; 2024 Onward Workspaces. All rights reserved.</p>
+
+          <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
+            <div>&copy; 2025 Onward Workspaces. All rights reserved. Demo Redesign Build.</div>
             <div className="flex gap-6">
-              {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((l) => (
-                <a key={l} href="#" className="hover:text-[#d4622b] transition-colors">{l}</a>
-              ))}
+              <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+              <a href="#" className="hover:text-white transition-colors">GST Compliance</a>
             </div>
           </div>
         </div>
       </footer>
-    </>
+
+      {/* ━━━ INTERACTIVE BOOKING MODAL ━━━ */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-lg rounded-3xl bg-[#0e1322] border border-white/10 p-6 sm:p-8 shadow-2xl overflow-hidden"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="absolute top-5 right-5 p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              {bookingStep === "form" ? (
+                <div className="space-y-6">
+                  <div>
+                    <div className="text-xs font-bold text-[#ea580c] uppercase tracking-wider mb-1">
+                      Schedule Executive Visit
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">Book a Tour: {modalSelectedHub}</h3>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Select your preferred date & time. Our leasing director will host you with complimentary barista coffee.
+                    </p>
+                  </div>
+
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      setBookingStep("success");
+                    }}
+                    className="space-y-4"
+                  >
+                    <div>
+                      <label className="text-xs text-slate-300 font-semibold block mb-1">Name</label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="John Doe"
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#ea580c]"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-slate-300 font-semibold block mb-1">Work Email</label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="john@company.com"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#ea580c]"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-slate-300 font-semibold block mb-1">Phone</label>
+                        <input
+                          type="tel"
+                          required
+                          placeholder="+91 9910668152"
+                          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#ea580c]"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-slate-300 font-semibold block mb-1">Preferred Date</label>
+                        <input
+                          type="date"
+                          required
+                          className="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#ea580c]"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-slate-300 font-semibold block mb-1">Time Slot</label>
+                        <select className="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#ea580c]">
+                          <option>10:00 AM - 12:00 PM</option>
+                          <option>12:00 PM - 02:00 PM</option>
+                          <option>02:00 PM - 04:00 PM</option>
+                          <option>04:00 PM - 06:00 PM</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#ea580c] to-[#c2410c] text-white font-bold text-sm shadow-lg hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] transition-all"
+                    >
+                      Confirm Tour Booking
+                    </button>
+                  </form>
+                </div>
+              ) : (
+                <div className="text-center py-6 space-y-4">
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">Tour Scheduled!</h3>
+                  <p className="text-xs text-slate-300 max-w-sm mx-auto leading-relaxed">
+                    Thank you! Your walkthrough request for <strong className="text-white">{modalSelectedHub}</strong> has been confirmed. Our team will contact you shortly with calendar invites and directions.
+                  </p>
+                  <button
+                    onClick={() => setIsModalOpen(false)}
+                    className="px-6 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-colors"
+                  >
+                    Done
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+    </div>
   );
 }
+
