@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --background: #090d16;
-  --foreground: #f8fafc;
-  --primary: #ea580c;
-  --primary-glow: #f97316;
-  --primary-dark: #c2410c;
-  --secondary: #0b0f19;
-  --card-bg: rgba(255, 255, 255, 0.04);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --accent: #ffedd5;
-  --muted: #94a3b8;
+  --background: #faf8f5;
+  --foreground: #1a1a2e;
+  --primary: #d4622b;
+  --primary-hover: #b8501f;
+  --primary-light: #fff2eb;
+  --secondary: #1a1a2e;
+  --card-bg: #ffffff;
+  --card-border: #ede8e1;
+  --accent: #f5f0eb;
+  --muted: #64748b;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
-  --color-primary-glow: var(--primary-glow);
-  --color-primary-dark: var(--primary-dark);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
@@ -27,14 +27,14 @@
 }
 
 body {
-  background: #07090e;
-  color: #f1f5f9;
+  background: #faf8f5;
+  color: #1a1a2e;
   font-family: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   overflow-x: hidden;
 }
 
 ::selection {
-  background-color: #ea580c;
+  background-color: #d4622b;
   color: #ffffff;
 }
 
@@ -51,39 +51,38 @@ html {
   scrollbar-width: none;
 }
 
-/* Hyperframe Neon Glow Utilities */
-.glow-primary {
-  box-shadow: 0 0 40px -10px rgba(234, 88, 12, 0.35);
+/* Luxury Glow & Shadow Utilities */
+.glow-primary-light {
+  box-shadow: 0 10px 40px -10px rgba(212, 98, 43, 0.22);
 }
 
-.glow-subtle {
-  box-shadow: 0 0 60px -20px rgba(234, 88, 12, 0.15);
+.card-luxury {
+  background: #ffffff;
+  border: 1px solid #ede8e1;
+  box-shadow: 0 4px 20px -4px rgba(26, 26, 46, 0.04);
 }
 
-.glass-panel {
-  background: rgba(15, 20, 32, 0.75);
+.card-luxury:hover {
+  border-color: rgba(212, 98, 43, 0.3);
+  box-shadow: 0 20px 50px -15px rgba(212, 98, 43, 0.12);
+}
+
+.glass-header {
+  background: rgba(250, 248, 245, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(237, 232, 225, 0.8);
 }
 
-.hyper-grid {
+.light-grid {
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
+    linear-gradient(to right, rgba(212, 98, 43, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 98, 43, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
-.hyper-dots {
-  background-image: radial-gradient(rgba(234, 88, 12, 0.22) 1px, transparent 1px);
-  background-size: 24px 24px;
+.light-dots {
+  background-image: radial-gradient(rgba(212, 98, 43, 0.15) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.8; transform: scale(1.05); }
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 8s infinite ease-in-out;
-}
