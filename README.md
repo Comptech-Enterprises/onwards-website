@@ -1,63 +1,101 @@
-# Onward Workspaces
+# Onward Workspaces — 2025 Architectural Editorial Redesign
 
-Official website for [Onward Workspaces](https://onwardworkspaces.com/) — premium coworking spaces across Delhi NCR.
+Official website for [Onward Workspaces](https://onwardworkspaces.com/) — Delhi NCR's premier managed offices and agile team coworking spaces.
 
-Built with Next.js, Tailwind CSS, and Framer Motion.
+Built from scratch with **Next.js 16 (App Router)**, **Tailwind CSS**, and **Framer Motion**, featuring a 2025 luxury architectural editorial layout with interactive split dossiers, horizontal swipeable tracks, entry micro-animations, and verified brand identity.
 
-## Tech Stack
+---
 
-- **Next.js 15** — App Router, TypeScript
-- **Tailwind CSS v4** — Utility-first styling (`@import "tailwindcss"`)
-- **Framer Motion** — Animations (parallax, text reveal, counters, magnetic buttons, marquee)
-- **Geist** — Font family (via `next/font/google`)
+## 🚀 Key Highlights & Architectural Features
 
-## Features
+- **2025 Luxury Architectural Editorial Layout**: Asymmetrical, monograph-inspired design system with warm alabaster (`#faf8f5`), white cards, and signature terracotta/burnt orange (`#d4622b`) branding.
+- **Staggered Entry & Scroll Reveal Animations**: Smooth cubic-bezier entrance animations (`useInView`), header drop-in, text blur-to-sharp reveals, and dynamic animated stat counters (3+ Cities, 15+ Centres, 250+ Clients, 1M+ Sq. Ft.).
+- **Interactive Split Workspace Dossier**:
+  - `01 Managed Enterprise HQ` (Turnkey Built-to-Suit, 50–500+ seats)
+  - `02 Private Team Suites` (Sound-Insulated, 4–40 seats)
+  - `03 Executive Director Cabins` (Leadership acoustic suites)
+  - `04 Virtual Office & GST Compliance` (Registered commercial address)
+  - `05 4K Hybrid Boardrooms & Event Hubs` (Polycom AV by the hour)
+  - `06 Build-To-Suit Campus` (Custom architecture & development)
+- **Dynamic Architectural Inspector**: Live interactive specification view updating timelines, power SLAs, security access, and instant inquiry booking for each format.
+- **NCR Strategic Hubs & Commute Slider**: City switcher (`Delhi`, `Gurgaon`, `Noida`) with walking distance metro proximity indicators and swipeable/draggable horizontal tracks.
+- **Enterprise Specifications Bento Grid**: 6-part matrix covering 1Gbps redundant multi-ISP fiber, acoustic Zoom pods, artisanal barista roastery pantry, 24/7 AI biometrics, and 100% dual generator cutover.
+- **Campus Gallery Walk**: Horizontal swipeable gallery with architectural vector placeholders.
+- **Enterprise Endorsements**: Verified press and founder reviews (*Dangal Games*, *Aramex*, *Thermax*) alongside an infinite animated client marquee.
+- **Interactive 2-Column Split FAQ Knowledge Hub**: Filterable question categories (*2-Day Free Trial*, *Virtual Office & GST*, *Managed Enterprise*, *Inclusions & Amenities*) paired with a sticky concierge advisory block.
+- **Floating 2025 Concierge Action Dock**: Pinned bottom viewport dock with live status indicators and quick triggers for free 2-day trial passes and tour bookings.
+- **2-Day Free Trial & Tour Booking Modal**: Interactive reservation dialog with slot selection and instant confirmation.
 
-- Single-page responsive design — white + orange (#d4622b) brand theme
-- Parallax hero with animated word cycling
-- Bento grid solutions layout
-- Auto-sliding mobile carousels (solutions, locations, testimonials)
-- Animated scroll counters and infinite logo marquee
-- Magnetic CTA buttons
-- Location switcher with animated transitions
-- Contact form
-- Custom Onward brand favicon and header/footer logo
+---
 
-## Pages & Sections
+## 🛠️ Tech Stack
 
-1. **Hero** — Parallax, animated heading, stats strip
-2. **Solutions** — Bento grid (desktop) / auto-slider (mobile)
-3. **Why Onward** — Numbered feature list, sticky sidebar
-4. **Locations** — City switcher with card grid / auto-slider
-5. **Gallery** — Placeholder image strip
-6. **Testimonials** — Quote cards / auto-slider
-7. **Logo Marquee** — Partner brands
-8. **Contact** — Form with phone/email/address
-9. **Footer** — Links grid
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, React 19, TypeScript)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) with custom luxury theme tokens
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) (Springs, InView triggers, AnimatePresence)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Typography**: [Geist Sans & Mono](https://vercel.com/font)
 
-## Getting Started
+---
+
+## 📂 Project Structure
+
+```
+onwards-website/
+├── public/
+│   └── onward-logo.png       # Authentic Onward Workspaces brand logo
+├── src/
+│   └── app/
+│       ├── globals.css       # Theme tokens, custom grid patterns & scrollbar utilities
+│       ├── layout.tsx        # Root layout, metadata & Geist font configuration
+│       ├── page.tsx          # 2025 Architectural layout (All interactive sections & modals)
+│       ├── icon.png          # Favicon (32x32)
+│       └── apple-icon.png    # Apple touch icon (180x180)
+├── package.json              # Project scripts & dependencies
+├── next.config.ts            # Next.js configuration
+└── README.md                 # Project documentation
+```
+
+---
+
+## 💻 Getting Started
+
+### 1. Clone & Install Dependencies
 
 ```bash
+git clone https://github.com/Comptech-Enterprises/onwards-website.git
+cd onwards-website
+git checkout demo
 npm install
+```
+
+### 2. Run Local Development Server
+
+```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Project Structure
+### 3. Production Build
 
-```
-src/
-  app/
-    page.tsx        # Full home page (single file — all sections)
-    layout.tsx      # Root layout with metadata and Geist fonts
-    globals.css     # CSS variables + Tailwind v4 config
-    icon.png        # Favicon (32x32)
-    apple-icon.png  # Apple touch icon (180x180)
-public/
-  onward-logo.png   # Brand logo used in header and footer
+```bash
+npm run build
+npm run start
 ```
 
-## License
+---
 
-Proprietary — Comptech Enterprises
+## 🏢 Brand & Corporate Information
+
+- **Company**: Onward Coworkx Private Limited
+- **Headquarters**: Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020
+- **Leasing Helpline**: +91 9910668152
+- **Official Inquiries**: info@onwardworkspaces.com
+- **Website**: [onwardworkspaces.com](https://onwardworkspaces.com/)
+
+---
+
+## 📄 License
+
+Proprietary — Comptech Enterprises / Onward Coworkx Pvt. Ltd.
