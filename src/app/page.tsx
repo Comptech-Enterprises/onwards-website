@@ -29,20 +29,19 @@ import {
   Clock,
   Star,
   X,
-  Sliders,
   Monitor,
   Lock,
   Headphones,
   Check,
   ChevronDown,
   Globe2,
-  Flame,
   Award,
   Compass,
+  Image as ImageIcon,
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════
-   ORIGINAL BRAND DATA & VERIFIED CONTENT
+   ORIGINAL BRAND DATA & VERIFIED CONTENT (NO PRICING)
    ═══════════════════════════════════════════════════════════════ */
 
 const heroRotatingWords = ["Ambition", "Brand", "People", "Vision", "Growth"];
@@ -64,15 +63,15 @@ const workspaceSolutions = [
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with bespoke branding and private infrastructure.",
     badge: "Custom Turnkey",
     capacity: "50 – 500+ Seats",
-    pricing: "Custom Proposal",
+    terms: "Custom Bespoke Layout",
     popular: true,
+    icon: Building2,
     specs: [
       "Custom Brand Identity & Dedicated Reception",
       "Private Executive Boardrooms & Cabins",
       "Dedicated High-Speed Fiber & IT Security",
       "Complete Facility & Asset Management",
     ],
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "private-suites",
@@ -83,15 +82,15 @@ const workspaceSolutions = [
     desc: "Fully-managed private cabins for teams, offering sound-insulated comfort and plug-and-play agility.",
     badge: "Instant Move-in",
     capacity: "4 – 40 Seats",
-    pricing: "From ₹9,999 / seat",
+    terms: "Flexible Team Leases",
     popular: false,
+    icon: Users,
     specs: [
       "Ergonomic Workstations & Storage",
       "Dedicated Access Control & Whiteboards",
       "Unlimited Barista Coffee & Pantry",
       "Complimentary Meeting Room Credits",
     ],
-    image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "private-cabins",
@@ -102,15 +101,15 @@ const workspaceSolutions = [
     desc: "Fully-equipped space for directors and senior leadership, designed for privacy and high-stakes strategy.",
     badge: "Executive Class",
     capacity: "1 – 4 Leaders",
-    pricing: "From ₹24,999 / mo",
+    terms: "Private Acoustic Suites",
     popular: false,
+    icon: Award,
     specs: [
       "Italian Leather Executive Seating",
       "Private Consultation Table",
       "Acoustic Sound Isolation",
       "Priority Concierge & Guest Handling",
     ],
-    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "virtual-office",
@@ -121,15 +120,15 @@ const workspaceSolutions = [
     desc: "Virtual HQ with zero overhead costs. Compliant documentation for GST registration and ROC filings.",
     badge: "GST & MCA Ready",
     capacity: "Virtual / Remote",
-    pricing: "From ₹1,299 / mo",
+    terms: "Annual & Multi-Year Plans",
     popular: false,
+    icon: Globe2,
     specs: [
       "Prestigious Delhi NCR Business Address",
       "NOC, Electricity Bill & Rent Agreement",
       "Courier & Mail Receiving Services",
       "Monthly Complimentary Day Passes",
     ],
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "on-demand",
@@ -140,15 +139,15 @@ const workspaceSolutions = [
     desc: "Meeting rooms, conference hubs & day passes on the go with state-of-the-art 4K video conferencing.",
     badge: "Hourly & Daily",
     capacity: "1 – 60 Pax",
-    pricing: "From ₹799 / hr",
+    terms: "On-Demand Pay-per-Use",
     popular: false,
+    icon: Monitor,
     specs: [
       "4K Polycom/Logitech AV Video Systems",
       "Interactive Digital Smart Boards",
       "High-Speed Wi-Fi & Technical Support",
       "Beverage & Catering Concierge",
     ],
-    image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "custom-built",
@@ -159,15 +158,15 @@ const workspaceSolutions = [
     desc: "Bespoke design and construction tailored specifically to your company's brand, culture, and workflow.",
     badge: "Build-To-Suit",
     capacity: "100 – 1000+ Seats",
-    pricing: "Enterprise Plan",
+    terms: "Turnkey Architecture",
     popular: false,
+    icon: Compass,
     specs: [
       "Custom Interior Architecture & Layout",
       "Dedicated IT Server Rooms & Redundancy",
       "Exclusive Cafeteria & Breakout Lounge",
-      "Tailored Lease & Commercial Terms",
+      "Tailored Commercial Agreement",
     ],
-    image: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -206,7 +205,6 @@ const ncrLocationsData = {
         address: "Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020",
         sqft: "45,000+ sq.ft",
         tags: ["Flagship Centre", "Metro Adjacent", "Enterprise Wing", "Café Terrace"],
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
       },
       {
         name: "Okhla Phase III",
@@ -214,7 +212,6 @@ const ncrLocationsData = {
         address: "B-216, Okhla Phase III, New Delhi, 110020",
         sqft: "38,000+ sq.ft",
         tags: ["Tech Corridor", "Private Suites", "Gaming Lounge"],
-        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
       },
       {
         name: "Mohan Cooperative",
@@ -222,7 +219,6 @@ const ncrLocationsData = {
         address: "Mathura Road, Mohan Cooperative Industrial Estate, New Delhi",
         sqft: "60,000+ sq.ft",
         tags: ["Large Format Campus", "Ample Parking", "Auditorium"],
-        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80",
       },
       {
         name: "Connaught Place",
@@ -230,7 +226,6 @@ const ncrLocationsData = {
         address: "Outer Circle, Connaught Place, Central Delhi",
         sqft: "25,000+ sq.ft",
         tags: ["Central CBD", "Executive Cabins", "Prestigious Address"],
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
       },
     ],
   },
@@ -244,7 +239,6 @@ const ncrLocationsData = {
         address: "DLF Cyber City, Sector 24, Gurugram, Haryana",
         sqft: "55,000+ sq.ft",
         tags: ["Fortune 500 Hub", "High-Speed Fiber", "Rooftop Lounge"],
-        image: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=600&q=80",
       },
       {
         name: "Udyog Vihar Phase IV",
@@ -252,7 +246,6 @@ const ncrLocationsData = {
         address: "Plot 304, Udyog Vihar Phase-IV, Gurugram",
         sqft: "40,000+ sq.ft",
         tags: ["Startup Cluster", "24/7 Security", "Podcast Studio"],
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
       },
       {
         name: "Golf Course Extension",
@@ -260,7 +253,6 @@ const ncrLocationsData = {
         address: "Golf Course Extension Road, Sector 65, Gurugram",
         sqft: "32,000+ sq.ft",
         tags: ["Ultra Premium", "Wellness Pods", "EV Charging"],
-        image: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=600&q=80",
       },
     ],
   },
@@ -274,7 +266,6 @@ const ncrLocationsData = {
         address: "C-Block, Institutional Area, Sector 62, Noida",
         sqft: "50,000+ sq.ft",
         tags: ["IT Park", "Enterprise Floorplates", "Cafeteria"],
-        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
       },
       {
         name: "Sector 16 Metro Corridor",
@@ -282,7 +273,6 @@ const ncrLocationsData = {
         address: "Film City Marg, Sector 16, Noida",
         sqft: "30,000+ sq.ft",
         tags: ["Media Hub", "Turnkey Cabins", "Instant Commute"],
-        image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80",
       },
       {
         name: "Sector 132 Expressway",
@@ -290,7 +280,6 @@ const ncrLocationsData = {
         address: "Expressway Corporate Park, Sector 132, Noida",
         sqft: "65,000+ sq.ft",
         tags: ["Mega Campus", "Green Architecture", "Executive Suites"],
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
       },
     ],
   },
@@ -329,13 +318,13 @@ const enterpriseAmenities = [
   },
 ];
 
-const workspaceGalleryImages = [
-  { title: "Executive Lounge & Café", category: "Hospitality", img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&q=80" },
-  { title: "Private Team Suite", category: "Workspaces", img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=700&q=80" },
-  { title: "4K Boardroom", category: "Meeting Hubs", img: "https://images.unsplash.com/photo-1517502884422-41eaead166d4?auto=format&fit=crop&w=700&q=80" },
-  { title: "Director Cabin", category: "Executive", img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=80" },
-  { title: "Open Collaboration Deck", category: "Community", img: "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=700&q=80" },
-  { title: "Reception & Concierge", category: "Campus", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=700&q=80" },
+const workspaceGalleryPlaceholders = [
+  { title: "Executive Lounge & Café", category: "Hospitality", tag: "Gallery 01", icon: Coffee },
+  { title: "Private Team Suite", category: "Workspaces", tag: "Gallery 02", icon: Users },
+  { title: "4K Hybrid Boardroom", category: "Meeting Hubs", tag: "Gallery 03", icon: Monitor },
+  { title: "Director Private Cabin", category: "Executive", tag: "Gallery 04", icon: Award },
+  { title: "Collaboration Deck", category: "Community", tag: "Gallery 05", icon: Layers },
+  { title: "Reception & Concierge", category: "Campus", tag: "Gallery 06", icon: Building2 },
 ];
 
 const clientLogos = [
@@ -387,10 +376,52 @@ const faqItems = [
     a: "We provide complete, legally verified documentation including Rent Agreement, NOC from landlord, and latest Electricity Bill compliant with GST Department, ROC, and MCA bank verification.",
   },
   {
-    q: "What amenities are included in the monthly membership fee?",
+    q: "What amenities are included in the monthly membership?",
     a: "Everything is consolidated into one transparent invoice: ergonomic furniture, 1Gbps multi-ISP internet, 100% power backup, daily sanitization & housekeeping, receptionist services, and unlimited tea & coffee.",
   },
 ];
+
+/* ═══════════════════════════════════════════════════════════════
+   PLACEHOLDER COMPONENT
+   ═══════════════════════════════════════════════════════════════ */
+
+function ElegantPlaceholder({
+  title,
+  subtitle,
+  icon: Icon = ImageIcon,
+  className = "aspect-[16/10]",
+}: {
+  title?: string;
+  subtitle?: string;
+  icon?: any;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`relative rounded-2xl bg-gradient-to-br from-[#faf8f5] via-[#f5f0eb] to-[#ede8e1] border border-gray-200/80 flex flex-col items-center justify-center p-6 text-center overflow-hidden group ${className}`}
+    >
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 light-grid opacity-40 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-24 h-24 bg-[#d4622b]/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+
+      {/* Icon Badge */}
+      <div className="relative w-14 h-14 rounded-2xl bg-white border border-gray-200 shadow-xs flex items-center justify-center text-[#d4622b] group-hover:scale-110 group-hover:border-[#d4622b]/40 transition-all duration-300 mb-3">
+        <Icon className="w-7 h-7" />
+      </div>
+
+      {title && (
+        <div className="relative font-bold text-sm text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+          {title}
+        </div>
+      )}
+      {subtitle && (
+        <div className="relative text-[11px] font-medium text-gray-500 mt-0.5">
+          {subtitle}
+        </div>
+      )}
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════════════════════════
    ANIMATION HELPERS
@@ -456,11 +487,6 @@ export default function Home() {
   const [activeCityTab, setActiveCityTab] = useState<"delhi" | "gurgaon" | "noida">("delhi");
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
-  // Space Estimator State
-  const [teamSize, setTeamSize] = useState<number>(20);
-  const [estimatorCity, setEstimatorCity] = useState<string>("Delhi");
-  const [workspaceType, setWorkspaceType] = useState<"managed" | "private" | "desk">("managed");
-
   // Tour Booking Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalSelectedHub, setModalSelectedHub] = useState("Okhla Phase II, Delhi");
@@ -517,25 +543,6 @@ export default function Home() {
       });
     }
   };
-
-  // Calculations for Estimator
-  const calculatedSpecs = useMemo(() => {
-    let sqft = teamSize * 70;
-    if (workspaceType === "managed") sqft = teamSize * 85;
-    if (workspaceType === "desk") sqft = teamSize * 45;
-
-    const cabins = Math.max(1, Math.floor(teamSize / 8));
-    const meetingRooms = Math.max(1, Math.floor(teamSize / 16));
-    const phonePods = Math.max(1, Math.floor(teamSize / 10));
-
-    return {
-      sqft: sqft.toLocaleString(),
-      cabins,
-      meetingRooms,
-      phonePods,
-      estMonthly: (teamSize * (workspaceType === "managed" ? 11000 : workspaceType === "private" ? 9500 : 7500)).toLocaleString(),
-    };
-  }, [teamSize, workspaceType]);
 
   const openBookingModal = (hubName?: string, isTrial = false) => {
     if (hubName) setModalSelectedHub(hubName);
@@ -595,9 +602,8 @@ export default function Home() {
             <a href="#locations" className="hover:text-[#d4622b] transition-colors">
               Locations
             </a>
-            <a href="#estimator" className="hover:text-[#d4622b] transition-colors flex items-center gap-1.5">
-              <span>Space Calculator</span>
-              <span className="text-[10px] bg-[#d4622b]/10 text-[#d4622b] font-bold px-2 py-0.5 rounded-full">New</span>
+            <a href="#amenities" className="hover:text-[#d4622b] transition-colors">
+              Amenities
             </a>
             <a href="#gallery" className="hover:text-[#d4622b] transition-colors">
               Gallery
@@ -650,7 +656,7 @@ export default function Home() {
                   { label: "Solutions", href: "#solutions" },
                   { label: "Why Onward", href: "#about" },
                   { label: "Locations", href: "#locations" },
-                  { label: "Space Calculator", href: "#estimator" },
+                  { label: "Amenities", href: "#amenities" },
                   { label: "Gallery", href: "#gallery" },
                   { label: "Testimonials", href: "#reviews" },
                   { label: "Contact Us", href: "#contact" },
@@ -780,7 +786,7 @@ export default function Home() {
 
             </div>
 
-            {/* Right Column: Hero Visual Card with Live Features */}
+            {/* Right Column: Hero Visual Showcase (Placeholder Card) */}
             <motion.div
               style={{ y: heroY, opacity: heroOpacity }}
               className="lg:col-span-5 relative"
@@ -788,26 +794,13 @@ export default function Home() {
               <FadeUp delay={0.35}>
                 <div className="relative rounded-3xl p-3 bg-white border border-[#ede8e1] shadow-[0_20px_60px_-15px_rgba(212,98,43,0.12)]">
                   
-                  {/* Photo Container */}
-                  <div className="relative rounded-2xl overflow-hidden aspect-[4/3] group">
-                    <img
-                      src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
-                      alt="Onward Managed Workspace"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80" />
-
-                    {/* Floating Status Tag */}
-                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-[#1a1a2e] flex items-center gap-1.5 shadow-sm">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                      <span>Okhla Phase II Flagship</span>
-                    </div>
-
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <div className="text-xs font-bold uppercase tracking-wider text-amber-300">Grade-A Facility</div>
-                      <div className="text-lg font-bold">Custom Enterprise Floorplate</div>
-                    </div>
-                  </div>
+                  {/* Styled Placeholder Container */}
+                  <ElegantPlaceholder
+                    title="Okhla Phase II (Flagship Centre)"
+                    subtitle="Grade-A Managed Floorplate • New Delhi"
+                    icon={Building2}
+                    className="aspect-[4/3]"
+                  />
 
                   {/* Highlights Grid inside Card */}
                   <div className="grid grid-cols-3 gap-3 p-4 bg-[#faf8f5] rounded-2xl mt-3 border border-gray-100">
@@ -934,28 +927,23 @@ export default function Home() {
                 className="w-[330px] sm:w-[390px] flex-shrink-0 rounded-3xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 p-6 flex flex-col justify-between group transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.12)]"
               >
                 <div>
-                  {/* Image Preview */}
-                  <div className="relative rounded-2xl overflow-hidden aspect-[16/10] mb-5">
-                    <img
-                      src={sol.image}
-                      alt={sol.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
-
-                    <div className="absolute top-3 left-3">
-                      <span className="text-[10px] font-extrabold tracking-wider px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#d4622b] shadow-xs">
-                        {sol.tag}
-                      </span>
-                    </div>
-
-                    <div className="absolute bottom-3 right-3 text-[11px] font-bold text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-lg">
-                      {sol.capacity}
-                    </div>
-                  </div>
+                  {/* Placeholder Card */}
+                  <ElegantPlaceholder
+                    title={sol.title}
+                    subtitle={sol.capacity}
+                    icon={sol.icon}
+                    className="aspect-[16/10] mb-5"
+                  />
 
                   {/* Title & Description */}
-                  <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-[10px] font-extrabold tracking-wider px-2.5 py-0.5 rounded-full bg-[#d4622b]/10 text-[#d4622b]">
+                      {sol.tag}
+                    </span>
+                    <span className="text-xs font-semibold text-gray-400">{sol.badge}</span>
+                  </div>
+
+                  <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors mt-2">
                     {sol.title}
                   </h3>
                   <p className="text-xs text-gray-500 mt-2 leading-relaxed">
@@ -973,11 +961,11 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Footer Action & Pricing */}
+                {/* Footer Action */}
                 <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-gray-400 block">Pricing</span>
-                    <span className="text-sm font-extrabold text-[#1a1a2e]">{sol.pricing}</span>
+                    <span className="text-[10px] uppercase font-bold text-gray-400 block">Configuration</span>
+                    <span className="text-xs font-bold text-[#1a1a2e]">{sol.terms}</span>
                   </div>
 
                   <button
@@ -1135,18 +1123,13 @@ export default function Home() {
                 className="w-[320px] sm:w-[370px] flex-shrink-0 rounded-3xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 p-5 flex flex-col justify-between group transition-all duration-300 hover:shadow-xl"
               >
                 <div>
-                  {/* Image */}
-                  <div className="relative rounded-2xl overflow-hidden aspect-[16/10] mb-4">
-                    <img
-                      src={centre.image}
-                      alt={centre.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-bold text-[#1a1a2e] flex items-center gap-1 shadow-xs">
-                      <Building2 className="w-3 h-3 text-[#d4622b]" />
-                      <span>{centre.sqft}</span>
-                    </div>
-                  </div>
+                  {/* Location Placeholder Graphic */}
+                  <ElegantPlaceholder
+                    title={centre.name}
+                    subtitle={centre.sqft}
+                    icon={Building2}
+                    className="aspect-[16/10] mb-4"
+                  />
 
                   <h3 className="text-lg font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
                     {centre.name}
@@ -1189,180 +1172,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ INTERACTIVE SPACE & BUDGET ESTIMATOR (LIGHT LUXURY) ━━━ */}
-      <section id="estimator" className="py-24 sm:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <FadeUp>
-              <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block mb-3">
-                Space Calculator
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] tracking-tight">
-                Calculate your team&apos;s <span className="text-[#d4622b]">workspace footprint.</span>
-              </h2>
-              <p className="text-gray-600 text-sm sm:text-base mt-3">
-                Slide team size to see instant floorplate recommendations, private cabins, meeting hubs, and estimated pricing.
-              </p>
-            </FadeUp>
-          </div>
-
-          {/* Calculator Card */}
-          <FadeUp delay={0.2}>
-            <div className="rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-6 sm:p-10 shadow-lg">
-              <div className="grid lg:grid-cols-12 gap-10 items-center">
-                
-                {/* Left Controls */}
-                <div className="lg:col-span-6 space-y-7">
-                  
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <label className="text-sm font-bold text-[#1a1a2e] flex items-center gap-2">
-                        <Users className="w-4 h-4 text-[#d4622b]" /> Team Size
-                      </label>
-                      <span className="text-lg font-extrabold text-[#d4622b] px-3.5 py-1 rounded-full bg-white border border-[#ede8e1] shadow-xs">
-                        {teamSize} Members
-                      </span>
-                    </div>
-
-                    <input
-                      type="range"
-                      min={1}
-                      max={120}
-                      value={teamSize}
-                      onChange={(e) => setTeamSize(Number(e.target.value))}
-                      className="w-full h-2.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#d4622b]"
-                    />
-                    <div className="flex justify-between text-[11px] text-gray-400 mt-2 font-semibold">
-                      <span>1 Desk (Founder)</span>
-                      <span>50 Desks (Growth)</span>
-                      <span>120+ Desks (Enterprise)</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-bold text-[#1a1a2e] block mb-3">
-                      Workspace Solution
-                    </label>
-                    <div className="grid grid-cols-3 gap-2.5">
-                      {[
-                        { id: "managed", label: "Managed HQ", desc: "Custom Floorplate" },
-                        { id: "private", label: "Private Suite", desc: "Lockable Cabin" },
-                        { id: "desk", label: "Dedicated Desks", desc: "Coworking Deck" },
-                      ].map((type) => (
-                        <button
-                          key={type.id}
-                          onClick={() => setWorkspaceType(type.id as any)}
-                          className={`p-3 rounded-2xl text-left border transition-all ${
-                            workspaceType === type.id
-                              ? "bg-white border-[#d4622b] text-[#1a1a2e] shadow-md"
-                              : "bg-white/50 border-gray-200 text-gray-500 hover:bg-white"
-                          }`}
-                        >
-                          <div className="text-xs font-bold text-[#1a1a2e]">{type.label}</div>
-                          <div className="text-[10px] text-gray-500 mt-0.5">{type.desc}</div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-sm font-bold text-[#1a1a2e] block mb-3">
-                      Target NCR Location
-                    </label>
-                    <div className="grid grid-cols-3 gap-2.5">
-                      {["Delhi", "Gurgaon", "Noida"].map((city) => (
-                        <button
-                          key={city}
-                          onClick={() => setEstimatorCity(city)}
-                          className={`py-2.5 rounded-xl text-xs font-bold border transition-all text-center ${
-                            estimatorCity === city
-                              ? "bg-[#d4622b] text-white border-[#d4622b] shadow-xs"
-                              : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
-                          }`}
-                        >
-                          {city}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                </div>
-
-                {/* Right Blueprint Recommendation */}
-                <div className="lg:col-span-6 rounded-2xl bg-white border border-[#ede8e1] p-6 sm:p-8 space-y-6 shadow-sm">
-                  <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-                    <div>
-                      <span className="text-[10px] uppercase font-bold text-gray-400">Architectural Recommendation</span>
-                      <h4 className="text-lg font-bold text-[#1a1a2e]">Estimated Floorplate for {teamSize} Pax</h4>
-                    </div>
-                    <span className="text-xs font-bold text-[#d4622b] bg-[#d4622b]/10 px-3 py-1 rounded-full">
-                      {estimatorCity} Hubs
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                    <div className="p-3 rounded-xl bg-[#faf8f5] text-center border border-gray-100">
-                      <div className="text-[11px] text-gray-500">Floor Area</div>
-                      <div className="text-base font-extrabold text-[#1a1a2e] mt-0.5">{calculatedSpecs.sqft} sq.ft</div>
-                    </div>
-                    <div className="p-3 rounded-xl bg-[#faf8f5] text-center border border-gray-100">
-                      <div className="text-[11px] text-gray-500">Cabins</div>
-                      <div className="text-base font-extrabold text-[#1a1a2e] mt-0.5">{calculatedSpecs.cabins} Cabins</div>
-                    </div>
-                    <div className="p-3 rounded-xl bg-[#faf8f5] text-center border border-gray-100">
-                      <div className="text-[11px] text-gray-500">Meeting Hubs</div>
-                      <div className="text-base font-extrabold text-[#1a1a2e] mt-0.5">{calculatedSpecs.meetingRooms} Hubs</div>
-                    </div>
-                    <div className="p-3 rounded-xl bg-[#faf8f5] text-center border border-gray-100">
-                      <div className="text-[11px] text-gray-500">Phone Pods</div>
-                      <div className="text-base font-extrabold text-[#1a1a2e] mt-0.5">{calculatedSpecs.phonePods} Pods</div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 text-xs font-medium text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      <span>Includes 1Gbps Redundant Tier-1 Fiber & Wi-Fi</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      <span>Unlimited Barista Espresso, Gourmet Teas & Housekeeping</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      <span>24/7 Biometric Access & 100% Dual Power Backup</span>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                      <span className="text-[10px] uppercase font-bold text-gray-400">Estimated Turnkey Package</span>
-                      <div className="text-xl font-extrabold text-[#d4622b]">
-                        ₹{calculatedSpecs.estMonthly} <span className="text-xs text-gray-500 font-normal">/ month (approx)</span>
-                      </div>
-                    </div>
-
-                    <button
-                      onClick={() => openBookingModal(`Estimated ${teamSize}-Seat Layout in ${estimatorCity}`)}
-                      className="px-6 py-3 rounded-full bg-[#d4622b] text-white font-bold text-xs shadow-md hover:bg-[#b8501f] transition-all flex items-center justify-center gap-1.5"
-                    >
-                      <span>Lock In Proposal</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                </div>
-
-              </div>
-            </div>
-          </FadeUp>
-
-        </div>
-      </section>
-
       {/* ━━━ ENTERPRISE AMENITIES BENTO GRID ━━━ */}
-      <section id="amenities" className="py-24 sm:py-32 bg-[#faf8f5] border-t border-[#ede8e1]">
+      <section id="amenities" className="py-24 sm:py-32 bg-white">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -1384,9 +1195,9 @@ export default function Home() {
               const Icon = amenity.icon;
               return (
                 <FadeUp key={amenity.title} delay={0.08 * i}>
-                  <div className="h-full rounded-3xl bg-white border border-[#ede8e1] p-8 flex flex-col justify-between group hover:border-[#d4622b]/30 hover:shadow-lg transition-all duration-300">
+                  <div className="h-full rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-8 flex flex-col justify-between group hover:border-[#d4622b]/30 hover:bg-white hover:shadow-lg transition-all duration-300">
                     <div>
-                      <div className="w-12 h-12 rounded-2xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center text-[#d4622b] group-hover:scale-110 transition-transform mb-6">
+                      <div className="w-12 h-12 rounded-2xl bg-white border border-gray-200 flex items-center justify-center text-[#d4622b] group-hover:scale-110 transition-transform mb-6 shadow-xs">
                         <Icon className="w-6 h-6" />
                       </div>
 
@@ -1399,7 +1210,7 @@ export default function Home() {
                       </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-gray-100 flex items-center gap-2 text-xs font-bold text-gray-500 group-hover:text-[#d4622b] transition-colors">
+                    <div className="mt-6 pt-4 border-t border-gray-200/60 flex items-center gap-2 text-xs font-bold text-gray-500 group-hover:text-[#d4622b] transition-colors">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#d4622b]" />
                       <span>Standard Across All NCR Centres</span>
                     </div>
@@ -1412,8 +1223,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ WORKSPACE VISUAL GALLERY (HORIZONTAL SLIDER) ━━━ */}
-      <section id="gallery" className="py-24 sm:py-32 bg-white border-y border-[#ede8e1] overflow-hidden">
+      {/* ━━━ WORKSPACE VISUAL GALLERY (HORIZONTAL SLIDER WITH PLACEHOLDERS) ━━━ */}
+      <section id="gallery" className="py-24 sm:py-32 bg-[#faf8f5] border-y border-[#ede8e1] overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
             <FadeUp>
@@ -1449,30 +1260,24 @@ export default function Home() {
           ref={galleryTrackRef}
           className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-6 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
         >
-          {workspaceGalleryImages.map((g, i) => (
+          {workspaceGalleryPlaceholders.map((g, i) => (
             <div
               key={i}
-              className="w-[300px] sm:w-[360px] flex-shrink-0 rounded-3xl overflow-hidden bg-[#faf8f5] border border-gray-200 group cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500"
+              className="w-[300px] sm:w-[360px] flex-shrink-0 rounded-3xl overflow-hidden bg-white border border-gray-200 group cursor-pointer shadow-xs hover:shadow-xl transition-all duration-500 p-4"
             >
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img
-                  src={g.img}
-                  alt={g.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-70" />
-                <div className="absolute bottom-4 left-4 text-white">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-300 block">{g.category}</span>
-                  <span className="text-base font-bold">{g.title}</span>
-                </div>
-              </div>
+              <ElegantPlaceholder
+                title={g.title}
+                subtitle={`${g.category} • ${g.tag}`}
+                icon={g.icon}
+                className="aspect-[4/3]"
+              />
             </div>
           ))}
         </div>
       </section>
 
       {/* ━━━ CLIENT TESTIMONIALS & LOGO MARQUEE ━━━ */}
-      <section id="reviews" className="py-24 bg-[#faf8f5] relative overflow-hidden">
+      <section id="reviews" className="py-24 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-14 text-center">
           <FadeUp>
             <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block mb-3">
@@ -1503,7 +1308,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 grid md:grid-cols-3 gap-6">
           {testimonialsData.map((t, idx) => (
             <FadeUp key={t.name} delay={0.1 * idx}>
-              <div className="h-full rounded-3xl bg-white border border-[#ede8e1] p-8 flex flex-col justify-between group hover:border-[#d4622b]/30 hover:shadow-lg transition-all">
+              <div className="h-full rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-8 flex flex-col justify-between group hover:border-[#d4622b]/30 hover:bg-white hover:shadow-lg transition-all">
                 <div>
                   <div className="flex gap-1 mb-6 text-[#d4622b]">
                     {[...Array(t.rating)].map((_, j) => (
@@ -1515,7 +1320,7 @@ export default function Home() {
                   </p>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-gray-100 flex items-center gap-4">
+                <div className="mt-8 pt-6 border-t border-gray-200/60 flex items-center gap-4">
                   <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#d4622b] to-[#e8855a] flex items-center justify-center text-white font-bold text-sm">
                     {t.name.split(" ").map((n) => n[0]).join("")}
                   </div>
@@ -1531,7 +1336,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ FAQ ACCORDION ━━━ */}
-      <section className="py-24 bg-white border-t border-[#ede8e1]">
+      <section className="py-24 bg-[#faf8f5] border-t border-[#ede8e1]">
         <div className="max-w-4xl mx-auto px-5 sm:px-8">
           <div className="text-center mb-16">
             <FadeUp>
@@ -1548,7 +1353,7 @@ export default function Home() {
             {faqItems.map((item, idx) => (
               <div
                 key={idx}
-                className="rounded-2xl bg-[#faf8f5] border border-[#ede8e1] overflow-hidden transition-colors"
+                className="rounded-2xl bg-white border border-[#ede8e1] overflow-hidden transition-colors"
               >
                 <button
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
@@ -1570,7 +1375,7 @@ export default function Home() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-6 text-sm text-gray-600 leading-relaxed border-t border-gray-200/50 pt-4">
+                      <div className="px-6 pb-6 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
                         {item.a}
                       </div>
                     </motion.div>
@@ -1583,7 +1388,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ CONTACT & CONSULTATION SECTION ━━━ */}
-      <section id="contact" className="py-24 sm:py-32 bg-[#faf8f5] border-t border-[#ede8e1]">
+      <section id="contact" className="py-24 sm:py-32 bg-white border-t border-[#ede8e1]">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
@@ -1598,12 +1403,12 @@ export default function Home() {
                   <span className="text-[#d4622b]">forward?</span>
                 </h2>
                 <p className="text-gray-600 text-sm leading-relaxed mt-4">
-                  Transform your work life. Fill in the form and our commercial real estate team will reach out within 24 hours with custom floor plans and pricing.
+                  Transform your work life. Fill in the form and our commercial real estate team will reach out within 24 hours with custom floor plans and information.
                 </p>
 
                 <div className="space-y-4 pt-6">
-                  <div className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-[#ede8e1]">
-                    <div className="w-11 h-11 rounded-xl bg-[#faf8f5] border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0">
+                  <div className="flex items-start gap-4 p-4 rounded-2xl bg-[#faf8f5] border border-[#ede8e1]">
+                    <div className="w-11 h-11 rounded-xl bg-white border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0 shadow-xs">
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
@@ -1616,9 +1421,9 @@ export default function Home() {
 
                   <a
                     href="tel:9910668152"
-                    className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
+                    className="flex items-start gap-4 p-4 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-[#faf8f5] border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0">
+                    <div className="w-11 h-11 rounded-xl bg-white border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0 shadow-xs">
                       <Phone className="w-5 h-5" />
                     </div>
                     <div>
@@ -1629,9 +1434,9 @@ export default function Home() {
 
                   <a
                     href="mailto:info@onwardworkspaces.com"
-                    className="flex items-start gap-4 p-4 rounded-2xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
+                    className="flex items-start gap-4 p-4 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-[#faf8f5] border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0">
+                    <div className="w-11 h-11 rounded-xl bg-white border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0 shadow-xs">
                       <Mail className="w-5 h-5" />
                     </div>
                     <div>
@@ -1646,7 +1451,7 @@ export default function Home() {
             {/* Right Form */}
             <div className="lg:col-span-7">
               <FadeUp delay={0.2}>
-                <div className="rounded-3xl bg-white border border-[#ede8e1] p-8 sm:p-10 shadow-lg">
+                <div className="rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-8 sm:p-10 shadow-lg">
                   <h3 className="text-2xl font-bold text-[#1a1a2e] mb-2">Request Consultation or Free Trial</h3>
                   <p className="text-xs text-gray-500 mb-6">Schedule a physical walkthrough or claim your 2-day team trial pass.</p>
 
@@ -1665,7 +1470,7 @@ export default function Home() {
                           type="text"
                           required
                           placeholder="Vikram Sharma"
-                          className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
+                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
                         />
                       </div>
                       <div>
@@ -1674,7 +1479,7 @@ export default function Home() {
                           type="email"
                           required
                           placeholder="vikram@company.com"
-                          className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
+                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
                         />
                       </div>
                     </div>
@@ -1686,12 +1491,12 @@ export default function Home() {
                           type="tel"
                           required
                           placeholder="+91 9910668152"
-                          className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
+                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
                         />
                       </div>
                       <div>
                         <label className="text-xs font-bold text-gray-600 block mb-1.5">Preferred Centre</label>
-                        <select className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors">
+                        <select className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors">
                           <option value="Okhla Phase II, Delhi">Okhla Phase II (Delhi Flagship)</option>
                           <option value="Okhla Phase III, Delhi">Okhla Phase III (Delhi)</option>
                           <option value="Mohan Cooperative, Delhi">Mohan Cooperative (Delhi)</option>
@@ -1709,7 +1514,7 @@ export default function Home() {
                       <textarea
                         rows={3}
                         placeholder="Tell us about your team size, target move-in date, or custom layout requirements..."
-                        className="w-full bg-[#faf8f5] border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors resize-none"
+                        className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors resize-none"
                       />
                     </div>
 
@@ -1917,5 +1722,6 @@ export default function Home() {
     </div>
   );
 }
+
 
 
