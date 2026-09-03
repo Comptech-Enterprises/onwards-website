@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   title: "Onward Workspaces | Premium Coworking Spaces",
   description:
     "Premium coworking spaces built around your brand. Managed offices, private suites, virtual offices and more across Delhi NCR.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

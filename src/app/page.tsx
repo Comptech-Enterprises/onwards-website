@@ -295,9 +295,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
           <a href="#" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-[#d4622b] rounded-lg flex items-center justify-center group-hover:rotate-6 transition-transform">
-              <div className="w-3.5 h-3.5 border-2 border-white rounded-md" />
-            </div>
+            <img src="/onward-logo.png" alt="Onward" className="w-9 h-9 group-hover:rotate-6 transition-transform" />
             <div className="leading-none">
               <span className="text-xl font-bold tracking-tight text-[#1a1a2e]">Onward</span>
               <span className="block text-[9px] tracking-[0.25em] text-gray-400">WORKSPACES</span>
@@ -750,9 +748,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             <div>
               <a href="#" className="flex items-center gap-2.5 mb-5">
-                <div className="w-9 h-9 bg-[#d4622b] rounded-lg flex items-center justify-center">
-                  <div className="w-3.5 h-3.5 border-2 border-white rounded-md" />
-                </div>
+                <img src="/onward-logo.png" alt="Onward" className="w-9 h-9" />
                 <div className="leading-none">
                   <span className="text-xl font-bold text-[#1a1a2e] tracking-tight">Onward</span>
                   <span className="block text-[9px] text-gray-400 tracking-[0.25em]">WORKSPACES</span>
