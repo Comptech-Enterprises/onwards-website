@@ -1,12 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   motion,
   AnimatePresence,
   useInView,
-  useScroll,
-  useTransform,
 } from "framer-motion";
 import {
   ArrowRight,
@@ -14,320 +12,345 @@ import {
   ChevronLeft,
   ChevronRight,
   CheckCircle2,
-  ShieldCheck,
-  Wifi,
-  Coffee,
-  Users,
   Building2,
-  MapPin,
-  Sparkles,
+  Users,
+  Award,
+  Globe2,
+  Monitor,
+  Compass,
   Phone,
   Mail,
-  Calendar,
-  Layers,
-  Zap,
-  Clock,
-  Star,
-  X,
-  Monitor,
+  MapPin,
+  Sparkles,
+  Wifi,
+  Coffee,
   Lock,
   Headphones,
+  Zap,
+  Star,
+  X,
   Check,
+  Clock,
+  ShieldCheck,
   ChevronDown,
-  Globe2,
-  Award,
-  Compass,
-  Image as ImageIcon,
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════════════════════════
-   ORIGINAL BRAND DATA & VERIFIED CONTENT (NO PRICING)
+   ORIGINAL VERIFIED BRAND ARCHITECTURE DATA
    ═══════════════════════════════════════════════════════════════ */
 
-const heroRotatingWords = ["Ambition", "Brand", "People", "Vision", "Growth"];
-
-const statsData = [
-  { value: 3, suffix: "+", label: "NCR Cities", sub: "Delhi • Noida • Gurgaon" },
-  { value: 15, suffix: "+", label: "Centres", sub: "Prime Commercial Belts" },
-  { value: 250, suffix: "+", label: "Clients", sub: "Enterprises & Scaleups" },
-  { value: 1, suffix: "M+", label: "Sq. Ft.", sub: "Of Managed Workspace" },
-];
-
-const workspaceSolutions = [
+const workspaceFormats = [
   {
-    id: "managed-office",
-    category: "enterprise",
-    categoryLabel: "Enterprise",
-    tag: "ENTERPRISE",
-    title: "Managed Office",
-    desc: "Customised workspace for Enterprise, MNCs & Unicorns with bespoke branding and private infrastructure.",
-    badge: "Custom Turnkey",
-    capacity: "50 – 500+ Seats",
-    terms: "Custom Bespoke Layout",
-    popular: true,
+    id: "managed",
+    code: "01",
+    title: "Managed Enterprise HQ",
+    subtitle: "Turnkey Floorplate Built-to-Suit",
+    capacity: "50 – 500+ Workstations",
+    commitment: "Custom Corporate Leases",
+    tag: "CUSTOM ENTERPRISE",
     icon: Building2,
-    specs: [
-      "Custom Brand Identity & Dedicated Reception",
-      "Private Executive Boardrooms & Cabins",
-      "Dedicated High-Speed Fiber & IT Security",
-      "Complete Facility & Asset Management",
+    summary:
+      "A dedicated, brand-customized private office floor with private reception, IT server room, executive cabins, and bespoke hospitality services.",
+    highlights: [
+      "Custom brand interior identity & signage",
+      "Private executive boardrooms & director cabins",
+      "Dedicated multi-ISP 1Gbps fiber with failover",
+      "Zero CAPEX — end-to-end facility management",
     ],
+    details: {
+      moveIn: "3–4 Weeks Custom Delivery",
+      power: "100% Dual Generator Redundancy",
+      access: "24/7 Dedicated Biometrics",
+    },
   },
   {
-    id: "private-suites",
-    category: "teams",
-    categoryLabel: "Teams",
-    tag: "TEAMS",
-    title: "Private Suites",
-    desc: "Fully-managed private cabins for teams, offering sound-insulated comfort and plug-and-play agility.",
-    badge: "Instant Move-in",
-    capacity: "4 – 40 Seats",
-    terms: "Flexible Team Leases",
-    popular: false,
+    id: "suites",
+    code: "02",
+    title: "Private Team Suites",
+    subtitle: "Sound-Insulated Dedicated Office",
+    capacity: "4 – 40 Team Members",
+    commitment: "Agile Team Contracts",
+    tag: "PLUG & PLAY TEAMS",
     icon: Users,
-    specs: [
-      "Ergonomic Workstations & Storage",
-      "Dedicated Access Control & Whiteboards",
-      "Unlimited Barista Coffee & Pantry",
-      "Complimentary Meeting Room Credits",
+    summary:
+      "Fully-managed private lockable suites crafted for high-performance engineering, product, and consulting teams wanting agility with zero friction.",
+    highlights: [
+      "Ergonomic workstations with private storage",
+      "Acoustic glass isolation & private whiteboards",
+      "Unlimited artisanal barista coffee & tea pantry",
+      "Complimentary meeting & conference credits",
     ],
+    details: {
+      moveIn: "Same Day Move-in Ready",
+      power: "100% Online UPS + DG Backup",
+      access: "Biometric Suite Access",
+    },
   },
   {
-    id: "private-cabins",
-    category: "executive",
-    categoryLabel: "Leadership",
-    tag: "EXECUTIVE",
-    title: "Private Cabins",
-    desc: "Fully-equipped space for directors and senior leadership, designed for privacy and high-stakes strategy.",
-    badge: "Executive Class",
+    id: "cabins",
+    code: "03",
+    title: "Executive Director Cabins",
+    subtitle: "Private Leadership Office Suite",
     capacity: "1 – 4 Leaders",
-    terms: "Private Acoustic Suites",
-    popular: false,
+    commitment: "Flexible Executive Terms",
+    tag: "LEADERSHIP CLASS",
     icon: Award,
-    specs: [
-      "Italian Leather Executive Seating",
-      "Private Consultation Table",
-      "Acoustic Sound Isolation",
-      "Priority Concierge & Guest Handling",
+    summary:
+      "Prestigious private sound-isolated cabins crafted for corporate leaders, founders, and legal counsel requiring privacy, elegance, and comfort.",
+    highlights: [
+      "Italian leather executive chairs & discussion nook",
+      "Sound-damped acoustic privacy glass",
+      "Priority guest handling & concierge support",
+      "High-speed private Wi-Fi VLAN",
     ],
+    details: {
+      moveIn: "Immediate Availability",
+      power: "Zero-Downtime SLA",
+      access: "24/7 Private Access",
+    },
   },
   {
-    id: "virtual-office",
-    category: "flexible",
-    categoryLabel: "Remote",
-    tag: "REMOTE",
-    title: "Virtual Office",
-    desc: "Virtual HQ with zero overhead costs. Compliant documentation for GST registration and ROC filings.",
-    badge: "GST & MCA Ready",
-    capacity: "Virtual / Remote",
-    terms: "Annual & Multi-Year Plans",
-    popular: false,
+    id: "virtual",
+    code: "04",
+    title: "Virtual Office & GST Compliance",
+    subtitle: "Official Delhi NCR Business Address",
+    capacity: "Remote & Hybrid Firms",
+    commitment: "Annual Compliance Term",
+    tag: "MCA & ROC COMPLIANT",
     icon: Globe2,
-    specs: [
-      "Prestigious Delhi NCR Business Address",
-      "NOC, Electricity Bill & Rent Agreement",
-      "Courier & Mail Receiving Services",
-      "Monthly Complimentary Day Passes",
+    summary:
+      "A legally certified commercial address for company incorporation, GST registration, bank account opening, and corporate mail handling.",
+    highlights: [
+      "NOC, Electricity Bill & Rent Agreement provided",
+      "Compliant with GST Department & ROC filings",
+      "Courier & parcel receiving with digital logging",
+      "Monthly complimentary day passes across NCR",
     ],
+    details: {
+      moveIn: "Documentation in 24 Hours",
+      power: "Digital Mail Portal",
+      access: "NCR Pass Integration",
+    },
   },
   {
-    id: "on-demand",
-    category: "flexible",
-    categoryLabel: "Flexible",
-    tag: "FLEXIBLE",
-    title: "On-Demand & Day Pass",
-    desc: "Meeting rooms, conference hubs & day passes on the go with state-of-the-art 4K video conferencing.",
-    badge: "Hourly & Daily",
-    capacity: "1 – 60 Pax",
-    terms: "On-Demand Pay-per-Use",
-    popular: false,
+    id: "ondemand",
+    code: "05",
+    title: "4K Boardrooms & Event Spaces",
+    subtitle: "Smart Meeting Hubs by the Hour",
+    capacity: "4 – 60 Pax",
+    commitment: "Hourly & Daily Pay-per-Use",
+    tag: "HYBRID COLLABORATION",
     icon: Monitor,
-    specs: [
-      "4K Polycom/Logitech AV Video Systems",
-      "Interactive Digital Smart Boards",
-      "High-Speed Wi-Fi & Technical Support",
-      "Beverage & Catering Concierge",
+    summary:
+      "State-of-the-art hybrid meeting hubs equipped with 4K video conferencing, smart touch presentation displays, and beverage concierge.",
+    highlights: [
+      "Polycom & Logitech 4K hybrid AV systems",
+      "Interactive smart touch digital whiteboards",
+      "High-speed dedicated Wi-Fi & technical support",
+      "Artisanal coffee & catering on demand",
     ],
+    details: {
+      moveIn: "Instant App/Web Booking",
+      power: "High-Def Polycom Video",
+      access: "Dedicated Concierge",
+    },
   },
   {
-    id: "custom-built",
-    category: "enterprise",
-    categoryLabel: "Bespoke",
-    tag: "BESPOKE",
-    title: "Custom Built HQ",
-    desc: "Bespoke design and construction tailored specifically to your company's brand, culture, and workflow.",
-    badge: "Build-To-Suit",
-    capacity: "100 – 1000+ Seats",
-    terms: "Turnkey Architecture",
-    popular: false,
+    id: "bespoke",
+    code: "06",
+    title: "Build-To-Suit Campus",
+    subtitle: "Custom Architecture & Development",
+    capacity: "100 – 1000+ Desks",
+    commitment: "Long-Term Enterprise Partnership",
+    tag: "BESPOKE ARCHITECTURE",
     icon: Compass,
-    specs: [
-      "Custom Interior Architecture & Layout",
-      "Dedicated IT Server Rooms & Redundancy",
-      "Exclusive Cafeteria & Breakout Lounge",
-      "Tailored Commercial Agreement",
+    summary:
+      "Turnkey development of whole standalone buildings and enterprise wings tailored from shell to finish to your enterprise specifications.",
+    highlights: [
+      "Architectural planning aligned to corporate branding",
+      "Dedicated cafeteria, wellness zone, and IT server hall",
+      "Tier-1 infrastructure & power redundancy",
+      "Optimized operational expense framework",
     ],
+    details: {
+      moveIn: "Tailored Project Timeline",
+      power: "Dedicated Substation / DG",
+      access: "Turnstile Security Gates",
+    },
   },
 ];
 
-const whyOnwardFeatures = [
-  {
-    num: "01",
-    title: "Strategic Locations",
-    desc: "Vibrant business centers across Delhi, Noida, and Gurgaon — positioned right at major metro stations and commercial arteries where opportunity lives.",
-    icon: Compass,
-    highlight: "2 mins from Metro stations",
-  },
-  {
-    num: "02",
-    title: "Built for Triumph",
-    desc: "Every architectural element is crafted to fuel productivity, inspire creativity, eliminate downtime, and drive your team's business growth.",
-    icon: Award,
-    highlight: "100% Power & Fiber Redundancy",
-  },
-  {
-    num: "03",
-    title: "Beyond Ordinary",
-    desc: "Futuristic technology, artisan coffee pantries, acoustic phone pods, and bespoke managed spaces that elevate how ambitious teams work.",
-    icon: Sparkles,
-    highlight: "Zero Setup & Maintenance Overhead",
-  },
-];
-
-const ncrLocationsData = {
+const ncrHubsData = {
   delhi: {
     city: "Delhi",
-    subtitle: "Capital city hubs with direct connectivity to Violet, Magenta & Blue Metro lines.",
+    subtitle: "Capital central hubs with immediate access to Violet, Magenta & Blue metro lines.",
     centres: [
       {
+        id: "okhla-2",
         name: "Okhla Phase II (Flagship HQ)",
-        metro: "2 mins from Harkesh Nagar Okhla Metro",
+        area: "45,000+ sq.ft",
+        metro: "2 min walk from Harkesh Nagar Okhla Metro",
         address: "Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020",
-        sqft: "45,000+ sq.ft",
-        tags: ["Flagship Centre", "Metro Adjacent", "Enterprise Wing", "Café Terrace"],
+        tags: ["Flagship Centre", "Enterprise Wing", "Café Terrace", "Ample Parking"],
       },
       {
+        id: "okhla-3",
         name: "Okhla Phase III",
-        metro: "3 mins from NSIC Okhla Metro",
+        area: "38,000+ sq.ft",
+        metro: "3 min from NSIC Okhla Metro",
         address: "B-216, Okhla Phase III, New Delhi, 110020",
-        sqft: "38,000+ sq.ft",
-        tags: ["Tech Corridor", "Private Suites", "Gaming Lounge"],
+        tags: ["Tech Corridor", "Private Suites", "Quiet Pods"],
       },
       {
+        id: "mohan",
         name: "Mohan Cooperative",
+        area: "60,000+ sq.ft",
         metro: "1 min walk from Mohan Estate Metro",
         address: "Mathura Road, Mohan Cooperative Industrial Estate, New Delhi",
-        sqft: "60,000+ sq.ft",
-        tags: ["Large Format Campus", "Ample Parking", "Auditorium"],
+        tags: ["Large Campus", "Auditorium", "Green Terraces"],
       },
       {
+        id: "cp",
         name: "Connaught Place",
-        metro: "Rajiv Chowk Interchange",
+        area: "25,000+ sq.ft",
+        metro: "Rajiv Chowk Metro Interchange",
         address: "Outer Circle, Connaught Place, Central Delhi",
-        sqft: "25,000+ sq.ft",
-        tags: ["Central CBD", "Executive Cabins", "Prestigious Address"],
+        tags: ["Central CBD", "Executive Suites", "Prestigious Pin"],
       },
     ],
   },
   gurgaon: {
     city: "Gurgaon",
-    subtitle: "Millennium City corporate nerve centres near DLF CyberHub & Expressway.",
+    subtitle: "Millennium City corporate corridors near DLF CyberHub and major expressways.",
     centres: [
       {
+        id: "cybercity",
         name: "DLF Cyber City",
-        metro: "2 mins from IndusInd Cyber City Rapid Metro",
+        area: "55,000+ sq.ft",
+        metro: "2 min from IndusInd Cyber City Rapid Metro",
         address: "DLF Cyber City, Sector 24, Gurugram, Haryana",
-        sqft: "55,000+ sq.ft",
-        tags: ["Fortune 500 Hub", "High-Speed Fiber", "Rooftop Lounge"],
+        tags: ["Fortune 500 Hub", "High-Speed Fiber", "Sky Lounge"],
       },
       {
+        id: "udyog",
         name: "Udyog Vihar Phase IV",
-        metro: "5 mins from Shankar Chowk / CyberHub",
+        area: "40,000+ sq.ft",
+        metro: "5 min from Shankar Chowk / CyberHub",
         address: "Plot 304, Udyog Vihar Phase-IV, Gurugram",
-        sqft: "40,000+ sq.ft",
-        tags: ["Startup Cluster", "24/7 Security", "Podcast Studio"],
+        tags: ["Startup Hub", "24/7 Biometrics", "Podcast Booth"],
       },
       {
-        name: "Golf Course Extension",
+        id: "golfcourse",
+        name: "Golf Course Extension Road",
+        area: "32,000+ sq.ft",
         metro: "Sector 55-56 Rapid Metro",
         address: "Golf Course Extension Road, Sector 65, Gurugram",
-        sqft: "32,000+ sq.ft",
         tags: ["Ultra Premium", "Wellness Pods", "EV Charging"],
       },
     ],
   },
   noida: {
     city: "Noida",
-    subtitle: "High-tech institutional hubs along prime expressway and metro corridors.",
+    subtitle: "High-tech institutional campuses across prime expressway and metro belts.",
     centres: [
       {
+        id: "sec62",
         name: "Sector 62 IT Hub",
-        metro: "3 mins from Electronic City Metro",
+        area: "50,000+ sq.ft",
+        metro: "3 min from Electronic City Metro",
         address: "C-Block, Institutional Area, Sector 62, Noida",
-        sqft: "50,000+ sq.ft",
         tags: ["IT Park", "Enterprise Floorplates", "Cafeteria"],
       },
       {
-        name: "Sector 16 Metro Corridor",
+        id: "sec16",
+        name: "Sector 16 Metro Belt",
+        area: "30,000+ sq.ft",
         metro: "1 min walk from Sector 16 Metro",
         address: "Film City Marg, Sector 16, Noida",
-        sqft: "30,000+ sq.ft",
-        tags: ["Media Hub", "Turnkey Cabins", "Instant Commute"],
+        tags: ["Media District", "Turnkey Cabins", "Instant Commute"],
       },
       {
+        id: "sec132",
         name: "Sector 132 Expressway",
+        area: "65,000+ sq.ft",
         metro: "Noida-Greater Noida Expressway",
         address: "Expressway Corporate Park, Sector 132, Noida",
-        sqft: "65,000+ sq.ft",
         tags: ["Mega Campus", "Green Architecture", "Executive Suites"],
       },
     ],
   },
 };
 
-const enterpriseAmenities = [
+const enterpriseSpecs = [
   {
-    icon: Wifi,
+    num: "01",
     title: "1Gbps Redundant Multi-ISP Fiber",
-    desc: "High-speed enterprise lines with dual active failover, dedicated VLANs, and firewall security.",
+    desc: "Dual active enterprise internet connections with auto-failover, private VLAN configuration, and hardware firewall security.",
+    icon: Wifi,
   },
   {
+    num: "02",
+    title: "Sound-Insulated Acoustic Zoom Pods",
+    desc: "Private acoustic booths designed for confidential investor calls, hybrid client meetings, and uninterrupted focus.",
     icon: Headphones,
-    title: "Soundproof Acoustic Zoom Pods",
-    desc: "Studio-grade isolated booths designed for crystal-clear confidential client and investor calls.",
   },
   {
+    num: "03",
+    title: "Unlimited Artisanal Barista Coffee",
+    desc: "Freshly brewed artisan coffees, organic herbal teas, micro-kitchens, and healthy snacking stations on every floor.",
     icon: Coffee,
-    title: "Unlimited Barista Coffee & Teas",
-    desc: "Freshly roasted artisanal coffees, herbal teas, micro-kitchens, and healthy snacking stations.",
   },
   {
-    icon: Lock,
+    num: "04",
     title: "24/7 AI Biometric & CCTV Security",
-    desc: "Touchless biometric facial turnstiles, round-the-clock security personnel, and full CCTV coverage.",
+    desc: "Touchless biometric access control, round-the-clock trained security personnel, and continuous high-definition CCTV coverage.",
+    icon: Lock,
   },
   {
+    num: "05",
+    title: "4K Hybrid Boardrooms & Polycom AV",
+    desc: "Polycom 4K studio cameras, interactive touch whiteboards, and seamless wireless presentation casting.",
     icon: Monitor,
-    title: "4K Hybrid Boardrooms & AV",
-    desc: "Polycom 4K studio cameras, digital interactive whiteboards, and seamless wireless casting.",
   },
   {
+    num: "06",
+    title: "100% Dual Power Redundancy",
+    desc: "Heavy-duty dual generator sets with zero-second online UPS cutover ensuring uninterrupted workday productivity.",
     icon: Zap,
-    title: "100% Dual Power Backup",
-    desc: "Heavy-duty dual diesel generator sets and industrial online UPS guaranteeing 0-second blackout downtime.",
   },
 ];
 
-const workspaceGalleryPlaceholders = [
-  { title: "Executive Lounge & Café", category: "Hospitality", tag: "Gallery 01", icon: Coffee },
-  { title: "Private Team Suite", category: "Workspaces", tag: "Gallery 02", icon: Users },
-  { title: "4K Hybrid Boardroom", category: "Meeting Hubs", tag: "Gallery 03", icon: Monitor },
-  { title: "Director Private Cabin", category: "Executive", tag: "Gallery 04", icon: Award },
-  { title: "Collaboration Deck", category: "Community", tag: "Gallery 05", icon: Layers },
-  { title: "Reception & Concierge", category: "Campus", tag: "Gallery 06", icon: Building2 },
+const campusGalleryItems = [
+  { title: "Executive Lounge & Café", tag: "HOSPITALITY", icon: Coffee, desc: "Artisanal espresso bar & casual breakout terrace." },
+  { title: "Soundproof Team Cabin", tag: "WORKSPACES", icon: Users, desc: "Acoustically isolated private team suites." },
+  { title: "4K Hybrid Boardroom", tag: "MEETING HUBS", icon: Monitor, desc: "Polycom AV conferencing for hybrid boards." },
+  { title: "Director Executive Suite", tag: "LEADERSHIP", icon: Award, desc: "Italian leather executive seating & meeting nook." },
+  { title: "Collaboration Deck", tag: "COMMUNITY", icon: Building2, desc: "Naturally lit collaboration and breakout spaces." },
+  { title: "Concierge Welcome Reception", tag: "CAMPUS", icon: Compass, desc: "Professional front-desk hospitality and guest handling." },
 ];
 
-const clientLogos = [
+const verifiedTestimonials = [
+  {
+    name: "Varun Puri",
+    role: "Founder",
+    company: "Dangal Games",
+    text: "Onward has been a cornerstone in our expansion journey. The strategic locations and seamless operations let our team focus 100% on product development.",
+  },
+  {
+    name: "Abhinay Nagwekar",
+    role: "Procurement Lead",
+    company: "Aramex",
+    text: "Meticulously maintained facilities with unwavering infrastructure support. Onward consistently exceeds our enterprise expectations across NCR.",
+  },
+  {
+    name: "Prasenjit Das Gupta",
+    role: "Head Commercial",
+    company: "Thermax",
+    text: "Transitioning our regional office to Onward was an outstanding decision. The professional environment leaves a lasting impression on our visiting clients.",
+  },
+];
+
+const clientBrands = [
   "Dangal Games",
   "Aramex",
   "Thermax",
@@ -338,271 +361,73 @@ const clientLogos = [
   "NexGen AI",
 ];
 
-const testimonialsData = [
-  {
-    name: "Varun Puri",
-    role: "Founder",
-    company: "Dangal Games",
-    text: "Onward has been a game-changer for our team. The perfect office space for our growth journey across Delhi NCR.",
-    rating: 5,
-  },
-  {
-    name: "Abhinay Nagwekar",
-    role: "Procurement Lead",
-    company: "Aramex",
-    text: "Onward exceeded all expectations — meticulously designed spaces with unwavering support and high-speed infrastructure.",
-    rating: 5,
-  },
-  {
-    name: "Prasenjit Das Gupta",
-    role: "Head Commercial",
-    company: "Thermax",
-    text: "Transitioning to Onward was our best decision. The environment fosters real collaboration and impressive client impressions.",
-    rating: 5,
-  },
+const faqCategories = [
+  { id: "all", label: "All Questions" },
+  { id: "trial", label: "2-Day Free Trial" },
+  { id: "virtual", label: "Virtual Office & GST" },
+  { id: "managed", label: "Managed Enterprise" },
+  { id: "inclusions", label: "Inclusions & Amenities" },
 ];
 
-const faqItems = [
+const faqAccordion = [
   {
-    q: "How does the 2-Day Free Trial work?",
-    a: "You and your core team can experience working out of any Onward Workspace for 2 full days at zero cost. Enjoy high-speed fiber, meeting room access, and barista coffee to feel the environment before making a decision.",
+    category: "trial",
+    categoryLabel: "2-DAY TRIAL",
+    q: "How does the 2-Day Free Trial work and who is eligible?",
+    a: "You and your core team can experience working out of any Onward center in Delhi, Gurgaon, or Noida for 2 consecutive days at zero cost. You will have full access to high-speed redundant Wi-Fi, ergonomic workstations, meeting room facilities, and our artisanal barista coffee bar with zero credit card required.",
   },
   {
-    q: "How fast can we move our team into an Onward Workspace?",
-    a: "Private Suites and Dedicated Desks are plug-and-play ready for immediate same-day or 24-hour move-in. Custom-built Managed Offices (50 to 500+ desks) are delivered in 3 to 4 weeks.",
+    category: "trial",
+    categoryLabel: "MOVE-IN",
+    q: "How quickly can our team move into a Private Suite or Dedicated Cabin?",
+    a: "Private Suites and Executive Cabins are 100% plug-and-play furnished. Your team can move in on the same day or within 24 hours of completing verification. Custom-built Managed Offices (50 to 500+ desks) are delivered in 3 to 4 weeks with bespoke branding and layout.",
   },
   {
+    category: "virtual",
+    categoryLabel: "GST & ROC",
     q: "What documentation is provided for Virtual Office & GST registration?",
-    a: "We provide complete, legally verified documentation including Rent Agreement, NOC from landlord, and latest Electricity Bill compliant with GST Department, ROC, and MCA bank verification.",
+    a: "We provide complete, legally certified commercial documentation including a registered Rent Agreement, NOC from the property owner, and the latest commercial Electricity Bill. These documents are 100% compliant with GST Department registration, ROC company incorporation, and MCA bank verification.",
   },
   {
-    q: "What amenities are included in the monthly membership?",
-    a: "Everything is consolidated into one transparent invoice: ergonomic furniture, 1Gbps multi-ISP internet, 100% power backup, daily sanitization & housekeeping, receptionist services, and unlimited tea & coffee.",
+    category: "virtual",
+    categoryLabel: "COMPLIANCE",
+    q: "How does corporate courier handling and digital mail scanning work for Virtual Offices?",
+    a: "Our front-desk concierge receives and logs all incoming mail, legal notices, and courier parcels. You receive an instant digital notification with scanned envelopes, and parcels can be forwarded to your preferred residential or corporate address upon request.",
+  },
+  {
+    category: "managed",
+    categoryLabel: "ENTERPRISE HQ",
+    q: "Can we customize the office layout, private reception, and IT server infrastructure?",
+    a: "Yes. For our Managed Enterprise and Build-to-Suit clients, our architectural team designs custom floorplans featuring your brand colours, dedicated reception desk, private executive cabins, dedicated server room with multi-ISP fiber lines, and private biometric turnstiles.",
+  },
+  {
+    category: "managed",
+    categoryLabel: "INFRASTRUCTURE",
+    q: "What are your power and internet uptime guarantees?",
+    a: "All Onward centers operate on enterprise Grade-A infrastructure featuring dual active multi-ISP fiber connections with automated failover, industrial online UPS systems, and heavy-duty dual generator sets providing 100% power and zero-second cutover backup.",
+  },
+  {
+    category: "inclusions",
+    categoryLabel: "INCLUSIONS",
+    q: "What services are included in the single consolidated monthly membership?",
+    a: "Everything is covered in a single transparent monthly invoice: ergonomic furniture, high-speed fiber internet, 100% electricity and power backup, daily sanitization and housekeeping, front-desk concierge, mail handling, unlimited barista roastery coffee and teas, and monthly complimentary boardroom credits.",
+  },
+  {
+    category: "inclusions",
+    categoryLabel: "BOARDROOMS",
+    q: "How do meeting room bookings and 4K video conferencing credits work?",
+    a: "Members receive monthly complimentary credits to reserve our 4K hybrid boardrooms equipped with Polycom studio cameras and smart digital whiteboards. Additional hours can be booked seamlessly on-demand.",
   },
 ];
 
 /* ═══════════════════════════════════════════════════════════════
-   3D WIREFRAME & HYPERFRAME ANIMATION ENGINES
+   ARCHITECTURAL PLACEHOLDER COMPONENT
    ═══════════════════════════════════════════════════════════════ */
 
-/* 2. Rotating 3D Hyperframe Wireframe Polyhedron */
-function Floating3DCage({ size = 80, className = "" }: { size?: number; className?: string }) {
-  return (
-    <div className={`relative flex items-center justify-center ${className}`} style={{ width: size, height: size, perspective: 800 }}>
-      <motion.div
-        animate={{
-          rotateX: [0, 360],
-          rotateY: [0, 360],
-          rotateZ: [0, 180],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
-        style={{ transformStyle: "preserve-3d" }}
-        className="relative w-full h-full"
-      >
-        {/* Wireframe Cube Faces */}
-        {[
-          { transform: `translateZ(${size / 2}px)` },
-          { transform: `rotateY(180deg) translateZ(${size / 2}px)` },
-          { transform: `rotateY(90deg) translateZ(${size / 2}px)` },
-          { transform: `rotateY(-90deg) translateZ(${size / 2}px)` },
-          { transform: `rotateX(90deg) translateZ(${size / 2}px)` },
-          { transform: `rotateX(-90deg) translateZ(${size / 2}px)` },
-        ].map((face, idx) => (
-          <div
-            key={idx}
-            style={face}
-            className="absolute inset-0 border border-[#d4622b]/30 bg-[#d4622b]/[0.03] backdrop-blur-[1px] rounded-lg"
-          >
-            {/* Corner Node Dots */}
-            <span className="absolute top-0 left-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full -translate-x-1/2 -translate-y-1/2 shadow-xs" />
-            <span className="absolute top-0 right-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full translate-x-1/2 -translate-y-1/2 shadow-xs" />
-            <span className="absolute bottom-0 left-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full -translate-x-1/2 translate-y-1/2 shadow-xs" />
-            <span className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-[#d4622b] rounded-full translate-x-1/2 translate-y-1/2 shadow-xs" />
-          </div>
-        ))}
-      </motion.div>
-    </div>
-  );
-}
-
-/* 3. Interactive 3D Architectural Wireframe Model (Hero Showcase) */
-function Architectural3DVisual({ onExploreClick }: { onExploreClick: () => void }) {
-  const [activeFloor, setActiveFloor] = useState<1 | 2 | 3>(2);
-
-  return (
-    <div className="relative rounded-3xl p-6 bg-white border border-[#ede8e1] shadow-[0_20px_60px_-15px_rgba(212,98,43,0.14)] overflow-hidden">
-      
-      {/* Top Controls Bar */}
-      <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-100">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
-          <span className="text-xs font-extrabold text-[#1a1a2e] uppercase tracking-wider">
-            3D Hyperframe Live Topology
-          </span>
-        </div>
-        
-        {/* Tier Selector */}
-        <div className="flex bg-[#faf8f5] p-1 rounded-xl border border-gray-200 text-[11px] font-bold text-gray-500">
-          {[
-            { id: 1, label: "L1: Lounge & Café" },
-            { id: 2, label: "L2: Private Suites" },
-            { id: 3, label: "L3: Boardrooms" },
-          ].map((floor) => (
-            <button
-              key={floor.id}
-              onClick={() => setActiveFloor(floor.id as any)}
-              className={`px-2.5 py-1 rounded-lg transition-all ${
-                activeFloor === floor.id
-                  ? "bg-[#d4622b] text-white shadow-xs"
-                  : "hover:text-[#1a1a2e]"
-              }`}
-            >
-              {floor.label.split(":")[0]}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 3D Isometric Viewport Container */}
-      <div className="relative h-[280px] sm:h-[320px] bg-gradient-to-b from-[#faf8f5] to-[#f5f0eb] rounded-2xl border border-gray-200/80 flex items-center justify-center overflow-hidden">
-        
-        {/* Background Radial Radar Ring */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-64 h-64 border border-[#d4622b]/15 rounded-full animate-[spin_30s_linear_infinite]" />
-          <div className="w-48 h-48 border border-dashed border-[#d4622b]/20 rounded-full animate-[spin_20s_linear_infinite_reverse]" />
-          <div className="w-32 h-32 border border-[#d4622b]/25 rounded-full" />
-        </div>
-
-        {/* 3D Isometric Stacking Platform */}
-        <div
-          className="relative w-64 h-48 transition-transform duration-700"
-          style={{
-            transform: "rotateX(60deg) rotateZ(-45deg)",
-            transformStyle: "preserve-3d",
-          }}
-        >
-          {/* Level 1: Ground Floor / Café Deck */}
-          <motion.div
-            animate={{
-              translateZ: activeFloor === 1 ? 40 : 0,
-              opacity: activeFloor === 1 ? 1 : 0.45,
-            }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 rounded-2xl border-2 border-gray-400 bg-white/70 backdrop-blur-sm shadow-md flex items-center justify-center"
-          >
-            {/* Grid Floor Lines */}
-            <div className="absolute inset-2 grid grid-cols-4 grid-rows-3 gap-1 opacity-30">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className="border border-gray-500/40 rounded-xs" />
-              ))}
-            </div>
-            <span className="text-[10px] font-extrabold text-gray-700 bg-white px-2 py-0.5 rounded-full border shadow-xs -rotate-45">
-              L1: Barista Café & Hot Desks
-            </span>
-          </motion.div>
-
-          {/* Level 2: Private Team Suites */}
-          <motion.div
-            animate={{
-              translateZ: activeFloor === 2 ? 70 : 35,
-              opacity: activeFloor === 2 ? 1 : 0.6,
-            }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 rounded-2xl border-2 border-[#d4622b] bg-white/80 backdrop-blur-md shadow-xl flex items-center justify-center"
-          >
-            <div className="absolute inset-2 grid grid-cols-3 grid-rows-2 gap-2">
-              {[...Array(6)].map((_, i) => (
-                <div
-                  key={i}
-                  className="border border-[#d4622b]/40 bg-[#d4622b]/10 rounded-sm flex items-center justify-center"
-                >
-                  <span className="w-1 h-1 bg-[#d4622b] rounded-full animate-ping" />
-                </div>
-              ))}
-            </div>
-            <span className="relative text-[10px] font-extrabold text-[#d4622b] bg-white px-2.5 py-1 rounded-full border border-[#d4622b]/30 shadow-xs -rotate-45">
-              L2: Sound-Insulated Team Cabins
-            </span>
-          </motion.div>
-
-          {/* Level 3: Executive Boardrooms */}
-          <motion.div
-            animate={{
-              translateZ: activeFloor === 3 ? 105 : 70,
-              opacity: activeFloor === 3 ? 1 : 0.45,
-            }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 rounded-2xl border-2 border-[#1a1a2e] bg-white/75 backdrop-blur-sm shadow-md flex items-center justify-center"
-          >
-            <div className="absolute inset-3 border border-dashed border-[#1a1a2e]/40 rounded-lg flex items-center justify-center">
-              <span className="text-[10px] font-extrabold text-[#1a1a2e] bg-white px-2 py-0.5 rounded-full border shadow-xs -rotate-45">
-                L3: 4K Hybrid Boardroom
-              </span>
-            </div>
-          </motion.div>
-
-          {/* Inflow Fiber Wire Laser Pulse */}
-          <motion.div
-            animate={{
-              translateZ: [0, 110, 0],
-              opacity: [0.2, 1, 0.2],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#d4622b] shadow-[0_0_20px_#d4622b]"
-          />
-        </div>
-
-        {/* Floating Telemetry Badges */}
-        <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-gray-200 text-[10px] font-bold text-gray-700 shadow-xs">
-          <span className="text-[#d4622b]">⚡ Multi-ISP Inflow:</span> 1.0 Gbps Sync
-        </div>
-        <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-gray-200 text-[10px] font-bold text-emerald-600 shadow-xs">
-          ● Dual Generator Online (0s Failover)
-        </div>
-      </div>
-
-      {/* Specs Strip */}
-      <div className="grid grid-cols-3 gap-3 p-3.5 bg-[#faf8f5] rounded-2xl mt-4 border border-gray-100 text-center">
-        <div>
-          <div className="text-xs font-extrabold text-[#d4622b]">Turnkey</div>
-          <div className="text-[10px] text-gray-500">Modular Fit-out</div>
-        </div>
-        <div>
-          <div className="text-xs font-extrabold text-[#1a1a2e]">Acoustic</div>
-          <div className="text-[10px] text-gray-500">Sound-Isolated</div>
-        </div>
-        <div>
-          <div className="text-xs font-extrabold text-emerald-600">Grade-A</div>
-          <div className="text-[10px] text-gray-500">Verified Campus</div>
-        </div>
-      </div>
-
-      {/* Action Button */}
-      <button
-        onClick={onExploreClick}
-        className="w-full mt-3 py-3 rounded-xl bg-[#1a1a2e] hover:bg-[#d4622b] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors duration-300"
-      >
-        <span>Schedule Live Physical Inspection</span>
-        <ArrowUpRight className="w-3.5 h-3.5" />
-      </button>
-
-    </div>
-  );
-}
-
-/* 4. Elegant Placeholder with Wireframe Geometric Grid */
-function ElegantPlaceholder({
+function ArchitecturalPlaceholder({
   title,
   subtitle,
-  icon: Icon = ImageIcon,
+  icon: Icon = Building2,
   className = "aspect-[16/10]",
 }: {
   title?: string;
@@ -612,20 +437,18 @@ function ElegantPlaceholder({
 }) {
   return (
     <div
-      className={`relative rounded-2xl bg-gradient-to-br from-[#faf8f5] via-[#f5f0eb] to-[#ede8e1] border border-gray-200/80 flex flex-col items-center justify-center p-6 text-center overflow-hidden group ${className}`}
+      className={`relative rounded-2xl bg-[#faf8f5] border border-[#ede8e1] flex flex-col items-center justify-center p-6 text-center overflow-hidden group transition-all duration-300 hover:border-[#d4622b]/40 ${className}`}
     >
-      {/* Dynamic Wireframe Grid Accent */}
-      <div className="absolute inset-0 light-grid opacity-50 pointer-events-none" />
-      <div className="absolute top-0 right-0 w-28 h-28 bg-[#d4622b]/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+      <div className="absolute inset-0 light-grid opacity-30 pointer-events-none" />
 
-      {/* Inflow laser wire line across bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#d4622b]/40 to-transparent group-hover:via-[#d4622b] transition-all" />
-
-      {/* Icon Badge with 3D Ring */}
-      <div className="relative w-14 h-14 rounded-2xl bg-white border border-gray-200 shadow-xs flex items-center justify-center text-[#d4622b] group-hover:scale-110 group-hover:border-[#d4622b]/40 transition-all duration-300 mb-3">
-        <Icon className="w-7 h-7" />
-        <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#d4622b] rounded-full animate-ping opacity-75" />
-      </div>
+      {/* Architectural Icon Stamp */}
+      <motion.div
+        whileHover={{ scale: 1.08, rotate: 2 }}
+        transition={{ type: "spring", stiffness: 300, damping: 15 }}
+        className="relative w-12 h-12 rounded-xl bg-white border border-[#ede8e1] flex items-center justify-center text-[#d4622b] shadow-xs mb-2.5"
+      >
+        <Icon className="w-5 h-5" />
+      </motion.div>
 
       {title && (
         <div className="relative font-bold text-sm text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
@@ -642,18 +465,29 @@ function ElegantPlaceholder({
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   ANIMATION HELPERS
+   ANIMATION REVEAL HELPERS
    ═══════════════════════════════════════════════════════════════ */
 
-function FadeUp({ children, delay = 0, className = "" }: { children: React.ReactNode; delay?: number; className?: string }) {
+function FadeReveal({
+  children,
+  delay = 0,
+  yOffset = 28,
+  className = "",
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  yOffset?: number;
+  className?: string;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 35 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay }}
+      initial={{ opacity: 0, y: yOffset, filter: "blur(4px)" }}
+      animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1], delay }}
       className={className}
     >
       {children}
@@ -661,7 +495,7 @@ function FadeUp({ children, delay = 0, className = "" }: { children: React.React
   );
 }
 
-function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
+function StatCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
@@ -670,18 +504,17 @@ function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
     if (!inView) return;
     let start = 0;
     const duration = 1200;
-    const steps = 40;
-    const stepVal = target / steps;
-    const intervalTime = duration / steps;
+    const steps = 35;
+    const increment = target / steps;
     const timer = setInterval(() => {
-      start += stepVal;
+      start += increment;
       if (start >= target) {
         setCount(target);
         clearInterval(timer);
       } else {
         setCount(Math.floor(start));
       }
-    }, intervalTime);
+    }, duration / steps);
     return () => clearInterval(timer);
   }, [inView, target]);
 
@@ -694,581 +527,401 @@ function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MAIN PAGE COMPONENT
+   MAIN COMPONENT: TOTALLY NEW 2025 ARCHITECTURAL LAYOUT
    ═══════════════════════════════════════════════════════════════ */
 
 export default function Home() {
-  const [heroWordIndex, setHeroWordIndex] = useState(0);
+  const [activeFormatIndex, setActiveFormatIndex] = useState(0);
+  const [selectedCity, setSelectedCity] = useState<"delhi" | "gurgaon" | "noida">("delhi");
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [activeFaqCategory, setActiveFaqCategory] = useState("all");
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSolutionTab, setActiveSolutionTab] = useState("all");
-  const [activeCityTab, setActiveCityTab] = useState<"delhi" | "gurgaon" | "noida">("delhi");
-  const [activeFaq, setActiveFaq] = useState<number | null>(0);
 
-  // Tour Booking Modal State
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalSelectedHub, setModalSelectedHub] = useState("Okhla Phase II, Delhi");
-  const [isTrialRequest, setIsTrialRequest] = useState(false);
-  const [bookingSuccess, setBookingSuccess] = useState(false);
+  // Booking Modal
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTarget, setModalTarget] = useState("Okhla Phase II Flagship, Delhi");
+  const [isTrialBooking, setIsTrialBooking] = useState(false);
+  const [bookingDone, setBookingDone] = useState(false);
 
   // Horizontal Scroll Track Refs
-  const solutionsTrackRef = useRef<HTMLDivElement>(null);
-  const [solutionScrollProgress, setSolutionScrollProgress] = useState(0);
-  const locationsTrackRef = useRef<HTMLDivElement>(null);
-  const galleryTrackRef = useRef<HTMLDivElement>(null);
+  const hubsSliderRef = useRef<HTMLDivElement>(null);
+  const gallerySliderRef = useRef<HTMLDivElement>(null);
 
-  // Hero Parallax Scroll
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 140]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2]);
-
-  // Dynamic Word Interval & Scroll Listener
   useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroWordIndex((prev) => (prev + 1) % heroRotatingWords.length);
-    }, 2400);
-
-    const handleScroll = () => setScrolled(window.scrollY > 30);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      clearInterval(timer);
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Filter Solutions
-  const filteredSolutions = useMemo(() => {
-    if (activeSolutionTab === "all") return workspaceSolutions;
-    return workspaceSolutions.filter((s) => s.category === activeSolutionTab);
-  }, [activeSolutionTab]);
+  const activeFormat = workspaceFormats[activeFormatIndex];
 
-  // Solution Track Horizontal Scroll listener
-  const handleSolutionScroll = () => {
-    if (solutionsTrackRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = solutionsTrackRef.current;
-      const progress = scrollLeft / (scrollWidth - clientWidth);
-      setSolutionScrollProgress(Math.min(Math.max(progress, 0), 1));
-    }
-  };
-
-  const scrollTrack = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right", offset = 420) => {
+  const scrollTrack = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
     if (ref.current) {
       ref.current.scrollBy({
-        left: direction === "right" ? offset : -offset,
+        left: direction === "right" ? 360 : -360,
         behavior: "smooth",
       });
     }
   };
 
-  const openBookingModal = (hubName?: string, isTrial = false) => {
-    if (hubName) setModalSelectedHub(hubName);
-    setIsTrialRequest(isTrial);
-    setBookingSuccess(false);
-    setIsModalOpen(true);
+  const triggerBooking = (targetName?: string, trial = false) => {
+    if (targetName) setModalTarget(targetName);
+    setIsTrialBooking(trial);
+    setBookingDone(false);
+    setModalOpen(true);
   };
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] text-[#1a1a2e] font-sans relative overflow-x-hidden selection:bg-[#d4622b] selection:text-white">
-      {/* ━━━ BACKGROUND AMBIENT GLOW & SUBTLE LUXURY GRID ━━━ */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-5%] right-[-5%] w-[600px] h-[600px] bg-[#d4622b]/5 rounded-full blur-[140px]" />
-        <div className="absolute bottom-[10%] left-[-5%] w-[600px] h-[600px] bg-[#d4622b]/4 rounded-full blur-[150px]" />
-        <div className="absolute inset-0 light-grid opacity-60" />
-      </div>
-
-      {/* ━━━ HEADER / NAVIGATION ━━━ */}
-      <motion.header
-        initial={{ y: -80, opacity: 0 }}
+    <div className="min-h-screen bg-[#faf8f5] text-[#1a1a2e] font-sans antialiased selection:bg-[#d4622b] selection:text-white pb-24 overflow-x-hidden">
+      
+      {/* ━━━ LUXURY ARCHITECTURAL TOP BAR WITH SMOOTH ENTRY ━━━ */}
+      <motion.nav
+        initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-xl border-b border-[#ede8e1] shadow-sm py-3.5"
+            ? "bg-white/95 backdrop-blur-md border-b border-[#ede8e1] shadow-xs py-3"
             : "bg-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 flex items-center justify-between">
           
-          {/* Logo */}
+          {/* Brand Mark */}
           <a href="#home" className="flex items-center gap-3 group">
-            <img
+            <motion.img
+              whileHover={{ rotate: 8, scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 300 }}
               src="/onward-logo.png"
               alt="Onward Workspaces"
-              className="w-10 h-10 object-contain group-hover:rotate-6 transition-transform duration-300"
+              className="w-8 h-8 object-contain"
             />
             <div className="leading-none">
-              <span className="text-xl font-extrabold tracking-tight text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+              <span className="text-lg font-extrabold tracking-tight text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
                 Onward
               </span>
-              <span className="block text-[9px] font-bold tracking-[0.25em] text-gray-400 mt-0.5">
-                WORKSPACES
-              </span>
+              <span className="block text-[8px] font-bold tracking-[0.22em] text-[#d4622b] mt-0.5">WORKSPACES</span>
             </div>
           </a>
 
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-9 text-sm font-semibold text-gray-600">
-            <a href="#solutions" className="hover:text-[#d4622b] transition-colors">
-              Solutions
-            </a>
-            <a href="#about" className="hover:text-[#d4622b] transition-colors">
-              Why Onward
-            </a>
-            <a href="#locations" className="hover:text-[#d4622b] transition-colors">
-              Locations
-            </a>
-            <a href="#amenities" className="hover:text-[#d4622b] transition-colors">
-              Amenities
-            </a>
-            <a href="#gallery" className="hover:text-[#d4622b] transition-colors">
-              Gallery
-            </a>
-            <a href="#reviews" className="hover:text-[#d4622b] transition-colors">
-              Testimonials
-            </a>
-          </nav>
+          {/* Nav Links */}
+          <div className="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-wider text-gray-600">
+            <a href="#dossier" className="hover:text-[#d4622b] transition-colors">Workspace Portfolio</a>
+            <a href="#hubs" className="hover:text-[#d4622b] transition-colors">NCR Centres</a>
+            <a href="#specs" className="hover:text-[#d4622b] transition-colors">Enterprise Specs</a>
+            <a href="#gallery" className="hover:text-[#d4622b] transition-colors">Campus Walk</a>
+            <a href="#trust" className="hover:text-[#d4622b] transition-colors">Clients</a>
+          </div>
 
           {/* Action CTAs */}
-          <div className="flex items-center gap-3.5">
+          <div className="flex items-center gap-2.5">
             <a
               href="tel:+919910668152"
-              className="hidden sm:inline-flex items-center gap-2 text-xs font-bold text-gray-700 hover:text-[#d4622b] bg-white border border-gray-200 px-3.5 py-2.5 rounded-full shadow-xs hover:border-[#d4622b]/30 transition-all"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-gray-700 bg-white border border-[#ede8e1] px-3 py-2 rounded-full hover:border-[#d4622b]/40 transition-all shadow-2xs hover:scale-102 active:scale-98"
             >
               <Phone className="w-3.5 h-3.5 text-[#d4622b]" />
               <span>+91 9910668152</span>
             </a>
 
-            <button
-              onClick={() => openBookingModal(undefined, true)}
-              className="inline-flex items-center gap-2 bg-[#d4622b] text-white px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-bold shadow-[0_4px_20px_rgba(212,98,43,0.25)] hover:bg-[#b8501f] hover:shadow-[0_8px_25px_rgba(212,98,43,0.35)] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => triggerBooking(undefined, true)}
+              className="inline-flex items-center gap-1.5 bg-[#d4622b] text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-[#b8501f] transition-all shadow-xs"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-              <span>Free 2-Day Trial</span>
-            </button>
-
-            {/* Mobile Hamburger */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2.5 rounded-xl bg-white border border-gray-200 text-gray-700 shadow-xs"
-              aria-label="Toggle navigation"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <div className="w-5 h-4 flex flex-col justify-between"><span className="w-full h-0.5 bg-gray-800 rounded-full"/><span className="w-3/4 h-0.5 bg-gray-800 rounded-full"/><span className="w-full h-0.5 bg-gray-800 rounded-full"/></div>}
-            </button>
+              <span>Claim 2-Day Trial</span>
+            </motion.button>
           </div>
+
         </div>
+      </motion.nav>
 
-        {/* Mobile Navigation Drawer */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden bg-white border-b border-gray-200 shadow-xl overflow-hidden"
-            >
-              <div className="px-6 py-6 space-y-4">
-                {[
-                  { label: "Solutions", href: "#solutions" },
-                  { label: "Why Onward", href: "#about" },
-                  { label: "Locations", href: "#locations" },
-                  { label: "Amenities", href: "#amenities" },
-                  { label: "Gallery", href: "#gallery" },
-                  { label: "Testimonials", href: "#reviews" },
-                  { label: "Contact Us", href: "#contact" },
-                ].map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block text-gray-800 font-semibold text-base hover:text-[#d4622b] transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-
-                <div className="pt-4 border-t border-gray-100 flex flex-col gap-3">
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      openBookingModal(undefined, true);
-                    }}
-                    className="w-full py-3.5 rounded-full bg-[#d4622b] text-white font-bold text-center text-sm shadow-md"
-                  >
-                    Request Free 2-Day Trial
-                  </button>
-                  <a
-                    href="tel:+919910668152"
-                    className="w-full py-3 rounded-full bg-[#faf8f5] text-gray-700 font-bold text-center text-xs flex items-center justify-center gap-2 border border-gray-200"
-                  >
-                    <Phone className="w-3.5 h-3.5 text-[#d4622b]" />
-                    Call: +91 9910668152
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.header>
-
-      {/* ━━━ HERO SECTION ━━━ */}
-      <section
-        id="home"
-        ref={heroRef}
-        className="relative pt-32 sm:pt-40 pb-20 lg:pb-32 z-10 overflow-hidden"
-      >
+      {/* ━━━ HERO: MONUMENTAL ARCHITECTURAL HEADER WITH STAGGERED ENTRANCE ━━━ */}
+      <section id="home" className="pt-28 sm:pt-36 pb-16 border-b border-[#ede8e1]">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="grid lg:grid-cols-12 gap-10 items-end pb-12 border-b border-[#ede8e1]">
             
-            {/* Left Column: Authentic Brand Headline */}
-            <div className="lg:col-span-7 space-y-8">
+            {/* Left Headline with Staggered Fade Up */}
+            <div className="lg:col-span-8 space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#fce7dc] text-[#d4622b] text-[11px] font-bold uppercase tracking-wider"
+              >
+                <span className="w-2 h-2 rounded-full bg-[#d4622b] animate-pulse" />
+                <span>Delhi NCR Managed Offices & Coworking</span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-[#1a1a2e] tracking-tight leading-[1.05]"
+              >
+                Workspace Built <br />
+                Around Your{" "}
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="text-[#d4622b] inline-block"
+                >
+                  Ambition.
+                </motion.span>
+              </motion.h1>
+            </div>
+
+            {/* Right Subtitle & Buttons */}
+            <div className="lg:col-span-4 space-y-4">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="text-sm text-gray-600 leading-relaxed font-normal"
+              >
+                Grade-A enterprise offices, private acoustic suites, and MCA-compliant virtual spaces across Delhi, Gurgaon, and Noida.
+              </motion.p>
               
-              <FadeUp delay={0.1}>
-                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white border border-[#ede8e1] shadow-xs">
-                  <span className="w-2.5 h-2.5 bg-[#d4622b] rounded-full animate-pulse" />
-                  <span className="text-xs font-bold text-[#d4622b] tracking-wide uppercase">
-                    2 Day Free Trial Available
-                  </span>
-                </div>
-              </FadeUp>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.45 }}
+                className="flex flex-wrap items-center gap-3"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => triggerBooking(undefined, false)}
+                  className="px-6 py-3 rounded-full bg-[#1a1a2e] text-white font-bold text-xs hover:bg-[#d4622b] transition-colors flex items-center gap-2 shadow-xs"
+                >
+                  <span>Schedule Centre Tour</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </motion.button>
 
-              <FadeUp delay={0.2}>
-                <h1 className="text-4xl sm:text-6xl lg:text-[4.75rem] font-extrabold text-[#1a1a2e] leading-[1.08] tracking-tight">
-                  Workspace built <br />
-                  around{" "}
-                  <span className="relative inline-block text-[#d4622b]">
-                    <AnimatePresence mode="wait">
-                      <motion.span
-                        key={heroWordIndex}
-                        initial={{ opacity: 0, y: 35, filter: "blur(4px)" }}
-                        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                        exit={{ opacity: 0, y: -35, filter: "blur(4px)" }}
-                        transition={{ duration: 0.4 }}
-                        className="inline-block"
-                      >
-                        {heroRotatingWords[heroWordIndex]}
-                      </motion.span>
-                    </AnimatePresence>
-                    <span className="absolute -bottom-2 left-0 right-0 h-1.5 bg-[#d4622b]/20 rounded-full" />
-                  </span>
-                </h1>
-              </FadeUp>
-
-              <FadeUp delay={0.3}>
-                <p className="text-base sm:text-xl text-gray-600 max-w-xl leading-relaxed">
-                  Premium managed offices and coworking spaces across Delhi NCR. Designed for ambitious teams and enterprise leaders who refuse to settle for ordinary.
-                </p>
-              </FadeUp>
-
-              {/* Action Buttons */}
-              <FadeUp delay={0.4}>
-                <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <button
-                    onClick={() => openBookingModal(undefined, false)}
-                    className="flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-[#d4622b] text-white font-bold text-sm sm:text-base shadow-[0_8px_30px_rgba(212,98,43,0.3)] hover:bg-[#b8501f] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    <span>Book a Tour</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-
-                  <a
-                    href="tel:9910668152"
-                    className="flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-white hover:bg-gray-50 text-[#1a1a2e] font-bold text-sm sm:text-base border border-gray-200 hover:border-[#d4622b]/40 shadow-xs transition-all"
-                  >
-                    <Phone className="w-4 h-4 text-[#d4622b]" />
-                    <span>+91 9910668152</span>
-                  </a>
-                </div>
-              </FadeUp>
-
-              {/* Micro-Features Strip */}
-              <FadeUp delay={0.5}>
-                <div className="pt-6 border-t border-gray-200/80 flex flex-wrap items-center gap-6 sm:gap-8 text-xs font-semibold text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#d4622b]" />
-                    <span>Prime Metro Locations</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#d4622b]" />
-                    <span>Zero Setup & Brokerage</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#d4622b]" />
-                    <span>100% Power & Fiber Redundancy</span>
-                  </div>
-                </div>
-              </FadeUp>
-
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => triggerBooking(undefined, true)}
+                  className="px-5 py-3 rounded-full bg-white border border-[#ede8e1] text-gray-700 font-bold text-xs hover:border-[#d4622b] transition-colors shadow-2xs"
+                >
+                  <span>Request Free 2-Day Trial</span>
+                </motion.button>
+              </motion.div>
             </div>
-
-            {/* Right Column: Hero Visual Showcase (3D Architectural Wireframe Hyperframe) */}
-            <motion.div
-              style={{ y: heroY, opacity: heroOpacity }}
-              className="lg:col-span-5 relative"
-            >
-              <FadeUp delay={0.35}>
-                <Architectural3DVisual onExploreClick={() => openBookingModal("Okhla Phase II (Flagship HQ)")} />
-              </FadeUp>
-            </motion.div>
-
           </div>
 
-          {/* Stats Bar */}
-          <div className="mt-16 sm:mt-24 pt-10 border-t border-gray-200">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-              {statsData.map((stat, i) => (
-                <FadeUp key={stat.label} delay={0.1 * i}>
-                  <div className="p-6 rounded-2xl bg-white border border-[#ede8e1] text-center group hover:border-[#d4622b]/30 hover:shadow-md transition-all duration-300">
-                    <div className="text-3xl sm:text-4xl font-extrabold text-[#d4622b]">
-                      <Counter target={stat.value} suffix={stat.suffix} />
-                    </div>
-                    <div className="text-sm font-bold text-[#1a1a2e] mt-1">{stat.label}</div>
-                    <div className="text-xs text-gray-400 mt-0.5">{stat.sub}</div>
+          {/* Staggered Metrics Ribbon with Live Counting Numbers */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8">
+            {[
+              { val: 3, suffix: "+ Cities", desc: "Delhi • Gurgaon • Noida" },
+              { val: 15, suffix: "+ Centres", desc: "Metro-Connected Locations" },
+              { val: 250, suffix: "+ Clients", desc: "Startups to MNCs" },
+              { val: 1, suffix: "M+ Sq. Ft.", desc: "Managed Grade-A Footprint" },
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="p-4 rounded-2xl bg-white border border-[#ede8e1] flex items-center gap-3.5 shadow-2xs hover:shadow-xs transition-shadow"
+              >
+                <div className="w-2 h-8 rounded-full bg-[#d4622b]/20 flex items-center justify-center">
+                  <div className="w-2 h-3 rounded-full bg-[#d4622b]" />
+                </div>
+                <div>
+                  <div className="text-base font-extrabold text-[#1a1a2e]">
+                    <StatCounter target={stat.val} suffix={stat.suffix} />
                   </div>
-                </FadeUp>
-              ))}
-            </div>
+                  <div className="text-[11px] text-gray-500">{stat.desc}</div>
+                </div>
+              </motion.div>
+            ))}
           </div>
 
         </div>
       </section>
 
-      {/* ━━━ HORIZONTAL WORKSPACE SOLUTIONS SLIDER ━━━ */}
-      <section id="solutions" className="py-24 sm:py-32 bg-[#f5f0eb]/60 border-y border-[#ede8e1] relative z-10">
+      {/* ━━━ SECTION 1: INTERACTIVE SPLIT WORKSPACE DOSSIER (STAGGERED ENTRANCE) ━━━ */}
+      <section id="dossier" className="py-20 sm:py-24 bg-white border-b border-[#ede8e1]">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           
-          {/* Header & Controls */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <div>
-              <FadeUp>
-                <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block mb-3">
-                  Workspace Solutions
-                </span>
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] tracking-tight">
-                  Space that fits your <span className="text-[#d4622b]">ambition.</span>
-                </h2>
-                <p className="text-gray-600 text-sm sm:text-base mt-3 max-w-xl">
-                  Flexible office solutions aligned with your business needs, team size, and growth trajectory.
-                </p>
-              </FadeUp>
+          <FadeReveal>
+            <div className="max-w-2xl mb-12">
+              <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
+                Workspace Portfolio
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a1a2e] tracking-tight">
+                Select your team format.
+              </h2>
+              <p className="text-sm text-gray-500 mt-1.5">
+                Click any workspace format below to inspect specifications, capacity options, and move-in terms.
+              </p>
             </div>
+          </FadeReveal>
 
-            {/* Navigation Arrows */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => scrollTrack(solutionsTrackRef, "left")}
-                className="w-12 h-12 rounded-full bg-white hover:bg-gray-100 text-[#1a1a2e] flex items-center justify-center border border-gray-200 shadow-xs transition-all active:scale-95"
-                aria-label="Previous solution"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => scrollTrack(solutionsTrackRef, "right")}
-                className="w-12 h-12 rounded-full bg-[#d4622b] hover:bg-[#b8501f] text-white flex items-center justify-center shadow-[0_4px_15px_rgba(212,98,43,0.3)] transition-all active:scale-95"
-                aria-label="Next solution"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          {/* Category Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-4 mb-6">
-            {[
-              { id: "all", label: "All Solutions" },
-              { id: "enterprise", label: "Enterprise Managed" },
-              { id: "teams", label: "Private Team Suites" },
-              { id: "executive", label: "Executive Cabins" },
-              { id: "flexible", label: "Virtual & On-Demand" },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveSolutionTab(tab.id)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 ${
-                  activeSolutionTab === tab.id
-                    ? "bg-[#d4622b] text-white shadow-sm"
-                    : "bg-white text-gray-600 hover:text-[#1a1a2e] border border-gray-200 hover:border-[#d4622b]/30"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Horizontal Drag/Scroll Track */}
-          <div
-            ref={solutionsTrackRef}
-            onScroll={handleSolutionScroll}
-            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-8 pt-2 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
-          >
-            {filteredSolutions.map((sol) => (
-              <div
-                key={sol.id}
-                className="w-[330px] sm:w-[390px] flex-shrink-0 rounded-3xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 p-6 flex flex-col justify-between group transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.12)]"
-              >
-                <div>
-                  {/* Placeholder Card */}
-                  <ElegantPlaceholder
-                    title={sol.title}
-                    subtitle={sol.capacity}
-                    icon={sol.icon}
-                    className="aspect-[16/10] mb-5"
-                  />
-
-                  {/* Title & Description */}
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="text-[10px] font-extrabold tracking-wider px-2.5 py-0.5 rounded-full bg-[#d4622b]/10 text-[#d4622b]">
-                      {sol.tag}
-                    </span>
-                    <span className="text-xs font-semibold text-gray-400">{sol.badge}</span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors mt-2">
-                    {sol.title}
-                  </h3>
-                  <p className="text-xs text-gray-500 mt-2 leading-relaxed">
-                    {sol.desc}
-                  </p>
-
-                  {/* Spec List */}
-                  <div className="mt-5 space-y-2 pt-4 border-t border-gray-100">
-                    {sol.specs.map((spec) => (
-                      <div key={spec} className="flex items-start gap-2 text-xs text-gray-700">
-                        <Check className="w-3.5 h-3.5 text-[#d4622b] shrink-0 mt-0.5" />
-                        <span>{spec}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Footer Action */}
-                <div className="mt-8 pt-4 border-t border-gray-100 flex items-center justify-between">
-                  <div>
-                    <span className="text-[10px] uppercase font-bold text-gray-400 block">Configuration</span>
-                    <span className="text-xs font-bold text-[#1a1a2e]">{sol.terms}</span>
-                  </div>
-
-                  <button
-                    onClick={() => openBookingModal(sol.title)}
-                    className="flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#faf8f5] group-hover:bg-[#d4622b] text-[#1a1a2e] group-hover:text-white border border-gray-200 group-hover:border-[#d4622b] text-xs font-bold transition-all duration-300"
-                  >
-                    <span>Explore Space</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-
-              </div>
-            ))}
-          </div>
-
-          {/* Progress Indicator */}
-          <div className="mt-6 flex items-center gap-4 max-w-xs mx-auto">
-            <div className="h-1.5 flex-1 bg-gray-200 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-[#d4622b] transition-all duration-200"
-                style={{ width: `${Math.max(20, solutionScrollProgress * 100)}%` }}
-              />
-            </div>
-            <span className="text-[11px] font-semibold text-gray-400">Drag / Swipe horizontally</span>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ━━━ WHY ONWARD — NUMBERED SPEC LIST ━━━ */}
-      <section id="about" className="py-24 sm:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          {/* Split Interactive Matrix Layout */}
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
             
-            {/* Left Sticky Column with Floating 3D Hyperframe */}
-            <div className="lg:sticky lg:top-32 space-y-6 relative">
-              <FadeUp>
-                <div className="flex items-center justify-between">
-                  <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block">
-                    Why Onward
-                  </span>
-                  <Floating3DCage size={55} className="hidden sm:flex opacity-70" />
-                </div>
-                <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#1a1a2e] mt-3 leading-tight tracking-tight">
-                  Not just a desk.<br />
-                  <span className="text-[#d4622b]">A launchpad.</span>
-                </h2>
-                <p className="mt-6 text-gray-600 text-lg leading-relaxed max-w-md">
-                  We don&apos;t just rent space. We build environments where ambitious teams do their life&apos;s best work.
-                </p>
-                <div className="pt-4">
-                  <button
-                    onClick={() => openBookingModal(undefined, false)}
-                    className="inline-flex items-center gap-2 bg-[#d4622b] text-white px-8 py-4 rounded-full font-bold text-sm shadow-[0_8px_25px_rgba(212,98,43,0.25)] hover:bg-[#b8501f] transition-all"
-                  >
-                    <span>See it for yourself</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </FadeUp>
-            </div>
-
-            {/* Right Numbered Specs */}
-            <div className="space-y-0">
-              {whyOnwardFeatures.map((f, i) => (
-                <FadeUp key={f.num} delay={i * 0.15}>
-                  <div className="group py-10 border-b border-gray-200 last:border-0">
-                    <div className="flex gap-6 items-start">
-                      <span className="text-5xl font-black text-[#d4622b]/20 group-hover:text-[#d4622b] transition-colors shrink-0 leading-none">
-                        {f.num}
-                      </span>
-                      <div>
-                        <h3 className="text-2xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                          {f.title}
-                        </h3>
-                        <p className="mt-3 text-gray-600 leading-relaxed text-sm sm:text-base">
-                          {f.desc}
-                        </p>
-                        <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#d4622b]">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>{f.highlight}</span>
+            {/* Left Column: Format Selector List with Animated Stagger */}
+            <div className="lg:col-span-5 space-y-2.5">
+              {workspaceFormats.map((wf, idx) => {
+                const isSelected = activeFormatIndex === idx;
+                const Icon = wf.icon;
+                return (
+                  <FadeReveal key={wf.id} delay={0.05 * idx} yOffset={15}>
+                    <motion.button
+                      whileHover={{ x: 4 }}
+                      whileTap={{ scale: 0.99 }}
+                      onClick={() => setActiveFormatIndex(idx)}
+                      className={`w-full p-4 sm:p-5 rounded-2xl text-left border transition-all duration-200 flex items-center justify-between ${
+                        isSelected
+                          ? "bg-[#faf8f5] border-[#d4622b] shadow-xs text-[#1a1a2e]"
+                          : "bg-white border-[#ede8e1] text-gray-600 hover:border-gray-300 hover:bg-[#faf8f5]/50"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3.5">
+                        <span className={`text-xs font-extrabold ${isSelected ? "text-[#d4622b]" : "text-gray-400"}`}>
+                          {wf.code}
+                        </span>
+                        <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-colors ${isSelected ? "bg-[#d4622b] text-white" : "bg-[#faf8f5] text-gray-500"}`}>
+                          <Icon className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-bold text-[#1a1a2e]">{wf.title}</div>
+                          <div className="text-[11px] text-gray-500">{wf.capacity}</div>
                         </div>
                       </div>
+
+                      <ArrowRight className={`w-4 h-4 transition-transform duration-200 ${isSelected ? "text-[#d4622b] translate-x-1" : "text-gray-300"}`} />
+                    </motion.button>
+                  </FadeReveal>
+                );
+              })}
+            </div>
+
+            {/* Right Column: Dynamic Architectural Inspector Card with Smooth Morph */}
+            <div className="lg:col-span-7">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeFormat.id}
+                  initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -15, scale: 0.98 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-6 sm:p-8 space-y-6 shadow-xs"
+                >
+                  
+                  {/* Inspector Header */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[#ede8e1]">
+                    <div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#d4622b] bg-white px-2.5 py-1 rounded-full border border-gray-200 shadow-2xs">
+                        {activeFormat.tag}
+                      </span>
+                      <h3 className="text-2xl font-extrabold text-[#1a1a2e] mt-2">{activeFormat.title}</h3>
+                      <div className="text-xs text-gray-500 mt-0.5">{activeFormat.subtitle}</div>
+                    </div>
+
+                    <div className="text-right">
+                      <div className="text-xs font-bold text-[#1a1a2e]">{activeFormat.capacity}</div>
+                      <div className="text-[11px] text-gray-500">{activeFormat.commitment}</div>
                     </div>
                   </div>
-                </FadeUp>
-              ))}
+
+                  {/* Visual Blueprint Graphic */}
+                  <ArchitecturalPlaceholder
+                    title={activeFormat.title}
+                    subtitle={`${activeFormat.capacity} • ${activeFormat.commitment}`}
+                    icon={activeFormat.icon}
+                    className="aspect-[16/8]"
+                  />
+
+                  {/* Summary & Feature List */}
+                  <div>
+                    <p className="text-xs sm:text-sm text-gray-700 leading-relaxed font-normal">
+                      {activeFormat.summary}
+                    </p>
+
+                    <div className="grid sm:grid-cols-2 gap-2.5 mt-4 pt-4 border-t border-gray-200/60">
+                      {activeFormat.highlights.map((h, i) => (
+                        <div key={i} className="flex items-start gap-2 text-xs text-gray-600">
+                          <Check className="w-3.5 h-3.5 text-[#d4622b] shrink-0 mt-0.5" />
+                          <span>{h}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Technical Metadata Strip */}
+                  <div className="grid grid-cols-3 gap-3 p-3 rounded-2xl bg-white border border-[#ede8e1] text-center text-[11px] shadow-2xs">
+                    <div>
+                      <div className="text-gray-400 font-medium">Timeline</div>
+                      <div className="font-bold text-[#1a1a2e] mt-0.5">{activeFormat.details.moveIn}</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-400 font-medium">Power SLA</div>
+                      <div className="font-bold text-emerald-700 mt-0.5">{activeFormat.details.power}</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-400 font-medium">Security</div>
+                      <div className="font-bold text-[#1a1a2e] mt-0.5">{activeFormat.details.access}</div>
+                    </div>
+                  </div>
+
+                  {/* Action Bar */}
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-xs font-bold text-gray-500">Available across all NCR hubs</span>
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => triggerBooking(activeFormat.title)}
+                      className="px-6 py-3 rounded-full bg-[#d4622b] text-white font-bold text-xs hover:bg-[#b8501f] transition-colors flex items-center gap-2 shadow-xs"
+                    >
+                      <span>Inquire for this Format</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </motion.button>
+                  </div>
+
+                </motion.div>
+              </AnimatePresence>
             </div>
 
           </div>
+
         </div>
       </section>
 
-      {/* ━━━ HORIZONTAL NCR LOCATIONS SLIDER ━━━ */}
-      <section id="locations" className="py-24 sm:py-32 bg-[#faf8f5] border-y border-[#ede8e1]">
+      {/* ━━━ SECTION 2: NCR HUBS & COMMUTE MATRIX (HORIZONTAL SLIDER) ━━━ */}
+      <section id="hubs" className="py-20 sm:py-24 bg-[#faf8f5] border-b border-[#ede8e1]">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <div>
-              <FadeUp>
-                <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block mb-3">
-                  Strategic Locations
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <FadeReveal>
+              <div>
+                <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
+                  Strategic NCR Belts
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] tracking-tight">
-                  Find us across <span className="text-[#d4622b]">Delhi NCR.</span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a1a2e] tracking-tight">
+                  Explore our centres.
                 </h2>
-                <p className="text-gray-600 text-sm sm:text-base mt-2">
-                  {ncrLocationsData[activeCityTab].subtitle}
+                <p className="text-xs sm:text-sm text-gray-500 mt-1 max-w-lg">
+                  {ncrHubsData[selectedCity].subtitle}
                 </p>
-              </FadeUp>
-            </div>
+              </div>
+            </FadeReveal>
 
-            {/* City Selector Pills & Arrows */}
+            {/* City Switcher Tabs & Slider Arrows */}
             <div className="flex items-center gap-3">
-              <div className="flex p-1 rounded-full bg-white border border-gray-200 shadow-xs">
+              <div className="flex p-1 rounded-full bg-white border border-[#ede8e1] shadow-xs">
                 {(["delhi", "gurgaon", "noida"] as const).map((city) => (
                   <button
                     key={city}
-                    onClick={() => setActiveCityTab(city)}
-                    className={`px-5 py-2 rounded-full text-xs font-bold capitalize transition-all ${
-                      activeCityTab === city
+                    onClick={() => setSelectedCity(city)}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold capitalize transition-all ${
+                      selectedCity === city
                         ? "bg-[#d4622b] text-white shadow-xs"
                         : "text-gray-600 hover:text-[#1a1a2e]"
                     }`}
@@ -1278,129 +931,125 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="hidden sm:flex items-center gap-2">
-                <button
-                  onClick={() => scrollTrack(locationsTrackRef, "left")}
-                  className="w-10 h-10 rounded-full bg-white hover:bg-gray-100 text-[#1a1a2e] flex items-center justify-center border border-gray-200"
+              <div className="flex items-center gap-1.5">
+                <motion.button
+                  whileTap={{ scale: 0.92 }}
+                  onClick={() => scrollTrack(hubsSliderRef, "left")}
+                  className="w-9 h-9 rounded-full bg-white border border-[#ede8e1] flex items-center justify-center text-gray-700 hover:text-[#d4622b] shadow-2xs"
                   aria-label="Previous centre"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => scrollTrack(locationsTrackRef, "right")}
-                  className="w-10 h-10 rounded-full bg-[#d4622b] hover:bg-[#b8501f] text-white flex items-center justify-center"
+                </motion.button>
+                <motion.button
+                  whileTap={{ scale: 0.92 }}
+                  onClick={() => scrollTrack(hubsSliderRef, "right")}
+                  className="w-9 h-9 rounded-full bg-[#d4622b] text-white flex items-center justify-center hover:bg-[#b8501f] shadow-2xs"
                   aria-label="Next centre"
                 >
                   <ChevronRight className="w-4 h-4" />
-                </button>
+                </motion.button>
               </div>
             </div>
           </div>
 
-          {/* Horizontal Track of Centres */}
+          {/* Horizontal Drag/Scroll Hubs Track with Card Hover Lift */}
           <div
-            ref={locationsTrackRef}
-            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-8 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
+            ref={hubsSliderRef}
+            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
           >
-            {ncrLocationsData[activeCityTab].centres.map((centre) => (
-              <div
-                key={centre.name}
-                className="w-[320px] sm:w-[370px] flex-shrink-0 rounded-3xl bg-white border border-[#ede8e1] hover:border-[#d4622b]/40 p-5 flex flex-col justify-between group transition-all duration-300 hover:shadow-xl"
+            {ncrHubsData[selectedCity].centres.map((centre, i) => (
+              <motion.div
+                key={centre.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.45, delay: 0.08 * i }}
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                className="w-[300px] sm:w-[350px] flex-shrink-0 rounded-3xl bg-white border border-[#ede8e1] p-6 flex flex-col justify-between hover:border-[#d4622b]/40 transition-all shadow-xs"
               >
                 <div>
-                  {/* Location Placeholder Graphic */}
-                  <ElegantPlaceholder
+                  <ArchitecturalPlaceholder
                     title={centre.name}
-                    subtitle={centre.sqft}
+                    subtitle={centre.area}
                     icon={Building2}
                     className="aspect-[16/10] mb-4"
                   />
 
-                  <h3 className="text-lg font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                    {centre.name}
-                  </h3>
+                  <h3 className="text-base font-bold text-[#1a1a2e]">{centre.name}</h3>
 
-                  <div className="mt-2 text-xs font-semibold text-[#d4622b] flex items-center gap-1.5">
-                    <Clock className="w-3.5 h-3.5 shrink-0" />
+                  <div className="mt-1.5 text-xs font-semibold text-[#d4622b] flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" />
                     <span>{centre.metro}</span>
                   </div>
 
-                  <p className="mt-2 text-xs text-gray-500 leading-relaxed">
-                    {centre.address}
-                  </p>
+                  <p className="mt-2 text-xs text-gray-500 leading-relaxed">{centre.address}</p>
 
-                  {/* Highlights */}
                   <div className="mt-4 flex flex-wrap gap-1.5">
                     {centre.tags.map((tag) => (
-                      <span key={tag} className="text-[10px] font-semibold px-2.5 py-1 rounded-md bg-[#faf8f5] text-gray-600 border border-gray-200">
+                      <span key={tag} className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-[#faf8f5] text-gray-600 border border-gray-200">
                         {tag}
                       </span>
                     ))}
                   </div>
                 </div>
 
-                {/* Footer Action */}
                 <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                  <span className="text-xs font-bold text-gray-500">Open for Visits</span>
+                  <span className="text-[11px] font-semibold text-gray-400">Open for Visits</span>
                   <button
-                    onClick={() => openBookingModal(centre.name)}
-                    className="flex items-center gap-1 text-xs font-bold text-[#d4622b] hover:text-[#b8501f] transition-colors"
+                    onClick={() => triggerBooking(centre.name)}
+                    className="inline-flex items-center gap-1 text-xs font-bold text-[#d4622b] hover:text-[#b8501f] transition-colors"
                   >
                     <span>Schedule Visit</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
         </div>
       </section>
 
-      {/* ━━━ ENTERPRISE AMENITIES BENTO GRID ━━━ */}
-      <section id="amenities" className="py-24 sm:py-32 bg-white">
+      {/* ━━━ SECTION 3: ENTERPRISE SPECS EDITORIAL GRID (STAGGERED ENTRANCE) ━━━ */}
+      <section id="specs" className="py-20 sm:py-24 bg-white border-b border-[#ede8e1]">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <FadeUp>
-              <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block mb-3">
-                Enterprise Standards
+          <FadeReveal>
+            <div className="text-center max-w-2xl mx-auto mb-14">
+              <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
+                Enterprise Specifications
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] tracking-tight">
-                Designed for peak <span className="text-[#d4622b]">productivity.</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a1a2e] tracking-tight">
+                Crafted for uninterrupted focus.
               </h2>
-              <p className="text-gray-600 text-sm sm:text-base mt-3">
-                Every Onward center is engineered to eliminate operational friction and keep your team performing at their highest potential.
-              </p>
-            </FadeUp>
-          </div>
+            </div>
+          </FadeReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {enterpriseAmenities.map((amenity, i) => {
-              const Icon = amenity.icon;
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {enterpriseSpecs.map((spec, idx) => {
+              const Icon = spec.icon;
               return (
-                <FadeUp key={amenity.title} delay={0.08 * i}>
-                  <div className="h-full rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-8 flex flex-col justify-between group hover:border-[#d4622b]/30 hover:bg-white hover:shadow-lg transition-all duration-300">
+                <FadeReveal key={spec.num} delay={0.08 * idx} yOffset={20}>
+                  <motion.div
+                    whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                    className="p-7 rounded-3xl bg-[#faf8f5] border border-[#ede8e1] flex flex-col justify-between h-full hover:border-[#d4622b]/30 transition-all shadow-2xs hover:shadow-xs"
+                  >
                     <div>
-                      <div className="w-12 h-12 rounded-2xl bg-white border border-gray-200 flex items-center justify-center text-[#d4622b] group-hover:scale-110 transition-transform mb-6 shadow-xs">
-                        <Icon className="w-6 h-6" />
+                      <div className="flex items-center justify-between mb-5">
+                        <span className="text-2xl font-black text-[#d4622b]/30">{spec.num}</span>
+                        <div className="w-10 h-10 rounded-xl bg-white border border-[#ede8e1] flex items-center justify-center text-[#d4622b] shadow-xs">
+                          <Icon className="w-5 h-5" />
+                        </div>
                       </div>
 
-                      <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                        {amenity.title}
-                      </h3>
-
-                      <p className="mt-3 text-sm text-gray-500 leading-relaxed">
-                        {amenity.desc}
-                      </p>
+                      <h3 className="text-base font-bold text-[#1a1a2e]">{spec.title}</h3>
+                      <p className="text-xs text-gray-500 mt-2 leading-relaxed">{spec.desc}</p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-gray-200/60 flex items-center gap-2 text-xs font-bold text-gray-500 group-hover:text-[#d4622b] transition-colors">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#d4622b]" />
-                      <span>Standard Across All NCR Centres</span>
+                    <div className="mt-5 pt-3.5 border-t border-gray-200/60 text-[11px] font-bold text-gray-400">
+                      Standard Across All 15+ NCR Hubs
                     </div>
-                  </div>
-                </FadeUp>
+                  </motion.div>
+                </FadeReveal>
               );
             })}
           </div>
@@ -1408,310 +1057,421 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ WORKSPACE VISUAL GALLERY (HORIZONTAL SLIDER WITH PLACEHOLDERS) ━━━ */}
-      <section id="gallery" className="py-24 sm:py-32 bg-[#faf8f5] border-y border-[#ede8e1] overflow-hidden">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <FadeUp>
-              <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block mb-3">
-                Campus Gallery
+      {/* ━━━ SECTION 4: CAMPUS GALLERY WALK (HORIZONTAL SLIDER) ━━━ */}
+      <section id="gallery" className="py-20 sm:py-24 bg-[#faf8f5] border-b border-[#ede8e1]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <FadeReveal>
+            <div>
+              <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
+                Campus Environments
               </span>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] tracking-tight">
-                See the space in <span className="text-[#d4622b]">action.</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a1a2e] tracking-tight">
+                Curated facilities.
               </h2>
-            </FadeUp>
-          </div>
+            </div>
+          </FadeReveal>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => scrollTrack(galleryTrackRef, "left")}
-              className="w-10 h-10 rounded-full bg-white hover:bg-gray-100 text-[#1a1a2e] flex items-center justify-center border border-gray-200"
-              aria-label="Previous gallery image"
+          <div className="flex items-center gap-1.5">
+            <motion.button
+              whileTap={{ scale: 0.92 }}
+              onClick={() => scrollTrack(gallerySliderRef, "left")}
+              className="w-9 h-9 rounded-full bg-white border border-[#ede8e1] flex items-center justify-center text-gray-700 hover:text-[#d4622b] shadow-2xs"
+              aria-label="Previous gallery slide"
             >
               <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => scrollTrack(galleryTrackRef, "right")}
-              className="w-10 h-10 rounded-full bg-[#d4622b] hover:bg-[#b8501f] text-white flex items-center justify-center"
-              aria-label="Next gallery image"
+            </motion.button>
+            <motion.button
+              whileTap={{ scale: 0.92 }}
+              onClick={() => scrollTrack(gallerySliderRef, "right")}
+              className="w-9 h-9 rounded-full bg-[#d4622b] text-white flex items-center justify-center hover:bg-[#b8501f] shadow-2xs"
+              aria-label="Next gallery slide"
             >
               <ChevronRight className="w-4 h-4" />
-            </button>
+            </motion.button>
           </div>
         </div>
 
-        {/* Horizontal Gallery Track */}
+        {/* Horizontal Track with Staggered Elements */}
         <div
-          ref={galleryTrackRef}
-          className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-6 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
+          ref={gallerySliderRef}
+          className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 -mx-5 px-5 sm:-mx-8 sm:px-8 cursor-grab active:cursor-grabbing"
         >
-          {workspaceGalleryPlaceholders.map((g, i) => (
-            <div
+          {campusGalleryItems.map((item, i) => (
+            <motion.div
               key={i}
-              className="w-[300px] sm:w-[360px] flex-shrink-0 rounded-3xl overflow-hidden bg-white border border-gray-200 group cursor-pointer shadow-xs hover:shadow-xl transition-all duration-500 p-4"
+              whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              className="w-[280px] sm:w-[330px] flex-shrink-0 rounded-3xl bg-white border border-[#ede8e1] p-5 shadow-xs hover:border-[#d4622b]/40 transition-all"
             >
-              <ElegantPlaceholder
-                title={g.title}
-                subtitle={`${g.category} • ${g.tag}`}
-                icon={g.icon}
-                className="aspect-[4/3]"
+              <ArchitecturalPlaceholder
+                title={item.title}
+                subtitle={item.tag}
+                icon={item.icon}
+                className="aspect-[4/3] mb-3.5"
               />
-            </div>
+              <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* ━━━ CLIENT TESTIMONIALS & LOGO MARQUEE ━━━ */}
-      <section id="reviews" className="py-24 bg-white relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-14 text-center">
-          <FadeUp>
-            <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block mb-3">
-              Testimonials
+      {/* ━━━ SECTION 5: CLIENT TRUST & PRESS REVIEWS ━━━ */}
+      <section id="trust" className="py-20 bg-white border-b border-[#ede8e1]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 mb-12 text-center">
+          <FadeReveal>
+            <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block mb-1">
+              Enterprise Endorsements
             </span>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] tracking-tight">
-              Leaders trust <span className="text-[#d4622b]">Onward.</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a1a2e] tracking-tight">
+              Trusted by founders & leaders.
             </h2>
-          </FadeUp>
+          </FadeReveal>
         </div>
 
-        {/* Logo Ticker */}
-        <div className="mb-16 overflow-hidden whitespace-nowrap opacity-60">
+        {/* Client Marquee Strip */}
+        <div className="mb-14 overflow-hidden whitespace-nowrap opacity-60">
           <motion.div
-            className="inline-flex gap-16"
             animate={{ x: ["0%", "-50%"] }}
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="inline-flex gap-14"
           >
-            {[...clientLogos, ...clientLogos].map((logo, idx) => (
-              <span key={idx} className="text-xl font-bold tracking-widest text-gray-400 hover:text-gray-800 transition-colors uppercase">
-                {logo}
+            {[...clientBrands, ...clientBrands].map((brand, idx) => (
+              <span key={idx} className="text-sm sm:text-base font-extrabold tracking-widest text-gray-400 uppercase">
+                {brand}
               </span>
             ))}
           </motion.div>
         </div>
 
-        {/* Testimonials Grid */}
+        {/* Testimonials */}
         <div className="max-w-7xl mx-auto px-5 sm:px-8 grid md:grid-cols-3 gap-6">
-          {testimonialsData.map((t, idx) => (
-            <FadeUp key={t.name} delay={0.1 * idx}>
-              <div className="h-full rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-8 flex flex-col justify-between group hover:border-[#d4622b]/30 hover:bg-white hover:shadow-lg transition-all">
+          {verifiedTestimonials.map((t, idx) => (
+            <FadeReveal key={idx} delay={0.1 * idx} yOffset={20}>
+              <motion.div
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                className="p-7 rounded-3xl bg-[#faf8f5] border border-[#ede8e1] flex flex-col justify-between h-full shadow-2xs hover:shadow-xs"
+              >
                 <div>
-                  <div className="flex gap-1 mb-6 text-[#d4622b]">
-                    {[...Array(t.rating)].map((_, j) => (
-                      <Star key={j} className="w-4 h-4 fill-[#d4622b]" />
+                  <div className="flex gap-1 mb-4 text-[#d4622b]">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="w-3.5 h-3.5 fill-[#d4622b]" />
                     ))}
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed italic">
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed italic">
                     &ldquo;{t.text}&rdquo;
                   </p>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-gray-200/60 flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#d4622b] to-[#e8855a] flex items-center justify-center text-white font-bold text-sm">
-                    {t.name.split(" ").map((n) => n[0]).join("")}
+                <div className="mt-6 pt-4 border-t border-gray-200/60 flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#1a1a2e] text-white font-bold text-xs flex items-center justify-center">
+                    {t.name[0]}
                   </div>
                   <div>
-                    <div className="font-bold text-[#1a1a2e] text-sm">{t.name}</div>
-                    <div className="text-xs text-gray-500">{t.role}, {t.company}</div>
+                    <div className="font-bold text-xs text-[#1a1a2e]">{t.name}</div>
+                    <div className="text-[10px] text-gray-500">{t.role}, {t.company}</div>
                   </div>
                 </div>
-              </div>
-            </FadeUp>
+              </motion.div>
+            </FadeReveal>
           ))}
         </div>
       </section>
 
-      {/* ━━━ FAQ ACCORDION ━━━ */}
-      <section className="py-24 bg-[#faf8f5] border-t border-[#ede8e1]">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8">
-          <div className="text-center mb-16">
-            <FadeUp>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a1a2e]">
-                Frequently Asked Questions
+      {/* ━━━ SECTION 6: ELEVATED KNOWLEDGE BASE & FAQ (INTERACTIVE CATEGORIZED SPLIT) ━━━ */}
+      <section id="faq" className="py-20 sm:py-28 bg-[#faf8f5] border-b border-[#ede8e1]">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          
+          {/* Section Header */}
+          <div className="max-w-3xl mb-12">
+            <FadeReveal>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#ede8e1] shadow-2xs text-[#d4622b] text-[10px] font-bold uppercase tracking-wider mb-3">
+                <Sparkles className="w-3 h-3 text-[#d4622b]" />
+                <span>Knowledge Base & Advisory</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] tracking-tight">
+                Clear answers for <span className="text-[#d4622b]">clear decisions.</span>
               </h2>
-              <p className="text-gray-500 text-sm mt-3">
-                Everything you need to know about flexible leases, free trial, and onboarding.
+              <p className="text-xs sm:text-sm text-gray-500 mt-2 max-w-xl">
+                Everything you need to know about flexible team leases, GST compliance, bespoke buildouts, and our zero-cost 2-day trial pass.
               </p>
-            </FadeUp>
+            </FadeReveal>
           </div>
 
-          <div className="space-y-4">
-            {faqItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="rounded-2xl bg-white border border-[#ede8e1] overflow-hidden transition-colors"
-              >
+          {/* Interactive Category Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-10">
+            {faqCategories.map((cat) => {
+              const isActive = activeFaqCategory === cat.id;
+              return (
                 <button
-                  onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                  className="w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-[#1a1a2e] text-base hover:text-[#d4622b] transition-colors"
+                  key={cat.id}
+                  onClick={() => {
+                    setActiveFaqCategory(cat.id);
+                    setOpenFaq(null);
+                  }}
+                  className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-200 ${
+                    isActive
+                      ? "bg-[#d4622b] text-white shadow-xs"
+                      : "bg-white text-gray-600 hover:text-[#1a1a2e] border border-[#ede8e1] hover:border-gray-300"
+                  }`}
                 >
-                  <span>{item.q}</span>
-                  <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
-                      activeFaq === idx ? "rotate-180 text-[#d4622b]" : ""
-                    }`}
-                  />
+                  {cat.label}
                 </button>
-                <AnimatePresence>
-                  {activeFaq === idx && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="px-6 pb-6 text-sm text-gray-600 leading-relaxed border-t border-gray-100 pt-4">
-                        {item.a}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
+              );
+            })}
           </div>
+
+          {/* 2-Column Split Architectural Grid */}
+          <div className="grid lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left Column: Advisory Concierge Callout Block */}
+            <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-4">
+              <FadeReveal delay={0.1}>
+                <div className="rounded-3xl bg-white border border-[#ede8e1] p-6 sm:p-7 shadow-xs space-y-5">
+                  <div className="w-11 h-11 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] flex items-center justify-center text-[#d4622b] shadow-2xs">
+                    <Headphones className="w-5 h-5" />
+                  </div>
+
+                  <div>
+                    <span className="text-[10px] font-bold text-[#d4622b] uppercase tracking-wider block">
+                      Dedicated Concierge
+                    </span>
+                    <h3 className="text-lg font-bold text-[#1a1a2e] mt-1">
+                      Have a unique team requirement?
+                    </h3>
+                    <p className="text-xs text-gray-500 mt-2 leading-relaxed font-normal">
+                      Our commercial real estate advisors can prepare custom floorplans, enterprise IT topologies, and bespoke lease proposals within 24 hours.
+                    </p>
+                  </div>
+
+                  <div className="pt-3 border-t border-gray-100 flex flex-col gap-2.5">
+                    <button
+                      onClick={() => triggerBooking(undefined, true)}
+                      className="w-full py-3 rounded-full bg-[#d4622b] text-white font-bold text-xs hover:bg-[#b8501f] transition-all flex items-center justify-center gap-1.5 shadow-xs"
+                    >
+                      <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                      <span>Claim Free 2-Day Pass</span>
+                    </button>
+
+                    <a
+                      href="tel:+919910668152"
+                      className="w-full py-2.5 rounded-full bg-[#faf8f5] text-gray-700 font-semibold text-xs flex items-center justify-center gap-2 border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
+                    >
+                      <Phone className="w-3.5 h-3.5 text-[#d4622b]" />
+                      <span>Direct: +91 9910668152</span>
+                    </a>
+                  </div>
+
+                  <div className="pt-2 flex items-center gap-4 text-[10px] font-bold text-gray-400">
+                    <div className="flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-[#d4622b]" />
+                      <span>Zero Brokerage</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-[#d4622b]" />
+                      <span>MCA & GST Verified</span>
+                    </div>
+                  </div>
+                </div>
+              </FadeReveal>
+            </div>
+
+            {/* Right Column: Categorized Interactive Accordion Cards */}
+            <div className="lg:col-span-8 space-y-3.5">
+              {(activeFaqCategory === "all"
+                ? faqAccordion
+                : faqAccordion.filter((f) => f.category === activeFaqCategory)
+              ).map((item, idx) => {
+                const isOpen = openFaq === idx;
+                return (
+                  <FadeReveal key={item.q} delay={0.04 * idx} yOffset={12}>
+                    <div
+                      className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                        isOpen
+                          ? "bg-white border-[#d4622b] shadow-xs"
+                          : "bg-white border-[#ede8e1] hover:border-gray-300"
+                      }`}
+                    >
+                      <button
+                        onClick={() => setOpenFaq(isOpen ? null : idx)}
+                        className="w-full p-5 text-left flex items-start justify-between gap-4 transition-colors group"
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[9px] font-extrabold px-2 py-0.5 rounded-md bg-[#faf8f5] text-[#d4622b] border border-gray-200">
+                              {item.categoryLabel}
+                            </span>
+                          </div>
+                          <h4 className="text-sm sm:text-base font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors leading-snug">
+                            {item.q}
+                          </h4>
+                        </div>
+
+                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border transition-all ${
+                          isOpen
+                            ? "bg-[#d4622b] text-white border-[#d4622b] rotate-180"
+                            : "bg-[#faf8f5] text-gray-500 border-[#ede8e1] group-hover:border-gray-300"
+                        }`}>
+                          <ChevronDown className="w-4 h-4" />
+                        </div>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 font-normal">
+                              {item.a}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </FadeReveal>
+                );
+              })}
+            </div>
+
+          </div>
+
         </div>
       </section>
 
-      {/* ━━━ CONTACT & CONSULTATION SECTION ━━━ */}
-      <section id="contact" className="py-24 sm:py-32 bg-white border-t border-[#ede8e1]">
+      {/* ━━━ SECTION 7: DIRECT INQUIRY & CONSULTATION ━━━ */}
+      <section id="contact" className="py-20 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
-            {/* Left Contact Information */}
-            <div className="lg:col-span-5 space-y-6">
-              <FadeUp>
-                <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest px-3.5 py-1 rounded-full bg-[#d4622b]/10 inline-block">
-                  Get In Touch
+            <div className="lg:col-span-5 space-y-5">
+              <FadeReveal>
+                <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider block">
+                  Direct Leasing & Visits
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-extrabold text-[#1a1a2e] leading-tight mt-3">
-                  Ready to move <br />
-                  <span className="text-[#d4622b]">forward?</span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1a1a2e] leading-tight">
+                  Request a physical tour or 2-day team trial.
                 </h2>
-                <p className="text-gray-600 text-sm leading-relaxed mt-4">
-                  Transform your work life. Fill in the form and our commercial real estate team will reach out within 24 hours with custom floor plans and information.
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  Connect with our commercial advisory team for bespoke floor plans, lease structuring, and private hub visits across Delhi, Gurgaon, and Noida.
                 </p>
 
-                <div className="space-y-4 pt-6">
-                  <div className="flex items-start gap-4 p-4 rounded-2xl bg-[#faf8f5] border border-[#ede8e1]">
-                    <div className="w-11 h-11 rounded-xl bg-white border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0 shadow-xs">
-                      <MapPin className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-gray-400 uppercase">Headquarters</div>
-                      <div className="text-sm font-bold text-[#1a1a2e] mt-0.5">
-                        Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020
-                      </div>
+                <div className="space-y-3 pt-3">
+                  <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#faf8f5] border border-[#ede8e1]">
+                    <MapPin className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" />
+                    <div className="text-xs text-gray-700">
+                      <span className="font-bold text-[#1a1a2e] block">Registered Flagship HQ</span>
+                      Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020
                     </div>
                   </div>
 
                   <a
-                    href="tel:9910668152"
-                    className="flex items-start gap-4 p-4 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
+                    href="tel:+919910668152"
+                    className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-white border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0 shadow-xs">
-                      <Phone className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-gray-400 uppercase">Direct Line</div>
-                      <div className="text-sm font-bold text-[#1a1a2e] mt-0.5">+91 9910668152</div>
+                    <Phone className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" />
+                    <div className="text-xs text-gray-700">
+                      <span className="font-bold text-[#1a1a2e] block">Direct Line</span>
+                      +91 9910668152
                     </div>
                   </a>
 
                   <a
                     href="mailto:info@onwardworkspaces.com"
-                    className="flex items-start gap-4 p-4 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
+                    className="flex items-start gap-3 p-3.5 rounded-2xl bg-[#faf8f5] border border-[#ede8e1] hover:border-[#d4622b]/40 transition-colors"
                   >
-                    <div className="w-11 h-11 rounded-xl bg-white border border-gray-200 text-[#d4622b] flex items-center justify-center shrink-0 shadow-xs">
-                      <Mail className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-gray-400 uppercase">Official Email</div>
-                      <div className="text-sm font-bold text-[#1a1a2e] mt-0.5">info@onwardworkspaces.com</div>
+                    <Mail className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" />
+                    <div className="text-xs text-gray-700">
+                      <span className="font-bold text-[#1a1a2e] block">Official Email</span>
+                      info@onwardworkspaces.com
                     </div>
                   </a>
                 </div>
-              </FadeUp>
+              </FadeReveal>
             </div>
 
-            {/* Right Form */}
+            {/* Inquiry Form */}
             <div className="lg:col-span-7">
-              <FadeUp delay={0.2}>
-                <div className="rounded-3xl bg-[#faf8f5] border border-[#ede8e1] p-8 sm:p-10 shadow-lg">
-                  <h3 className="text-2xl font-bold text-[#1a1a2e] mb-2">Request Consultation or Free Trial</h3>
-                  <p className="text-xs text-gray-500 mb-6">Schedule a physical walkthrough or claim your 2-day team trial pass.</p>
+              <FadeReveal delay={0.15}>
+                <div className="p-8 sm:p-10 rounded-3xl bg-[#faf8f5] border border-[#ede8e1] shadow-xs">
+                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-1">Book Tour or Claim Free Trial</h3>
+                  <p className="text-xs text-gray-500 mb-6">Receive calendar confirmation and centre directions within 24 hours.</p>
 
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      setBookingSuccess(true);
-                      setIsModalOpen(true);
+                      setBookingDone(true);
+                      setModalOpen(true);
                     }}
                     className="space-y-4"
                   >
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-bold text-gray-600 block mb-1.5">Full Name</label>
+                        <label className="text-xs font-bold text-gray-700 block mb-1">Full Name</label>
                         <input
                           type="text"
                           required
                           placeholder="Vikram Sharma"
-                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
+                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-gray-600 block mb-1.5">Work Email</label>
+                        <label className="text-xs font-bold text-gray-700 block mb-1">Work Email</label>
                         <input
                           type="email"
                           required
                           placeholder="vikram@company.com"
-                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
+                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
                         />
                       </div>
                     </div>
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="text-xs font-bold text-gray-600 block mb-1.5">Phone Number</label>
+                        <label className="text-xs font-bold text-gray-700 block mb-1">Phone Number</label>
                         <input
                           type="tel"
                           required
                           placeholder="+91 9910668152"
-                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors"
+                          className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-gray-600 block mb-1.5">Preferred Centre</label>
-                        <select className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors">
-                          <option value="Okhla Phase II, Delhi">Okhla Phase II (Delhi Flagship)</option>
+                        <label className="text-xs font-bold text-gray-700 block mb-1">Target Hub</label>
+                        <select className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]">
+                          <option value="Okhla Phase II, Delhi">Okhla Phase II (Flagship HQ, Delhi)</option>
                           <option value="Okhla Phase III, Delhi">Okhla Phase III (Delhi)</option>
                           <option value="Mohan Cooperative, Delhi">Mohan Cooperative (Delhi)</option>
-                          <option value="Connaught Place, Delhi">Connaught Place (Delhi)</option>
-                          <option value="Cyber City, Gurgaon">DLF Cyber City (Gurgaon)</option>
+                          <option value="Connaught Place, Delhi">Connaught Place (Central Delhi)</option>
+                          <option value="DLF Cyber City, Gurgaon">DLF Cyber City (Gurgaon)</option>
                           <option value="Udyog Vihar, Gurgaon">Udyog Vihar Phase IV (Gurgaon)</option>
-                          <option value="Sector 62, Noida">Sector 62 (Noida)</option>
-                          <option value="Sector 16, Noida">Sector 16 (Noida)</option>
+                          <option value="Sector 62, Noida">Sector 62 IT Hub (Noida)</option>
+                          <option value="Sector 16, Noida">Sector 16 Metro Belt (Noida)</option>
                         </select>
                       </div>
                     </div>
 
                     <div>
-                      <label className="text-xs font-bold text-gray-600 block mb-1.5">Message / Requirements</label>
+                      <label className="text-xs font-bold text-gray-700 block mb-1">Requirements & Team Size</label>
                       <textarea
                         rows={3}
-                        placeholder="Tell us about your team size, target move-in date, or custom layout requirements..."
-                        className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-3 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] transition-colors resize-none"
+                        placeholder="Specify your team size, expected move-in date, or layout preferences..."
+                        className="w-full bg-white border border-[#ede8e1] rounded-xl px-4 py-2.5 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] resize-none"
                       />
                     </div>
 
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.01 }}
+                      whileTap={{ scale: 0.99 }}
                       type="submit"
-                      className="w-full py-4 rounded-full bg-[#d4622b] text-white font-bold text-base shadow-[0_8px_25px_rgba(212,98,43,0.3)] hover:bg-[#b8501f] transition-all"
+                      className="w-full py-3.5 rounded-full bg-[#d4622b] text-white font-bold text-xs hover:bg-[#b8501f] transition-all shadow-xs"
                     >
-                      Submit Tour & Trial Request
-                    </button>
+                      Submit Booking & Trial Request
+                    </motion.button>
                   </form>
                 </div>
-              </FadeUp>
+              </FadeReveal>
             </div>
 
           </div>
@@ -1719,54 +1479,54 @@ export default function Home() {
       </section>
 
       {/* ━━━ FOOTER ━━━ */}
-      <footer className="bg-[#1a1a2e] text-gray-400 py-20 border-t border-gray-800 text-xs">
+      <footer className="bg-[#1a1a2e] text-gray-400 py-16 text-xs border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             
             <div>
-              <a href="#" className="flex items-center gap-2.5 mb-5">
-                <img src="/onward-logo.png" alt="Onward" className="w-9 h-9" />
-                <div className="leading-none">
-                  <span className="text-xl font-extrabold text-white tracking-tight">Onward</span>
-                  <span className="block text-[9px] text-gray-400 tracking-[0.25em]">WORKSPACES</span>
+              <div className="flex items-center gap-2.5 mb-4">
+                <img src="/onward-logo.png" alt="Onward Logo" className="w-8 h-8" />
+                <div>
+                  <span className="text-lg font-bold text-white tracking-tight">Onward</span>
+                  <span className="block text-[8px] text-gray-400 tracking-[0.2em]">WORKSPACES</span>
                 </div>
-              </a>
-              <p className="text-sm leading-relaxed text-gray-400">
-                Premium coworking spaces built around your brand, ambition, and people.
+              </div>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Premium managed workspaces crafted around your ambition, brand, and team growth.
               </p>
-              <div className="mt-4 text-xs font-semibold text-[#d4622b]">
+              <div className="mt-3 text-xs font-bold text-[#d4622b]">
                 ONWARD COWORKX PRIVATE LIMITED
               </div>
             </div>
 
             <div>
-              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-5">Solutions</h4>
-              <ul className="space-y-3">
-                <li><a href="#solutions" className="hover:text-[#d4622b] transition-colors">Managed Office</a></li>
-                <li><a href="#solutions" className="hover:text-[#d4622b] transition-colors">Private Suites</a></li>
-                <li><a href="#solutions" className="hover:text-[#d4622b] transition-colors">Private Cabins</a></li>
-                <li><a href="#solutions" className="hover:text-[#d4622b] transition-colors">Virtual Office</a></li>
-                <li><a href="#solutions" className="hover:text-[#d4622b] transition-colors">On-Demand & Event Hubs</a></li>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Formats</h4>
+              <ul className="space-y-2 text-xs">
+                <li><a href="#dossier" className="hover:text-[#d4622b] transition-colors">Managed Office</a></li>
+                <li><a href="#dossier" className="hover:text-[#d4622b] transition-colors">Private Suites</a></li>
+                <li><a href="#dossier" className="hover:text-[#d4622b] transition-colors">Executive Cabins</a></li>
+                <li><a href="#dossier" className="hover:text-[#d4622b] transition-colors">Virtual Office</a></li>
+                <li><a href="#dossier" className="hover:text-[#d4622b] transition-colors">4K Boardrooms</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-5">NCR Locations</h4>
-              <ul className="space-y-3">
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Okhla Phase II & III</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Mohan Cooperative</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Connaught Place</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">DLF Cyber City Gurgaon</a></li>
-                <li><a href="#locations" className="hover:text-[#d4622b] transition-colors">Noida Sector 62 & 16</a></li>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">NCR Hubs</h4>
+              <ul className="space-y-2 text-xs">
+                <li><a href="#hubs" className="hover:text-[#d4622b] transition-colors">Okhla Phase II & III</a></li>
+                <li><a href="#hubs" className="hover:text-[#d4622b] transition-colors">Mohan Cooperative</a></li>
+                <li><a href="#hubs" className="hover:text-[#d4622b] transition-colors">Connaught Place</a></li>
+                <li><a href="#hubs" className="hover:text-[#d4622b] transition-colors">DLF Cyber City Gurgaon</a></li>
+                <li><a href="#hubs" className="hover:text-[#d4622b] transition-colors">Sector 62 & 16 Noida</a></li>
               </ul>
             </div>
 
             <div>
-              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-5">Contact & Support</h4>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Headquarters</h4>
               <p className="text-xs text-gray-400 leading-relaxed mb-3">
                 Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, 110020
               </p>
-              <div className="space-y-1.5 font-semibold text-white">
+              <div className="space-y-1 font-semibold text-white">
                 <div>+91 9910668152</div>
                 <div className="text-gray-400">info@onwardworkspaces.com</div>
               </div>
@@ -1774,9 +1534,9 @@ export default function Home() {
 
           </div>
 
-          <div className="pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+          <div className="pt-6 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center gap-3 text-[11px] text-gray-500">
             <p>&copy; {new Date().getFullYear()} Onward Workspaces (Onward Coworkx Pvt. Ltd.). All rights reserved.</p>
-            <div className="flex gap-6">
+            <div className="flex gap-5">
               <a href="#" className="hover:text-[#d4622b] transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-[#d4622b] transition-colors">Terms of Service</a>
               <a href="#" className="hover:text-[#d4622b] transition-colors">GST Compliance</a>
@@ -1785,87 +1545,121 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* ━━━ TOUR BOOKING / TRIAL MODAL ━━━ */}
+      {/* ━━━ FLOATING 2025 CONCIERGE DOCK (WITH ENTRY ANIMATION) ━━━ */}
+      <motion.div
+        initial={{ y: 80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed bottom-4 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none"
+      >
+        <div className="bg-[#1a1a2e]/90 backdrop-blur-md text-white border border-gray-700/60 rounded-full px-5 py-2.5 shadow-2xl flex items-center gap-4 pointer-events-auto text-xs">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-semibold text-gray-200 hidden sm:inline">15+ NCR Hubs Open</span>
+          </div>
+
+          <div className="h-3.5 w-px bg-gray-600 hidden sm:block" />
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => triggerBooking(undefined, true)}
+            className="px-3.5 py-1.5 rounded-full bg-[#d4622b] hover:bg-[#b8501f] text-white font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+            <span>2-Day Free Trial</span>
+          </motion.button>
+
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => triggerBooking(undefined, false)}
+            className="px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-colors"
+          >
+            Book Tour
+          </motion.button>
+        </div>
+      </motion.div>
+
+      {/* ━━━ TOUR / TRIAL MODAL ━━━ */}
       <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        {modalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-lg rounded-3xl bg-white border border-[#ede8e1] p-6 sm:p-8 shadow-2xl overflow-hidden"
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="relative w-full max-w-lg rounded-3xl bg-white border border-[#ede8e1] p-7 shadow-xl overflow-hidden"
             >
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setModalOpen(false)}
                 className="absolute top-5 right-5 p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
 
-              {!bookingSuccess ? (
-                <div className="space-y-5">
+              {!bookingDone ? (
+                <div className="space-y-4">
                   <div>
-                    <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider">
-                      {isTrialRequest ? "2-Day Free Trial Pass" : "Schedule a Tour"}
+                    <span className="text-[10px] font-bold text-[#d4622b] uppercase tracking-wider">
+                      {isTrialBooking ? "2-Day Free Pass" : "Centre Visit"}
                     </span>
-                    <h3 className="text-2xl font-extrabold text-[#1a1a2e] mt-1">
-                      {isTrialRequest ? "Claim Your 2-Day Free Trial" : `Visit ${modalSelectedHub}`}
+                    <h3 className="text-xl font-bold text-[#1a1a2e] mt-0.5">
+                      {isTrialBooking ? "Claim 2-Day Team Trial" : `Visit ${modalTarget}`}
                     </h3>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Experience our workspaces with complimentary barista coffee and high-speed Wi-Fi.
-                    </p>
                   </div>
 
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
-                      setBookingSuccess(true);
+                      setBookingDone(true);
                     }}
-                    className="space-y-4"
+                    className="space-y-3.5"
                   >
                     <div>
-                      <label className="text-xs font-bold text-gray-700 block mb-1">Your Name</label>
+                      <label className="text-xs font-semibold text-gray-700 block mb-1">Your Name</label>
                       <input
                         type="text"
                         required
                         placeholder="John Doe"
-                        className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                        className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs font-bold text-gray-700 block mb-1">Work Email</label>
+                        <label className="text-xs font-semibold text-gray-700 block mb-1">Work Email</label>
                         <input
                           type="email"
                           required
                           placeholder="john@company.com"
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-gray-700 block mb-1">Phone</label>
+                        <label className="text-xs font-semibold text-gray-700 block mb-1">Phone</label>
                         <input
                           type="tel"
                           required
                           placeholder="+91 9910668152"
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs font-bold text-gray-700 block mb-1">Preferred Date</label>
+                        <label className="text-xs font-semibold text-gray-700 block mb-1">Preferred Date</label>
                         <input
                           type="date"
                           required
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
+                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]"
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-bold text-gray-700 block mb-1">Time Window</label>
-                        <select className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2.5 text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]">
+                        <label className="text-xs font-semibold text-gray-700 block mb-1">Time Slot</label>
+                        <select className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-2 text-xs text-[#1a1a2e] focus:outline-none focus:border-[#d4622b]">
                           <option>10:00 AM - 12:00 PM</option>
                           <option>12:00 PM - 02:00 PM</option>
                           <option>02:00 PM - 04:00 PM</option>
@@ -1874,26 +1668,28 @@ export default function Home() {
                       </div>
                     </div>
 
-                    <button
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       type="submit"
-                      className="w-full py-3.5 rounded-full bg-[#d4622b] text-white font-bold text-sm shadow-md hover:bg-[#b8501f] transition-all"
+                      className="w-full py-3 rounded-full bg-[#d4622b] text-white font-bold text-xs hover:bg-[#b8501f] transition-all shadow-xs"
                     >
-                      {isTrialRequest ? "Claim Free 2-Day Trial" : "Confirm Tour Reservation"}
-                    </button>
+                      {isTrialBooking ? "Claim Free 2-Day Pass" : "Confirm Tour Reservation"}
+                    </motion.button>
                   </form>
                 </div>
               ) : (
-                <div className="text-center py-6 space-y-4">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-8 h-8" />
+                <div className="text-center py-6 space-y-3">
+                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                    <CheckCircle2 className="w-6 h-6" />
                   </div>
-                  <h3 className="text-2xl font-extrabold text-[#1a1a2e]">Request Confirmed!</h3>
-                  <p className="text-xs text-gray-600 max-w-sm mx-auto leading-relaxed">
-                    Thank you! Our leasing team has received your request. We will contact you at your phone number with calendar confirmation and directions.
+                  <h3 className="text-xl font-bold text-[#1a1a2e]">Request Received!</h3>
+                  <p className="text-xs text-gray-600 max-w-xs mx-auto leading-relaxed">
+                    Thank you! Our leasing team has received your request and will confirm your visit time via phone.
                   </p>
                   <button
-                    onClick={() => setIsModalOpen(false)}
-                    className="px-6 py-2.5 rounded-full bg-[#1a1a2e] text-white font-semibold text-xs"
+                    onClick={() => setModalOpen(false)}
+                    className="px-5 py-2 rounded-full bg-[#1a1a2e] text-white font-semibold text-xs mt-2"
                   >
                     Done
                   </button>
@@ -1907,6 +1703,8 @@ export default function Home() {
     </div>
   );
 }
+
+
 
 
 
