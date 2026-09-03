@@ -382,143 +382,8 @@ const faqItems = [
 ];
 
 /* ═══════════════════════════════════════════════════════════════
-   3D WIREFRAME, INFLOW STREAM & HYPERFRAME ANIMATION ENGINES
+   3D WIREFRAME & HYPERFRAME ANIMATION ENGINES
    ═══════════════════════════════════════════════════════════════ */
-
-/* 1. 3D Interactive Isometric Wiring & Inflow Canvas */
-function InflowWireGrid() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", handleResize);
-
-    // Inflow particle wires
-    const wiresCount = 18;
-    const wires: Array<{
-      x: number;
-      speed: number;
-      length: number;
-      offset: number;
-      color: string;
-      width: number;
-      amplitude: number;
-      frequency: number;
-    }> = [];
-
-    for (let i = 0; i < wiresCount; i++) {
-      wires.push({
-        x: (width / wiresCount) * i + (Math.random() * 60 - 30),
-        speed: 0.8 + Math.random() * 1.6,
-        length: 120 + Math.random() * 220,
-        offset: Math.random() * height,
-        color: i % 3 === 0 ? "rgba(212, 98, 43, " : i % 2 === 0 ? "rgba(26, 26, 46, " : "rgba(232, 133, 90, ",
-        width: 1 + Math.random() * 1.5,
-        amplitude: 15 + Math.random() * 30,
-        frequency: 0.003 + Math.random() * 0.005,
-      });
-    }
-
-    // 3D Isometric Nodes
-    const gridSpacing = 90;
-    let time = 0;
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-      time += 0.015;
-
-      // Draw subtle isometric background wireframe mesh
-      ctx.strokeStyle = "rgba(212, 98, 43, 0.04)";
-      ctx.lineWidth = 1;
-
-      for (let x = -width; x < width * 2; x += gridSpacing) {
-        ctx.beginPath();
-        // 30 degree isometric diagonal wires
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x + height * 0.8, height);
-        ctx.stroke();
-
-        ctx.beginPath();
-        // Opposite diagonal wires
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x - height * 0.8, height);
-        ctx.stroke();
-      }
-
-      // Draw Inflow Streaming Energy Pulses (coming from top to bottom)
-      wires.forEach((w) => {
-        w.offset = (w.offset + w.speed) % (height + w.length);
-
-        const gradient = ctx.createLinearGradient(
-          w.x,
-          w.offset - w.length,
-          w.x,
-          w.offset
-        );
-        gradient.addColorStop(0, `${w.color}0)`);
-        gradient.addColorStop(0.7, `${w.color}0.4)`);
-        gradient.addColorStop(1, `${w.color}0.9)`);
-
-        ctx.beginPath();
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = w.width;
-
-        // Draw sinusoidal wire flow
-        const startY = Math.max(0, w.offset - w.length);
-        const endY = Math.min(height, w.offset);
-
-        ctx.moveTo(w.x + Math.sin(startY * w.frequency + time) * w.amplitude, startY);
-
-        for (let y = startY + 10; y <= endY; y += 10) {
-          const currentX = w.x + Math.sin(y * w.frequency + time) * w.amplitude;
-          ctx.lineTo(currentX, y);
-        }
-        ctx.stroke();
-
-        // Glowing pulse head
-        if (w.offset <= height) {
-          const headX = w.x + Math.sin(w.offset * w.frequency + time) * w.amplitude;
-          ctx.beginPath();
-          ctx.arc(headX, w.offset, 2.5, 0, Math.PI * 2);
-          ctx.fillStyle = "#d4622b";
-          ctx.shadowColor = "#d4622b";
-          ctx.shadowBlur = 10;
-          ctx.fill();
-          ctx.shadowBlur = 0; // reset
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0 opacity-70"
-    />
-  );
-}
 
 /* 2. Rotating 3D Hyperframe Wireframe Polyhedron */
 function Floating3DCage({ size = 80, className = "" }: { size?: number; className?: string }) {
@@ -906,9 +771,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#faf8f5] text-[#1a1a2e] font-sans relative overflow-x-hidden selection:bg-[#d4622b] selection:text-white">
-      
-      {/* ━━━ BACKGROUND AMBIENT GLOW & 3D ISOMETRIC INFLOW WIRE CANVAS ━━━ */}
-      <InflowWireGrid />
+      {/* ━━━ BACKGROUND AMBIENT GLOW & SUBTLE LUXURY GRID ━━━ */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-[-5%] right-[-5%] w-[600px] h-[600px] bg-[#d4622b]/5 rounded-full blur-[140px]" />
         <div className="absolute bottom-[10%] left-[-5%] w-[600px] h-[600px] bg-[#d4622b]/4 rounded-full blur-[150px]" />
