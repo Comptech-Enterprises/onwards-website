@@ -17,6 +17,7 @@ import SpotlightCard from "@/components/SpotlightCard";
 import SpringCounter from "@/components/SpringCounter";
 import FeatureTimeline from "@/components/FeatureTimeline";
 import ContactSection from "@/components/ContactSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
 
 /* ═══════════════════════════════════════════
    PRIMITIVES & MARQUEE
@@ -256,24 +257,6 @@ const cities = [
         highlight: "Scalable Team Suites & Lounges",
       },
     ],
-  },
-];
-
-const testimonials = [
-  {
-    name: "Varun Puri",
-    role: "Founder, Dangal Games",
-    text: "Onward has been a game-changer for our team. The perfect office space for our growth journey.",
-  },
-  {
-    name: "Abhinay Nagwekar",
-    role: "Procurement Lead, Aramex",
-    text: "Onward exceeded all expectations — meticulously designed spaces with unwavering support.",
-  },
-  {
-    name: "Prasenjit Das Gupta",
-    role: "Head Commercial, Thermax",
-    text: "Transitioning to Onward was our best decision. The environment fosters real collaboration.",
   },
 ];
 
@@ -547,92 +530,6 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
         Explore Specifications &rarr;
       </div>
     </SpotlightCard>
-  );
-}
-
-function TestimonialSpotlight() {
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setActive((p) => (p + 1) % testimonials.length), 5000);
-    return () => clearInterval(t);
-  }, []);
-
-  const t = testimonials[active];
-  const initials = (name: string) => name.split(" ").map((n) => n[0]).join("");
-
-  return (
-    <div className="grid lg:grid-cols-[1fr,auto] gap-12 lg:gap-20 items-center">
-      {/* Quote side */}
-      <div className="relative">
-        {/* Decorative quote mark */}
-        <svg className="absolute -top-4 -left-2 w-16 h-16 text-[#d4622b]/10" fill="currentColor" viewBox="0 0 32 32">
-          <path d="M10 8C5.6 8 2 11.6 2 16v8h8v-8H4c0-3.3 2.7-6 6-6V8zm14 0c-4.4 0-8 3.6-8 8v8h8v-8h-6c0-3.3 2.7-6 6-6V8z"/>
-        </svg>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={active}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -16 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-          >
-            {/* Stars */}
-            <div className="flex gap-1 mb-6">
-              {[...Array(5)].map((_, i) => (
-                <svg key={i} className="w-4 h-4 text-[#d4622b]" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              ))}
-            </div>
-
-            <p className="text-2xl lg:text-3xl font-medium text-[#1a1a2e] leading-snug">
-              &ldquo;{t.text}&rdquo;
-            </p>
-
-            <div className="mt-8 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#d4622b] to-[#e8855a] flex items-center justify-center text-white font-bold">
-                {initials(t.name)}
-              </div>
-              <div>
-                <div className="font-semibold text-[#1a1a2e]">{t.name}</div>
-                <div className="text-gray-400 text-sm">{t.role}</div>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Person selector — stacked avatars */}
-      <div className="flex lg:flex-col gap-4">
-        {testimonials.map((person, i) => (
-          <button
-            key={person.name}
-            onClick={() => setActive(i)}
-            className={`flex items-center gap-3 p-3 rounded-2xl transition-all duration-300 text-left ${
-              i === active
-                ? "bg-white shadow-[0_4px_20px_rgba(212,98,43,0.12)] border border-[#d4622b]/15"
-                : "hover:bg-white/60"
-            }`}
-          >
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300 ${
-              i === active
-                ? "bg-gradient-to-br from-[#d4622b] to-[#e8855a] text-white scale-110"
-                : "bg-gray-200 text-gray-500"
-            }`}>
-              {initials(person.name)}
-            </div>
-            <div className="hidden lg:block">
-              <div className={`text-xs font-semibold transition-colors ${i === active ? "text-[#1a1a2e]" : "text-gray-400"}`}>
-                {person.name.split(" ")[0]}
-              </div>
-              <div className="text-[10px] text-gray-400 leading-tight max-w-[100px]">{person.role.split(",")[1]?.trim() ?? person.role}</div>
-            </div>
-          </button>
-        ))}
-      </div>
-    </div>
   );
 }
 
@@ -1315,24 +1212,8 @@ export default function Home() {
         <GallerySlider />
       </section>
 
-      {/* ━━━ TESTIMONIALS ━━━ */}
-      <section className="py-24 lg:py-32 bg-[#faf8f5]">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8">
-          <div className="mb-14">
-            <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> Testimonials
-              </span>
-            </Reveal>
-            <AnimatedHeading
-              text="Leaders trust Onward"
-              highlight="trust Onward"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
-            />
-          </div>
-          <TestimonialSpotlight />
-        </div>
-      </section>
+      {/* ━━━ TESTIMONIALS SECTION WITH THREAD ANIMATION ━━━ */}
+      <TestimonialsSection />
 
       {/* ━━━ LOGO MARQUEE ━━━ */}
       <section className="py-16 bg-white border-y border-gray-100">

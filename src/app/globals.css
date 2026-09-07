@@ -89,6 +89,19 @@ body {
   }
 }
 
+@keyframes thread-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+
+.animate-thread-flow {
+  animation: thread-flow 12s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
