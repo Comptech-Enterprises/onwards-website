@@ -16,6 +16,7 @@ import MagneticButton from "@/components/MagneticButton";
 import SpotlightCard from "@/components/SpotlightCard";
 import SpringCounter from "@/components/SpringCounter";
 import FeatureTimeline from "@/components/FeatureTimeline";
+import ContactSection from "@/components/ContactSection";
 
 /* ═══════════════════════════════════════════
    PRIMITIVES & MARQUEE
@@ -692,9 +693,9 @@ function LocationCard({
 
       {/* Content */}
       <div className="p-5">
-        {/* Tag */}
+        {/* Tag & City */}
         <span className="text-[10px] font-bold tracking-widest text-[#d4622b] uppercase">
-          {hub.tag}
+          {hub.tag} &bull; {city}
         </span>
 
         <h3 className="mt-1 text-lg font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
@@ -1347,158 +1348,8 @@ export default function Home() {
         </Marquee>
       </section>
 
-      {/* ━━━ CONTACT ━━━ */}
-      <section
-        id="contact"
-        className="py-24 lg:py-32 bg-white relative overflow-hidden"
-      >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#d4622b]/5 rounded-full blur-[150px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-[1fr,1.1fr] gap-16 lg:gap-24">
-            <div>
-              <Reveal>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-6 h-px bg-[#d4622b]" /> Contact
-                </span>
-              </Reveal>
-              <AnimatedHeading
-                text="Ready to move forward?"
-                highlight="move forward?"
-                className="text-4xl sm:text-5xl font-bold text-[#1a1a2e] mt-3 leading-tight"
-              />
-              <Reveal delay={0.2}>
-                <p className="mt-6 text-gray-500 text-lg leading-relaxed">
-                  Transform your work life. Fill in the form and our team will
-                  reach out within 24 hours.
-                </p>
-              </Reveal>
-
-              <Reveal delay={0.35}>
-                <div className="mt-10 space-y-6">
-                  {[
-                    {
-                      icon: "M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z",
-                      label: "Phone",
-                      value: "+91 9910668152",
-                    },
-                    {
-                      icon: "M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75",
-                      label: "Email",
-                      value: "info@onwardworkspaces.com",
-                    },
-                    {
-                      icon: "M15 10.5a3 3 0 11-6 0 3 3 0 016 0z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z",
-                      label: "Address",
-                      value: "Delhi NCR, India",
-                    },
-                  ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="flex items-start gap-4 group"
-                    >
-                      <div className="w-12 h-12 rounded-2xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center shrink-0 group-hover:border-[#d4622b]/30 transition-colors">
-                        <svg
-                          className="w-5 h-5 text-[#d4622b]"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d={item.icon}
-                          />
-                        </svg>
-                      </div>
-                      <div>
-                        <div className="text-gray-400 text-xs uppercase tracking-wider">
-                          {item.label}
-                        </div>
-                        <div className="text-[#1a1a2e] mt-0.5 font-medium">
-                          {item.value}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Reveal>
-            </div>
-
-            <Reveal delay={0.25}>
-              <form
-                onSubmit={(e) => e.preventDefault()}
-                className="bg-[#faf8f5] border border-gray-200 rounded-3xl p-8 lg:p-10 space-y-5 shadow-sm"
-              >
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2 font-medium">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="John Doe"
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors shadow-sm"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2 font-medium">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="john@company.com"
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors shadow-sm"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2 font-medium">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    placeholder="+91 XXXXX XXXXX"
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors shadow-sm"
-                  />
-                </div>
-                <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2 font-medium">
-                    Solution
-                  </label>
-                  <select className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-gray-500 focus:outline-none focus:border-[#d4622b]/50 transition-colors shadow-sm">
-                    <option value="">Select a solution</option>
-                    {solutions.map((s) => (
-                      <option key={s.title} value={s.title}>
-                        {s.title}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider block mb-2 font-medium">
-                    Message
-                  </label>
-                  <textarea
-                    placeholder="Tell us about your requirements..."
-                    rows={4}
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-300 focus:outline-none focus:border-[#d4622b]/50 transition-colors resize-none shadow-sm"
-                  />
-                </div>
-                <motion.button
-                  type="submit"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full bg-[#d4622b] text-white py-4 rounded-xl font-semibold text-lg hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.2)]"
-                >
-                  Send Message
-                </motion.button>
-              </form>
-            </Reveal>
-          </div>
-        </div>
-      </section>
+      {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
+      <ContactSection />
 
       {/* ━━━ FOOTER ━━━ */}
       <footer className="bg-[#faf8f5] text-gray-400 py-20 border-t border-gray-100">
