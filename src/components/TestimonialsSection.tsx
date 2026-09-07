@@ -11,7 +11,6 @@ import {
 } from "framer-motion";
 import Reveal from "./Reveal";
 import AnimatedHeading from "./AnimatedHeading";
-import SpotlightCard from "./SpotlightCard";
 
 interface TestimonialItem {
   id: string;
@@ -23,7 +22,6 @@ interface TestimonialItem {
   seats: string;
   rating: number;
   text: string;
-  highlightWords: string;
 }
 
 const testimonialsData: TestimonialItem[] = [
@@ -32,12 +30,11 @@ const testimonialsData: TestimonialItem[] = [
     name: "Varun Puri",
     role: "Founder",
     company: "Dangal Games",
-    metric: "Scaled from 15 → 120 seats",
+    metric: "Scaled 15 → 120 seats",
     tenure: "3+ Years Client",
     seats: "120+ Desks",
     rating: 5,
     text: "Onward has been a game-changer for our team. The flexibility to scale seamlessly and the hospitality standards have made it the perfect office space for our high-velocity growth journey.",
-    highlightWords: "game-changer for our team",
   },
   {
     id: "aramex",
@@ -49,19 +46,17 @@ const testimonialsData: TestimonialItem[] = [
     seats: "85+ Desks",
     rating: 5,
     text: "Onward exceeded all our corporate expectations. Meticulously designed spaces, enterprise-grade IT infrastructure, and unwavering operational support make them our undisputed workspace choice.",
-    highlightWords: "exceeded all our corporate expectations",
   },
   {
     id: "thermax",
     name: "Prasenjit Das Gupta",
     role: "Head Commercial",
     company: "Thermax Ltd.",
-    metric: "100% turnkey setup in 10 days",
+    metric: "Turnkey setup in 10 days",
     tenure: "Strategic Client",
     seats: "60+ Desks",
     rating: 5,
     text: "Transitioning to Onward was by far our best decision. The vibrant environment fosters cross-team collaboration while offering our leadership the executive privacy they need.",
-    highlightWords: "by far our best decision",
   },
 ];
 
@@ -71,28 +66,25 @@ export default function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [[activeIdx, dir], setSlideState] = useState<[number, number]>([0, 1]);
   const [isPaused, setIsPaused] = useState(false);
-  const [pulseKey, setPulseKey] = useState(0);
 
-  // Parallax on section scroll
+  // Smooth scroll parallax for the decorative thread line
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"],
+    offset: ["start 80%", "end 20%"],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 70,
-    damping: 20,
+    stiffness: 80,
+    damping: 25,
   });
 
-  const threadDrawProgress = useTransform(smoothProgress, [0.1, 0.7], [0, 1]);
-  const ambientGlowY = useTransform(smoothProgress, [0, 1], [-60, 60]);
+  const threadPathLength = useTransform(smoothProgress, [0, 1], [0.2, 1]);
 
   const goTo = useCallback((newIdx: number, direction?: number) => {
     const total = testimonialsData.length;
     const targetIdx = (newIdx + total) % total;
     const d = direction ?? (targetIdx >= activeIdx ? 1 : -1);
     setSlideState([targetIdx, d]);
-    setPulseKey((p) => p + 1);
   }, [activeIdx]);
 
   // Autoplay cycle
@@ -111,27 +103,24 @@ export default function TestimonialsSection() {
       .map((n) => n[0])
       .join("");
 
-  const slideVariants: Variants = {
+  const quoteVariants: Variants = {
     enter: (d: number) => ({
       opacity: 0,
-      x: d > 0 ? 60 : -60,
-      scale: 0.98,
+      y: d > 0 ? 20 : -20,
     }),
     center: {
       opacity: 1,
-      x: 0,
-      scale: 1,
+      y: 0,
       transition: {
-        duration: 0.5,
+        duration: 0.4,
         ease: [0.22, 1, 0.36, 1] as const,
       },
     },
     exit: (d: number) => ({
       opacity: 0,
-      x: d > 0 ? -60 : 60,
-      scale: 0.98,
+      y: d > 0 ? -20 : 20,
       transition: {
-        duration: 0.35,
+        duration: 0.25,
         ease: [0.22, 1, 0.36, 1] as const,
       },
     }),
@@ -141,381 +130,236 @@ export default function TestimonialsSection() {
     <section
       id="testimonials"
       ref={sectionRef}
-      className="relative py-28 lg:py-40 bg-[#faf8f5] overflow-hidden"
+      className="relative py-24 lg:py-36 bg-[#faf8f5] overflow-hidden"
     >
-      {/* ━━━ BACKGROUND AMBIENT GLOWS ━━━ */}
-      <motion.div
-        style={{ y: ambientGlowY }}
-        className="pointer-events-none absolute top-1/3 -left-32 w-[600px] h-[600px] rounded-full bg-[#d4622b]/8 blur-[140px]"
-      />
-      <motion.div
-        style={{ y: ambientGlowY }}
-        className="pointer-events-none absolute bottom-1/4 -right-32 w-[550px] h-[550px] rounded-full bg-[#f59e0b]/8 blur-[140px]"
-      />
+      {/* ━━━ AMBIENT BACKGROUND GLOWS ━━━ */}
+      <div className="pointer-events-none absolute top-1/4 -left-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#f59e0b]/5 blur-[120px]" />
 
-      {/* ━━━ ANIMATED CONNECTING SVG THREAD CANVAS ━━━ */}
+      {/* ━━━ SOLID, SMOOTH DECORATIVE SVG THREAD (NO BLINKING) ━━━ */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 w-full h-full overflow-hidden z-0"
       >
         <svg
-          viewBox="0 0 1440 900"
+          viewBox="0 0 1440 800"
           fill="none"
           preserveAspectRatio="none"
           className="w-full h-full"
         >
           <defs>
-            {/* Main thread gradient */}
-            <linearGradient id="threadGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#d4622b" stopOpacity="0.2" />
-              <stop offset="35%" stopColor="#d4622b" stopOpacity="0.8" />
-              <stop offset="65%" stopColor="#f59e0b" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#e8855a" stopOpacity="0.3" />
+            <linearGradient id="solidThreadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#d4622b" stopOpacity="0.1" />
+              <stop offset="30%" stopColor="#d4622b" stopOpacity="0.45" />
+              <stop offset="70%" stopColor="#f59e0b" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#d4622b" stopOpacity="0.1" />
             </linearGradient>
-
-            {/* Glowing neon pulse filter */}
-            <filter id="threadGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="6" result="blur1" />
-              <feGaussianBlur stdDeviation="14" result="blur2" />
-              <feMerge>
-                <feMergeNode in="blur2" />
-                <feMergeNode in="blur1" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
-            {/* Energy bead gradient */}
-            <radialGradient id="beadGlow">
-              <stop offset="0%" stopColor="#ffffff" />
-              <stop offset="40%" stopColor="#f59e0b" />
-              <stop offset="100%" stopColor="#d4622b" stopOpacity="0" />
-            </radialGradient>
           </defs>
 
-          {/* Background thread shadow / diffuse aura */}
+          {/* Continuous smooth solid connecting curve */}
           <motion.path
-            d="M 120 180 C 400 120, 320 440, 720 380 C 1120 320, 1020 680, 1380 640"
-            stroke="url(#threadGradient)"
-            strokeWidth="8"
+            d="M 60 140 C 350 80, 480 320, 720 280 C 960 240, 1150 560, 1380 500"
+            stroke="url(#solidThreadGrad)"
+            strokeWidth="2"
             strokeLinecap="round"
-            filter="url(#threadGlow)"
-            opacity="0.3"
-            style={{ pathLength: threadDrawProgress }}
+            style={{ pathLength: threadPathLength }}
           />
-
-          {/* Primary sharp flowing thread line */}
-          <motion.path
-            id="mainThreadPath"
-            d="M 120 180 C 400 120, 320 440, 720 380 C 1120 320, 1020 680, 1380 640"
-            stroke="url(#threadGradient)"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeDasharray="6 8"
-            className="animate-thread-flow"
-            style={{ pathLength: threadDrawProgress }}
-          />
-
-          {/* Secondary harmonic resonance thread */}
-          <motion.path
-            d="M 100 210 C 450 150, 300 480, 750 420 C 1180 360, 980 720, 1420 680"
-            stroke="#d4622b"
-            strokeWidth="1"
-            strokeOpacity="0.25"
-            strokeDasharray="4 12"
-            fill="none"
-          />
-
-          {/* Live Energy Pulses Traveling Along Thread */}
-          <motion.circle
-            r="4.5"
-            fill="url(#beadGlow)"
-            filter="url(#threadGlow)"
-            className="opacity-90"
-          >
-            <animateMotion
-              dur="6s"
-              repeatCount="indefinite"
-              path="M 120 180 C 400 120, 320 440, 720 380 C 1120 320, 1020 680, 1380 640"
-            />
-          </motion.circle>
-
-          <motion.circle
-            r="3"
-            fill="#ffffff"
-            filter="url(#threadGlow)"
-            className="opacity-75"
-          >
-            <animateMotion
-              dur="6s"
-              begin="3s"
-              repeatCount="indefinite"
-              path="M 120 180 C 400 120, 320 440, 720 380 C 1120 320, 1020 680, 1380 640"
-            />
-          </motion.circle>
         </svg>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        {/* ━━━ SECTION HEADER WITH THREAD ANCHOR ━━━ */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div className="max-w-2xl">
-            <Reveal>
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#d4622b]/10 border border-[#d4622b]/20 mb-4">
-                <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4622b] opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d4622b]" />
-                </span>
-                <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest">
-                  Verified Client Stories
-                </span>
-              </div>
-            </Reveal>
-
-            <AnimatedHeading
-              text="Leaders trust Onward"
-              highlight="trust Onward"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] leading-[1.1] tracking-tight"
-            />
-
-            <Reveal delay={0.15}>
-              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
-                Over 12,000+ executives and high-growth founders power their
-                daily operations across Onward’s premium network.
-              </p>
-            </Reveal>
-          </div>
-
-          {/* Next / Previous Controls */}
-          <Reveal delay={0.25}>
-            <div className="flex items-center gap-3 self-start md:self-end">
-              <button
-                aria-label="Previous Testimonial"
-                onClick={() => goTo(activeIdx - 1, -1)}
-                className="w-12 h-12 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm text-[#1a1a2e] flex items-center justify-center hover:border-[#d4622b] hover:text-[#d4622b] hover:shadow-md transition-all group"
-              >
-                <span className="group-hover:-translate-x-0.5 transition-transform font-bold text-lg">
-                  &larr;
-                </span>
-              </button>
-
-              <button
-                aria-label="Next Testimonial"
-                onClick={() => goTo(activeIdx + 1, 1)}
-                className="w-12 h-12 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm text-[#1a1a2e] flex items-center justify-center hover:border-[#d4622b] hover:text-[#d4622b] hover:shadow-md transition-all group"
-              >
-                <span className="group-hover:translate-x-0.5 transition-transform font-bold text-lg">
-                  &rarr;
-                </span>
-              </button>
+        {/* ━━━ SECTION HEADER ━━━ */}
+        <div className="max-w-2xl mb-14">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4622b]/10 border border-[#d4622b]/20 mb-3.5">
+              <span className="w-2 h-2 rounded-full bg-[#d4622b]" />
+              <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest">
+                Client Testimonials
+              </span>
             </div>
+          </Reveal>
+
+          <AnimatedHeading
+            text="Leaders trust Onward"
+            highlight="trust Onward"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] leading-tight tracking-tight"
+          />
+
+          <Reveal delay={0.1}>
+            <p className="mt-3.5 text-gray-500 text-base sm:text-lg leading-relaxed">
+              Discover how India’s fastest-growing enterprises and modern teams scale effortlessly across our workspaces.
+            </p>
           </Reveal>
         </div>
 
-        {/* ━━━ MAIN TESTIMONIAL STAGE WITH INTERACTIVE THREAD NODES ━━━ */}
+        {/* ━━━ UNIFIED ADJACENT STAGE (GRID 5 / 7 COLS) ━━━ */}
         <div
-          className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch"
+          className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-stretch"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* ━━━ LEFT COLUMN: INTERCONNECTED LEADER NODES (THREAD TRACK) ━━━ */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
-            <div className="space-y-3.5 relative">
-              {/* Vertical connecting line linking the cards */}
-              <div className="hidden sm:block absolute left-8 top-10 bottom-10 w-0.5 bg-gradient-to-b from-[#d4622b]/40 via-[#f59e0b]/30 to-transparent -z-10" />
+          {/* ━━━ LEFT COLUMN: LEADER SELECTOR LIST ━━━ */}
+          <div className="lg:col-span-5 flex flex-col justify-between gap-3">
+            {testimonialsData.map((item, idx) => {
+              const isActive = idx === activeIdx;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => goTo(idx, idx >= activeIdx ? 1 : -1)}
+                  className={`w-full text-left p-4 sm:p-5 rounded-2xl transition-all duration-300 relative border flex items-center justify-between gap-4 ${
+                    isActive
+                      ? "bg-white border-[#d4622b] shadow-sm shadow-[#d4622b]/5 ring-1 ring-[#d4622b]/20"
+                      : "bg-white/70 hover:bg-white border-gray-200/80 hover:border-gray-300"
+                  }`}
+                >
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    {/* Clean Avatar */}
+                    <div
+                      className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-colors ${
+                        isActive
+                          ? "bg-[#d4622b] text-white"
+                          : "bg-gray-100 text-gray-600"
+                      }`}
+                    >
+                      {initials(item.name)}
+                    </div>
 
-              {testimonialsData.map((item, idx) => {
-                const isActive = idx === activeIdx;
-                return (
-                  <motion.button
-                    key={item.id}
-                    onClick={() => goTo(idx, idx >= activeIdx ? 1 : -1)}
-                    whileHover={{ x: 4 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    className={`w-full text-left p-4 sm:p-5 rounded-2xl transition-all duration-300 relative border ${
-                      isActive
-                        ? "bg-white border-[#d4622b]/40 shadow-[0_12px_36px_rgba(212,98,43,0.12)]"
-                        : "bg-white/60 hover:bg-white/90 border-gray-200/80 hover:border-gray-300"
-                    }`}
-                  >
-                    {/* Active highlight pill background */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeLeaderBorder"
-                        className="absolute -inset-px rounded-2xl border-2 border-[#d4622b] pointer-events-none"
-                        transition={{
-                          type: "spring",
-                          stiffness: 350,
-                          damping: 30,
-                        }}
-                      />
-                    )}
-
-                    <div className="flex items-center gap-4">
-                      {/* Thread Node / Avatar with Pulse */}
-                      <div className="relative shrink-0">
-                        <div
-                          className={`w-12 h-12 rounded-xl flex items-center justify-center font-bold text-sm transition-all duration-300 ${
-                            isActive
-                              ? "bg-gradient-to-br from-[#d4622b] to-[#f59e0b] text-white shadow-md shadow-[#d4622b]/30 scale-105"
-                              : "bg-[#faf8f5] text-gray-600 border border-gray-200"
-                          }`}
-                        >
-                          {initials(item.name)}
-                        </div>
-
-                        {/* Energetic pulse node when active */}
-                        {isActive && (
-                          <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4622b] opacity-75" />
-                            <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-[#d4622b] border-2 border-white" />
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
-                          <h4
-                            className={`font-bold text-base truncate transition-colors ${
-                              isActive ? "text-[#1a1a2e]" : "text-gray-700"
-                            }`}
-                          >
-                            {item.name}
-                          </h4>
-                          <span
-                            className={`text-[11px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap ${
-                              isActive
-                                ? "bg-[#d4622b]/10 text-[#d4622b]"
-                                : "bg-gray-100 text-gray-500"
-                            }`}
-                          >
-                            {item.seats}
-                          </span>
-                        </div>
-
-                        <p className="text-xs text-gray-400 font-medium truncate mt-0.5">
-                          {item.role}, {item.company}
-                        </p>
-
-                        <div className="flex items-center gap-2 mt-2 text-[11px] font-medium text-emerald-600">
-                          <span>✓</span>
-                          <span>{item.metric}</span>
-                        </div>
+                    {/* Leader details */}
+                    <div className="min-w-0">
+                      <h4
+                        className={`font-bold text-sm sm:text-base truncate transition-colors ${
+                          isActive ? "text-[#1a1a2e]" : "text-gray-700"
+                        }`}
+                      >
+                        {item.name}
+                      </h4>
+                      <p className="text-xs text-gray-400 truncate mt-0.5 font-medium">
+                        {item.role} &bull;{" "}
+                        <span className={isActive ? "text-[#d4622b] font-semibold" : "text-gray-500"}>
+                          {item.company}
+                        </span>
+                      </p>
+                      <div className="flex items-center gap-1.5 mt-1.5 text-[11px] font-medium text-emerald-600 truncate">
+                        <span>✓</span>
+                        <span className="truncate">{item.metric}</span>
                       </div>
                     </div>
-                  </motion.button>
-                );
-              })}
-            </div>
+                  </div>
 
-            {/* Autoplay Progress Indicator */}
-            <div className="pt-4 border-t border-gray-200/80 flex items-center justify-between text-xs text-gray-400">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span>
-                  {isPaused ? "Paused on hover" : "Auto-cycling testimonials"}
-                </span>
-              </div>
-              <div className="flex items-center gap-1.5 font-mono text-[11px] font-bold text-[#1a1a2e]">
-                <span>0{activeIdx + 1}</span>
-                <span className="text-gray-300">/</span>
-                <span>0{testimonialsData.length}</span>
-              </div>
-            </div>
+                  {/* Right side tag & indicator */}
+                  <div className="shrink-0 flex items-center gap-2">
+                    <span
+                      className={`text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${
+                        isActive
+                          ? "bg-[#d4622b]/10 text-[#d4622b]"
+                          : "bg-gray-100 text-gray-500"
+                      }`}
+                    >
+                      {item.seats}
+                    </span>
+
+                    {/* Clean right indicator chevron when active */}
+                    <span
+                      className={`text-sm font-bold transition-all ${
+                        isActive
+                          ? "text-[#d4622b] translate-x-0 opacity-100"
+                          : "text-gray-300 -translate-x-1 opacity-0"
+                      }`}
+                    >
+                      &rarr;
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* ━━━ RIGHT COLUMN: SHOWCASE SPOTLIGHT QUOTE STAGE ━━━ */}
+          {/* ━━━ RIGHT COLUMN: ADJACENT SHOWCASE STAGE ━━━ */}
           <div className="lg:col-span-7">
-            <SpotlightCard className="h-full bg-white/95 backdrop-blur-xl border border-gray-200/90 rounded-3xl p-8 sm:p-12 lg:p-14 shadow-[0_16px_48px_rgba(0,0,0,0.04)] flex flex-col justify-between relative overflow-hidden">
-              {/* Decorative giant quote watermark */}
-              <div className="absolute top-6 right-8 text-8xl font-serif text-[#d4622b]/10 select-none pointer-events-none leading-none">
-                &ldquo;
-              </div>
-
-              {/* Glowing thread injection wave from the left */}
-              <motion.div
-                key={`pulse-${pulseKey}`}
-                initial={{ opacity: 0.8, scaleX: 0 }}
-                animate={{ opacity: 0, scaleX: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#d4622b] via-[#f59e0b] to-transparent origin-left pointer-events-none"
-              />
-
-              <div>
-                {/* 5-Star Rating & Trust Badge */}
-                <div className="flex items-center justify-between mb-8">
-                  <div className="flex items-center gap-1">
+            <div className="h-full bg-white rounded-3xl border border-gray-200/80 p-8 sm:p-10 lg:p-12 shadow-sm flex flex-col justify-between relative overflow-hidden">
+              {/* TOP ROW: Stars, verified badge & Prev/Next controls */}
+              <div className="flex items-center justify-between gap-4 pb-6 border-b border-gray-100">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1">
                     {[...Array(5)].map((_, i) => (
-                      <motion.svg
+                      <svg
                         key={i}
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.05 * i, duration: 0.3 }}
-                        className="w-5 h-5 text-[#d4622b] fill-current"
+                        className="w-4 h-4 text-[#d4622b] fill-current"
                         viewBox="0 0 20 20"
                       >
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </motion.svg>
+                      </svg>
                     ))}
-                    <span className="ml-2 text-xs font-bold text-gray-500">
-                      5.0 Verified Rating
-                    </span>
                   </div>
-
-                  <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs font-semibold">
-                    <span>🛡️ Verified Onward Member</span>
+                  <span className="text-xs font-bold text-gray-500 hidden sm:inline">
+                    5.0 Verified Experience
                   </span>
                 </div>
 
-                {/* Animated Quote Text */}
-                <div className="relative min-h-[160px] sm:min-h-[140px] flex items-center">
-                  <AnimatePresence mode="wait" custom={dir}>
-                    <motion.div
-                      key={current.id}
-                      custom={dir}
-                      variants={slideVariants}
-                      initial="enter"
-                      animate="center"
-                      exit="exit"
-                    >
-                      <blockquote className="text-xl sm:text-2xl lg:text-3xl font-medium text-[#1a1a2e] leading-relaxed tracking-tight">
-                        &ldquo;{current.text}&rdquo;
-                      </blockquote>
-                    </motion.div>
-                  </AnimatePresence>
+                <div className="flex items-center gap-2">
+                  <button
+                    aria-label="Previous Testimonial"
+                    onClick={() => goTo(activeIdx - 1, -1)}
+                    className="w-9 h-9 rounded-full border border-gray-200 bg-[#faf8f5] text-[#1a1a2e] flex items-center justify-center hover:border-[#d4622b] hover:text-[#d4622b] transition-colors"
+                  >
+                    &larr;
+                  </button>
+                  <button
+                    aria-label="Next Testimonial"
+                    onClick={() => goTo(activeIdx + 1, 1)}
+                    className="w-9 h-9 rounded-full border border-gray-200 bg-[#faf8f5] text-[#1a1a2e] flex items-center justify-center hover:border-[#d4622b] hover:text-[#d4622b] transition-colors"
+                  >
+                    &rarr;
+                  </button>
                 </div>
               </div>
 
-              {/* Leader Meta Info Footer */}
-              <div className="mt-10 pt-8 border-t border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#d4622b] to-[#f59e0b] flex items-center justify-center text-white text-lg font-bold shadow-md shadow-[#d4622b]/20">
+              {/* MIDDLE ROW: Quote Text with Smooth Directional Fade */}
+              <div className="py-8 min-h-[170px] flex items-center">
+                <AnimatePresence mode="wait" custom={dir}>
+                  <motion.div
+                    key={current.id}
+                    custom={dir}
+                    variants={quoteVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className="w-full"
+                  >
+                    <blockquote className="text-xl sm:text-2xl lg:text-2.5xl font-medium text-[#1a1a2e] leading-relaxed">
+                      &ldquo;{current.text}&rdquo;
+                    </blockquote>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* BOTTOM ROW: Author meta + partnership status */}
+              <div className="pt-6 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-12 h-12 rounded-xl bg-[#d4622b] text-white flex items-center justify-center font-bold text-base shadow-sm">
                     {initials(current.name)}
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg text-[#1a1a2e]">
+                    <h3 className="font-bold text-base text-[#1a1a2e]">
                       {current.name}
                     </h3>
-                    <p className="text-gray-500 text-sm font-medium">
-                      {current.role} &bull;{" "}
-                      <span className="text-[#d4622b] font-semibold">
-                        {current.company}
-                      </span>
+                    <p className="text-gray-500 text-xs sm:text-sm font-medium">
+                      {current.role}, <span className="text-[#d4622b] font-semibold">{current.company}</span>
                     </p>
                   </div>
                 </div>
 
-                <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-1 bg-[#faf8f5] sm:bg-transparent px-4 py-2 sm:p-0 rounded-xl">
-                  <span className="text-[11px] uppercase tracking-wider font-bold text-gray-400">
+                <div className="text-right">
+                  <div className="text-[10px] uppercase font-bold tracking-wider text-gray-400">
                     Partnership
-                  </span>
-                  <span className="text-sm font-bold text-[#1a1a2e]">
+                  </div>
+                  <div className="text-xs sm:text-sm font-bold text-[#1a1a2e] mt-0.5">
                     {current.tenure}
-                  </span>
+                  </div>
                 </div>
               </div>
 
-              {/* Active Autoplay Progress Line at Bottom */}
+              {/* Bottom Subtle Progress Bar */}
               <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-100">
                 {!isPaused && (
                   <motion.div
@@ -526,11 +370,11 @@ export default function TestimonialsSection() {
                       duration: AUTOPLAY_DURATION / 1000,
                       ease: "linear",
                     }}
-                    className="h-full bg-gradient-to-r from-[#d4622b] to-[#f59e0b] origin-left"
+                    className="h-full bg-[#d4622b] origin-left"
                   />
                 )}
               </div>
-            </SpotlightCard>
+            </div>
           </div>
         </div>
       </div>
