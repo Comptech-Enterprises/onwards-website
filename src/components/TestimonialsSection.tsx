@@ -67,7 +67,6 @@ export default function TestimonialsSection() {
   const [[activeIdx, dir], setSlideState] = useState<[number, number]>([0, 1]);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Smooth scroll parallax for the decorative thread line
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start 80%", "end 20%"],
@@ -87,7 +86,6 @@ export default function TestimonialsSection() {
     setSlideState([targetIdx, d]);
   }, [activeIdx]);
 
-  // Autoplay cycle
   useEffect(() => {
     if (isPaused) return;
     const timer = setInterval(() => {
@@ -156,7 +154,6 @@ export default function TestimonialsSection() {
             </linearGradient>
           </defs>
 
-          {/* Continuous smooth solid connecting curve */}
           <motion.path
             d="M 60 140 C 350 80, 480 320, 720 280 C 960 240, 1150 560, 1380 500"
             stroke="url(#solidThreadGrad)"
@@ -187,7 +184,7 @@ export default function TestimonialsSection() {
 
           <Reveal delay={0.1}>
             <p className="mt-3.5 text-gray-500 text-base sm:text-lg leading-relaxed">
-              Discover how India’s fastest-growing enterprises and modern teams scale effortlessly across our workspaces.
+              Discover how India's fastest-growing enterprises and modern teams scale effortlessly across our workspaces.
             </p>
           </Reveal>
         </div>
@@ -213,7 +210,6 @@ export default function TestimonialsSection() {
                   }`}
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
-                    {/* Clean Avatar */}
                     <div
                       className={`w-11 h-11 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 transition-colors ${
                         isActive
@@ -224,7 +220,6 @@ export default function TestimonialsSection() {
                       {initials(item.name)}
                     </div>
 
-                    {/* Leader details */}
                     <div className="min-w-0">
                       <h4
                         className={`font-bold text-sm sm:text-base truncate transition-colors ${
@@ -246,7 +241,6 @@ export default function TestimonialsSection() {
                     </div>
                   </div>
 
-                  {/* Right side tag & indicator */}
                   <div className="shrink-0 flex items-center gap-2">
                     <span
                       className={`text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${
@@ -258,7 +252,6 @@ export default function TestimonialsSection() {
                       {item.seats}
                     </span>
 
-                    {/* Clean right indicator chevron when active */}
                     <span
                       className={`text-sm font-bold transition-all ${
                         isActive
