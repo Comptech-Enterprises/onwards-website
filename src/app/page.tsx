@@ -133,6 +133,41 @@ function AutoSlider({
 
 const heroWords = ["Ambition", "Brand", "People", "Vision"];
 
+const heroVideoSlides = [
+  {
+    id: 1,
+    label: "Co-Working Floor",
+    location: "Connaught Place, Delhi",
+    grad: ["#fff7f3", "#ffe4d0", "#ffd0b0"],
+    accentColor: "#d4622b",
+    videoSrc: "",
+  },
+  {
+    id: 2,
+    label: "Private Suites",
+    location: "Cyber City, Gurgaon",
+    grad: ["#f0f4f8", "#dde6f0", "#c8d8e8"],
+    accentColor: "#1a1a2e",
+    videoSrc: "",
+  },
+  {
+    id: 3,
+    label: "The Boardroom",
+    location: "Nehru Place, Delhi",
+    grad: ["#fdf6ec", "#f7e8cf", "#f0d8ae"],
+    accentColor: "#d4622b",
+    videoSrc: "",
+  },
+  {
+    id: 4,
+    label: "Commons & Lounge",
+    location: "Sector 62, Noida",
+    grad: ["#f5f5f0", "#eaeae0", "#ddddd0"],
+    accentColor: "#6b7280",
+    videoSrc: "",
+  },
+];
+
 const stats = [
   { value: 3, suffix: "+", label: "Cities", sub: "and growing" },
   { value: 15, suffix: "+", label: "Centres", sub: "across NCR" },
@@ -308,6 +343,80 @@ const logos = [
   "TechCorp",
   "NexGen",
 ];
+
+/* ═══════════════════════════════════════════
+   HERO VIDEO CAROUSEL
+   ═══════════════════════════════════════════ */
+
+function HeroVideoCarousel() {
+  const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+  const total = heroVideoSlides.length;
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setPrev(current);
+      setCurrent((p) => (p + 1) % total);
+    }, 4500);
+    return () => clearInterval(t);
+  }, [current, total]);
+
+  const slide = heroVideoSlides[current];
+
+  return (
+    <div className="relative w-full h-full rounded-3xl overflow-hidden">
+      {/* Slides */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.06 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.96 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0"
+        >
+          {slide.videoSrc ? (
+            <video
+              src={slide.videoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          ) : (
+            /* Placeholder gradient until real video added */
+            <div
+              className="absolute inset-0"
+              style={{
+                background: `radial-gradient(ellipse at 30% 40%, ${slide.grad[1]} 0%, ${slide.grad[0]} 60%, ${slide.grad[0]} 100%)`,
+              }}
+            >
+              {/* Ken-Burns inner glow */}
+              <motion.div
+                className="absolute inset-0"
+                animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                style={{
+                  background: `radial-gradient(circle at 60% 50%, ${slide.accentColor}30 0%, transparent 65%)`,
+                }}
+              />
+              {/* Dot grid overlay */}
+              <div
+                className="absolute inset-0 opacity-10"
+                style={{
+                  backgroundImage:
+                    "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+                  backgroundSize: "28px 28px",
+                }}
+              />
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════
    CARD COMPONENTS
@@ -786,203 +895,83 @@ export default function Home() {
         </AnimatePresence>
       </motion.header>
 
-      {/* ━━━ HERO WITH NEXT-LEVEL MOUSE PARALLAX ━━━ */}
+      {/* ━━━ HERO — FULL-BLEED BACKGROUND VIDEO CAROUSEL ━━━ */}
       <section
         ref={heroRef}
         onMouseMove={handleHeroMouseMove}
-        className="relative min-h-screen flex items-center bg-white overflow-hidden"
+        className="relative min-h-screen flex items-center overflow-hidden"
         id="home"
       >
-        {/* Parallax Grid Background */}
-        <motion.div
-          aria-hidden
-          style={{
-            x: gridX,
-            y: gridY,
-            backgroundImage:
-              "linear-gradient(rgba(212,98,43,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(212,98,43,.05) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-          className="pointer-events-none absolute -inset-16 opacity-80"
-        />
+        {/* Background carousel */}
+        <div className="absolute inset-0 z-0">
+          <HeroVideoCarousel />
+        </div>
 
-        {/* Floating glow orbs with mouse parallax */}
-        <motion.div
-          aria-hidden
-          style={{ x: orb1X, y: orb1Y }}
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute top-1/4 right-[15%] w-80 h-80 bg-[#d4622b]/15 rounded-full blur-[110px]"
-        />
-        <motion.div
-          aria-hidden
-          style={{ x: orb2X, y: orb2Y }}
-          animate={{ scale: [1.1, 1, 1.1] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute bottom-1/4 left-[10%] w-96 h-96 bg-[#f59e0b]/10 rounded-full blur-[130px]"
-        />
+        {/* White blend — left and right edges */}
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/40 to-white/70" />
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-20"
+          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 pb-16"
         >
-          <div className="max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.6 }}
-              className="inline-flex items-center gap-3 bg-[#d4622b]/5 border border-[#d4622b]/15 rounded-full px-5 py-2 mb-10 shadow-sm"
-            >
+          <div className="max-w-3xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="inline-flex items-center gap-3 bg-[#d4622b]/5 border border-[#d4622b]/15 rounded-full px-5 py-2 mb-10 shadow-sm">
               <span className="w-2 h-2 bg-[#d4622b] rounded-full animate-pulse" />
-              <span className="text-[#d4622b] text-sm font-semibold">
-                2 Day Free Trial Available
-              </span>
+              <span className="text-[#d4622b] text-sm font-semibold">2 Day Free Trial Available</span>
             </motion.div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold text-[#1a1a2e] leading-[1.05] tracking-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-[#1a1a2e] leading-[1.05] tracking-tight">
               <div className="overflow-hidden">
-                <motion.div
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{
-                    duration: 0.85,
-                    ease: [0.22, 1, 0.36, 1],
-                    delay: 0.4,
-                  }}
-                >
+                <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}>
                   Workspace built
                 </motion.div>
               </div>
               <div className="overflow-hidden">
-                <motion.div
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{
-                    duration: 0.85,
-                    ease: [0.22, 1, 0.36, 1],
-                    delay: 0.55,
-                  }}
-                >
+                <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}>
                   around{" "}
                   <span className="relative inline-block">
                     <AnimatePresence mode="wait">
-                      <motion.span
-                        key={heroWord}
-                        initial={{ y: 40, opacity: 0, rotateX: -40 }}
-                        animate={{ y: 0, opacity: 1, rotateX: 0 }}
-                        exit={{ y: -40, opacity: 0, rotateX: 40 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        className="inline-block text-gradient"
-                        style={{ transformOrigin: "bottom" }}
-                      >
+                      <motion.span key={heroWord} initial={{ y: 40, opacity: 0, rotateX: -40 }} animate={{ y: 0, opacity: 1, rotateX: 0 }} exit={{ y: -40, opacity: 0, rotateX: 40 }} transition={{ duration: 0.4, ease: "easeInOut" }} className="inline-block text-gradient" style={{ transformOrigin: "bottom" }}>
                         {heroWords[heroWord]}
                       </motion.span>
                     </AnimatePresence>
-                    <motion.span
-                      className="absolute -bottom-2 left-0 h-1 bg-[#d4622b] rounded-full"
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: 1, duration: 0.8 }}
-                    />
+                    <motion.span className="absolute -bottom-2 left-0 h-1 bg-[#d4622b] rounded-full" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ delay: 1, duration: 0.8 }} />
                   </span>
                 </motion.div>
               </div>
             </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.6 }}
-              className="mt-8 text-lg sm:text-xl text-gray-500 max-w-xl leading-relaxed"
-            >
-              Premium coworking spaces across Delhi NCR. Designed for teams that
-              refuse to settle for ordinary.
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }} className="mt-8 text-lg sm:text-xl text-gray-500 max-w-xl leading-relaxed">
+              Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1, duration: 0.6 }}
-              className="mt-10 flex flex-col sm:flex-row gap-4"
-            >
-              <MagneticButton
-                href="#contact"
-                className="inline-flex items-center justify-center bg-[#d4622b] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]"
-              >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.6 }} className="mt-10 flex flex-col sm:flex-row gap-4">
+              <MagneticButton href="#contact" className="inline-flex items-center justify-center bg-[#d4622b] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]">
                 Book a Tour
-                <svg
-                  className="ml-2 w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </MagneticButton>
-              <a
-                href="tel:9910668152"
-                className="inline-flex items-center justify-center gap-3 text-gray-600 hover:text-[#d4622b] px-8 py-4 rounded-full border border-gray-200 hover:border-[#d4622b]/30 bg-white/60 backdrop-blur-sm transition-all shadow-sm"
-              >
-                <svg
-                  className="w-5 h-5 text-[#d4622b]"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
-                  />
-                </svg>
+              <a href="tel:9910668152" className="inline-flex items-center justify-center gap-3 text-gray-600 hover:text-[#d4622b] px-8 py-4 rounded-full border border-gray-200 hover:border-[#d4622b]/30 bg-white/60 backdrop-blur-sm transition-all shadow-sm">
+                <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
                 +91 9910668152
               </a>
             </motion.div>
-          </div>
 
-          {/* Stats strip with Spring-Physics Number Tickers */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.3, duration: 0.7 }}
-            className="mt-20 lg:mt-28 grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-200/80 rounded-2xl overflow-hidden shadow-sm"
-          >
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="bg-white p-6 sm:p-8 text-center group hover:bg-[#faf8f5] transition-colors"
-              >
-                <div className="text-3xl sm:text-4xl font-bold text-[#d4622b]">
-                  <SpringCounter target={s.value} suffix={s.suffix} />
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.7 }} className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px bg-gray-200/60 rounded-2xl overflow-hidden shadow-sm">
+              {stats.map((s) => (
+                <div key={s.label} className="bg-white/80 backdrop-blur-sm p-5 sm:p-6 text-center group hover:bg-white transition-colors">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
+                  <div className="text-gray-600 text-xs mt-1 font-medium">{s.label}</div>
+                  <div className="text-gray-400 text-[10px] mt-0.5 group-hover:text-[#d4622b]/70 transition-colors">{s.sub}</div>
                 </div>
-                <div className="text-gray-600 text-sm mt-1 font-medium">
-                  {s.label}
-                </div>
-                <div className="text-gray-400 text-xs mt-0.5 group-hover:text-[#d4622b]/70 transition-colors">
-                  {s.sub}
-                </div>
-              </div>
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.8 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        >
-          <span className="text-gray-400 text-xs tracking-widest uppercase">
-            Scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-px h-8 bg-gradient-to-b from-[#d4622b]/50 to-transparent"
-          />
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }} className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10">
+          <span className="text-gray-400 text-[10px] tracking-widest uppercase">Scroll</span>
+          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-6 bg-gradient-to-b from-[#d4622b]/50 to-transparent" />
         </motion.div>
       </section>
 
