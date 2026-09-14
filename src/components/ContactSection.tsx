@@ -80,8 +80,6 @@ export default function ContactSection() {
   // Parallax transform layers
   const orb1Y = useTransform(smoothProgress, [0, 1], [-120, 120]);
   const orb2Y = useTransform(smoothProgress, [0, 1], [100, -100]);
-  const floatingBadge1Y = useTransform(smoothProgress, [0, 1], [80, -80]);
-  const floatingBadge2Y = useTransform(smoothProgress, [0, 1], [-60, 60]);
   const formOffset = useTransform(smoothProgress, [0, 1], [40, -40]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -122,24 +120,6 @@ export default function ContactSection() {
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* ━━━ LEFT COLUMN: BRAND NARRATIVE & DIRECT REACH (STICKY) ━━━ */}
           <div className="relative md:sticky md:top-28">
-            {/* Floating Parallax Trust Badge 1 */}
-            <motion.div
-              style={{ y: floatingBadge1Y }}
-              className="hidden xl:flex absolute -top-12 -left-8 z-20 items-center gap-2.5 bg-white/90 backdrop-blur-xl border border-gray-200/80 rounded-full px-4 py-2 shadow-lg text-xs font-semibold text-[#1a1a2e]"
-            >
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#d4622b] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d4622b]" />
-              </span>
-              <span>⚡ Instant Tour Scheduling</span>
-            </motion.div>
-
-            <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> Get in Touch
-              </span>
-            </Reveal>
-
             <AnimatedHeading
               text="Ready to move forward with Onward?"
               highlight="forward with Onward?"
@@ -190,13 +170,6 @@ export default function ContactSection() {
               ))}
             </div>
 
-            {/* Floating Parallax Trust Badge 2 */}
-            <motion.div
-              style={{ y: floatingBadge2Y }}
-              className="hidden lg:inline-flex mt-8 items-center gap-2 px-4 py-2 rounded-full bg-[#d4622b]/10 border border-[#d4622b]/20 text-[#d4622b] text-xs font-bold"
-            >
-              <span>🔒 100% Direct Management &bull; Zero Brokerage Fees</span>
-            </motion.div>
           </div>
 
           {/* ━━━ RIGHT COLUMN: 3D SPOTLIGHT PARALLAX FORM STAGE ━━━ */}
