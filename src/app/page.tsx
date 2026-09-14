@@ -838,10 +838,10 @@ export default function Home() {
           </a>
 
           <nav className="hidden lg:flex items-center gap-10">
-            {["Home", "About", "Solutions", "Locations", "Contact"].map((l) => (
+            {["Home", "About", "Team", "Locations", "Contact"].map((l) => (
               <a
                 key={l}
-                href={`#${l.toLowerCase()}`}
+                href={l === "Team" ? "/team" : `#${l.toLowerCase()}`}
                 className="text-sm font-medium text-white/85 hover:text-[#d4622b] transition-colors"
               >
                 {l}
@@ -890,11 +890,11 @@ export default function Home() {
               className="lg:hidden bg-white border-t overflow-hidden"
             >
               <div className="px-6 py-6 space-y-4">
-                {["Home", "About", "Solutions", "Locations", "Contact"].map(
+                {["Home", "About", "Team", "Locations", "Contact"].map(
                   (l) => (
                     <a
                       key={l}
-                      href={`#${l.toLowerCase()}`}
+                      href={l === "Team" ? "/team" : `#${l.toLowerCase()}`}
                       onClick={() => setMobileMenu(false)}
                       className="block text-gray-700 font-medium text-lg"
                     >
