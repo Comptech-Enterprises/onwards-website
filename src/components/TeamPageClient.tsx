@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
-import ThreadRoam from "@/components/ThreadRoam";
 
 function AnimatedLogoMark() {
   return (
@@ -82,7 +81,6 @@ export default function TeamPageClient() {
   return (
     <>
       <Header alwaysSolid />
-      <ThreadRoam>
       <main className="bg-[#faf8f5] min-h-screen py-28 lg:py-36">
         <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
           <AnimatedLogoMark />
@@ -136,7 +134,6 @@ export default function TeamPageClient() {
           </div>
         </div>
       </main>
-      </ThreadRoam>
     </>
   );
 }
