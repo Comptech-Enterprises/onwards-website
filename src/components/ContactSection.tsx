@@ -12,14 +12,6 @@ import Reveal from "./Reveal";
 import AnimatedHeading from "./AnimatedHeading";
 import SpotlightCard from "./SpotlightCard";
 
-const solutionsList = [
-  "Managed Office",
-  "Private Suites",
-  "Virtual Office",
-  "Enterprise HQ",
-  "Custom Built",
-];
-
 const directContacts = [
   {
     icon: (
@@ -61,7 +53,6 @@ const directContacts = [
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [selectedSolution, setSelectedSolution] = useState(solutionsList[0]);
   const [status, setStatus] = useState<"idle" | "submitting" | "success">(
     "idle",
   );
@@ -206,48 +197,7 @@ export default function ContactSection() {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-3">
-                        1. Select Workspace Category
-                      </span>
-                      {/* Interactive Solution Chips with layoutId */}
-                      <div className="flex flex-wrap gap-2">
-                        {solutionsList.map((sol) => {
-                          const isSelected = selectedSolution === sol;
-                          return (
-                            <button
-                              key={sol}
-                              type="button"
-                              onClick={() => setSelectedSolution(sol)}
-                              className="relative px-4 py-2 rounded-xl text-xs font-semibold transition-colors duration-200"
-                            >
-                              {isSelected && (
-                                <motion.div
-                                  layoutId="contactPill"
-                                  transition={{
-                                    type: "spring",
-                                    stiffness: 400,
-                                    damping: 30,
-                                  }}
-                                  className="absolute inset-0 rounded-xl bg-[#d4622b] shadow-md"
-                                />
-                              )}
-                              <span
-                                className={`relative z-10 ${
-                                  isSelected
-                                    ? "text-white"
-                                    : "text-gray-600 hover:text-[#d4622b]"
-                                }`}
-                              >
-                                {sol}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-3">
-                        2. Your Contact Details
+                        Your Contact Details
                       </span>
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
