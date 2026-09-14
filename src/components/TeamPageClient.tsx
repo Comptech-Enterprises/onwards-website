@@ -69,7 +69,7 @@ export default function TeamPageClient() {
             resources and support to do their best work.
           </motion.p>
 
-          <div className="mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-left">
+          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-left">
             {team.map((person, i) => (
               <motion.div
                 key={person.name}
