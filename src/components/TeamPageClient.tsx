@@ -78,20 +78,23 @@ export default function TeamPageClient() {
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
+                className="flex sm:block items-center sm:items-stretch gap-4 sm:gap-0"
               >
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-[#1a1a2e] border border-gray-200 flex items-center justify-center relative group">
+                <div className="w-20 h-20 sm:w-full sm:h-auto sm:aspect-[4/5] shrink-0 rounded-2xl overflow-hidden bg-[#1a1a2e] border border-gray-200 flex items-center justify-center relative group">
                   <span className="absolute inset-0 bg-gradient-to-br from-[#d4622b]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <span className="text-5xl font-bold text-white/90 tracking-tight">
+                  <span className="text-xl sm:text-5xl font-bold text-white/90 tracking-tight">
                     {initials(person.name)}
                   </span>
                 </div>
-                <h3 className="mt-4 font-bold text-[#1a1a2e]">{person.name}</h3>
-                <p className="text-sm font-semibold text-[#d4622b]">
-                  {person.role}
-                </p>
-                <p className="mt-2 text-sm text-gray-500 leading-relaxed">
-                  {person.bio}
-                </p>
+                <div>
+                  <h3 className="sm:mt-4 font-bold text-[#1a1a2e]">{person.name}</h3>
+                  <p className="text-sm font-semibold text-[#d4622b]">
+                    {person.role}
+                  </p>
+                  <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+                    {person.bio}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
