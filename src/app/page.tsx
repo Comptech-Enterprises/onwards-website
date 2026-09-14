@@ -689,8 +689,27 @@ function TestimonialCard({ t }: { t: (typeof testimonials)[number] }) {
 
 function TestimonialsSlider() {
   const [index, setIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const perView = 2;
-  const maxIndex = Math.max(0, testimonials.length - perView);
+  const maxIndex = isMobile
+    ? testimonials.length - 1
+    : Math.max(0, testimonials.length - perView);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    const timer = setInterval(() => {
+      setIndex((i) => (i + 1) % (maxIndex + 1));
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [isMobile, maxIndex]);
 
   const goPrev = () => setIndex((i) => Math.max(0, i - 1));
   const goNext = () => setIndex((i) => Math.min(maxIndex, i + 1));
