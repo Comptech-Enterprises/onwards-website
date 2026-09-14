@@ -1046,53 +1046,43 @@ export default function Home() {
               250+ Teams
             </div>
 
-            {/* Edge fades */}
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-white to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-white to-transparent" />
-
-            <motion.div
-              className="inline-flex items-center gap-6 whitespace-nowrap mt-6"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-            >
-              {[...Array(2)].flatMap((_, r) =>
-                [
-                  { name: "Northline", tag: "FinTech" },
-                  { name: "Kairo", tag: "SaaS" },
-                  { name: "Meridian", tag: "Consulting" },
-                  { name: "Vertex", tag: "Health" },
-                  { name: "Halcyon", tag: "Studio" },
-                  { name: "Silverline", tag: "Logistics" },
-                  { name: "Novara", tag: "Media" },
-                  { name: "Fjord & Co", tag: "Design" },
-                  { name: "Quantum Yard", tag: "AI" },
-                  { name: "Cinder", tag: "Retail" },
-                  { name: "Terra Loop", tag: "Climate" },
-                  { name: "Arcadia", tag: "Games" },
-                ].map((b, i) => (
-                  <div
-                    key={`${r}-${i}`}
-                    className="group inline-flex items-center gap-3 pl-3 pr-5 py-2.5 rounded-full border border-gray-200 bg-[#faf8f5] hover:bg-white hover:border-[#d4622b] transition-colors shrink-0"
-                  >
-                    <span className="w-8 h-8 rounded-full bg-[#1a1a2e] text-white text-[10px] font-bold flex items-center justify-center group-hover:bg-[#d4622b] transition-colors">
-                      {b.name
-                        .replace(/&/g, "")
-                        .split(" ")
-                        .filter(Boolean)
-                        .map((w) => w[0])
-                        .join("")
-                        .slice(0, 2)}
-                    </span>
-                    <span className="text-[15px] font-semibold text-[#1a1a2e] tracking-tight">
-                      {b.name}
-                    </span>
-                    <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
-                      {b.tag}
-                    </span>
-                  </div>
-                )),
-              )}
-            </motion.div>
+            <div className="flex flex-wrap justify-center items-center gap-3 mt-8 px-6">
+              {[
+                { name: "Northline", tag: "FinTech" },
+                { name: "Kairo", tag: "SaaS" },
+                { name: "Meridian", tag: "Consulting" },
+                { name: "Vertex", tag: "Health" },
+                { name: "Halcyon", tag: "Studio" },
+                { name: "Silverline", tag: "Logistics" },
+                { name: "Novara", tag: "Media" },
+                { name: "Fjord & Co", tag: "Design" },
+                { name: "Quantum Yard", tag: "AI" },
+                { name: "Cinder", tag: "Retail" },
+                { name: "Terra Loop", tag: "Climate" },
+                { name: "Arcadia", tag: "Games" },
+              ].map((b) => (
+                <div
+                  key={b.name}
+                  className="group inline-flex items-center gap-3 pl-3 pr-5 py-2.5 rounded-full border border-gray-200 bg-[#faf8f5] hover:bg-white hover:border-[#d4622b] transition-colors"
+                >
+                  <span className="w-8 h-8 rounded-full bg-[#1a1a2e] text-white text-[10px] font-bold flex items-center justify-center group-hover:bg-[#d4622b] transition-colors">
+                    {b.name
+                      .replace(/&/g, "")
+                      .split(" ")
+                      .filter(Boolean)
+                      .map((w) => w[0])
+                      .join("")
+                      .slice(0, 2)}
+                  </span>
+                  <span className="text-[15px] font-semibold text-[#1a1a2e] tracking-tight">
+                    {b.name}
+                  </span>
+                  <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
+                    {b.tag}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1295,7 +1285,7 @@ export default function Home() {
           <motion.div
             className="flex w-max gap-6 whitespace-normal items-stretch"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           >
             {[...Array(2)].flatMap((_, r) =>
               [
