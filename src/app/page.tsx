@@ -960,12 +960,7 @@ export default function Home() {
   return (
     <>
       {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
-      <motion.div
-        animate={{ opacity: introComplete ? 1 : 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-      >
-        <Header />
-      </motion.div>
+      {introComplete && <Header />}
 
 
       {/* ━━━ HERO — FULL-BLEED BACKGROUND VIDEO CAROUSEL ━━━ */}
@@ -996,10 +991,7 @@ export default function Home() {
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-t from-[#0a0a15] to-transparent" />
 
-        <motion.div
-          animate={{ opacity: introComplete ? 1 : 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
-        >
+        {introComplete && (
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 pb-16"
@@ -1080,13 +1072,15 @@ export default function Home() {
             </motion.div>
           </div>
         </motion.div>
+        )}
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10">
+        {introComplete && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }} className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10">
           <span className="text-gray-400 text-[10px] tracking-widest uppercase">Scroll</span>
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-6 bg-gradient-to-b from-[#d4622b]/50 to-transparent" />
-        </div>
         </motion.div>
+        )}
       </section>
 
       {/* ━━━ BRAND TICKER — CREAM SIMPLE CARDS ━━━ */}
