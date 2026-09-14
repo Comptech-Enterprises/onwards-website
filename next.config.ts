@@ -1,0 +1,13 @@
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  async rewrites() {
+    return {
+      beforeFiles: [{ source: "/", destination: "/clone.html" }],
+      afterFiles: [],
+      fallback: [{ source: "/:path*", destination: "/:path*.html" }],
+    };
+  },
+};
+
+export default nextConfig;
