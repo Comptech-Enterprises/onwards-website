@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import {
   motion,
   AnimatePresence,
@@ -11,6 +11,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/Header";
+import { IntroAnimation } from "@/components/IntroAnimation";
 import Reveal from "@/components/Reveal";
 import AnimatedHeading from "@/components/AnimatedHeading";
 import MagneticButton from "@/components/MagneticButton";
@@ -916,6 +917,8 @@ function LocationCard({
    ═══════════════════════════════════════════ */
 
 export default function Home() {
+  const [introComplete, setIntroComplete] = useState(false);
+  const handleIntroComplete = useCallback(() => setIntroComplete(true), []);
   const [heroWord, setHeroWord] = useState(0);
   const [activeCity, setActiveCity] = useState<"Delhi" | "Noida" | "Gurgaon">("Delhi");
   const heroRef = useRef<HTMLDivElement>(null);
@@ -956,6 +959,7 @@ export default function Home() {
 
   return (
     <>
+      {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
       <Header />
 
 
