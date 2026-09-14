@@ -79,7 +79,7 @@ export default function TeamPageClient() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ y: -6 }}
               >
-                <div className="aspect-[16/9] sm:aspect-[4/5] rounded-2xl overflow-hidden bg-[#1a1a2e] border border-gray-200 flex items-center justify-center relative group">
+                <div className="aspect-[4/3] sm:aspect-[4/5] rounded-2xl overflow-hidden bg-[#1a1a2e] border border-gray-200 flex items-center justify-center relative group">
                   <span className="absolute inset-0 bg-gradient-to-br from-[#d4622b]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <span className="text-3xl sm:text-5xl font-bold text-white/90 tracking-tight">
                     {initials(person.name)}
