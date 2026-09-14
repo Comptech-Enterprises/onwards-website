@@ -1357,20 +1357,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ LOGO MARQUEE ━━━ */}
-      <section className="py-16 bg-white border-y border-gray-100">
-        <Marquee speed={25}>
-          {logos.map((l) => (
-            <span
-              key={l}
-              className="text-2xl font-bold text-gray-300 tracking-wider whitespace-nowrap hover:text-[#d4622b] transition-colors"
-            >
-              {l}
-            </span>
-          ))}
-        </Marquee>
-      </section>
-
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection />
 
