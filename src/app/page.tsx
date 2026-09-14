@@ -614,28 +614,184 @@ function GallerySlider() {
   );
 }
 
+const testimonials = [
+  {
+    name: "Varun Puri",
+    role: "Founder",
+    company: "Dangal Games",
+    seats: "120+ Desks",
+    metric: "Scaled 15 → 120 seats",
+    text: "Onward has been a game-changer for our team. The flexibility to scale seamlessly and the hospitality standards have made it the perfect office space for our high-velocity growth journey.",
+  },
+  {
+    name: "Abhinay Nagwekar",
+    role: "Procurement Lead",
+    company: "Aramex Logistics",
+    seats: "85+ Desks",
+    metric: "Zero facility downtime",
+    text: "Onward exceeded all our corporate expectations. Meticulously designed spaces, enterprise-grade IT infrastructure, and unwavering operational support make them our undisputed workspace choice.",
+  },
+  {
+    name: "Prasenjit Das Gupta",
+    role: "Head Commercial",
+    company: "Thermax Ltd.",
+    seats: "60+ Desks",
+    metric: "Turnkey setup in 10 days",
+    text: "Transitioning to Onward was by far our best decision. The vibrant environment fosters cross-team collaboration while offering our leadership the executive privacy they need.",
+  },
+];
+
+function TestimonialCard({ t }: { t: (typeof testimonials)[number] }) {
+  return (
+    <div className="w-full bg-white rounded-3xl border border-gray-200 p-7 shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.15)] hover:border-[#d4622b]/40 transition-all">
+      <div className="flex gap-1 mb-4">
+        {[...Array(5)].map((_, s) => (
+          <svg key={s} className="w-4 h-4 fill-[#d4622b]" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
+
+      <p className="text-[15px] leading-relaxed text-[#1a1a2e]">
+        &ldquo;{t.text}&rdquo;
+      </p>
+
+      <div className="mt-5 inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-semibold">
+        <span>✓</span>
+        <span>{t.metric}</span>
+      </div>
+
+      <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-11 h-11 rounded-xl bg-[#d4622b] text-white flex items-center justify-center font-bold text-sm shrink-0">
+            {t.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")}
+          </div>
+          <div className="min-w-0">
+            <p className="font-bold text-sm text-[#1a1a2e] truncate">{t.name}</p>
+            <p className="text-xs text-gray-500 truncate">
+              {t.role} ·{" "}
+              <span className="text-[#d4622b] font-semibold">{t.company}</span>
+            </p>
+          </div>
+        </div>
+        <span className="text-[10px] font-bold text-[#d4622b] bg-[#d4622b]/10 px-2 py-1 rounded-full whitespace-nowrap">
+          {t.seats}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function TestimonialsSlider() {
+  const [index, setIndex] = useState(0);
+  const perView = 2;
+  const maxIndex = Math.max(0, testimonials.length - perView);
+
+  const goPrev = () => setIndex((i) => Math.max(0, i - 1));
+  const goNext = () => setIndex((i) => Math.min(maxIndex, i + 1));
+
+  return (
+    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#faf8f5] overflow-hidden">
+      <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-14">
+        <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
+          Client Testimonials
+        </span>
+        <h2 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] leading-tight tracking-tight">
+          Leaders trust Onward.
+        </h2>
+      </div>
+
+      {/* Mobile: single-card manual slider */}
+      <div className="md:hidden max-w-6xl mx-auto px-6 overflow-hidden">
+        <motion.div
+          className="flex"
+          animate={{ x: `${-index * 100}%` }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {testimonials.map((t) => (
+            <div key={t.name} className="w-full flex-shrink-0 px-1">
+              <TestimonialCard t={t} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Desktop: 2-up manual slider */}
+      <div className="hidden md:block max-w-6xl mx-auto px-6 lg:px-8 overflow-hidden">
+        <motion.div
+          className="flex gap-6"
+          animate={{ x: `calc(${-index * 100}% / ${perView} - ${index * 1.5}rem)` }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {testimonials.map((t) => (
+            <div
+              key={t.name}
+              className="shrink-0"
+              style={{ width: `calc(${100 / perView}% - ${(1.5 * (perView - 1)) / perView}rem)` }}
+            >
+              <TestimonialCard t={t} />
+            </div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Controls */}
+      <div className="flex items-center justify-center gap-4 mt-10">
+        <button
+          onClick={goPrev}
+          disabled={index === 0}
+          className="w-11 h-11 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#1a1a2e] hover:border-[#d4622b] hover:text-[#d4622b] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          &larr;
+        </button>
+        <div className="flex gap-2">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(Math.min(maxIndex, i))}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === index ? "w-8 bg-[#d4622b]" : "w-1.5 bg-gray-300"
+              }`}
+            />
+          ))}
+        </div>
+        <button
+          onClick={goNext}
+          disabled={index === maxIndex}
+          className="w-11 h-11 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#1a1a2e] hover:border-[#d4622b] hover:text-[#d4622b] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          &rarr;
+        </button>
+      </div>
+    </section>
+  );
+}
+
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
     <SpotlightCard className="h-full min-h-[240px] cursor-pointer group relative overflow-hidden">
-      {/* Full-bleed hover background image */}
+      {/* Full-bleed background image — visible by default on mobile, hover-reveal on desktop */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-cover bg-center opacity-0 scale-105 group-hover:opacity-90 group-hover:scale-100 transition-all duration-700 ease-out"
+        className="absolute inset-0 bg-cover bg-center opacity-90 scale-100 lg:opacity-0 lg:scale-105 lg:group-hover:opacity-90 lg:group-hover:scale-100 transition-all duration-700 ease-out"
         style={{ backgroundImage: `url(${sol.img})` }}
       />
       {/* Dark overlay */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-tr from-black/85 via-black/55 to-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 bg-gradient-to-tr from-black/85 via-black/55 to-black/35 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500"
       />
 
       <div className="relative z-10 p-8 h-full flex flex-col justify-between">
         <div>
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-[#d4622b] bg-[#d4622b]/10 border border-[#d4622b]/20 px-3 py-1 rounded-full group-hover:bg-[#d4622b] group-hover:text-white group-hover:border-[#d4622b] transition-colors duration-300">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-white bg-[#d4622b] border border-[#d4622b] px-3 py-1 rounded-full lg:text-[#d4622b] lg:bg-[#d4622b]/10 lg:border-[#d4622b]/20 lg:group-hover:bg-[#d4622b] lg:group-hover:text-white lg:group-hover:border-[#d4622b] transition-colors duration-300">
               {sol.tag}
             </span>
-            <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#d4622b] group-hover:text-white transition-colors duration-300 shadow-sm">
+            <div className="w-8 h-8 rounded-full bg-[#d4622b] text-white flex items-center justify-center lg:bg-gray-50 lg:text-gray-400 lg:group-hover:bg-[#d4622b] lg:group-hover:text-white transition-colors duration-300 shadow-sm">
               <svg
                 className="w-3.5 h-3.5"
                 fill="none"
@@ -647,14 +803,14 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
               </svg>
             </div>
           </div>
-          <h3 className="mt-6 text-2xl font-bold text-[#1a1a2e] group-hover:text-white transition-colors duration-300">
+          <h3 className="mt-6 text-2xl font-bold text-white lg:text-[#1a1a2e] lg:group-hover:text-white transition-colors duration-300">
             {sol.title}
           </h3>
-          <p className="mt-3 text-gray-500 group-hover:text-white/85 leading-relaxed text-sm transition-colors duration-300">
+          <p className="mt-3 text-white/85 leading-relaxed text-sm lg:text-gray-500 lg:group-hover:text-white/85 transition-colors duration-300">
             {sol.desc}
           </p>
         </div>
-        <div className="mt-6 flex items-center gap-2 text-[#d4622b] group-hover:text-[#f59e0b] text-sm font-semibold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        <div className="mt-6 flex items-center gap-2 text-[#f59e0b] text-sm font-semibold opacity-100 translate-y-0 lg:text-[#d4622b] lg:opacity-0 lg:translate-y-2 lg:group-hover:text-[#f59e0b] lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
           Explore Specifications &rarr;
         </div>
       </div>
@@ -862,17 +1018,17 @@ export default function Home() {
             >
               <div className="w-7 h-5 flex flex-col justify-between">
                 <span
-                  className={`block h-0.5 bg-gray-800 transition-all origin-center ${
+                  className={`block h-0.5 bg-white transition-all origin-center ${
                     mobileMenu ? "rotate-45 translate-y-[9px]" : ""
                   }`}
                 />
                 <span
-                  className={`block h-0.5 bg-gray-800 transition-all ${
+                  className={`block h-0.5 bg-white transition-all ${
                     mobileMenu ? "opacity-0" : ""
                   }`}
                 />
                 <span
-                  className={`block h-0.5 bg-gray-800 transition-all origin-center ${
+                  className={`block h-0.5 bg-white transition-all origin-center ${
                     mobileMenu ? "-rotate-45 -translate-y-[9px]" : ""
                   }`}
                 />
@@ -1257,105 +1413,8 @@ export default function Home() {
         <GallerySlider />
       </section>
 
-      {/* ━━━ TESTIMONIALS — SCROLLING TICKER ━━━ */}
-      <section id="testimonials" className="relative py-24 lg:py-32 bg-[#faf8f5] overflow-hidden">
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-14">
-          <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
-            Client Testimonials
-          </span>
-          <h2 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] leading-tight tracking-tight">
-            Leaders trust Onward.
-          </h2>
-        </div>
-
-        {/* Edge fades */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
-
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 overflow-hidden">
-          <motion.div
-            className="flex w-max gap-6 whitespace-normal items-stretch"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          >
-            {[...Array(2)].flatMap((_, r) =>
-              [
-                {
-                  name: "Varun Puri",
-                  role: "Founder",
-                  company: "Dangal Games",
-                  seats: "120+ Desks",
-                  metric: "Scaled 15 → 120 seats",
-                  text: "Onward has been a game-changer for our team. The flexibility to scale seamlessly and the hospitality standards have made it the perfect office space for our high-velocity growth journey.",
-                },
-                {
-                  name: "Abhinay Nagwekar",
-                  role: "Procurement Lead",
-                  company: "Aramex Logistics",
-                  seats: "85+ Desks",
-                  metric: "Zero facility downtime",
-                  text: "Onward exceeded all our corporate expectations. Meticulously designed spaces, enterprise-grade IT infrastructure, and unwavering operational support make them our undisputed workspace choice.",
-                },
-                {
-                  name: "Prasenjit Das Gupta",
-                  role: "Head Commercial",
-                  company: "Thermax Ltd.",
-                  seats: "60+ Desks",
-                  metric: "Turnkey setup in 10 days",
-                  text: "Transitioning to Onward was by far our best decision. The vibrant environment fosters cross-team collaboration while offering our leadership the executive privacy they need.",
-                },
-              ].map((t, i) => (
-                <div
-                  key={`${r}-${i}`}
-                  className="w-[85vw] sm:w-[540px] shrink-0 bg-white rounded-3xl border border-gray-200 p-7 shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.15)] hover:border-[#d4622b]/40 transition-all"
-                >
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, s) => (
-                      <svg key={s} className="w-4 h-4 fill-[#d4622b]" viewBox="0 0 20 20">
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-
-                  {/* Quote */}
-                  <p className="text-[15px] leading-relaxed text-[#1a1a2e] whitespace-normal">
-                    &ldquo;{t.text}&rdquo;
-                  </p>
-
-                  {/* Metric */}
-                  <div className="mt-5 inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-semibold">
-                    <span>✓</span>
-                    <span>{t.metric}</span>
-                  </div>
-
-                  {/* Author */}
-                  <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-11 h-11 rounded-xl bg-[#d4622b] text-white flex items-center justify-center font-bold text-sm shrink-0">
-                        {t.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-bold text-sm text-[#1a1a2e] truncate">{t.name}</p>
-                        <p className="text-xs text-gray-500 truncate">
-                          {t.role} ·{" "}
-                          <span className="text-[#d4622b] font-semibold">{t.company}</span>
-                        </p>
-                      </div>
-                    </div>
-                    <span className="text-[10px] font-bold text-[#d4622b] bg-[#d4622b]/10 px-2 py-1 rounded-full whitespace-nowrap">
-                      {t.seats}
-                    </span>
-                  </div>
-                </div>
-              )),
-            )}
-          </motion.div>
-        </div>
-      </section>
+      {/* ━━━ TESTIMONIALS — MANUAL SLIDER ━━━ */}
+      <TestimonialsSlider />
 
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection />
