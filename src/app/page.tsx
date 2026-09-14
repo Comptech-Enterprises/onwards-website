@@ -1031,60 +1031,42 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ━━━ HERO BRAND TICKER — CARD SIZED ━━━ */}
-      <section className="relative py-16 lg:py-24 bg-[#faf8f5]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="relative bg-white rounded-3xl border border-gray-200 shadow-[0_20px_60px_-30px_rgba(26,26,46,0.2)] py-12 lg:py-16 overflow-hidden">
-            {/* Corner label */}
-            <div className="absolute top-6 left-6 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
-              <span className="text-[10px] tracking-[0.3em] uppercase text-gray-500 font-semibold">
-                In Good Company
-              </span>
-            </div>
-            <div className="absolute top-6 right-6 text-[10px] tracking-widest uppercase text-gray-400">
-              250+ Teams
-            </div>
+      {/* ━━━ BRAND TICKER — DARK SIMPLE CARDS ━━━ */}
+      <section className="relative py-20 bg-[#0a0a15] overflow-hidden">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-[#0a0a15] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-[#0a0a15] to-transparent" />
 
-            <div className="flex flex-wrap justify-center items-center gap-3 mt-8 px-6">
-              {[
-                { name: "Northline", tag: "FinTech" },
-                { name: "Kairo", tag: "SaaS" },
-                { name: "Meridian", tag: "Consulting" },
-                { name: "Vertex", tag: "Health" },
-                { name: "Halcyon", tag: "Studio" },
-                { name: "Silverline", tag: "Logistics" },
-                { name: "Novara", tag: "Media" },
-                { name: "Fjord & Co", tag: "Design" },
-                { name: "Quantum Yard", tag: "AI" },
-                { name: "Cinder", tag: "Retail" },
-                { name: "Terra Loop", tag: "Climate" },
-                { name: "Arcadia", tag: "Games" },
-              ].map((b) => (
-                <div
-                  key={b.name}
-                  className="group inline-flex items-center gap-3 pl-3 pr-5 py-2.5 rounded-full border border-gray-200 bg-[#faf8f5] hover:bg-white hover:border-[#d4622b] transition-colors"
-                >
-                  <span className="w-8 h-8 rounded-full bg-[#1a1a2e] text-white text-[10px] font-bold flex items-center justify-center group-hover:bg-[#d4622b] transition-colors">
-                    {b.name
-                      .replace(/&/g, "")
-                      .split(" ")
-                      .filter(Boolean)
-                      .map((w) => w[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </span>
-                  <span className="text-[15px] font-semibold text-[#1a1a2e] tracking-tight">
-                    {b.name}
-                  </span>
-                  <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
-                    {b.tag}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+        <motion.div
+          className="flex w-max gap-4 whitespace-nowrap"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        >
+          {[...Array(2)].flatMap((_, r) =>
+            [
+              "Bacardi",
+              "BCG",
+              "Star World",
+              "Pernod Ricard",
+              "ITC's Hotel Group",
+              "Jio",
+              "Radico Khaitan",
+              "LVMH",
+              "Dangal Games",
+              "Aramex",
+              "Thermax",
+              "Razorpay",
+            ].map((name, i) => (
+              <div
+                key={`${r}-${i}`}
+                className="shrink-0 px-10 py-6 rounded-2xl bg-[#1a1a2e] border border-white/5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.6)]"
+              >
+                <span className="text-lg font-semibold text-white/80 tracking-tight">
+                  {name}
+                </span>
+              </div>
+            )),
+          )}
+        </motion.div>
       </section>
 
       {/* ━━━ LOCATIONS & INTERACTIVE NCR MAP ━━━ */}
