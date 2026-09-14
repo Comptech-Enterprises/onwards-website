@@ -1,0 +1,127 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import MagneticButton from "./MagneticButton";
+
+const navLinks = ["Home", "About", "Team", "Locations", "Contact"];
+
+export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean }) {
+  const [scrolled, setScrolled] = useState(alwaysSolid);
+  const [mobileMenu, setMobileMenu] = useState(false);
+
+  useEffect(() => {
+    if (alwaysSolid) return;
+    const sh = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", sh);
+    return () => window.removeEventListener("scroll", sh);
+  }, [alwaysSolid]);
+
+  const linkHref = (l: string) => (l === "Team" ? "/team" : `/#${l.toLowerCase()}`);
+
+  return (
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-black/30 backdrop-blur-md border-b border-white/10"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
+        <a href="/" className="flex items-center gap-3 group">
+          <Image
+            src="/onward-logo.png"
+            alt="Onward Workspaces"
+            width={38}
+            height={38}
+            className="w-9 h-9 object-contain group-hover:rotate-6 transition-transform"
+            priority
+          />
+          <div className="leading-none">
+            <span className="text-xl font-bold tracking-tight text-white">
+              Onward
+            </span>
+            <span className="block text-[9px] tracking-[0.25em] text-white/70">
+              WORKSPACES
+            </span>
+          </div>
+        </a>
+
+        <nav className="hidden lg:flex items-center gap-10">
+          {navLinks.map((l) => (
+            <a
+              key={l}
+              href={linkHref(l)}
+              className="text-sm font-medium text-white/85 hover:text-[#d4622b] transition-colors"
+            >
+              {l}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-4">
+          <MagneticButton
+            href="/#contact"
+            className="hidden lg:flex bg-[#d4622b] text-white px-7 py-3 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
+          >
+            Get Started
+          </MagneticButton>
+          <button onClick={() => setMobileMenu(!mobileMenu)} className="lg:hidden">
+            <div className="w-7 h-5 flex flex-col justify-between">
+              <span
+                className={`block h-0.5 bg-white transition-all origin-center ${
+                  mobileMenu ? "rotate-45 translate-y-[9px]" : ""
+                }`}
+              />
+              <span
+                className={`block h-0.5 bg-white transition-all ${
+                  mobileMenu ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`block h-0.5 bg-white transition-all origin-center ${
+                  mobileMenu ? "-rotate-45 -translate-y-[9px]" : ""
+                }`}
+              />
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {mobileMenu && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-white border-t overflow-hidden"
+          >
+            <div className="px-6 py-6 space-y-4">
+              {navLinks.map((l) => (
+                <a
+                  key={l}
+                  href={linkHref(l)}
+                  onClick={() => setMobileMenu(false)}
+                  className="block text-gray-700 font-medium text-lg"
+                >
+                  {l}
+                </a>
+              ))}
+              <a
+                href="/#contact"
+                onClick={() => setMobileMenu(false)}
+                className="block bg-[#d4622b] text-white text-center py-3.5 rounded-full font-semibold"
+              >
+                Get Started
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
+  );
+}
