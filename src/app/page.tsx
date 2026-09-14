@@ -1031,10 +1031,19 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ━━━ BRAND TICKER — DARK SIMPLE CARDS ━━━ */}
-      <section className="relative py-20 bg-[#0a0a15] overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-[#0a0a15] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-[#0a0a15] to-transparent" />
+      {/* ━━━ BRAND TICKER — CREAM SIMPLE CARDS ━━━ */}
+      <section className="relative py-20 bg-[#faf8f5] overflow-hidden">
+        <div className="max-w-3xl mx-auto text-center mb-10 px-6">
+          <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
+            In Good Company
+          </span>
+          <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight">
+            Trusted by 250+ teams
+          </h2>
+        </div>
+
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
 
         <motion.div
           className="flex w-max gap-4 whitespace-nowrap"
@@ -1058,9 +1067,9 @@ export default function Home() {
             ].map((name, i) => (
               <div
                 key={`${r}-${i}`}
-                className="shrink-0 px-10 py-6 rounded-2xl bg-[#1a1a2e] border border-white/5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.6)]"
+                className="shrink-0 px-10 py-6 rounded-2xl bg-white border border-gray-200 shadow-[0_10px_30px_-20px_rgba(26,26,46,0.25)] hover:border-[#d4622b] hover:shadow-[0_10px_30px_-15px_rgba(212,98,43,0.3)] transition-all"
               >
-                <span className="text-lg font-semibold text-white/80 tracking-tight">
+                <span className="text-lg font-semibold text-[#1a1a2e] tracking-tight">
                   {name}
                 </span>
               </div>
