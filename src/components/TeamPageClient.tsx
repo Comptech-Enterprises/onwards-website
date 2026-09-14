@@ -3,6 +3,50 @@
 import { motion } from "framer-motion";
 import Header from "@/components/Header";
 
+function AnimatedLogoMark() {
+  return (
+    <div className="relative mx-auto w-20 h-20">
+      <svg
+        width={80}
+        height={80}
+        viewBox="0 0 100 100"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient id="teamLogoGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#ea580c" />
+            <stop offset="50%" stopColor="#d4622b" />
+            <stop offset="100%" stopColor="#f59e0b" />
+          </linearGradient>
+        </defs>
+        {/* Thread — draws the corner arm like a stitched line */}
+        <motion.path
+          d="M 22 26 H 62 C 75.25 26 86 36.75 86 50 V 82"
+          stroke="url(#teamLogoGrad)"
+          strokeWidth="18"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+        />
+        {/* Core node — settles once the thread completes */}
+        <motion.circle
+          cx="36"
+          cy="64"
+          r="14"
+          fill="url(#teamLogoGrad)"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.4, ease: "backOut", delay: 1.2 }}
+          className="origin-[36px_64px]"
+        />
+      </svg>
+    </div>
+  );
+}
+
 const team = [
   {
     name: "Rohan Malhotra",
@@ -39,14 +83,7 @@ export default function TeamPageClient() {
       <Header alwaysSolid />
       <main className="bg-[#faf8f5] min-h-screen py-28 lg:py-36">
         <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-block px-4 py-1.5 rounded-full bg-white border border-gray-200 text-xs font-bold text-[#d4622b] tracking-wide"
-          >
-            We&apos;re hiring!
-          </motion.span>
+          <AnimatedLogoMark />
 
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
