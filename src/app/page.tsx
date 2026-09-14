@@ -181,36 +181,42 @@ const solutions = [
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
     size: "lg",
+    img: "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
     size: "sm",
+    img: "https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
     size: "sm",
+    img: "https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
     size: "md",
+    img: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
     size: "md",
+    img: "https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Custom Built",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
     tag: "BESPOKE",
     size: "lg",
+    img: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
 ];
 
@@ -610,33 +616,47 @@ function GallerySlider() {
 
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
-    <SpotlightCard className="p-8 h-full min-h-[240px] cursor-pointer group flex flex-col justify-between">
-      <div>
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] font-bold tracking-[0.2em] text-[#d4622b] bg-[#d4622b]/10 border border-[#d4622b]/20 px-3 py-1 rounded-full">
-            {sol.tag}
-          </span>
-          <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#d4622b] group-hover:text-white transition-colors duration-300 shadow-sm">
-            <svg
-              className="w-3.5 h-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
-              <path d="M7 17L17 7M17 7H7M17 7V17" />
-            </svg>
+    <SpotlightCard className="h-full min-h-[240px] cursor-pointer group relative overflow-hidden">
+      {/* Full-bleed hover background image */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-cover bg-center opacity-0 scale-105 group-hover:opacity-90 group-hover:scale-100 transition-all duration-700 ease-out"
+        style={{ backgroundImage: `url(${sol.img})` }}
+      />
+      {/* Dark overlay */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-gradient-to-tr from-black/85 via-black/55 to-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+      />
+
+      <div className="relative z-10 p-8 h-full flex flex-col justify-between">
+        <div>
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-bold tracking-[0.2em] text-[#d4622b] bg-[#d4622b]/10 border border-[#d4622b]/20 px-3 py-1 rounded-full group-hover:bg-[#d4622b] group-hover:text-white group-hover:border-[#d4622b] transition-colors duration-300">
+              {sol.tag}
+            </span>
+            <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#d4622b] group-hover:text-white transition-colors duration-300 shadow-sm">
+              <svg
+                className="w-3.5 h-3.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </div>
           </div>
+          <h3 className="mt-6 text-2xl font-bold text-[#1a1a2e] group-hover:text-white transition-colors duration-300">
+            {sol.title}
+          </h3>
+          <p className="mt-3 text-gray-500 group-hover:text-white/85 leading-relaxed text-sm transition-colors duration-300">
+            {sol.desc}
+          </p>
         </div>
-        <h3 className="mt-6 text-2xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
-          {sol.title}
-        </h3>
-        <p className="mt-3 text-gray-500 leading-relaxed text-sm">
-          {sol.desc}
-        </p>
-      </div>
-      <div className="mt-6 flex items-center gap-2 text-[#d4622b] text-sm font-semibold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-        Explore Specifications &rarr;
+        <div className="mt-6 flex items-center gap-2 text-[#d4622b] group-hover:text-[#f59e0b] text-sm font-semibold opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+          Explore Specifications &rarr;
+        </div>
       </div>
     </SpotlightCard>
   );
@@ -1011,94 +1031,68 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
-      <section id="solutions" className="py-24 lg:py-32 bg-[#faf8f5]">
+      {/* ━━━ HERO BRAND TICKER — CARD SIZED ━━━ */}
+      <section className="relative py-16 lg:py-24 bg-[#faf8f5]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
-            <div>
-              <Reveal>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-6 h-px bg-[#d4622b]" /> Solutions
-                </span>
-              </Reveal>
-              <AnimatedHeading
-                text="Space that fits your ambition"
-                highlight="your ambition"
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
-              />
+          <div className="relative bg-white rounded-3xl border border-gray-200 shadow-[0_20px_60px_-30px_rgba(26,26,46,0.2)] py-12 lg:py-16 overflow-hidden">
+            {/* Corner label */}
+            <div className="absolute top-6 left-6 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
+              <span className="text-[10px] tracking-[0.3em] uppercase text-gray-500 font-semibold">
+                In Good Company
+              </span>
             </div>
-            <Reveal delay={0.2}>
-              <p className="text-gray-500 max-w-md text-lg">
-                Flexible office solutions aligned with your business needs and
-                growth trajectory.
-              </p>
-            </Reveal>
-          </div>
+            <div className="absolute top-6 right-6 text-[10px] tracking-widest uppercase text-gray-400">
+              250+ Teams
+            </div>
 
-          {/* Desktop 3D Tilt Spotlight grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {solutions.map((sol, i) => (
-              <Reveal
-                key={sol.title}
-                delay={i * 0.07}
-                className={sol.size === "lg" ? "lg:col-span-1" : ""}
-              >
-                <SolutionCard sol={sol} />
-              </Reveal>
-            ))}
-          </div>
-          {/* Mobile auto-slider */}
-          <AutoSlider interval={3500}>
-            {solutions.map((sol) => (
-              <SolutionCard key={sol.title} sol={sol} />
-            ))}
-          </AutoSlider>
-        </div>
-      </section>
+            {/* Edge fades */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-white to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-white to-transparent" />
 
-      {/* ━━━ FEATURES — INTERACTIVE PROGRESS TIMELINE ━━━ */}
-      <section id="about" className="py-24 lg:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
-            <div className="lg:sticky lg:top-32">
-              <Reveal>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-6 h-px bg-[#d4622b]" /> Why Onward
-                </span>
-              </Reveal>
-              <AnimatedHeading
-                text="Not just a desk. A launchpad."
-                highlight="A launchpad."
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
-              />
-              <Reveal delay={0.25}>
-                <p className="mt-6 text-gray-500 text-lg leading-relaxed">
-                  We don&apos;t rent space. We build environments where
-                  ambitious teams do their life&apos;s work.
-                </p>
-              </Reveal>
-              <Reveal delay={0.35}>
-                <MagneticButton
-                  href="#contact"
-                  className="inline-flex items-center gap-2 mt-8 bg-[#d4622b] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
-                >
-                  See it for yourself
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
+            <motion.div
+              className="inline-flex items-center gap-6 whitespace-nowrap mt-6"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+            >
+              {[...Array(2)].flatMap((_, r) =>
+                [
+                  { name: "Northline", tag: "FinTech" },
+                  { name: "Kairo", tag: "SaaS" },
+                  { name: "Meridian", tag: "Consulting" },
+                  { name: "Vertex", tag: "Health" },
+                  { name: "Halcyon", tag: "Studio" },
+                  { name: "Silverline", tag: "Logistics" },
+                  { name: "Novara", tag: "Media" },
+                  { name: "Fjord & Co", tag: "Design" },
+                  { name: "Quantum Yard", tag: "AI" },
+                  { name: "Cinder", tag: "Retail" },
+                  { name: "Terra Loop", tag: "Climate" },
+                  { name: "Arcadia", tag: "Games" },
+                ].map((b, i) => (
+                  <div
+                    key={`${r}-${i}`}
+                    className="group inline-flex items-center gap-3 pl-3 pr-5 py-2.5 rounded-full border border-gray-200 bg-[#faf8f5] hover:bg-white hover:border-[#d4622b] transition-colors shrink-0"
                   >
-                    <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </MagneticButton>
-              </Reveal>
-            </div>
-
-            <div>
-              <FeatureTimeline />
-            </div>
+                    <span className="w-8 h-8 rounded-full bg-[#1a1a2e] text-white text-[10px] font-bold flex items-center justify-center group-hover:bg-[#d4622b] transition-colors">
+                      {b.name
+                        .replace(/&/g, "")
+                        .split(" ")
+                        .filter(Boolean)
+                        .map((w) => w[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </span>
+                    <span className="text-[15px] font-semibold text-[#1a1a2e] tracking-tight">
+                      {b.name}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-widest text-gray-400 font-bold">
+                      {b.tag}
+                    </span>
+                  </div>
+                )),
+              )}
+            </motion.div>
           </div>
         </div>
       </section>
@@ -1220,6 +1214,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
+      <section id="solutions" className="py-24 lg:py-32 bg-[#faf8f5]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
+            <div>
+              <Reveal>
+                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
+                  <span className="w-6 h-px bg-[#d4622b]" /> Solutions
+                </span>
+              </Reveal>
+              <AnimatedHeading
+                text="Space that fits your ambition"
+                highlight="your ambition"
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
+              />
+            </div>
+            <Reveal delay={0.2}>
+              <p className="text-gray-500 max-w-md text-lg">
+                Flexible office solutions aligned with your business needs and
+                growth trajectory.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Desktop 3D Tilt Spotlight grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {solutions.map((sol, i) => (
+              <Reveal
+                key={sol.title}
+                delay={i * 0.07}
+                className={sol.size === "lg" ? "lg:col-span-1" : ""}
+              >
+                <SolutionCard sol={sol} />
+              </Reveal>
+            ))}
+          </div>
+          {/* Mobile auto-slider */}
+          <AutoSlider interval={3500}>
+            {solutions.map((sol) => (
+              <SolutionCard key={sol.title} sol={sol} />
+            ))}
+          </AutoSlider>
+        </div>
+      </section>
+
       {/* ━━━ GALLERY ━━━ */}
       <section className="py-24 lg:py-32 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-14">
@@ -1237,8 +1276,105 @@ export default function Home() {
         <GallerySlider />
       </section>
 
-      {/* ━━━ TESTIMONIALS SECTION WITH THREAD ANIMATION ━━━ */}
-      <TestimonialsSection />
+      {/* ━━━ TESTIMONIALS — SCROLLING TICKER ━━━ */}
+      <section id="testimonials" className="relative py-24 lg:py-32 bg-[#faf8f5] overflow-hidden">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-14">
+          <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
+            Client Testimonials
+          </span>
+          <h2 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] leading-tight tracking-tight">
+            Leaders trust Onward.
+          </h2>
+        </div>
+
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
+
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 overflow-hidden">
+          <motion.div
+            className="flex w-max gap-6 whitespace-normal items-stretch"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
+          >
+            {[...Array(2)].flatMap((_, r) =>
+              [
+                {
+                  name: "Varun Puri",
+                  role: "Founder",
+                  company: "Dangal Games",
+                  seats: "120+ Desks",
+                  metric: "Scaled 15 → 120 seats",
+                  text: "Onward has been a game-changer for our team. The flexibility to scale seamlessly and the hospitality standards have made it the perfect office space for our high-velocity growth journey.",
+                },
+                {
+                  name: "Abhinay Nagwekar",
+                  role: "Procurement Lead",
+                  company: "Aramex Logistics",
+                  seats: "85+ Desks",
+                  metric: "Zero facility downtime",
+                  text: "Onward exceeded all our corporate expectations. Meticulously designed spaces, enterprise-grade IT infrastructure, and unwavering operational support make them our undisputed workspace choice.",
+                },
+                {
+                  name: "Prasenjit Das Gupta",
+                  role: "Head Commercial",
+                  company: "Thermax Ltd.",
+                  seats: "60+ Desks",
+                  metric: "Turnkey setup in 10 days",
+                  text: "Transitioning to Onward was by far our best decision. The vibrant environment fosters cross-team collaboration while offering our leadership the executive privacy they need.",
+                },
+              ].map((t, i) => (
+                <div
+                  key={`${r}-${i}`}
+                  className="w-[85vw] sm:w-[540px] shrink-0 bg-white rounded-3xl border border-gray-200 p-7 shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.15)] hover:border-[#d4622b]/40 transition-all"
+                >
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-4">
+                    {[...Array(5)].map((_, s) => (
+                      <svg key={s} className="w-4 h-4 fill-[#d4622b]" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-[15px] leading-relaxed text-[#1a1a2e] whitespace-normal">
+                    &ldquo;{t.text}&rdquo;
+                  </p>
+
+                  {/* Metric */}
+                  <div className="mt-5 inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-semibold">
+                    <span>✓</span>
+                    <span>{t.metric}</span>
+                  </div>
+
+                  {/* Author */}
+                  <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-11 h-11 rounded-xl bg-[#d4622b] text-white flex items-center justify-center font-bold text-sm shrink-0">
+                        {t.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="font-bold text-sm text-[#1a1a2e] truncate">{t.name}</p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {t.role} ·{" "}
+                          <span className="text-[#d4622b] font-semibold">{t.company}</span>
+                        </p>
+                      </div>
+                    </div>
+                    <span className="text-[10px] font-bold text-[#d4622b] bg-[#d4622b]/10 px-2 py-1 rounded-full whitespace-nowrap">
+                      {t.seats}
+                    </span>
+                  </div>
+                </div>
+              )),
+            )}
+          </motion.div>
+        </div>
+      </section>
 
       {/* ━━━ LOGO MARQUEE ━━━ */}
       <section className="py-16 bg-white border-y border-gray-100">
