@@ -793,8 +793,8 @@ export default function Home() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-white/90 backdrop-blur-xl shadow-lg border-b border-gray-100/50"
-            : "bg-white/70 backdrop-blur-sm"
+            ? "bg-black/30 backdrop-blur-md border-b border-white/10"
+            : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
@@ -808,10 +808,10 @@ export default function Home() {
               priority
             />
             <div className="leading-none">
-              <span className="text-xl font-bold tracking-tight text-[#1a1a2e]">
+              <span className={`text-xl font-bold tracking-tight transition-colors ${scrolled ? "text-white" : "text-white"}`}>
                 Onward
               </span>
-              <span className="block text-[9px] tracking-[0.25em] text-gray-400">
+              <span className={`block text-[9px] tracking-[0.25em] transition-colors ${scrolled ? "text-white/60" : "text-white/70"}`}>
                 WORKSPACES
               </span>
             </div>
@@ -822,7 +822,7 @@ export default function Home() {
               <a
                 key={l}
                 href={`#${l.toLowerCase()}`}
-                className="text-sm font-medium text-gray-600 transition-colors hover:text-[#d4622b]"
+                className="text-sm font-medium text-white/85 hover:text-[#d4622b] transition-colors"
               >
                 {l}
               </a>
@@ -902,25 +902,38 @@ export default function Home() {
         className="relative min-h-screen flex items-center overflow-hidden"
         id="home"
       >
-        {/* Background carousel */}
-        <div className="absolute inset-0 z-0">
-          <HeroVideoCarousel />
-        </div>
+        {/* Background video */}
+        <video
+          src="/hero-bg.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 z-0 w-full h-full object-cover"
+        />
 
-        {/* White blend — left and right edges */}
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-white/95 via-white/40 to-white/70" />
+        {/* Cinematic overlay — navy tint + vignette */}
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-[#1a1a2e]/70" />
+        <div
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              "radial-gradient(ellipse at 30% 45%, transparent 0%, rgba(15,15,30,0.35) 55%, rgba(10,10,20,0.75) 100%)",
+          }}
+        />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-t from-[#0a0a15] to-transparent" />
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 pb-16"
         >
           <div className="max-w-3xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="inline-flex items-center gap-3 bg-[#d4622b]/5 border border-[#d4622b]/15 rounded-full px-5 py-2 mb-10 shadow-sm">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="inline-flex items-center gap-3 bg-white/30 backdrop-blur-md border border-white/40 rounded-full px-5 py-2 mb-10 shadow-sm">
               <span className="w-2 h-2 bg-[#d4622b] rounded-full animate-pulse" />
               <span className="text-[#d4622b] text-sm font-semibold">2 Day Free Trial Available</span>
             </motion.div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-[#1a1a2e] leading-[1.05] tracking-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-white leading-[1.05] tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)]">
               <div className="overflow-hidden">
                 <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}>
                   Workspace built
@@ -941,7 +954,7 @@ export default function Home() {
               </div>
             </h1>
 
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }} className="mt-8 text-lg sm:text-xl text-gray-500 max-w-xl leading-relaxed">
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }} className="mt-8 text-lg sm:text-xl text-white/85 max-w-xl leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
 
@@ -950,18 +963,18 @@ export default function Home() {
                 Book a Tour
                 <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </MagneticButton>
-              <a href="tel:9910668152" className="inline-flex items-center justify-center gap-3 text-gray-600 hover:text-[#d4622b] px-8 py-4 rounded-full border border-gray-200 hover:border-[#d4622b]/30 bg-white/60 backdrop-blur-sm transition-all shadow-sm">
+              <a href="tel:9910668152" className="inline-flex items-center justify-center gap-3 text-white hover:text-[#d4622b] px-8 py-4 rounded-full border border-white/30 hover:border-[#d4622b]/60 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all shadow-sm">
                 <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
                 +91 9910668152
               </a>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.7 }} className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px bg-gray-200/60 rounded-2xl overflow-hidden shadow-sm">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.7 }} className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden shadow-sm border border-white/20">
               {stats.map((s) => (
-                <div key={s.label} className="bg-white/80 backdrop-blur-sm p-5 sm:p-6 text-center group hover:bg-white transition-colors">
-                  <div className="text-2xl sm:text-3xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
-                  <div className="text-gray-600 text-xs mt-1 font-medium">{s.label}</div>
-                  <div className="text-gray-400 text-[10px] mt-0.5 group-hover:text-[#d4622b]/70 transition-colors">{s.sub}</div>
+                <div key={s.label} className="bg-white/10 backdrop-blur-md p-5 sm:p-6 text-center group hover:bg-white/20 transition-colors">
+                  <div className="text-2xl sm:text-3xl font-bold text-[#f59e0b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
+                  <div className="text-white/90 text-xs mt-1 font-medium">{s.label}</div>
+                  <div className="text-white/60 text-[10px] mt-0.5 group-hover:text-[#f59e0b]/90 transition-colors">{s.sub}</div>
                 </div>
               ))}
             </motion.div>
