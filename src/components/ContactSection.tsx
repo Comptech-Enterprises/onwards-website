@@ -110,7 +110,7 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* ━━━ LEFT COLUMN: BRAND NARRATIVE & DIRECT REACH (STICKY) ━━━ */}
-          <div className="relative md:sticky md:top-28">
+          <div className="relative md:sticky md:top-28 min-w-0">
             <AnimatedHeading
               text="Ready to move forward with Onward?"
               highlight="forward with Onward?"
@@ -145,11 +145,11 @@ export default function ContactSection() {
                         {item.icon}
                       </svg>
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="text-gray-400 text-xs font-semibold uppercase tracking-wider">
                         {item.label}
                       </div>
-                      <div className="text-[#1a1a2e] font-bold mt-0.5 group-hover:text-[#d4622b] transition-colors">
+                      <div className="text-[#1a1a2e] font-bold mt-0.5 break-words group-hover:text-[#d4622b] transition-colors">
                         {item.value}
                       </div>
                     </div>
@@ -188,7 +188,7 @@ export default function ContactSection() {
           </div>
 
           {/* ━━━ RIGHT COLUMN: 3D SPOTLIGHT PARALLAX FORM STAGE ━━━ */}
-          <motion.div style={{ y: formOffset }} className="relative">
+          <motion.div style={{ y: formOffset }} className="relative min-w-0">
             <SpotlightCard className="p-8 sm:p-10 lg:p-12 bg-white/95 backdrop-blur-xl border border-gray-200 shadow-xl rounded-[2.5rem]">
               <AnimatePresence mode="wait">
                 {status === "success" ? (
