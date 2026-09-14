@@ -1132,13 +1132,13 @@ export default function Home() {
               </span>
             </motion.a>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-white leading-[1.05] tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)]">
+            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-white leading-[1.15] sm:leading-[1.05] tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)]">
               <div className="overflow-hidden">
                 <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}>
                   Workspace built
                 </motion.div>
               </div>
-              <div className="overflow-hidden">
+              <div className="overflow-visible sm:overflow-hidden">
                 <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}>
                   around{" "}
                   <span className="relative inline-block">
@@ -1420,10 +1420,10 @@ export default function Home() {
       <ContactSection />
 
       {/* ━━━ FOOTER ━━━ */}
-      <footer className="bg-[#faf8f5] text-gray-400 py-20 border-t border-gray-100">
+      <footer className="bg-[#faf8f5] text-gray-400 py-14 sm:py-20 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-            <div>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10 sm:gap-12 mb-12 sm:mb-16">
+            <div className="col-span-2 sm:col-span-4 lg:col-span-1">
               <a href="#" className="flex items-center gap-3 mb-5 group">
                 <Image
                   src="/onward-logo.png"
@@ -1441,7 +1441,7 @@ export default function Home() {
                   </span>
                 </div>
               </a>
-              <p className="text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed max-w-xs">
                 Premium coworking spaces built around your brand, ambition, and
                 people.
               </p>
@@ -1473,10 +1473,10 @@ export default function Home() {
               },
             ].map((col) => (
               <div key={col.title}>
-                <h4 className="text-[#1a1a2e] font-semibold text-sm mb-5 uppercase tracking-wider">
+                <h4 className="text-[#1a1a2e] font-semibold text-sm mb-4 sm:mb-5 uppercase tracking-wider">
                   {col.title}
                 </h4>
-                <ul className="space-y-3 text-sm">
+                <ul className="space-y-2.5 sm:space-y-3 text-sm">
                   {col.links.map((l) => (
                     <li key={l}>
                       <a
@@ -1491,9 +1491,9 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-center">
             <p>&copy; 2024 Onward Workspaces. All rights reserved.</p>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
                 (l) => (
                   <a
