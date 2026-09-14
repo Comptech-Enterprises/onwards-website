@@ -27,7 +27,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-black/30 backdrop-blur-md border-b border-white/10"
+          ? "bg-[#1a1a2e]/95 backdrop-blur-md border-b border-white/10"
           : "bg-transparent"
       }`}
     >
