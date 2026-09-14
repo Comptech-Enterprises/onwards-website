@@ -74,7 +74,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#faf8f5] overflow-hidden select-none"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-white overflow-hidden select-none"
       initial={{ opacity: 1 }}
       animate={isZooming ? { opacity: [1, 1, 0] } : { opacity: 1 }}
       transition={
@@ -82,24 +82,24 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           ? { duration: 1.6, times: [0, 0.6, 1], ease: [0.22, 1, 0.36, 1] }
           : { duration: 0.2 }
       }
-      style={{ pointerEvents: isZooming ? "none" : "auto" }}
+      style={{ mixBlendMode: "screen", pointerEvents: isZooming ? "none" : "auto" }}
     >
       <div className="relative text-center px-4">
         <motion.div
-          className="font-sans font-black text-[#1a1a2e] text-center leading-[0.9] tracking-tight"
+          className="font-sans font-black text-black text-center leading-[0.9] tracking-tight"
           style={{ fontSize: "clamp(2.5rem, 12vw, 11rem)" }}
           animate={isZooming ? { opacity: 0, y: -20 } : { opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <span>{topText.slice(0, topVisible)}</span>
           {showCursor && charIndex <= topText.length && (
-            <span className="animate-blink border-r-[3px] border-[#1a1a2e] ml-0.5">&nbsp;</span>
+            <span className="animate-blink border-r-[3px] border-black ml-0.5">&nbsp;</span>
           )}
         </motion.div>
 
         {charIndex > topText.length && (
           <div
-            className="mt-2 sm:mt-4 flex items-center justify-center font-sans font-black text-[#1a1a2e] tracking-[0.18em] sm:tracking-[0.25em]"
+            className="mt-2 sm:mt-4 flex items-center justify-center font-sans font-black text-black tracking-[0.18em] sm:tracking-[0.25em]"
             style={{ fontSize: "clamp(1.2rem, 4.5vw, 4.2rem)" }}
           >
             <motion.span
@@ -125,7 +125,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
                 }
                 onAnimationComplete={isZooming ? handleZoomComplete : undefined}
               >
-                <OnwardLogo size="1em" className="w-[1em] h-[1em] mx-[0.05em]" />
+                <OnwardLogo size="1em" color="currentColor" className="w-[1em] h-[1em] mx-[0.05em]" />
               </motion.span>
             )}
 
@@ -137,7 +137,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             </motion.span>
 
             {showCursor && charIndex > topText.length && (
-              <span className="animate-blink border-r-[3px] border-[#1a1a2e] ml-0.5">&nbsp;</span>
+              <span className="animate-blink border-r-[3px] border-black ml-0.5">&nbsp;</span>
             )}
           </div>
         )}
