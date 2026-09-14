@@ -928,10 +928,33 @@ export default function Home() {
           className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 pb-16"
         >
           <div className="max-w-3xl">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }} className="inline-flex items-center gap-3 bg-white/30 backdrop-blur-md border border-white/40 rounded-full px-5 py-2 mb-10 shadow-sm">
-              <span className="w-2 h-2 bg-[#d4622b] rounded-full animate-pulse" />
-              <span className="text-[#d4622b] text-sm font-semibold">2 Day Free Trial Available</span>
-            </motion.div>
+            <motion.a
+              href="#contact"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+              className="group inline-flex items-center gap-4 mb-10 pl-2 pr-5 py-2 relative"
+            >
+              {/* Vertical orange bar with rotating 'LIMITED' text */}
+              <div className="relative flex items-center">
+                <span className="block w-1 h-10 bg-[#d4622b] rounded-full" />
+                <span className="absolute -left-1 top-0 w-3 h-3 rounded-full bg-[#d4622b] animate-ping opacity-70" />
+              </div>
+
+              {/* Content stack */}
+              <div className="flex flex-col leading-tight">
+                <span className="text-white text-base font-semibold tracking-tight flex items-baseline gap-1.5">
+                  Try 2 days
+                  <span className="text-white/50 text-sm font-normal">— on us.</span>
+                  <span className="text-[#d4622b] group-hover:translate-x-1 transition-transform">→</span>
+                </span>
+              </div>
+
+              {/* Animated underline sweep */}
+              <span className="absolute bottom-0 left-6 right-6 h-px overflow-hidden">
+                <span className="block w-full h-full bg-gradient-to-r from-transparent via-[#d4622b] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+              </span>
+            </motion.a>
 
             <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-white leading-[1.05] tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)]">
               <div className="overflow-hidden">
