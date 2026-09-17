@@ -1230,21 +1230,20 @@ export default function Home() {
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
       <section id="solutions" className="py-24 lg:py-32 bg-[#faf8f5]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-16">
-            <div>
-              <Reveal>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
-                  <span className="w-6 h-px bg-[#d4622b]" /> Solutions
-                </span>
-              </Reveal>
-              <AnimatedHeading
-                text="Space that fits your ambition"
-                highlight="your ambition"
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
-              />
-            </div>
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <Reveal>
+              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                <span className="w-6 h-px bg-[#d4622b]" /> Solutions
+                <span className="w-6 h-px bg-[#d4622b]" />
+              </span>
+            </Reveal>
+            <AnimatedHeading
+              text="Space that fits your ambition"
+              highlight="your ambition"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
+            />
             <Reveal delay={0.2}>
-              <p className="text-gray-500 max-w-md text-lg">
+              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
                 Flexible office solutions aligned with your business needs and
                 growth trajectory.
               </p>
@@ -1274,10 +1273,11 @@ export default function Home() {
 
       {/* ━━━ GALLERY ━━━ */}
       <section className="py-24 lg:py-32 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 mb-14">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8 mb-14 text-center">
           <Reveal>
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center gap-2">
+            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Gallery
+              <span className="w-6 h-px bg-[#d4622b]" />
             </span>
           </Reveal>
           <AnimatedHeading
