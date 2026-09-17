@@ -154,15 +154,6 @@ export default function BlogClient({ posts }: BlogClientProps) {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-24 relative z-10">
         {/* ━━━ HERO HEADER ━━━ */}
         <div className="max-w-3xl mb-14 sm:mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 border border-[#d4622b]/20 text-[#d4622b] text-xs font-bold uppercase tracking-widest mb-4"
-          >
-            <span className="w-2 h-2 rounded-full bg-[#d4622b] animate-pulse" />
-            <span>The Onward Dispatch &bull; {posts.length} Publications</span>
-          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
