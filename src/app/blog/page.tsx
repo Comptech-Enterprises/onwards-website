@@ -1,75 +1,119 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Header from "@/components/Header";
+import BlogClient from "@/components/BlogClient";
 import { blogPosts } from "@/data/blogPosts";
 
 export const metadata: Metadata = {
-  title: "Blog | Onward Workspaces",
-  description: "Insights on coworking, flexible offices, and workspace design from Onward Workspaces.",
+  title: "Blog & Workspace Insights | Onward Workspaces",
+  description:
+    "Explore trends, perspectives, and insights on coworking spaces, private suites, and commercial real estate across Delhi NCR from Onward Workspaces.",
 };
 
 export default function BlogPage() {
   return (
     <>
       <Header alwaysSolid />
-      <main className="bg-[#faf8f5] min-h-screen">
-        {/* Banner */}
-        <section className="relative h-[280px] sm:h-[340px] overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/blog-banner.png"
-            alt="Blog"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-[#1a1a2e]/70" />
-          <div className="relative z-10 h-full flex flex-col justify-end px-6 lg:px-8 pb-10 max-w-7xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl font-bold text-white">Blog</h1>
-            <nav className="mt-2 text-sm text-white/70">
-              <a href="/" className="hover:text-[#f59e0b] transition-colors">
-                Home
-              </a>
-              <span className="mx-2">/</span>
-              <span className="text-white">Blog</span>
-            </nav>
-          </div>
-        </section>
+      <main>
+        <BlogClient posts={blogPosts} />
+      </main>
 
-        {/* Grid */}
-        <section className="py-16 lg:py-20">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post, i) => (
-                <a
-                  key={i}
-                  href={post.href}
-                  className="group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-lg hover:border-[#d4622b]/40 transition-all"
-                >
-                  <div className="aspect-[16/10] overflow-hidden bg-gray-100">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={post.img}
-                      alt={post.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center justify-between text-xs text-gray-400">
-                      <span className="font-semibold text-[#d4622b]">{post.author}</span>
-                      <em className="not-italic">{post.date}</em>
-                    </div>
-                    <h4 className="mt-2 font-bold text-[#1a1a2e] leading-snug group-hover:text-[#d4622b] transition-colors">
-                      {post.title}
-                    </h4>
-                    <p className="mt-2 text-sm text-gray-500 leading-relaxed line-clamp-2">
-                      {post.desc}
-                    </p>
-                  </div>
-                </a>
-              ))}
+      {/* Footer */}
+      <footer className="bg-[#faf8f5] text-gray-400 py-10 sm:py-14 border-t border-gray-200/70">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10 sm:gap-12 mb-12 sm:mb-16">
+            <div className="col-span-2 sm:col-span-4 lg:col-span-1">
+              <a href="/" className="flex items-center gap-3 mb-5 group">
+                <Image
+                  src="/onward-logo.png"
+                  alt="Onward Workspaces"
+                  width={38}
+                  height={38}
+                  className="w-9 h-9 object-contain group-hover:rotate-6 transition-transform"
+                />
+                <div className="leading-none">
+                  <span className="text-xl font-bold text-[#1a1a2e] tracking-tight">
+                    Onward
+                  </span>
+                  <span className="block text-[9px] text-gray-400 tracking-[0.25em]">
+                    WORKSPACES
+                  </span>
+                </div>
+              </a>
+              <p className="text-sm leading-relaxed max-w-xs text-gray-500">
+                Premium coworking spaces built around your brand, ambition, and
+                people.
+              </p>
+            </div>
+            {[
+              {
+                title: "Solutions",
+                links: [
+                  "Managed Office",
+                  "Private Suites",
+                  "Virtual Office",
+                  "On-Demand",
+                  "Custom Built",
+                ],
+              },
+              {
+                title: "Locations",
+                links: ["Delhi", "Noida", "Gurgaon", "All Locations"],
+              },
+              {
+                title: "Company",
+                links: [
+                  "About Us",
+                  "Blog",
+                  "Careers",
+                  "Enterprise",
+                  "Contact",
+                ],
+              },
+            ].map((col) => (
+              <div key={col.title}>
+                <h4 className="text-[#1a1a2e] font-semibold text-sm mb-4 sm:mb-5 uppercase tracking-wider">
+                  {col.title}
+                </h4>
+                <ul className="space-y-2.5 sm:space-y-3 text-sm">
+                  {col.links.map((l) => (
+                    <li key={l}>
+                      <a
+                        href={
+                          l === "Blog"
+                            ? "/blog"
+                            : l === "About Us"
+                            ? "/#about"
+                            : l === "Contact"
+                            ? "/#contact"
+                            : "#"
+                        }
+                        className="text-gray-500 hover:text-[#d4622b] transition-colors"
+                      >
+                        {l}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-center text-gray-500">
+            <p>
+              &copy; {new Date().getFullYear()} Onward Workspaces. All rights
+              reserved.
+            </p>
+            <div className="flex gap-6">
+              <a href="#" className="hover:text-[#d4622b] transition-colors">
+                Privacy Policy
+              </a>
+              <a href="#" className="hover:text-[#d4622b] transition-colors">
+                Terms of Service
+              </a>
             </div>
           </div>
-        </section>
-      </main>
+        </div>
+      </footer>
     </>
   );
 }
