@@ -1118,8 +1118,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">
             <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
-                Locations
+              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                <span className="w-6 h-px bg-[#d4622b]" /> Locations
+                <span className="w-6 h-px bg-[#d4622b]" />
               </span>
             </Reveal>
             <AnimatedHeading
