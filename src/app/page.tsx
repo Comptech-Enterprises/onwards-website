@@ -1232,8 +1232,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
-                Solutions
+              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                <span className="w-6 h-px bg-[#d4622b]" /> Solutions
+                <span className="w-6 h-px bg-[#d4622b]" />
               </span>
             </Reveal>
             <AnimatedHeading
@@ -1274,8 +1275,9 @@ export default function Home() {
       <section className="py-16 lg:py-20 bg-white overflow-hidden">
         <div className="max-w-3xl mx-auto px-6 lg:px-8 mb-14 text-center">
           <Reveal>
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
-              Gallery
+            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="w-6 h-px bg-[#d4622b]" /> Gallery
+              <span className="w-6 h-px bg-[#d4622b]" />
             </span>
           </Reveal>
           <AnimatedHeading
