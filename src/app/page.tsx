@@ -547,10 +547,7 @@ function GallerySlider() {
             <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white/80 via-white/20 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 px-8 pb-8 flex items-end justify-between">
               <div>
-                <span className="text-[10px] font-bold tracking-widest text-[#d4622b] uppercase bg-white/70 px-2.5 py-1 rounded-full">
-                  {slide.tag}
-                </span>
-                <h3 className="mt-2 text-3xl lg:text-4xl font-bold text-[#1a1a2e]">{slide.title}</h3>
+                <h3 className="text-3xl lg:text-4xl font-bold text-[#1a1a2e]">{slide.title}</h3>
                 <p className="mt-1 text-sm text-gray-500 font-medium">{slide.location}</p>
               </div>
               <div className="text-right shrink-0">
