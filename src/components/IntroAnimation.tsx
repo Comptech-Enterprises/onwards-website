@@ -14,24 +14,44 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
   const fullLength = topText.length + 1 + bottomLeft.length + 1 + bottomRight.length;
 
   useEffect(() => {
-    if (phase === "done") {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-      return;
-    }
-    const prevBody = document.body.style.overflow;
-    const prevHtml = document.documentElement.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (phase === "done") return;
+
     document.documentElement.style.overflow = "hidden";
-    window.scrollTo(0, 0);
+    document.body.style.position = "fixed";
+    document.body.style.top = "0";
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+    document.body.style.width = "100%";
+    document.body.style.overflow = "hidden";
+
     const prevent = (e: Event) => e.preventDefault();
+    const preventKeys = (e: KeyboardEvent) => {
+      const scrollKeys = [
+        "ArrowUp",
+        "ArrowDown",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        " ",
+      ];
+      if (scrollKeys.includes(e.key)) e.preventDefault();
+    };
     window.addEventListener("wheel", prevent, { passive: false });
     window.addEventListener("touchmove", prevent, { passive: false });
+    window.addEventListener("keydown", preventKeys);
+
     return () => {
-      document.body.style.overflow = prevBody;
-      document.documentElement.style.overflow = prevHtml;
+      document.documentElement.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      document.body.style.overflow = "";
       window.removeEventListener("wheel", prevent);
       window.removeEventListener("touchmove", prevent);
+      window.removeEventListener("keydown", preventKeys);
     };
   }, [phase]);
 
