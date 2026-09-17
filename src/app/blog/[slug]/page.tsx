@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
-import BlogArticleView from "@/components/BlogArticleView";
+import BlogDetailDualView from "@/components/BlogDetailDualView";
 import { blogPosts } from "@/data/blogPosts";
 
 interface PageProps {
@@ -107,6 +107,10 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
     notFound();
   }
 
+  const postIndex = blogPosts.findIndex(
+    (p) => p.href.endsWith(slug) || p.href === `/blog/${slug}`
+  );
+
   // Related posts from same dataset excluding current
   const relatedPosts = blogPosts
     .filter((p) => !p.href.endsWith(slug))
@@ -117,13 +121,20 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
     .filter((p) => !p.href.endsWith(slug))
     .slice(3, 7);
 
+  const nextPost =
+    postIndex !== -1 && postIndex + 1 < blogPosts.length
+      ? blogPosts[postIndex + 1]
+      : blogPosts[0];
+
   return (
     <>
       <Header alwaysSolid />
-      <BlogArticleView
+      <BlogDetailDualView
         post={post}
         relatedPosts={relatedPosts}
         sidebarPosts={sidebarPosts}
+        nextPost={nextPost}
+        postIndex={postIndex !== -1 ? postIndex : 0}
       />
     </>
   );
