@@ -712,7 +712,7 @@ function TestimonialsSlider() {
   const goNext = () => setIndex((i) => Math.min(maxIndex, i + 1));
 
   return (
-    <section id="testimonials" className="relative py-24 lg:py-32 bg-[#faf8f5] overflow-hidden">
+    <section id="testimonials" className="relative py-16 lg:py-20 bg-[#faf8f5] overflow-hidden">
       <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-14">
         <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
           Client Testimonials
@@ -1064,7 +1064,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ BRAND TICKER — CREAM SIMPLE CARDS ━━━ */}
-      <section className="relative py-20 bg-[#faf8f5] overflow-hidden">
+      <section className="relative py-14 bg-[#faf8f5] overflow-hidden">
         <div className="max-w-3xl mx-auto text-center mb-10 px-6">
           <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
             In Good Company
@@ -1113,7 +1113,7 @@ export default function Home() {
       {/* ━━━ LOCATIONS & INTERACTIVE NCR MAP ━━━ */}
       <section
         id="locations"
-        className="py-24 lg:py-32 bg-[#faf8f5] relative overflow-hidden"
+        className="py-16 lg:py-20 bg-[#faf8f5] relative overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center mb-12">
@@ -1228,7 +1228,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
-      <section id="solutions" className="py-24 lg:py-32 bg-[#faf8f5]">
+      <section id="solutions" className="py-16 lg:py-20 bg-[#faf8f5]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <Reveal>
@@ -1272,7 +1272,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ GALLERY ━━━ */}
-      <section className="py-24 lg:py-32 bg-white overflow-hidden">
+      <section className="py-16 lg:py-20 bg-white overflow-hidden">
         <div className="max-w-3xl mx-auto px-6 lg:px-8 mb-14 text-center">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
@@ -1296,7 +1296,7 @@ export default function Home() {
       <ContactSection />
 
       {/* ━━━ FOOTER ━━━ */}
-      <footer className="bg-[#faf8f5] text-gray-400 py-14 sm:py-20 border-t border-gray-100">
+      <footer className="bg-[#faf8f5] text-gray-400 py-10 sm:py-14 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10 sm:gap-12 mb-12 sm:mb-16">
             <div className="col-span-2 sm:col-span-4 lg:col-span-1">

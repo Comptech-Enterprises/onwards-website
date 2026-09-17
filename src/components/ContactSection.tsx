@@ -85,7 +85,7 @@ export default function ContactSection() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative py-28 lg:py-40 bg-[#faf8f5] overflow-hidden"
+      className="relative py-20 lg:py-28 bg-[#faf8f5] overflow-hidden"
     >
       {/* ━━━ PARALLAX AMBIENT BACKGROUND GLOWS ━━━ */}
       <motion.div
