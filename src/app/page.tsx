@@ -866,11 +866,6 @@ function LocationCard({
         {/* Soft glow blob */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 rounded-full bg-[#d4622b]/10 blur-2xl group-hover:scale-150 transition-transform duration-700" />
 
-        {/* Seats pill — top right */}
-        <span className="absolute top-3 right-3 text-[10px] font-bold text-[#d4622b] bg-white border border-[#d4622b]/20 px-2.5 py-1 rounded-full shadow-sm">
-          {hub.seats}
-        </span>
-
         {/* Bouncing pin */}
         <div className="relative flex flex-col items-center z-10">
           <motion.div
