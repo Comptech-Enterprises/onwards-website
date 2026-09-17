@@ -1466,7 +1466,7 @@ export default function Home() {
                   {col.links.map((l) => (
                     <li key={l}>
                       <a
-                        href="#"
+                        href={l === "Blog" ? "/blog" : "#"}
                         className="hover:text-[#d4622b] transition-colors"
                       >
                         {l}

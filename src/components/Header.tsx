@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import MagneticButton from "./MagneticButton";
 
-const navLinks = ["Home", "About", "Team", "Locations", "Contact"];
+const navLinks = ["Home", "About", "Team", "Locations", "Blog", "Contact"];
 
 export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean }) {
   const [scrolled, setScrolled] = useState(alwaysSolid);
@@ -18,7 +18,11 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     return () => window.removeEventListener("scroll", sh);
   }, [alwaysSolid]);
 
-  const linkHref = (l: string) => (l === "Team" ? "/team" : `/#${l.toLowerCase()}`);
+  const linkHref = (l: string) => {
+    if (l === "Team") return "/team";
+    if (l === "Blog") return "/blog";
+    return `/#${l.toLowerCase()}`;
+  };
 
   return (
     <motion.header
