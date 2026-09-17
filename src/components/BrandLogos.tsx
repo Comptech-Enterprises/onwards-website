@@ -376,6 +376,187 @@ export function StarWorldLogo({ className = "h-7 w-auto" }: { className?: string
   );
 }
 
+export function DpWorldLogo({ className = "h-10 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 80" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <path
+        d="M80 12C92 12 102 20 102 31C102 37 98 42 92 45C86 48 76 49 68 47C58 45 52 38 52 32C52 24 60 17 72 15C76 14 82 14 86 16"
+        stroke="#E6007E"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <path
+        d="M60 38C60 46 70 54 82 54C94 54 104 46 104 38C104 34 100 30 94 28"
+        stroke="#00A3A6"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
+      <text
+        x="80"
+        y="72"
+        textAnchor="middle"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="800"
+        fontSize="15"
+        letterSpacing="2px"
+        fill="#0A1E4A"
+      >
+        DP WORLD
+      </text>
+    </svg>
+  );
+}
+
+export function ClarksonsLogo({ className = "h-8 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 170 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <g transform="translate(4, 11)">
+        <path d="M0 4C4 1 8 7 12 4C16 1 20 7 24 4" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M0 10C4 7 8 13 12 10C16 7 20 13 24 10" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M0 16C4 13 8 19 12 16C16 13 20 19 24 16" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M0 22C4 19 8 25 12 22C16 19 20 25 24 22" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" />
+        <rect x="7" y="6" width="10" height="15" rx="2" fill="white" />
+        <text x="12" y="18" textAnchor="middle" fill="#DC2626" fontFamily="sans-serif" fontWeight="900" fontSize="11">C</text>
+      </g>
+      <text
+        x="38"
+        y="30"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="800"
+        fontSize="16.5"
+        letterSpacing="1px"
+        fill="#DC2626"
+      >
+        CLARKSONS
+      </text>
+    </svg>
+  );
+}
+
+export function ThermaxGridLogo({ className = "h-12 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 110 75" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <rect x="23" y="4" width="64" height="15" rx="1.5" fill="#E31837" />
+      <rect x="35" y="19" width="16" height="36" rx="1.5" fill="#E31837" />
+      <rect x="59" y="19" width="16" height="36" rx="1.5" fill="#E31837" />
+      <text
+        x="55"
+        y="70"
+        textAnchor="middle"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="900"
+        fontSize="13"
+        letterSpacing="1.2px"
+        fill="#111827"
+      >
+        THERMAX
+      </text>
+    </svg>
+  );
+}
+
+export function OpraahLogo({ className = "h-9 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <circle cx="24" cy="25" r="14" fill="#F36F21" />
+      <circle cx="28" cy="25" r="6" fill="white" />
+      <text
+        x="45"
+        y="33"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="800"
+        fontSize="24"
+        letterSpacing="-0.5px"
+        fill="#F36F21"
+      >
+        praah
+      </text>
+    </svg>
+  );
+}
+
+export function SageLogo({ className = "h-9 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 140 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <g transform="translate(10, 12)">
+        <path
+          d="M18 4C10 4 5 8 5 13C5 18 10 20 17 22C24 24 28 27 28 32C28 38 21 41 12 41C5 41 0 37 0 37"
+          stroke="#001E62"
+          strokeWidth="5"
+          strokeLinecap="round"
+          fill="none"
+        />
+      </g>
+      <text
+        x="48"
+        y="33"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="800"
+        fontSize="24"
+        letterSpacing="-0.5px"
+        fill="#001E62"
+      >
+        Sage
+      </text>
+    </svg>
+  );
+}
+
+export function TvsSupplyChainLogo({ className = "h-11 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 70" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <path
+        d="M42 16C26 22 18 36 22 49C26 62 42 68 56 64"
+        stroke="#0284C7"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M20 40C20 25 32 12 48 10C64 8 76 18 78 28"
+        stroke="#1E3A8A"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+      />
+      <text
+        x="50"
+        y="36"
+        textAnchor="middle"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="900"
+        fontSize="17"
+        letterSpacing="0.5px"
+        fill="#1E3A8A"
+      >
+        TVS
+      </text>
+      <text
+        x="50"
+        y="48"
+        textAnchor="middle"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="700"
+        fontSize="6.5"
+        letterSpacing="0.3px"
+        fill="#0284C7"
+      >
+        Supply Chain
+      </text>
+      <text
+        x="50"
+        y="56"
+        textAnchor="middle"
+        fontFamily="Inter, system-ui, -apple-system, sans-serif"
+        fontWeight="700"
+        fontSize="6.5"
+        letterSpacing="0.3px"
+        fill="#0284C7"
+      >
+        Solutions
+      </text>
+    </svg>
+  );
+}
+
 export const brandPartners = [
   { name: "Razorpay", Logo: RazorpayLogo },
   { name: "Reliance Jio", Logo: JioLogo },
@@ -389,4 +570,158 @@ export const brandPartners = [
   { name: "Radico Khaitan", Logo: RadicoLogo },
   { name: "Dangal Games", Logo: DangalGamesLogo },
   { name: "Star World", Logo: StarWorldLogo },
+];
+
+/* ═══════════════════════════════════════════
+   NEWS & MEDIA LOGOS
+   ═══════════════════════════════════════════ */
+
+export function BwHotelierLogo({ className = "h-8 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <g transform="translate(6, 4)">
+        <rect x="0" y="0" width="4" height="4" fill="#E53935" />
+        <rect x="0" y="6" width="4" height="4" fill="#E53935" />
+        <rect x="0" y="12" width="4" height="4" fill="#E53935" />
+        <rect x="0" y="18" width="4" height="4" fill="#E53935" />
+        <rect x="0" y="24" width="4" height="4" fill="#E53935" />
+        <rect x="6" y="6" width="4" height="4" fill="#E53935" />
+        <rect x="6" y="18" width="4" height="4" fill="#E53935" />
+        <rect x="6" y="24" width="4" height="4" fill="#E53935" />
+      </g>
+      <text x="22" y="22" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="16" letterSpacing="1px" fill="#D32F2F">
+        BW
+      </text>
+      <text x="22" y="32" fontFamily="Inter, sans-serif" fontWeight="700" fontSize="8.5" letterSpacing="2px" fill="#1E293B">
+        HOTELIER
+      </text>
+    </svg>
+  );
+}
+
+export function RealtyPlusLogo({ className = "h-8 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 150 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <text x="2" y="29" fontFamily="system-ui, -apple-system, sans-serif" fontWeight="900" fontSize="26" letterSpacing="-0.5px" fill="#E53935">
+        Realty<tspan fontSize="28" fontWeight="900" dy="-4" fill="#E53935">+</tspan>
+      </text>
+    </svg>
+  );
+}
+
+export function OutlookLogo({ className = "h-7 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 150 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <text x="2" y="27" fontFamily="Georgia, 'Times New Roman', serif" fontWeight="900" fontSize="26" letterSpacing="-0.5px" fill="#E53935">
+        Outlook
+      </text>
+    </svg>
+  );
+}
+
+export function SugermintLogo({ className = "h-7 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 160 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <text x="2" y="26" fontFamily="Inter, system-ui, sans-serif" fontWeight="900" fontSize="23" letterSpacing="-0.5px" fill="#111827">
+        suger<tspan fill="#E53935">mint</tspan>
+      </text>
+    </svg>
+  );
+}
+
+export function AbpLiveLogo({ className = "h-9 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 70 50" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <polygon points="35,2 62,34 8,34" fill="#E53935" />
+      <polygon points="35,10 52,34 18,34" fill="#B71C1C" />
+      <text x="35" y="29" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="11" fill="white">
+        abp
+      </text>
+      <text x="35" y="47" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="9" letterSpacing="1px" fill="#111827">
+        LIVE
+      </text>
+    </svg>
+  );
+}
+
+export function News18Logo({ className = "h-8 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <rect x="2" y="5" width="86" height="30" rx="4" fill="#0A2540" />
+      <text x="45" y="27" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="18" letterSpacing="1px" fill="white">
+        NEWS
+      </text>
+      <rect x="92" y="5" width="38" height="30" rx="4" fill="#E53935" />
+      <text x="111" y="27" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="18" fill="white">
+        18
+      </text>
+    </svg>
+  );
+}
+
+export function MoneycontrolLogo({ className = "h-7 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 170 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <rect x="2" y="4" width="158" height="28" rx="4" fill="#0066B2" />
+      <path d="M4 26C30 30 70 24 100 28C130 32 150 26 158 24" stroke="#4CAF50" strokeWidth="4" strokeLinecap="round" />
+      <text x="80" y="23" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="800" fontSize="15" letterSpacing="0.2px" fill="white">
+        moneycontrol
+      </text>
+    </svg>
+  );
+}
+
+export function NdtvLogo({ className = "h-7 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 130 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <text x="2" y="28" fontFamily="Inter, system-ui, sans-serif" fontWeight="900" fontSize="27" letterSpacing="0.5px" fill="#111827">
+        N<tspan fill="#111827">D</tspan>TV
+      </text>
+      <circle cx="51" cy="18" r="3.5" fill="#E53935" />
+    </svg>
+  );
+}
+
+export function IndianRetailerLogo({ className = "h-7 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 170 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <rect x="2" y="7" width="22" height="22" rx="4" fill="#E53935" />
+      <text x="13" y="23" textAnchor="middle" fontFamily="Inter, sans-serif" fontWeight="900" fontSize="13" fill="white">
+        R
+      </text>
+      <text x="30" y="23" fontFamily="Inter, sans-serif" fontWeight="700" fontSize="13.5" letterSpacing="-0.2px" fill="#111827">
+        IndianRetailer<tspan fontSize="9" fill="#E53935">.com</tspan>
+      </text>
+    </svg>
+  );
+}
+
+export function EconomicTimesLogo({ className = "h-8 w-auto" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <rect x="2" y="3" width="34" height="34" rx="8" fill="#E53935" />
+      <text x="19" y="27" textAnchor="middle" fontFamily="Georgia, serif" fontWeight="900" fontSize="21" fill="white">
+        ET
+      </text>
+      <text x="44" y="20" fontFamily="Georgia, serif" fontWeight="800" fontSize="10" letterSpacing="0.5px" fill="#111827">
+        THE ECONOMIC
+      </text>
+      <text x="44" y="31" fontFamily="Georgia, serif" fontWeight="800" fontSize="10" letterSpacing="0.5px" fill="#111827">
+        TIMES
+      </text>
+    </svg>
+  );
+}
+
+export const newsMediaOutlets = [
+  { name: "BW Hotelier", Logo: BwHotelierLogo },
+  { name: "Realty+", Logo: RealtyPlusLogo },
+  { name: "Outlook", Logo: OutlookLogo },
+  { name: "Sugermint", Logo: SugermintLogo },
+  { name: "ABP Live", Logo: AbpLiveLogo },
+  { name: "News18", Logo: News18Logo },
+  { name: "Moneycontrol", Logo: MoneycontrolLogo },
+  { name: "NDTV", Logo: NdtvLogo },
+  { name: "Indian Retailer", Logo: IndianRetailerLogo },
+  { name: "Economic Times", Logo: EconomicTimesLogo },
 ];

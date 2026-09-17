@@ -20,7 +20,16 @@ import SpringCounter from "@/components/SpringCounter";
 import FeatureTimeline from "@/components/FeatureTimeline";
 import ContactSection from "@/components/ContactSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import { brandPartners } from "@/components/BrandLogos";
+import {
+  brandPartners,
+  DpWorldLogo,
+  ClarksonsLogo,
+  ThermaxGridLogo,
+  OpraahLogo,
+  SageLogo,
+  TvsSupplyChainLogo,
+  newsMediaOutlets,
+} from "@/components/BrandLogos";
 
 /* ═══════════════════════════════════════════
    PRIMITIVES & MARQUEE
@@ -614,176 +623,280 @@ function GallerySlider() {
   );
 }
 
-const testimonials = [
+const enterpriseTestimonials = [
   {
+    id: "varun-puri",
     name: "Varun Puri",
-    role: "Founder",
-    company: "Dangal Games",
-    seats: "120+ Desks",
+    role: "Founder | Dangal Games",
     metric: "Scaled 15 → 120 seats",
-    text: "Onward has been a game-changer for our team. The flexibility to scale seamlessly and the hospitality standards have made it the perfect office space for our high-velocity growth journey.",
+    seats: "120+ Desks",
+    rating: 5,
+    shortQuote:
+      "I'm thrilled to share how Onward Workspaces has been a game-changer for our team. As the founder and CEO, finding the perfect office space was crucial for our growth journey. And I...",
+    fullQuote:
+      "I'm thrilled to share how Onward Workspaces has been a game-changer for our team. As the founder and CEO, finding the perfect office space was crucial for our growth journey. And Onward Workspaces delivered on every front, providing an exceptional environment for our team to thrive.",
+    logo: (
+      <svg viewBox="0 0 42 48" className="w-11 h-12 shrink-0 drop-shadow-sm" fill="none">
+        <path
+          d="M21 2L39 7.5V23C39 34.5 31 43.5 21 46.5C11 43.5 3 34.5 3 23V7.5L21 2Z"
+          fill="#0c1e4a"
+          stroke="#1b2e61"
+          strokeWidth="1.5"
+        />
+        <text
+          x="21"
+          y="29"
+          textAnchor="middle"
+          fill="white"
+          fontFamily="system-ui, -apple-system, sans-serif"
+          fontWeight="900"
+          fontSize="16"
+          letterSpacing="0.5px"
+        >
+          DG
+        </text>
+      </svg>
+    ),
   },
   {
+    id: "abhinay-nagwekar",
     name: "Abhinay Nagwekar",
-    role: "Procurement Lead",
-    company: "Aramex Logistics",
-    seats: "85+ Desks",
+    role: "Senior Procurement Leader | Aramex",
     metric: "Zero facility downtime",
-    text: "Onward exceeded all our corporate expectations. Meticulously designed spaces, enterprise-grade IT infrastructure, and unwavering operational support make them our undisputed workspace choice.",
+    seats: "85+ Desks",
+    rating: 5,
+    shortQuote:
+      "Finding the right workspace for our team was crucial, and Onward Workspaces exceeded all expectations. From their meticulously designed spaces to their unwavering support, they've ...",
+    fullQuote:
+      "Finding the right workspace for our team was crucial, and Onward Workspaces exceeded all expectations. From their meticulously designed spaces to their unwavering support, they've been an integral partner in our ongoing success and corporate expansion.",
+    logo: (
+      <div className="h-10 px-2 py-1 flex items-center shrink-0 rounded-lg bg-red-50/50 border border-red-100/60">
+        <span className="font-black text-xl tracking-tight text-[#E31837] italic font-sans">
+          aramex
+        </span>
+      </div>
+    ),
   },
   {
+    id: "prasenjit-das-gupta",
     name: "Prasenjit Das Gupta",
-    role: "Head Commercial",
-    company: "Thermax Ltd.",
-    seats: "60+ Desks",
+    role: "Head Commercial Heating Projects | Thermax",
     metric: "Turnkey setup in 10 days",
-    text: "Transitioning to Onward was by far our best decision. The vibrant environment fosters cross-team collaboration while offering our leadership the executive privacy they need.",
+    seats: "60+ Desks",
+    rating: 5,
+    shortQuote:
+      "Transitioning our team to Onward Workspaces was one of the best decisions we made. The environment they've cultivated is not only conducive to productivity but also fosters collabo...",
+    fullQuote:
+      "Transitioning our team to Onward Workspaces was one of the best decisions we made. The environment they've cultivated is not only conducive to productivity but also fosters collaboration, energy, and comfort across all our working teams. The hospitality and infrastructure are second to none.",
+    logo: (
+      <div className="flex flex-col items-center justify-center shrink-0 px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-100">
+        <svg viewBox="0 0 32 24" className="h-5 w-auto" fill="none">
+          <rect x="0" y="0" width="32" height="6.5" rx="0.5" fill="#E31837" />
+          <rect x="5.5" y="6.5" width="7" height="17.5" rx="0.5" fill="#E31837" />
+          <rect x="19.5" y="6.5" width="7" height="17.5" rx="0.5" fill="#E31837" />
+        </svg>
+        <span className="text-[7px] font-black text-[#111827] tracking-wider mt-0.5">
+          THERMAX
+        </span>
+      </div>
+    ),
   },
 ];
 
-function TestimonialCard({ t }: { t: (typeof testimonials)[number] }) {
+function TrustedLeadersSection() {
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+
+  const toggleExpand = (id: string) => {
+    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
   return (
-    <div className="w-full bg-white rounded-3xl border border-gray-200 p-7 shadow-sm hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.15)] hover:border-[#d4622b]/40 transition-all">
-      <div className="flex gap-1 mb-4">
-        {[...Array(5)].map((_, s) => (
-          <svg key={s} className="w-4 h-4 fill-[#d4622b]" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        ))}
-      </div>
+    <section id="testimonials" className="py-20 lg:py-28 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+      {/* Ambient background glows matching website theme */}
+      <div className="pointer-events-none absolute top-1/4 -left-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#f59e0b]/5 blur-[120px]" />
 
-      <p className="text-[15px] leading-relaxed text-[#1a1a2e]">
-        &ldquo;{t.text}&rdquo;
-      </p>
-
-      <div className="mt-5 inline-flex items-center gap-1.5 text-[11px] text-emerald-600 font-semibold">
-        <span>✓</span>
-        <span>{t.metric}</span>
-      </div>
-
-      <div className="mt-6 pt-5 border-t border-gray-100 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="w-11 h-11 rounded-xl bg-[#d4622b] text-white flex items-center justify-center font-bold text-sm shrink-0">
-            {t.name
-              .split(" ")
-              .map((n) => n[0])
-              .join("")}
-          </div>
-          <div className="min-w-0">
-            <p className="font-bold text-sm text-[#1a1a2e] truncate">{t.name}</p>
-            <p className="text-xs text-gray-500 truncate">
-              {t.role} ·{" "}
-              <span className="text-[#d4622b] font-semibold">{t.company}</span>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
+          <Reveal>
+            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="w-6 h-px bg-[#d4622b]" /> Testimonials <span className="w-6 h-px bg-[#d4622b]" />
+            </span>
+          </Reveal>
+          <AnimatedHeading
+            text="Trusted by Enterprise Leaders"
+            highlight="Enterprise Leaders"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+          />
+          <Reveal delay={0.1}>
+            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-justify">
+              These success stories showcase the real impact of our coworking spaces and services, providing valuable insights into how we can support your business needs &amp; aspirations.
             </p>
-          </div>
+          </Reveal>
         </div>
-        <span className="text-[10px] font-bold text-[#d4622b] bg-[#d4622b]/10 px-2 py-1 rounded-full whitespace-nowrap">
-          {t.seats}
-        </span>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          {enterpriseTestimonials.map((t) => {
+            const isExpanded = !!expanded[t.id];
+            return (
+              <div
+                key={t.id}
+                className="bg-white rounded-3xl border border-gray-200/90 p-7 sm:p-8 flex flex-col justify-between shadow-[0_8px_30px_-12px_rgba(26,26,46,0.1)] hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.18)] hover:border-[#d4622b]/40 hover:-translate-y-1.5 transition-all duration-300 relative group"
+              >
+                <div>
+                  {/* Top card header: 5 stars rating & seats badge */}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <div className="flex items-center gap-1">
+                      {[...Array(t.rating)].map((_, i) => (
+                        <svg
+                          key={i}
+                          className="w-4 h-4 text-[#d4622b] fill-current"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#d4622b]/10 text-[#d4622b] tracking-tight">
+                      {t.seats}
+                    </span>
+                  </div>
+
+                  {/* Verified metric badge */}
+                  <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-emerald-600">
+                    <span className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-[10px]">
+                      ✓
+                    </span>
+                    <span>{t.metric}</span>
+                  </div>
+
+                  {/* Testimonial Quote */}
+                  <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed font-normal text-justify">
+                    &ldquo;{isExpanded ? t.fullQuote : t.shortQuote}&rdquo;
+                    <button
+                      type="button"
+                      onClick={() => toggleExpand(t.id)}
+                      className="ml-2 font-semibold text-[#d4622b] hover:text-[#b8501f] transition-colors inline-flex items-center gap-0.5 text-xs group/btn"
+                    >
+                      {isExpanded ? "Read Less" : "Read More"}
+                      <span className="transition-transform group-hover/btn:translate-x-0.5">&rarr;</span>
+                    </button>
+                  </p>
+                </div>
+
+                {/* Author row */}
+                <div className="flex items-center gap-4 pt-6 mt-6 border-t border-gray-100">
+                  {t.logo}
+                  <div className="min-w-0">
+                    <h4 className="font-bold text-[#1a1a2e] text-sm sm:text-base leading-snug group-hover:text-[#d4622b] transition-colors">
+                      {t.name}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-gray-500 font-normal leading-snug mt-0.5 truncate">
+                      {t.role}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
-function TestimonialsSlider() {
-  const [index, setIndex] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
-  const perView = 2;
-  const maxIndex = isMobile
-    ? testimonials.length - 1
-    : Math.max(0, testimonials.length - perView);
+const enterpriseBrands = [
+  { name: "DP World", Logo: DpWorldLogo },
+  { name: "Clarksons", Logo: ClarksonsLogo },
+  { name: "Thermax", Logo: ThermaxGridLogo },
+  { name: "Opraah", Logo: OpraahLogo },
+  { name: "Sage", Logo: SageLogo },
+  { name: "TVS Supply Chain Solutions", Logo: TvsSupplyChainLogo },
+];
 
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  useEffect(() => {
-    if (!isMobile) return;
-    const timer = setInterval(() => {
-      setIndex((i) => (i + 1) % (maxIndex + 1));
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [isMobile, maxIndex]);
-
-  const goPrev = () => setIndex((i) => Math.max(0, i - 1));
-  const goNext = () => setIndex((i) => Math.min(maxIndex, i + 1));
-
+function EnterprisesSection() {
   return (
-    <section id="testimonials" className="relative py-16 lg:py-20 bg-[#faf8f5] overflow-hidden">
-      <div className="max-w-3xl mx-auto px-6 lg:px-8 text-center mb-14">
-        <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
-          Client Testimonials
-        </span>
-        <h2 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] leading-tight tracking-tight">
-          Leaders trust Onward.
-        </h2>
-      </div>
+    <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
+          <Reveal>
+            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="w-6 h-px bg-[#d4622b]" /> Enterprise Network <span className="w-6 h-px bg-[#d4622b]" />
+            </span>
+          </Reveal>
+          <AnimatedHeading
+            text="Enterprises using onward Workspaces"
+            highlight="onward Workspaces"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+          />
+          <Reveal delay={0.1}>
+            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-center">
+              Elevate your workspace experience and be part of a movement that redefines success
+            </p>
+          </Reveal>
+        </div>
 
-      {/* Mobile: single-card manual slider */}
-      <div className="md:hidden max-w-6xl mx-auto px-6 overflow-hidden">
-        <motion.div
-          className="flex"
-          animate={{ x: `${-index * 100}%` }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {testimonials.map((t) => (
-            <div key={t.name} className="w-full flex-shrink-0 px-1">
-              <TestimonialCard t={t} />
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Desktop: 2-up manual slider */}
-      <div className="hidden md:block max-w-6xl mx-auto px-6 lg:px-8 overflow-hidden">
-        <motion.div
-          className="flex gap-6"
-          animate={{ x: `calc(${-index * 100}% / ${perView} - ${index * 1.5}rem)` }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {testimonials.map((t) => (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 items-stretch max-w-6xl mx-auto">
+          {enterpriseBrands.map((brand) => (
             <div
-              key={t.name}
-              className="shrink-0"
-              style={{ width: `calc(${100 / perView}% - ${(1.5 * (perView - 1)) / perView}rem)` }}
+              key={brand.name}
+              title={brand.name}
+              className="px-6 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center h-[78px] group cursor-default"
             >
-              <TestimonialCard t={t} />
+              <brand.Logo className="h-7 sm:h-8 w-auto max-w-[125px] object-contain transition-transform duration-300 group-hover:scale-105" />
             </div>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Controls */}
-      <div className="flex items-center justify-center gap-4 mt-10">
-        <button
-          onClick={goPrev}
-          disabled={index === 0}
-          className="w-11 h-11 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#1a1a2e] hover:border-[#d4622b] hover:text-[#d4622b] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
-        >
-          &larr;
-        </button>
-        <div className="flex gap-2">
-          {testimonials.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setIndex(Math.min(maxIndex, i))}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === index ? "w-8 bg-[#d4622b]" : "w-1.5 bg-gray-300"
-              }`}
-            />
           ))}
         </div>
-        <button
-          onClick={goNext}
-          disabled={index === maxIndex}
-          className="w-11 h-11 rounded-full border border-gray-200 bg-white flex items-center justify-center text-[#1a1a2e] hover:border-[#d4622b] hover:text-[#d4622b] transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+      </div>
+    </section>
+  );
+}
+
+function NewsMediaSection() {
+  return (
+    <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
+          <Reveal>
+            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="w-6 h-px bg-[#d4622b]" /> Press &amp; Recognition <span className="w-6 h-px bg-[#d4622b]" />
+            </span>
+          </Reveal>
+          <AnimatedHeading
+            text="Featured in News & Media"
+            highlight="News & Media"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+          />
+          <Reveal delay={0.1}>
+            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-center">
+              We understand that selecting the right co-working space is a crucial decision. We&apos;re here to help you make an informed choice and tailor our offerings to meet your specific needs.
+            </p>
+          </Reveal>
+        </div>
+      </div>
+
+      {/* Infinite Smooth Scrolling Marquee */}
+      <div className="relative w-full overflow-hidden">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-44 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
+
+        <motion.div
+          className="flex w-max gap-5 sm:gap-6 items-center py-2"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
         >
-          &rarr;
-        </button>
+          {[...Array(2)].flatMap((_, r) =>
+            newsMediaOutlets.map((outlet, i) => (
+              <div
+                key={`media-outlet-${r}-${outlet.name}-${i}`}
+                title={outlet.name}
+                className="shrink-0 px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[170px] h-[78px] group cursor-default"
+              >
+                <outlet.Logo className="h-7 sm:h-8 w-auto max-w-[135px] object-contain transition-transform duration-300 group-hover:scale-105" />
+              </div>
+            )),
+          )}
+        </motion.div>
       </div>
     </section>
   );
@@ -1144,121 +1257,77 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ━━━ LOCATIONS & INTERACTIVE NCR MAP ━━━ */}
+      {/* ━━━ OUR TOP LOCATIONS IN DELHI NCR ━━━ */}
       <section
         id="locations"
-        className="py-16 lg:py-20 bg-[#faf8f5] relative overflow-hidden"
+        className="py-20 lg:py-24 bg-white relative overflow-hidden border-t border-gray-100"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-12">
-            <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> Locations
-                <span className="w-6 h-px bg-[#d4622b]" />
-              </span>
-            </Reveal>
-            <AnimatedHeading
-              text="Find us everywhere you need"
-              highlight="everywhere"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
-            />
+          <div className="text-center max-w-4xl mx-auto mb-12">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111827] tracking-tight">
+              Our Top Locations in Delhi NCR
+            </h2>
+            <p className="mt-4 text-sm sm:text-base text-gray-500 leading-relaxed max-w-3xl mx-auto">
+              Begin your path to success with Onward Workspaces in Delhi NCR. Our strategically located facilities ensure unparalleled convenience, accessibility, and excellence for your workspace needs
+            </p>
           </div>
 
-          {/* City Selector Floating Pills */}
-          <div className="flex justify-center mb-14">
-            <div className="inline-flex p-1.5 rounded-full bg-white border border-gray-200 shadow-sm">
-              {cities.map((c) => {
-                const isActive = activeCity === c.name;
-                return (
-                  <button
-                    key={c.name}
-                    onClick={() => setActiveCity(c.name)}
-                    className="relative px-8 py-3 rounded-full text-sm font-semibold transition-colors duration-200"
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeCityPill"
-                        transition={{
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 30,
-                        }}
-                        className="absolute inset-0 rounded-full bg-[#d4622b] shadow-[0_4px_20px_rgba(212,98,43,0.35)]"
-                      />
-                    )}
-                    <span
-                      className={`relative z-10 ${
-                        isActive
-                          ? "text-white font-bold"
-                          : "text-gray-600 hover:text-[#d4622b]"
-                      }`}
-                    >
-                      {c.name}
-                    </span>
-                  </button>
-                );
-              })}
+          {/* 3 City Cards (Delhi, Noida, Gurugram) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {/* Delhi */}
+            <div
+              className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                <img
+                  src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1000&q=80"
+                  alt="Delhi"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="py-5 text-center bg-white border-t border-gray-100">
+                <h3 className="text-xl font-bold text-[#111827] tracking-tight group-hover:text-[#d4622b] transition-colors">
+                  Delhi
+                </h3>
+              </div>
+            </div>
+
+            {/* Noida */}
+            <div
+              className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                <img
+                  src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1000&q=80"
+                  alt="Noida"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="py-5 text-center bg-white border-t border-gray-100">
+                <h3 className="text-xl font-bold text-[#111827] tracking-tight group-hover:text-[#d4622b] transition-colors">
+                  Noida
+                </h3>
+              </div>
+            </div>
+
+            {/* Gurugram */}
+            <div
+              className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                <img
+                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80"
+                  alt="Gurugram"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="py-5 text-center bg-white border-t border-gray-100">
+                <h3 className="text-xl font-bold text-[#111827] tracking-tight group-hover:text-[#d4622b] transition-colors">
+                  Gurugram
+                </h3>
+              </div>
             </div>
           </div>
-
-          {/* Location Center Cards with Staggered Animations */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeCity}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-              variants={{
-                hidden: { opacity: 0 },
-                show: {
-                  opacity: 1,
-                  transition: { staggerChildren: 0.1, delayChildren: 0.05 },
-                },
-                exit: {
-                  opacity: 0,
-                  transition: { duration: 0.2 },
-                },
-              }}
-              className="hidden sm:grid sm:grid-cols-3 gap-6"
-            >
-              {cities
-                .find((c) => c.name === activeCity)
-                ?.hubs.map((hub) => (
-                  <motion.div
-                    key={hub.spot}
-                    variants={{
-                      hidden: { opacity: 0, y: 30, scale: 0.95 },
-                      show: {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        transition: {
-                          duration: 0.5,
-                          ease: [0.16, 1, 0.3, 1],
-                        },
-                      },
-                      exit: {
-                        opacity: 0,
-                        y: -20,
-                        scale: 0.95,
-                        transition: { duration: 0.2 },
-                      },
-                    }}
-                  >
-                    <LocationCard hub={hub} city={activeCity} />
-                  </motion.div>
-                ))}
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Mobile auto-slider */}
-          <AutoSlider interval={3500} className="sm:hidden" dotColor="light">
-            {(cities.find((c) => c.name === activeCity)?.hubs || []).map(
-              (hub) => (
-                <LocationCard key={hub.spot} hub={hub} city={activeCity} />
-              ),
-            )}
-          </AutoSlider>
         </div>
       </section>
 
@@ -1273,8 +1342,8 @@ export default function Home() {
               </span>
             </Reveal>
             <AnimatedHeading
-              text="Space that fits your ambition"
-              highlight="your ambition"
+              text="Office Space Solutions"
+              highlight="Solutions"
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
             />
             <Reveal delay={0.2}>
@@ -1316,16 +1385,22 @@ export default function Home() {
             </span>
           </Reveal>
           <AnimatedHeading
-            text="See the space crafted for you"
-            highlight="crafted for you"
+            text="Explore Our Workspace Gallery"
+            highlight="Workspace Gallery"
             className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
           />
         </div>
         <GallerySlider />
       </section>
 
-      {/* ━━━ TESTIMONIALS — MANUAL SLIDER ━━━ */}
-      <TestimonialsSlider />
+      {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
+      <TrustedLeadersSection />
+
+      {/* ━━━ ENTERPRISES USING ONWARD WORKSPACES ━━━ */}
+      <EnterprisesSection />
+
+      {/* ━━━ NEWS & MEDIA TICKER ━━━ */}
+      <NewsMediaSection />
 
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection />
