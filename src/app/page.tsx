@@ -808,10 +808,7 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
 
       <div className="relative z-10 p-8 h-full flex flex-col justify-between">
         <div>
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-white bg-[#d4622b] border border-[#d4622b] px-3 py-1 rounded-full lg:text-[#d4622b] lg:bg-[#d4622b]/10 lg:border-[#d4622b]/20 lg:group-hover:bg-[#d4622b] lg:group-hover:text-white lg:group-hover:border-[#d4622b] transition-colors duration-300">
-              {sol.tag}
-            </span>
+          <div className="flex items-center justify-end">
             <div className="w-8 h-8 rounded-full bg-[#d4622b] text-white flex items-center justify-center lg:bg-gray-50 lg:text-gray-400 lg:group-hover:bg-[#d4622b] lg:group-hover:text-white transition-colors duration-300 shadow-sm">
               <svg
                 className="w-3.5 h-3.5"
