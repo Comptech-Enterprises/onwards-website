@@ -13,7 +13,7 @@ type OnwardLogoProps = {
 
 /**
  * High-precision vector SVG representation of the Onward Logo.
- * Features the signature 90-degree rounded top-right corner arm and core inner dot.
+ * Strictly uses flat solid colors (black, white, or orange #d4622b) with no gradients.
  */
 export default function OnwardLogo({
   className = "",
@@ -23,7 +23,6 @@ export default function OnwardLogo({
   dotProgress,
   animated = false,
 }: OnwardLogoProps) {
-  // Corner path definition
   const cornerD = "M 22 26 H 62 C 75.25 26 86 36.75 86 50 V 82";
 
   if (animated && strokeProgress !== undefined) {
@@ -36,30 +35,19 @@ export default function OnwardLogo({
         xmlns="http://www.w3.org/2000/svg"
         className={className}
       >
-        <defs>
-          <linearGradient id="onwardLogoGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#ea580c" />
-            <stop offset="50%" stopColor="#d4622b" />
-            <stop offset="100%" stopColor="#f59e0b" />
-          </linearGradient>
-        </defs>
-
-        {/* Outer rounded chevron arm */}
         <motion.path
           d={cornerD}
-          stroke="url(#onwardLogoGrad)"
+          stroke={color}
           strokeWidth="18"
           strokeLinecap="round"
           strokeLinejoin="round"
           style={{ pathLength: strokeProgress }}
         />
-
-        {/* Inner dot */}
         <motion.circle
           cx="36"
           cy="64"
           r="14"
-          fill="url(#onwardLogoGrad)"
+          fill={color}
           style={{
             scale: dotProgress ?? strokeProgress,
             opacity: dotProgress ?? strokeProgress,
@@ -79,15 +67,9 @@ export default function OnwardLogo({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <defs>
-        <linearGradient id="onwardStaticGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={color} />
-          <stop offset="100%" stopColor="#f59e0b" />
-        </linearGradient>
-      </defs>
       <path
         d={cornerD}
-        stroke={color === "currentColor" ? "currentColor" : "url(#onwardStaticGrad)"}
+        stroke={color}
         strokeWidth="18"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -96,7 +78,7 @@ export default function OnwardLogo({
         cx="36"
         cy="64"
         r="14"
-        fill={color === "currentColor" ? "currentColor" : "url(#onwardStaticGrad)"}
+        fill={color}
       />
     </svg>
   );

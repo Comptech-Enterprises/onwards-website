@@ -96,31 +96,14 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#faf8f5] overflow-hidden select-none pointer-events-none"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-white overflow-hidden select-none pointer-events-none"
       initial={{ opacity: 1 }}
       animate={isSettle ? { opacity: 0 } : { opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Ambient background glow & subtle grid */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, #d4622b22 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d4622b]/15 blur-3xl"
-          animate={isLogoPhase ? { width: 500, height: 500 } : { width: 400, height: 400 }}
-          transition={{ duration: 0.8 }}
-        />
-      </div>
-
       {/* Stage Container */}
       <div className="relative flex items-center justify-center">
-        {/* Step 1: Larger Desk SVG Line-Draw (170px x 170px) */}
+        {/* Step 1: Flat Solid Desk SVG Line-Draw (170px x 170px) */}
         <motion.div
           className="absolute flex flex-col items-center justify-center"
           initial={{ opacity: 1, scale: 1 }}
@@ -137,20 +120,12 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             viewBox="0 0 100 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="overflow-visible drop-shadow-[0_12px_32px_rgba(212,98,43,0.18)]"
+            className="overflow-visible"
           >
-            <defs>
-              <linearGradient id="introDeskGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#ea580c" />
-                <stop offset="50%" stopColor="#d4622b" />
-                <stop offset="100%" stopColor="#f59e0b" />
-              </linearGradient>
-            </defs>
-
             {/* Desk Surface */}
             <motion.path
               d="M 10 60 H 90"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="3.5"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
@@ -161,7 +136,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Desk Left Leg */}
             <motion.path
               d="M 20 60 V 86"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="3.5"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
@@ -172,7 +147,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Desk Right Leg */}
             <motion.path
               d="M 80 60 V 86"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="3.5"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
@@ -183,7 +158,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Desk Stretcher Bar */}
             <motion.path
               d="M 20 76 H 80"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="2.5"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
@@ -194,7 +169,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Stand Base */}
             <motion.path
               d="M 40 60 H 60"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="3"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
@@ -205,7 +180,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Stand Neck */}
             <motion.path
               d="M 50 60 V 52"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="3"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
@@ -216,7 +191,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Monitor Screen Frame */}
             <motion.path
               d="M 32 28 H 68 C 70.2 28 72 29.8 72 32 V 52 C 72 54.2 70.2 56 68 56 H 32 C 29.8 56 28 54.2 28 52 V 32 C 28 29.8 29.8 28 32 28 Z"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -228,7 +203,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Desk Lamp Arch */}
             <motion.path
               d="M 16 60 V 46 C 16 40 22 38 26 40"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="2.5"
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
@@ -239,7 +214,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             {/* Coffee Cup */}
             <motion.path
               d="M 82 60 V 51 H 87 V 60 Z"
-              stroke="url(#introDeskGrad)"
+              stroke="#d4622b"
               strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -260,7 +235,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           </motion.span>
         </motion.div>
 
-        {/* Step 2 & 3: BIG Logo Construction (170px) & Glide to Navbar */}
+        {/* Step 2 & 3: Flat Solid BIG Logo Construction (170px) & Glide to Navbar */}
         {isLogoPhase && (
           <motion.div
             className="absolute flex flex-col sm:flex-row items-center gap-4 sm:gap-6 origin-center whitespace-nowrap"
@@ -288,20 +263,12 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               viewBox="0 0 100 100"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="overflow-visible shrink-0 drop-shadow-[0_12px_32px_rgba(212,98,43,0.22)]"
+              className="overflow-visible shrink-0"
             >
-              <defs>
-                <linearGradient id="onwardBigGrad" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stopColor="#ea580c" />
-                  <stop offset="50%" stopColor="#d4622b" />
-                  <stop offset="100%" stopColor="#f59e0b" />
-                </linearGradient>
-              </defs>
-
               {/* Big Logo Arm Vector Construction */}
               <motion.path
                 d={cornerD}
-                stroke="url(#onwardBigGrad)"
+                stroke="#d4622b"
                 strokeWidth="18"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -315,7 +282,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
                 cx="36"
                 cy="64"
                 r="14"
-                fill="url(#onwardBigGrad)"
+                fill="#d4622b"
                 className="origin-[36px_64px]"
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: [0, 1.3, 1], opacity: 1 }}
@@ -331,7 +298,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
                 animate={
                   isSettle
                     ? { opacity: 1, y: 0, color: "#ffffff" }
-                    : { opacity: 1, y: 0, color: "#1a1a2e" }
+                    : { opacity: 1, y: 0, color: "#000000" }
                 }
                 transition={{ duration: 0.5, delay: 0.25 }}
               >
@@ -342,7 +309,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
                 initial={{ opacity: 0, y: 8 }}
                 animate={
                   isSettle
-                    ? { opacity: 1, y: 0, color: "rgba(255,255,255,0.7)" }
+                    ? { opacity: 1, y: 0, color: "rgba(255,255,255,0.8)" }
                     : { opacity: 1, y: 0, color: "#d4622b" }
                 }
                 transition={{ duration: 0.5, delay: 0.38 }}
