@@ -52,12 +52,12 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
   // Phase sequence & timing
   useEffect(() => {
-    // 1. At 1100ms: Desk draw complete, transition to logo construction phase
+    // 1. At 1050ms: Desk draw complete, transition to BIG LOGO construction phase
     const t1 = setTimeout(() => {
       setPhase("logo");
-    }, 1100);
+    }, 1050);
 
-    // 2. At 2100ms: Logo construction complete, calculate navbar position & glide
+    // 2. At 2250ms: Big logo construction complete, calculate navbar position & glide
     const t2 = setTimeout(() => {
       const headerLogo = document.getElementById("header-logo");
       if (headerLogo) {
@@ -72,13 +72,13 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         });
       }
       setPhase("settle");
-    }, 2100);
+    }, 2250);
 
-    // 3. At 2900ms: Settle complete, reveal header & unlock scroll
+    // 3. At 3150ms: Settle complete, reveal header & unlock scroll
     const t3 = setTimeout(() => {
       setPhase("done");
       onComplete();
-    }, 2900);
+    }, 3150);
 
     return () => {
       clearTimeout(t1);
@@ -99,7 +99,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
       className="fixed inset-0 z-[100] flex items-center justify-center bg-[#faf8f5] overflow-hidden select-none pointer-events-none"
       initial={{ opacity: 1 }}
       animate={isSettle ? { opacity: 0 } : { opacity: 1 }}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Ambient background glow & subtle grid */}
       <div className="absolute inset-0 pointer-events-none">
@@ -111,25 +111,29 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             backgroundSize: "28px 28px",
           }}
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[#d4622b]/10 blur-3xl" />
+        <motion.div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d4622b]/15 blur-3xl"
+          animate={isLogoPhase ? { width: 480, height: 480 } : { width: 320, height: 320 }}
+          transition={{ duration: 0.8 }}
+        />
       </div>
 
       {/* Stage Container */}
       <div className="relative flex items-center justify-center">
-        {/* Step 1: Desk SVG Stroke-Draw */}
+        {/* Step 1: Desk SVG Line-Draw */}
         <motion.div
           className="absolute flex flex-col items-center justify-center"
           initial={{ opacity: 1, scale: 1 }}
           animate={
             isLogoPhase
-              ? { opacity: 0, scale: 0.6, y: 12 }
+              ? { opacity: 0, scale: 0.5, y: 15 }
               : { opacity: 1, scale: 1, y: 0 }
           }
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <svg
-            width="120"
-            height="120"
+            width="130"
+            height="130"
             viewBox="0 0 100 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -256,16 +260,16 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           </motion.span>
         </motion.div>
 
-        {/* Step 2 & 3: Logo Drawing & Glide to Navbar */}
+        {/* Step 2 & 3: BIG Logo Construction & Glide to Navbar */}
         {isLogoPhase && (
           <motion.div
-            className="absolute flex items-center gap-3 origin-center whitespace-nowrap"
-            initial={{ opacity: 0, scale: 0.8, x: 0, y: 0 }}
+            className="absolute flex flex-col sm:flex-row items-center gap-4 sm:gap-6 origin-center whitespace-nowrap"
+            initial={{ opacity: 0, scale: 0.85, x: 0, y: 0 }}
             animate={
               isSettle
                 ? {
                     opacity: 1,
-                    scale: 0.72,
+                    scale: 0.28,
                     x: targetOffset.x,
                     y: targetOffset.y,
                   }
@@ -273,75 +277,75 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             }
             transition={
               isSettle
-                ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-                : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+                ? { duration: 0.85, ease: [0.16, 1, 0.3, 1] }
+                : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
             }
           >
-            {/* Animated Onward Logo Mark SVG */}
+            {/* BIG Animated Onward Logo Mark SVG (160px x 160px) */}
             <svg
-              width="54"
-              height="54"
+              width="160"
+              height="160"
               viewBox="0 0 100 100"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="overflow-visible shrink-0"
+              className="overflow-visible shrink-0 drop-shadow-[0_12px_32px_rgba(212,98,43,0.2)]"
             >
               <defs>
-                <linearGradient id="onwardConstructGrad" x1="0" y1="0" x2="1" y2="1">
+                <linearGradient id="onwardBigGrad" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor="#ea580c" />
                   <stop offset="50%" stopColor="#d4622b" />
                   <stop offset="100%" stopColor="#f59e0b" />
                 </linearGradient>
               </defs>
 
-              {/* Logo Arm Stroke Construction */}
+              {/* Big Logo Arm Vector Construction */}
               <motion.path
                 d={cornerD}
-                stroke="url(#onwardConstructGrad)"
+                stroke="url(#onwardBigGrad)"
                 strokeWidth="18"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
-                transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1], delay: 0.05 }}
+                transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.05 }}
               />
 
-              {/* Logo Inner Dot Pop */}
+              {/* Big Logo Inner Core Dot Pop */}
               <motion.circle
                 cx="36"
                 cy="64"
                 r="14"
-                fill="url(#onwardConstructGrad)"
+                fill="url(#onwardBigGrad)"
                 className="origin-[36px_64px]"
                 initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: [0, 1.25, 1], opacity: 1 }}
-                transition={{ duration: 0.45, ease: "easeOut", delay: 0.4 }}
+                animate={{ scale: [0, 1.3, 1], opacity: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.45 }}
               />
             </svg>
 
-            {/* Brand Typography Reveal */}
-            <div className="leading-none text-left">
+            {/* Big Brand Typography */}
+            <div className="leading-none text-center sm:text-left">
               <motion.span
-                className="text-2xl font-bold tracking-tight block"
-                initial={{ opacity: 0, x: -8 }}
+                className="text-4xl sm:text-6xl font-black tracking-tight block"
+                initial={{ opacity: 0, y: 10 }}
                 animate={
                   isSettle
-                    ? { opacity: 1, x: 0, color: "#ffffff" }
-                    : { opacity: 1, x: 0, color: "#1a1a2e" }
+                    ? { opacity: 1, y: 0, color: "#ffffff" }
+                    : { opacity: 1, y: 0, color: "#1a1a2e" }
                 }
                 transition={{ duration: 0.5, delay: 0.25 }}
               >
                 Onward
               </motion.span>
               <motion.span
-                className="block text-[9.5px] tracking-[0.25em] font-bold"
-                initial={{ opacity: 0, x: -8 }}
+                className="block text-xs sm:text-base tracking-[0.3em] font-bold mt-1"
+                initial={{ opacity: 0, y: 8 }}
                 animate={
                   isSettle
-                    ? { opacity: 1, x: 0, color: "rgba(255,255,255,0.7)" }
-                    : { opacity: 1, x: 0, color: "#d4622b" }
+                    ? { opacity: 1, y: 0, color: "rgba(255,255,255,0.7)" }
+                    : { opacity: 1, y: 0, color: "#d4622b" }
                 }
-                transition={{ duration: 0.5, delay: 0.35 }}
+                transition={{ duration: 0.5, delay: 0.38 }}
               >
                 WORKSPACES
               </motion.span>
