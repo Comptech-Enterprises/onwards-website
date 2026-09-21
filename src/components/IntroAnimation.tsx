@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import OnwardLogo from "./OnwardLogo";
 
 export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<"draw" | "crossfade" | "settle" | "done">("draw");
+  const [phase, setPhase] = useState<"desk" | "logo" | "settle" | "done">("desk");
   const [targetOffset, setTargetOffset] = useState<{ x: number; y: number }>({ x: 0, y: -200 });
 
   // Handle scroll lock during animation
@@ -51,14 +50,14 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
     };
   }, [phase]);
 
-  // Phase timers
+  // Phase sequence & timing
   useEffect(() => {
-    // 1. After 1350ms (stroke draw complete), transition to crossfade
+    // 1. At 1100ms: Desk draw complete, transition to logo construction phase
     const t1 = setTimeout(() => {
-      setPhase("crossfade");
-    }, 1350);
+      setPhase("logo");
+    }, 1100);
 
-    // 2. After 2150ms (crossfade complete), calculate target pos & transition to settle
+    // 2. At 2100ms: Logo construction complete, calculate navbar position & glide
     const t2 = setTimeout(() => {
       const headerLogo = document.getElementById("header-logo");
       if (headerLogo) {
@@ -73,13 +72,13 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         });
       }
       setPhase("settle");
-    }, 2150);
+    }, 2100);
 
-    // 3. After 2950ms (settle complete), mark done and notify parent
+    // 3. At 2900ms: Settle complete, reveal header & unlock scroll
     const t3 = setTimeout(() => {
       setPhase("done");
       onComplete();
-    }, 2950);
+    }, 2900);
 
     return () => {
       clearTimeout(t1);
@@ -90,8 +89,10 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
   if (phase === "done") return null;
 
-  const isCrossfade = phase === "crossfade" || phase === "settle";
+  const isLogoPhase = phase === "logo" || phase === "settle";
   const isSettle = phase === "settle";
+
+  const cornerD = "M 22 26 H 62 C 75.25 26 86 36.75 86 50 V 82";
 
   return (
     <motion.div
@@ -103,7 +104,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
       {/* Ambient background glow & subtle grid */}
       <div className="absolute inset-0 pointer-events-none">
         <div
-          className="absolute inset-0 opacity-25"
+          className="absolute inset-0 opacity-20"
           style={{
             backgroundImage:
               "radial-gradient(circle, #d4622b22 1px, transparent 1px)",
@@ -115,20 +116,20 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
       {/* Stage Container */}
       <div className="relative flex items-center justify-center">
-        {/* Phase 1: Desk SVG Drawing */}
+        {/* Step 1: Desk SVG Stroke-Draw */}
         <motion.div
           className="absolute flex flex-col items-center justify-center"
           initial={{ opacity: 1, scale: 1 }}
           animate={
-            isCrossfade
-              ? { opacity: 0, scale: 0.65, y: 10 }
+            isLogoPhase
+              ? { opacity: 0, scale: 0.6, y: 12 }
               : { opacity: 1, scale: 1, y: 0 }
           }
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <svg
-            width="130"
-            height="130"
+            width="120"
+            height="120"
             viewBox="0 0 100 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +151,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.7, ease: "easeInOut", delay: 0.1 }}
+              transition={{ duration: 0.6, ease: "easeInOut", delay: 0.05 }}
             />
 
             {/* Desk Left Leg */}
@@ -161,7 +162,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }}
+              transition={{ duration: 0.45, ease: "easeInOut", delay: 0.3 }}
             />
 
             {/* Desk Right Leg */}
@@ -172,7 +173,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }}
+              transition={{ duration: 0.45, ease: "easeInOut", delay: 0.3 }}
             />
 
             {/* Desk Stretcher Bar */}
@@ -183,7 +184,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.55 }}
+              transition={{ duration: 0.4, ease: "easeInOut", delay: 0.45 }}
             />
 
             {/* Stand Base */}
@@ -194,7 +195,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.35, ease: "easeInOut", delay: 0.5 }}
+              transition={{ duration: 0.3, ease: "easeInOut", delay: 0.4 }}
             />
 
             {/* Stand Neck */}
@@ -205,7 +206,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.3, ease: "easeInOut", delay: 0.6 }}
+              transition={{ duration: 0.25, ease: "easeInOut", delay: 0.5 }}
             />
 
             {/* Monitor Screen Frame */}
@@ -217,7 +218,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinejoin="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.75, ease: "easeInOut", delay: 0.65 }}
+              transition={{ duration: 0.6, ease: "easeInOut", delay: 0.55 }}
             />
 
             {/* Desk Lamp Arch */}
@@ -228,7 +229,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.8 }}
+              transition={{ duration: 0.45, ease: "easeInOut", delay: 0.7 }}
             />
 
             {/* Coffee Cup */}
@@ -240,62 +241,113 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
               strokeLinejoin="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
-              transition={{ duration: 0.4, ease: "easeInOut", delay: 0.85 }}
+              transition={{ duration: 0.35, ease: "easeInOut", delay: 0.75 }}
             />
           </svg>
 
           {/* Subtitle text */}
           <motion.span
-            className="mt-4 text-xs font-bold tracking-[0.25em] text-[#d4622b] uppercase"
-            initial={{ opacity: 0, y: 5 }}
+            className="mt-3 text-[11px] font-bold tracking-[0.25em] text-[#d4622b] uppercase"
+            initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 0.85, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: 0.4, delay: 0.5 }}
           >
             Crafting Space
           </motion.span>
         </motion.div>
 
-        {/* Phase 2 & 3: Onward Logo Crossfade & Glide to Navbar */}
-        <motion.div
-          className="absolute flex items-center gap-3 origin-center whitespace-nowrap"
-          initial={{ opacity: 0, scale: 0.75, x: 0, y: 0 }}
-          animate={
-            isSettle
-              ? {
-                  opacity: 1,
-                  scale: 0.72,
-                  x: targetOffset.x,
-                  y: targetOffset.y,
-                }
-              : isCrossfade
-              ? { opacity: 1, scale: 1, x: 0, y: 0 }
-              : { opacity: 0, scale: 0.75, x: 0, y: 0 }
-          }
-          transition={
-            isSettle
-              ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-              : { duration: 0.55, ease: [0.22, 1, 0.36, 1] }
-          }
-        >
-          <OnwardLogo size={54} color="#d4622b" />
+        {/* Step 2 & 3: Logo Drawing & Glide to Navbar */}
+        {isLogoPhase && (
+          <motion.div
+            className="absolute flex items-center gap-3 origin-center whitespace-nowrap"
+            initial={{ opacity: 0, scale: 0.8, x: 0, y: 0 }}
+            animate={
+              isSettle
+                ? {
+                    opacity: 1,
+                    scale: 0.72,
+                    x: targetOffset.x,
+                    y: targetOffset.y,
+                  }
+                : { opacity: 1, scale: 1, x: 0, y: 0 }
+            }
+            transition={
+              isSettle
+                ? { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+                : { duration: 0.45, ease: [0.22, 1, 0.36, 1] }
+            }
+          >
+            {/* Animated Onward Logo Mark SVG */}
+            <svg
+              width="54"
+              height="54"
+              viewBox="0 0 100 100"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="overflow-visible shrink-0"
+            >
+              <defs>
+                <linearGradient id="onwardConstructGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#ea580c" />
+                  <stop offset="50%" stopColor="#d4622b" />
+                  <stop offset="100%" stopColor="#f59e0b" />
+                </linearGradient>
+              </defs>
 
-          <div className="leading-none text-left">
-            <motion.span
-              className="text-2xl font-bold tracking-tight block"
-              animate={isSettle ? { color: "#ffffff" } : { color: "#1a1a2e" }}
-              transition={{ duration: 0.6 }}
-            >
-              Onward
-            </motion.span>
-            <motion.span
-              className="block text-[9.5px] tracking-[0.25em] font-bold"
-              animate={isSettle ? { color: "rgba(255,255,255,0.7)" } : { color: "#d4622b" }}
-              transition={{ duration: 0.6 }}
-            >
-              WORKSPACES
-            </motion.span>
-          </div>
-        </motion.div>
+              {/* Logo Arm Stroke Construction */}
+              <motion.path
+                d={cornerD}
+                stroke="url(#onwardConstructGrad)"
+                strokeWidth="18"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1], delay: 0.05 }}
+              />
+
+              {/* Logo Inner Dot Pop */}
+              <motion.circle
+                cx="36"
+                cy="64"
+                r="14"
+                fill="url(#onwardConstructGrad)"
+                className="origin-[36px_64px]"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: [0, 1.25, 1], opacity: 1 }}
+                transition={{ duration: 0.45, ease: "easeOut", delay: 0.4 }}
+              />
+            </svg>
+
+            {/* Brand Typography Reveal */}
+            <div className="leading-none text-left">
+              <motion.span
+                className="text-2xl font-bold tracking-tight block"
+                initial={{ opacity: 0, x: -8 }}
+                animate={
+                  isSettle
+                    ? { opacity: 1, x: 0, color: "#ffffff" }
+                    : { opacity: 1, x: 0, color: "#1a1a2e" }
+                }
+                transition={{ duration: 0.5, delay: 0.25 }}
+              >
+                Onward
+              </motion.span>
+              <motion.span
+                className="block text-[9.5px] tracking-[0.25em] font-bold"
+                initial={{ opacity: 0, x: -8 }}
+                animate={
+                  isSettle
+                    ? { opacity: 1, x: 0, color: "rgba(255,255,255,0.7)" }
+                    : { opacity: 1, x: 0, color: "#d4622b" }
+                }
+                transition={{ duration: 0.5, delay: 0.35 }}
+              >
+                WORKSPACES
+              </motion.span>
+            </div>
+          </motion.div>
+        )}
       </div>
     </motion.div>
   );
