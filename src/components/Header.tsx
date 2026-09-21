@@ -36,7 +36,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
-        <a href="/" className="flex items-center gap-3 group">
+        <a href="/" id="header-logo" className="flex items-center gap-3 group">
           <Image
             src="/onward-logo.png"
             alt="Onward Workspaces"

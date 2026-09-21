@@ -1081,8 +1081,8 @@ export default function Home() {
 
   return (
     <>
+      <Header />
       {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
-      {introComplete && <Header />}
 
 
       {/* ━━━ HERO — FULL-BLEED BACKGROUND VIDEO CAROUSEL ━━━ */}
