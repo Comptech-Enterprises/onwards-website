@@ -231,7 +231,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
             animate={{ opacity: 0.85, y: 0 }}
             transition={{ duration: 0.4, delay: 0.5 }}
           >
-            Crafting Space
+            Enterprise Workspaces
           </motion.span>
         </motion.div>
 

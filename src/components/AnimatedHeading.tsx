@@ -62,7 +62,7 @@ export default function AnimatedHeading({
         >
           <motion.span
             variants={word}
-            className={`inline-block ${hi.has(clean(w)) ? "text-gradient font-bold" : ""}`}
+            className={`inline-block ${hi.has(clean(w)) ? "text-[#d4622b] font-bold" : ""}`}
           >
             {w}
           </motion.span>
