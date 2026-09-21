@@ -52,10 +52,10 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
   // Phase sequence & timing
   useEffect(() => {
-    // 1. At 1050ms: Desk draw complete, transition to BIG LOGO construction phase
+    // 1. At 1100ms: Desk draw complete, transition to BIG LOGO construction phase
     const t1 = setTimeout(() => {
       setPhase("logo");
-    }, 1050);
+    }, 1100);
 
     // 2. At 2250ms: Big logo construction complete, calculate navbar position & glide
     const t2 = setTimeout(() => {
@@ -113,14 +113,14 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
         />
         <motion.div
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#d4622b]/15 blur-3xl"
-          animate={isLogoPhase ? { width: 480, height: 480 } : { width: 320, height: 320 }}
+          animate={isLogoPhase ? { width: 500, height: 500 } : { width: 400, height: 400 }}
           transition={{ duration: 0.8 }}
         />
       </div>
 
       {/* Stage Container */}
       <div className="relative flex items-center justify-center">
-        {/* Step 1: Desk SVG Line-Draw */}
+        {/* Step 1: Larger Desk SVG Line-Draw (170px x 170px) */}
         <motion.div
           className="absolute flex flex-col items-center justify-center"
           initial={{ opacity: 1, scale: 1 }}
@@ -132,12 +132,12 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <svg
-            width="130"
-            height="130"
+            width="170"
+            height="170"
             viewBox="0 0 100 100"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="overflow-visible"
+            className="overflow-visible drop-shadow-[0_12px_32px_rgba(212,98,43,0.18)]"
           >
             <defs>
               <linearGradient id="introDeskGrad" x1="0" y1="0" x2="1" y2="1">
@@ -251,8 +251,8 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
 
           {/* Subtitle text */}
           <motion.span
-            className="mt-3 text-[11px] font-bold tracking-[0.25em] text-[#d4622b] uppercase"
-            initial={{ opacity: 0, y: 4 }}
+            className="mt-4 text-xs font-bold tracking-[0.3em] text-[#d4622b] uppercase"
+            initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 0.85, y: 0 }}
             transition={{ duration: 0.4, delay: 0.5 }}
           >
@@ -260,7 +260,7 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
           </motion.span>
         </motion.div>
 
-        {/* Step 2 & 3: BIG Logo Construction & Glide to Navbar */}
+        {/* Step 2 & 3: BIG Logo Construction (170px) & Glide to Navbar */}
         {isLogoPhase && (
           <motion.div
             className="absolute flex flex-col sm:flex-row items-center gap-4 sm:gap-6 origin-center whitespace-nowrap"
@@ -281,14 +281,14 @@ export function IntroAnimation({ onComplete }: { onComplete: () => void }) {
                 : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
             }
           >
-            {/* BIG Animated Onward Logo Mark SVG (160px x 160px) */}
+            {/* BIG Animated Onward Logo Mark SVG (170px x 170px) */}
             <svg
-              width="160"
-              height="160"
+              width="170"
+              height="170"
               viewBox="0 0 100 100"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="overflow-visible shrink-0 drop-shadow-[0_12px_32px_rgba(212,98,43,0.2)]"
+              className="overflow-visible shrink-0 drop-shadow-[0_12px_32px_rgba(212,98,43,0.22)]"
             >
               <defs>
                 <linearGradient id="onwardBigGrad" x1="0" y1="0" x2="1" y2="1">
