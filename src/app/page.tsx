@@ -1257,6 +1257,50 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
+      <section id="solutions" className="py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/60">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <Reveal>
+              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                <span className="w-6 h-px bg-[#d4622b]" /> Solutions
+                <span className="w-6 h-px bg-[#d4622b]" />
+              </span>
+            </Reveal>
+            <AnimatedHeading
+              text="Office Space Solutions"
+              highlight="Solutions"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
+            />
+            <Reveal delay={0.2}>
+              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
+                Flexible office solutions aligned with your business needs and
+                growth trajectory.
+              </p>
+            </Reveal>
+          </div>
+
+          {/* Desktop 3D Tilt Spotlight grid */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {solutions.map((sol, i) => (
+              <Reveal
+                key={sol.title}
+                delay={i * 0.07}
+                className={sol.size === "lg" ? "lg:col-span-1" : ""}
+              >
+                <SolutionCard sol={sol} />
+              </Reveal>
+            ))}
+          </div>
+          {/* Mobile auto-slider */}
+          <AutoSlider interval={3500}>
+            {solutions.map((sol) => (
+              <SolutionCard key={sol.title} sol={sol} />
+            ))}
+          </AutoSlider>
+        </div>
+      </section>
+
       {/* ━━━ OUR TOP LOCATIONS IN DELHI NCR ━━━ */}
       <section
         id="locations"
@@ -1328,50 +1372,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
-      <section id="solutions" className="py-16 lg:py-20 bg-[#faf8f5]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> Solutions
-                <span className="w-6 h-px bg-[#d4622b]" />
-              </span>
-            </Reveal>
-            <AnimatedHeading
-              text="Office Space Solutions"
-              highlight="Solutions"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
-            />
-            <Reveal delay={0.2}>
-              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
-                Flexible office solutions aligned with your business needs and
-                growth trajectory.
-              </p>
-            </Reveal>
-          </div>
-
-          {/* Desktop 3D Tilt Spotlight grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {solutions.map((sol, i) => (
-              <Reveal
-                key={sol.title}
-                delay={i * 0.07}
-                className={sol.size === "lg" ? "lg:col-span-1" : ""}
-              >
-                <SolutionCard sol={sol} />
-              </Reveal>
-            ))}
-          </div>
-          {/* Mobile auto-slider */}
-          <AutoSlider interval={3500}>
-            {solutions.map((sol) => (
-              <SolutionCard key={sol.title} sol={sol} />
-            ))}
-          </AutoSlider>
         </div>
       </section>
 
