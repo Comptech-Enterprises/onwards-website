@@ -234,24 +234,10 @@ export default function TestimonialsSection() {
                           {item.company}
                         </span>
                       </p>
-                      <div className="flex items-center gap-1.5 mt-1.5 text-[11px] font-medium text-[#d4622b] truncate">
-                        <span>✓</span>
-                        <span className="truncate">{item.metric}</span>
-                      </div>
                     </div>
                   </div>
 
                   <div className="shrink-0 flex items-center gap-2">
-                    <span
-                      className={`text-[11px] font-semibold px-2.5 py-1 rounded-full whitespace-nowrap ${
-                        isActive
-                          ? "bg-[#d4622b]/10 text-[#d4622b]"
-                          : "bg-gray-100 text-gray-500"
-                      }`}
-                    >
-                      {item.seats}
-                    </span>
-
                     <span
                       className={`text-sm font-bold transition-all ${
                         isActive

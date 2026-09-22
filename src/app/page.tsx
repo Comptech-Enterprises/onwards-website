@@ -744,8 +744,8 @@ function TrustedLeadersSection() {
                 className="bg-white rounded-3xl border border-gray-200/90 p-7 sm:p-8 flex flex-col justify-between shadow-[0_8px_30px_-12px_rgba(26,26,46,0.1)] hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.18)] hover:border-[#d4622b]/40 hover:-translate-y-1.5 transition-all duration-300 relative group"
               >
                 <div>
-                  {/* Top card header: 5 stars rating & seats badge */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
+                  {/* Top card header: 5 stars rating */}
+                  <div className="flex items-center justify-between gap-2 mb-4">
                     <div className="flex items-center gap-1">
                       {[...Array(t.rating)].map((_, i) => (
                         <svg
@@ -757,17 +757,6 @@ function TrustedLeadersSection() {
                         </svg>
                       ))}
                     </div>
-                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#d4622b]/10 text-[#d4622b] tracking-tight">
-                      {t.seats}
-                    </span>
-                  </div>
-
-                  {/* Verified metric badge */}
-                  <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-[#d4622b]">
-                    <span className="w-4 h-4 rounded-full bg-[#d4622b]/10 flex items-center justify-center text-[#d4622b] text-[10px]">
-                      ✓
-                    </span>
-                    <span>{t.metric}</span>
                   </div>
 
                   {/* Testimonial Quote */}
