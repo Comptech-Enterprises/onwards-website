@@ -504,30 +504,18 @@ function GallerySlider() {
               animate="center"
               exit="exit"
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0"
-              style={{
-                background: `linear-gradient(135deg, ${slide.grad[0]} 0%, ${slide.grad[1]} 50%, ${slide.grad[2]} 100%)`,
-              }}
+              className="absolute inset-0 bg-[#faf8f5]"
             >
-              {/* Dot grid */}
-              <div
-                className="absolute inset-0 opacity-30"
-                style={{
-                  backgroundImage: `radial-gradient(circle, ${slide.shape}33 1.5px, transparent 1.5px)`,
-                  backgroundSize: "28px 28px",
-                }}
-              />
-
               {/* Decorative geometric shapes */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" fill="none">
-                <circle cx="900" cy="100" r="220" stroke={slide.shape} strokeOpacity="0.08" strokeWidth="80" />
-                <circle cx="900" cy="100" r="120" stroke={slide.shape} strokeOpacity="0.06" strokeWidth="40" />
-                <rect x="80" y="300" width="200" height="200" rx="40" fill={slide.shape} fillOpacity="0.04" />
-                <rect x="120" y="340" width="120" height="120" rx="24" fill={slide.shape} fillOpacity="0.05" />
-                <line x1="0" y1="200" x2="1200" y2="200" stroke={slide.shape} strokeOpacity="0.04" strokeWidth="1" />
-                <line x1="0" y1="320" x2="1200" y2="320" stroke={slide.shape} strokeOpacity="0.04" strokeWidth="1" />
-                <line x1="400" y1="0" x2="400" y2="520" stroke={slide.shape} strokeOpacity="0.04" strokeWidth="1" />
-                <line x1="800" y1="0" x2="800" y2="520" stroke={slide.shape} strokeOpacity="0.04" strokeWidth="1" />
+                <circle cx="900" cy="100" r="220" stroke="#d4622b" strokeOpacity="0.08" strokeWidth="80" />
+                <circle cx="900" cy="100" r="120" stroke="#d4622b" strokeOpacity="0.06" strokeWidth="40" />
+                <rect x="80" y="300" width="200" height="200" rx="40" fill="#d4622b" fillOpacity="0.04" />
+                <rect x="120" y="340" width="120" height="120" rx="24" fill="#d4622b" fillOpacity="0.05" />
+                <line x1="0" y1="200" x2="1200" y2="200" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
+                <line x1="0" y1="320" x2="1200" y2="320" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
+                <line x1="400" y1="0" x2="400" y2="520" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
+                <line x1="800" y1="0" x2="800" y2="520" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
               </svg>
 
               {/* Central illustration — floating building */}
@@ -538,9 +526,9 @@ function GallerySlider() {
                   className="opacity-15"
                 >
                   <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-                    <rect x="40" y="60" width="100" height="100" rx="8" fill={slide.shape} />
-                    <rect x="55" y="40" width="70" height="25" rx="4" fill={slide.shape} />
-                    <rect x="65" y="25" width="50" height="18" rx="3" fill={slide.shape} />
+                    <rect x="40" y="60" width="100" height="100" rx="8" fill="#d4622b" />
+                    <rect x="55" y="40" width="70" height="25" rx="4" fill="#d4622b" />
+                    <rect x="65" y="25" width="50" height="18" rx="3" fill="#d4622b" />
                     <rect x="55" y="80" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
                     <rect x="85" y="80" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
                     <rect x="115" y="80" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
@@ -553,8 +541,7 @@ function GallerySlider() {
               </div>
             </motion.div>
 
-            {/* Bottom caption overlay */}
-            <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-white/80 via-white/20 to-transparent" />
+            {/* Bottom caption area */}
             <div className="absolute bottom-0 left-0 right-0 px-8 pb-8 flex items-end justify-between">
               <div>
                 <h3 className="text-3xl lg:text-4xl font-bold text-[#1a1a2e]">{slide.title}</h3>
