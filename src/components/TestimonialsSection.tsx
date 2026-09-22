@@ -132,7 +132,7 @@ export default function TestimonialsSection() {
     >
       {/* ━━━ AMBIENT BACKGROUND GLOWS ━━━ */}
       <div className="pointer-events-none absolute top-1/4 -left-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#f59e0b]/5 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
 
       {/* ━━━ SOLID, SMOOTH DECORATIVE SVG THREAD (NO BLINKING) ━━━ */}
       <div
@@ -149,7 +149,7 @@ export default function TestimonialsSection() {
             <linearGradient id="solidThreadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#d4622b" stopOpacity="0.1" />
               <stop offset="30%" stopColor="#d4622b" stopOpacity="0.45" />
-              <stop offset="70%" stopColor="#f59e0b" stopOpacity="0.4" />
+              <stop offset="70%" stopColor="#d4622b" stopOpacity="0.4" />
               <stop offset="100%" stopColor="#d4622b" stopOpacity="0.1" />
             </linearGradient>
           </defs>
@@ -234,7 +234,7 @@ export default function TestimonialsSection() {
                           {item.company}
                         </span>
                       </p>
-                      <div className="flex items-center gap-1.5 mt-1.5 text-[11px] font-medium text-emerald-600 truncate">
+                      <div className="flex items-center gap-1.5 mt-1.5 text-[11px] font-medium text-[#d4622b] truncate">
                         <span>✓</span>
                         <span className="truncate">{item.metric}</span>
                       </div>

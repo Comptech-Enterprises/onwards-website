@@ -120,14 +120,14 @@ export default function BlogArticleView({
       {/* ━━━ READING PROGRESS BAR ━━━ */}
       <div className="fixed top-20 left-0 right-0 h-1 bg-transparent z-40">
         <div
-          className="h-full bg-gradient-to-r from-[#d4622b] to-[#f59e0b] transition-all duration-100 ease-out"
+          className="h-full bg-[#d4622b] transition-all duration-100 ease-out"
           style={{ width: `${readingProgress}%` }}
         />
       </div>
 
       <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-28 pb-20 relative overflow-hidden">
         {/* Subtle ambient atmospheric background glows */}
-        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[500px] bg-gradient-to-b from-[#d4622b]/5 via-[#f59e0b]/5 to-transparent blur-[140px]" />
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[500px] bg-[#d4622b]/5 blur-[140px]" />
 
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           {/* ━━━ BREADCRUMBS ━━━ */}

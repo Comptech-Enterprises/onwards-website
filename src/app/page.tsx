@@ -714,7 +714,7 @@ function TrustedLeadersSection() {
     <section id="testimonials" className="py-20 lg:py-28 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       {/* Ambient background glows matching website theme */}
       <div className="pointer-events-none absolute top-1/4 -left-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#f59e0b]/5 blur-[120px]" />
+      <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
@@ -763,8 +763,8 @@ function TrustedLeadersSection() {
                   </div>
 
                   {/* Verified metric badge */}
-                  <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-emerald-600">
-                    <span className="w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-[10px]">
+                  <div className="flex items-center gap-1.5 mb-4 text-xs font-semibold text-[#d4622b]">
+                    <span className="w-4 h-4 rounded-full bg-[#d4622b]/10 flex items-center justify-center text-[#d4622b] text-[10px]">
                       ✓
                     </span>
                     <span>{t.metric}</span>
@@ -939,7 +939,7 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
             {sol.desc}
           </p>
         </div>
-        <div className="mt-6 flex items-center gap-2 text-[#f59e0b] text-sm font-semibold opacity-100 translate-y-0 lg:text-[#d4622b] lg:opacity-0 lg:translate-y-2 lg:group-hover:text-[#f59e0b] lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
+        <div className="mt-6 flex items-center gap-2 text-[#d4622b] text-sm font-semibold opacity-100 translate-y-0 lg:text-[#d4622b] lg:opacity-0 lg:translate-y-2 lg:group-hover:text-[#d4622b] lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
           Explore Specifications &rarr;
         </div>
       </div>
@@ -1130,7 +1130,7 @@ export default function Home() {
                   around{" "}
                   <span className="relative inline-block">
                     <AnimatePresence mode="wait">
-                      <motion.span key={heroWord} initial={{ y: 40, opacity: 0, rotateX: -40 }} animate={{ y: 0, opacity: 1, rotateX: 0 }} exit={{ y: -40, opacity: 0, rotateX: 40 }} transition={{ duration: 0.4, ease: "easeInOut" }} className="inline-block text-gradient" style={{ transformOrigin: "bottom" }}>
+                      <motion.span key={heroWord} initial={{ y: 40, opacity: 0, rotateX: -40 }} animate={{ y: 0, opacity: 1, rotateX: 0 }} exit={{ y: -40, opacity: 0, rotateX: 40 }} transition={{ duration: 0.4, ease: "easeInOut" }} className="inline-block text-[#d4622b]" style={{ transformOrigin: "bottom" }}>
                         {heroWords[heroWord]}
                       </motion.span>
                     </AnimatePresence>
@@ -1158,9 +1158,9 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.7 }} className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden shadow-sm border border-white/20">
               {stats.map((s) => (
                 <div key={s.label} className="bg-white/10 backdrop-blur-md p-5 sm:p-6 text-center group hover:bg-white/20 transition-colors">
-                  <div className="text-2xl sm:text-3xl font-bold text-[#f59e0b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
+                  <div className="text-2xl sm:text-3xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
                   <div className="text-white/90 text-xs mt-1 font-medium">{s.label}</div>
-                  <div className="text-white/60 text-[10px] mt-0.5 group-hover:text-[#f59e0b]/90 transition-colors">{s.sub}</div>
+                  <div className="text-white/60 text-[10px] mt-0.5 group-hover:text-[#d4622b] transition-colors">{s.sub}</div>
                 </div>
               ))}
             </motion.div>

@@ -145,7 +145,7 @@ export default function BlogClient({ posts }: BlogClientProps) {
             className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1a1a2e] leading-[1.15]"
           >
             Ideas, Insights &amp;{" "}
-            <span className="text-gradient">Workspace Innovation</span>
+            <span className="text-[#d4622b]">Workspace Innovation</span>
           </motion.h1>
 
           <motion.p

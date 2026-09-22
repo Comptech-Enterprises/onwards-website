@@ -94,7 +94,7 @@ export default function ContactSection() {
       />
       <motion.div
         style={{ y: orb2Y }}
-        className="pointer-events-none absolute bottom-1/4 -right-20 w-[600px] h-[600px] rounded-full bg-[#f59e0b]/10 blur-[140px]"
+        className="pointer-events-none absolute bottom-1/4 -right-20 w-[600px] h-[600px] rounded-full bg-[#d4622b]/10 blur-[140px]"
       />
 
       {/* Subtle blueprint grid overlay */}
