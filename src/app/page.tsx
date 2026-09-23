@@ -187,6 +187,21 @@ const stats = [
   { value: 1, suffix: "M+", label: "Sq. Ft.", sub: "of workspace" },
 ];
 
+const cityCards = [
+  {
+    name: "Delhi",
+    img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    name: "Noida",
+    img: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1000&q=80",
+  },
+  {
+    name: "Gurugram",
+    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80",
+  },
+];
+
 const solutions = [
   {
     title: "Managed Office",
@@ -1210,62 +1225,51 @@ export default function Home() {
             </p>
           </div>
 
-          {/* 3 City Cards (Delhi, Noida, Gurugram) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {/* Delhi */}
-            <div
-              className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                <img
-                  src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1000&q=80"
-                  alt="Delhi"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+          {/* Desktop — 3 City Cards (Delhi, Noida, Gurugram) */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8">
+            {cityCards.map((city) => (
+              <div
+                key={city.name}
+                className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                  <img
+                    src={city.img}
+                    alt={city.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+                <div className="py-5 text-center bg-white border-t border-gray-100">
+                  <h3 className="text-xl font-bold text-[#111827] tracking-tight group-hover:text-[#d4622b] transition-colors">
+                    {city.name}
+                  </h3>
+                </div>
               </div>
-              <div className="py-5 text-center bg-white border-t border-gray-100">
-                <h3 className="text-xl font-bold text-[#111827] tracking-tight group-hover:text-[#d4622b] transition-colors">
-                  Delhi
-                </h3>
-              </div>
-            </div>
-
-            {/* Noida */}
-            <div
-              className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                <img
-                  src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1000&q=80"
-                  alt="Noida"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="py-5 text-center bg-white border-t border-gray-100">
-                <h3 className="text-xl font-bold text-[#111827] tracking-tight group-hover:text-[#d4622b] transition-colors">
-                  Noida
-                </h3>
-              </div>
-            </div>
-
-            {/* Gurugram */}
-            <div
-              className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                <img
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80"
-                  alt="Gurugram"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="py-5 text-center bg-white border-t border-gray-100">
-                <h3 className="text-xl font-bold text-[#111827] tracking-tight group-hover:text-[#d4622b] transition-colors">
-                  Gurugram
-                </h3>
-              </div>
-            </div>
+            ))}
           </div>
+
+          {/* Mobile — auto-slider */}
+          <AutoSlider interval={3500}>
+            {cityCards.map((city) => (
+              <div
+                key={city.name}
+                className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm flex flex-col"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                  <img
+                    src={city.img}
+                    alt={city.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="py-5 text-center bg-white border-t border-gray-100">
+                  <h3 className="text-xl font-bold text-[#111827] tracking-tight">
+                    {city.name}
+                  </h3>
+                </div>
+              </div>
+            ))}
+          </AutoSlider>
         </div>
       </section>
 
