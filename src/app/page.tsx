@@ -649,7 +649,7 @@ function TrustedLeadersSection() {
       <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
+        <div className="max-w-5xl mx-auto text-center mb-14 sm:mb-16">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Testimonials <span className="w-6 h-px bg-[#d4622b]" />
@@ -658,10 +658,10 @@ function TrustedLeadersSection() {
           <AnimatedHeading
             text="Trusted by Enterprise Leaders"
             highlight="Enterprise Leaders"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-justify">
+            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-3xl mx-auto xl:max-w-none xl:whitespace-nowrap">
               These success stories showcase the real impact of our coworking spaces and services, providing valuable insights into how we can support your business needs &amp; aspirations.
             </p>
           </Reveal>
@@ -739,7 +739,7 @@ function EnterprisesSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
+        <div className="max-w-5xl mx-auto text-center mb-12 sm:mb-14">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Enterprise Network <span className="w-6 h-px bg-[#d4622b]" />
@@ -748,10 +748,10 @@ function EnterprisesSection() {
           <AnimatedHeading
             text="Enterprises using onward Workspaces"
             highlight="onward Workspaces"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-center md:whitespace-nowrap">
               Elevate your workspace experience and be part of a movement that redefines success
             </p>
           </Reveal>
