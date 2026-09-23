@@ -914,14 +914,6 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
           style={{ backgroundImage: `url(${sol.img})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-        
-        {/* Top Tag Badge */}
-        <div className="absolute top-4 left-4 z-10">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[10px] font-semibold tracking-wider text-white uppercase">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b]" />
-            {sol.tag}
-          </span>
-        </div>
       </div>
 
       {/* Card Content Area */}
