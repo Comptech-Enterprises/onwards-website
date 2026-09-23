@@ -823,86 +823,6 @@ function NewsMediaSection() {
   );
 }
 
-function SequelBeliefsSection() {
-  return (
-    <section className="py-24 sm:py-32 bg-[#1a1a2e] text-white relative overflow-hidden border-t border-b border-white/10">
-      {/* Background ambient light */}
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#d4622b]/10 blur-[140px]" />
-
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12 lg:gap-20">
-          {/* Left Column: Big Title */}
-          <div className="lg:w-5/12 lg:sticky lg:top-32">
-            <Reveal delay={0.1}>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-                We believe <br />
-                <span className="text-[#d4622b] italic font-serif font-normal">in extraordinary</span>
-              </h2>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <p className="mt-6 text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
-                A new era of corporate infrastructure built for visionary leaders, high-velocity teams, and enduring enterprises.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.3}>
-              <div className="mt-8">
-                <MagneticButton
-                  href="#contact"
-                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md px-7 py-3.5 rounded-full text-sm font-semibold transition-all group"
-                >
-                  <span>Read full manifesto</span>
-                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                  </svg>
-                </MagneticButton>
-              </div>
-            </Reveal>
-          </div>
-
-          {/* Right Column: Sequel-style Belief Statements */}
-          <div className="lg:w-7/12 space-y-8 sm:space-y-12">
-            {[
-              {
-                text: "Backing founders who",
-                italic: "bend reality.",
-              },
-              {
-                text: "Teams who believe impossible is an",
-                italic: "opinion.",
-              },
-              {
-                text: "Choosing courage over",
-                italic: "comfort.",
-              },
-              {
-                text: "Refusing to accept ordinary workspace",
-                italic: "standards.",
-              },
-              {
-                text: "Building corporate infrastructure for",
-                italic: "longevity over hype.",
-              },
-            ].map((b, i) => (
-              <Reveal key={i} delay={i * 0.12} y={30}>
-                <div className="group border-b border-white/10 pb-8 hover:border-[#d4622b]/50 transition-colors duration-500">
-                  <p className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white/90 group-hover:text-white transition-colors duration-300 leading-snug">
-                    {b.text}{" "}
-                    <span className="italic font-serif font-normal text-[#d4622b] block sm:inline mt-1 sm:mt-0">
-                      {b.italic}
-                    </span>
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
     <SpotlightCard className="h-full min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white hover:border-[#d4622b] transition-all duration-500 flex flex-col justify-between">
@@ -1275,9 +1195,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ MANIFESTO — WE BELIEVE IN (SEQUEL.CO STYLE) ━━━ */}
-      <SequelBeliefsSection />
-
       {/* ━━━ OUR TOP LOCATIONS IN DELHI NCR ━━━ */}
       <section
         id="locations"
@@ -1354,7 +1271,7 @@ export default function Home() {
 
       {/* ━━━ GALLERY ━━━ */}
       <section className="py-16 lg:py-20 bg-white overflow-hidden">
-        <div className="max-w-3xl mx-auto px-6 lg:px-8 mb-14 text-center">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-14 text-center">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Gallery
@@ -1364,7 +1281,7 @@ export default function Home() {
           <AnimatedHeading
             text="Explore Our Workspace Gallery"
             highlight="Workspace Gallery"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
           />
         </div>
         <GallerySlider />
