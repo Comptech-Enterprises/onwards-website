@@ -664,7 +664,7 @@ function TrustedLeadersSection() {
       <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-5xl mx-auto text-center mb-14 sm:mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Testimonials <span className="w-6 h-px bg-[#d4622b]" />
@@ -673,10 +673,10 @@ function TrustedLeadersSection() {
           <AnimatedHeading
             text="Trusted by Enterprise Leaders"
             highlight="Enterprise Leaders"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-3xl mx-auto xl:max-w-none xl:whitespace-nowrap">
+            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
               These success stories showcase the real impact of our coworking spaces and services, providing valuable insights into how we can support your business needs &amp; aspirations.
             </p>
           </Reveal>
@@ -754,19 +754,19 @@ function EnterprisesSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-5xl mx-auto text-center mb-12 sm:mb-14">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Enterprise Network <span className="w-6 h-px bg-[#d4622b]" />
             </span>
           </Reveal>
           <AnimatedHeading
-            text="Enterprises using onward Workspaces"
-            highlight="onward Workspaces"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
+            text="Enterprises using Onward Workspaces"
+            highlight="Onward Workspaces"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-center md:whitespace-nowrap">
+            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
               Elevate your workspace experience and be part of a movement that redefines success
             </p>
           </Reveal>
@@ -985,13 +985,125 @@ function LocationCard({
   );
 }
 
-/* ═══════════════════════════════════════════
-   PAGE
-   ═══════════════════════════════════════════ */
+function FooterNCRMap() {
+  const points = [
+    { name: "Connaught Place", x: 38, y: 38 },
+    { name: "Noida Sector 132", x: 74, y: 16 },
+    { name: "Noida Sector 126", x: 78, y: 34 },
+    { name: "Okhla", x: 58, y: 50 },
+    { name: "Mohan Cooperative", x: 62, y: 66 },
+    { name: "Udyog Vihar", x: 44, y: 80 },
+  ];
+
+  return (
+    <div className="relative w-full aspect-[4/3] max-w-sm p-2 overflow-hidden group bg-transparent">
+      {/* Background blueprint grid pattern */}
+      <div
+        className="absolute inset-0 opacity-30 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #d4622b20 1px, transparent 1px)",
+          backgroundSize: "20px 20px",
+        }}
+      />
+
+      {/* SVG Map Lines & Outline with strict fill="none" */}
+      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
+        {/* Arterial Connecting Lines */}
+        <line
+          x1="38"
+          y1="38"
+          x2="74"
+          y2="16"
+          stroke="#d4622b"
+          strokeWidth="0.4"
+          strokeDasharray="1.5 1.5"
+          strokeOpacity="0.5"
+        />
+        <line
+          x1="74"
+          y1="16"
+          x2="78"
+          y2="34"
+          stroke="#1a1a2e"
+          strokeWidth="0.3"
+          strokeOpacity="0.15"
+        />
+        <line
+          x1="78"
+          y1="34"
+          x2="58"
+          y2="50"
+          stroke="#1a1a2e"
+          strokeWidth="0.3"
+          strokeOpacity="0.15"
+        />
+        <line
+          x1="38"
+          y1="38"
+          x2="58"
+          y2="50"
+          stroke="#1a1a2e"
+          strokeWidth="0.3"
+          strokeOpacity="0.15"
+        />
+        <line
+          x1="58"
+          y1="50"
+          x2="62"
+          y2="66"
+          stroke="#1a1a2e"
+          strokeWidth="0.3"
+          strokeOpacity="0.15"
+        />
+        <line
+          x1="62"
+          y1="66"
+          x2="44"
+          y2="80"
+          stroke="#1a1a2e"
+          strokeWidth="0.3"
+          strokeOpacity="0.15"
+        />
+        <path
+          d="M 16 42 Q 40 44 84 50"
+          fill="none"
+          stroke="#1a1a2e"
+          strokeWidth="0.25"
+          strokeOpacity="0.1"
+        />
+      </svg>
+
+      {/* Location Pinpoints & Labels */}
+      {points.map((pt) => (
+        <div
+          key={pt.name}
+          style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
+          className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 group/pin cursor-pointer z-10"
+        >
+          {/* Pulsing ring */}
+          <div className="relative flex items-center justify-center">
+            <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-[#d4622b] opacity-40" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d4622b] border border-white shadow-xs group-hover/pin:scale-125 transition-transform" />
+          </div>
+
+          {/* Location Name Label */}
+          <span className="text-[10px] font-bold text-[#1a1a2e] whitespace-nowrap group-hover/pin:text-[#d4622b] transition-colors">
+            {pt.name}
+          </span>
+        </div>
+      ))}
+
+      {/* Watermark in bottom right */}
+      <div className="absolute bottom-2 right-2 text-[9px] font-black tracking-[0.25em] uppercase text-[#1a1a2e]/30 pointer-events-none">
+        DELHI NCR
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
-  const [introComplete, setIntroComplete] = useState(false);
-  const handleIntroComplete = useCallback(() => setIntroComplete(true), []);
+  const [introComplete] = useState(true);
   const [heroWord, setHeroWord] = useState(0);
   const [activeCity, setActiveCity] = useState<"Delhi" | "Noida" | "Gurgaon">("Delhi");
   const heroRef = useRef<HTMLDivElement>(null);
@@ -1033,8 +1145,6 @@ export default function Home() {
   return (
     <>
       <Header />
-      {!introComplete && <IntroAnimation onComplete={handleIntroComplete} />}
-
 
       {/* ━━━ HERO — FULL-BLEED BACKGROUND VIDEO CAROUSEL ━━━ */}
       <section
@@ -1064,38 +1174,45 @@ export default function Home() {
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-t from-[#0a0a15] to-transparent" />
 
-        {introComplete && (
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 pb-16"
+          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 pb-16 text-center flex flex-col items-center justify-center"
         >
-          <div className="max-w-3xl">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[4.5rem] xl:text-[5rem] font-bold text-white leading-[1.15] sm:leading-[1.05] tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)]">
-              <div className="overflow-hidden">
-                <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}>
-                  Workspace built
-                </motion.div>
-              </div>
-              <div className="overflow-visible sm:overflow-hidden">
-                <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}>
-                  around{" "}
-                  <span className="relative inline-block">
-                    <AnimatePresence mode="wait">
-                      <motion.span key={heroWord} initial={{ y: 40, opacity: 0, rotateX: -40 }} animate={{ y: 0, opacity: 1, rotateX: 0 }} exit={{ y: -40, opacity: 0, rotateX: 40 }} transition={{ duration: 0.4, ease: "easeInOut" }} className="inline-block text-[#d4622b]" style={{ transformOrigin: "bottom" }}>
-                        {heroWords[heroWord]}
-                      </motion.span>
-                    </AnimatePresence>
-                    <motion.span className="absolute -bottom-2 left-0 h-1 bg-[#d4622b] rounded-full" initial={{ width: "0%" }} animate={{ width: "100%" }} transition={{ delay: 1, duration: 0.8 }} />
-                  </span>
-                </motion.div>
-              </div>
+          <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-bold text-white leading-tight tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)] text-center whitespace-nowrap">
+              Workspace built around{" "}
+              <span className="relative inline-block text-left">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={heroWord}
+                    initial={{ y: 35, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -35, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                    className="inline-block text-[#d4622b]"
+                  >
+                    {heroWords[heroWord]}
+                  </motion.span>
+                </AnimatePresence>
+                <motion.span
+                  className="absolute -bottom-1.5 left-0 h-1 bg-[#d4622b] rounded-full"
+                  initial={{ width: "0%" }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                />
+              </span>
             </h1>
 
-            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.6 }} className="mt-8 text-lg sm:text-xl text-white/85 max-w-xl leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="mt-6 text-base sm:text-lg md:text-xl text-white/90 max-w-6xl mx-auto text-center leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] lg:whitespace-nowrap"
+            >
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.6 }} className="mt-10 flex flex-col sm:flex-row gap-4">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.6 }} className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
               <MagneticButton href="#contact" className="inline-flex items-center justify-center bg-[#d4622b] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]">
                 Book a Tour
                 <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -1106,7 +1223,7 @@ export default function Home() {
               </a>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.3, duration: 0.7 }} className="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden shadow-sm border border-white/20">
+            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.7 }} className="mt-14 w-full max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden shadow-sm border border-white/20">
               {stats.map((s) => (
                 <div key={s.label} className="bg-white/10 backdrop-blur-md p-5 sm:p-6 text-center group hover:bg-white/20 transition-colors">
                   <div className="text-2xl sm:text-3xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
@@ -1117,15 +1234,12 @@ export default function Home() {
             </motion.div>
           </div>
         </motion.div>
-        )}
 
         {/* Scroll indicator */}
-        {introComplete && (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.8 }} className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10">
           <span className="text-gray-400 text-[10px] tracking-widest uppercase">Scroll</span>
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-6 bg-gradient-to-b from-[#d4622b]/50 to-transparent" />
         </motion.div>
-        )}
       </section>
 
 
@@ -1285,7 +1399,7 @@ export default function Home() {
           <AnimatedHeading
             text="Explore Our Workspace Gallery"
             highlight="Workspace Gallery"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
           />
         </div>
         <GallerySlider />
@@ -1303,11 +1417,12 @@ export default function Home() {
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection />
 
-      {/* ━━━ FOOTER (SEQUEL.CO STYLE) ━━━ */}
-      <footer className="bg-[#faf8f5] text-gray-500 pt-14 pb-8 border-t border-gray-200">
+      {/* ━━━ FOOTER (LIGHT THEME WITH NCR MAP) ━━━ */}
+      <footer className="bg-[#faf8f5] text-gray-500 pt-16 pb-10 border-t border-gray-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10 sm:gap-12 mb-12">
-            <div className="col-span-2 sm:col-span-4 lg:col-span-1">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 mb-14 items-start">
+            {/* Logo + Bio */}
+            <div className="lg:col-span-3">
               <a href="#" className="flex items-center gap-3 mb-5 group">
                 <Image
                   src="/onward-logo.png"
@@ -1325,54 +1440,63 @@ export default function Home() {
                   </span>
                 </div>
               </a>
-              <p className="text-sm leading-relaxed max-w-xs text-gray-500">
+              <p className="text-sm leading-relaxed text-gray-500 max-w-xs">
                 Premium coworking spaces built around your brand, ambition, and people across Delhi NCR.
               </p>
             </div>
-            {[
-              {
-                title: "Solutions",
-                links: [
-                  "Managed Office",
-                  "Private Suites",
-                  "Virtual Office",
-                  "On-Demand",
-                  "Custom Built",
-                ],
-              },
-              {
-                title: "Locations",
-                links: ["Delhi", "Noida", "Gurgaon", "All Locations"],
-              },
-              {
-                title: "Company",
-                links: [
-                  "About Us",
-                  "Blog",
-                  "Careers",
-                  "Enterprise",
-                  "Contact",
-                ],
-              },
-            ].map((col) => (
-              <div key={col.title}>
-                <h4 className="text-[#1a1a2e] font-semibold text-xs mb-5 uppercase tracking-widest">
-                  {col.title}
-                </h4>
-                <ul className="space-y-3 text-sm">
-                  {col.links.map((l) => (
-                    <li key={l}>
-                      <a
-                        href={l === "Blog" ? "/blog" : "#"}
-                        className="text-gray-500 hover:text-[#d4622b] transition-colors"
-                      >
-                        {l}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+
+            {/* Navigation Columns */}
+            <div className="lg:col-span-5 grid grid-cols-3 gap-6">
+              {[
+                {
+                  title: "Solutions",
+                  links: [
+                    "Managed Office",
+                    "Private Suites",
+                    "Virtual Office",
+                    "On-Demand",
+                    "Custom Built",
+                  ],
+                },
+                {
+                  title: "Locations",
+                  links: ["Delhi", "Noida", "Gurgaon", "All Locations"],
+                },
+                {
+                  title: "Company",
+                  links: [
+                    "About Us",
+                    "Blog",
+                    "Careers",
+                    "Enterprise",
+                    "Contact",
+                  ],
+                },
+              ].map((col) => (
+                <div key={col.title}>
+                  <h4 className="text-[#1a1a2e] font-semibold text-xs mb-5 uppercase tracking-widest">
+                    {col.title}
+                  </h4>
+                  <ul className="space-y-3 text-sm">
+                    {col.links.map((l) => (
+                      <li key={l}>
+                        <a
+                          href={l === "Blog" ? "/blog" : "#"}
+                          className="relative inline-block text-gray-500 hover:text-[#d4622b] transition-colors py-0.5 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+                        >
+                          {l}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {/* Right Side NCR Vector Map Visual */}
+            <div className="lg:col-span-4 flex justify-start lg:justify-end">
+              <FooterNCRMap />
+            </div>
           </div>
 
           <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
@@ -1383,7 +1507,7 @@ export default function Home() {
                   <a
                     key={l}
                     href="#"
-                    className="text-gray-500 hover:text-[#d4622b] transition-colors"
+                    className="relative inline-block text-gray-500 hover:text-[#d4622b] transition-colors py-0.5 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
                   >
                     {l}
                   </a>
