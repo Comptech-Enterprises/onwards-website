@@ -22,13 +22,13 @@ export default function SpotlightCard({
   const normX = useMotionValue(0);
   const normY = useMotionValue(0);
 
-  const rotateXSpring = useSpring(useTransform(normY, [-0.5, 0.5], [6, -6]), {
-    stiffness: 260,
-    damping: 24,
+  const rotateXSpring = useSpring(useTransform(normY, [-0.5, 0.5], [5, -5]), {
+    stiffness: 300,
+    damping: 30,
   });
-  const rotateYSpring = useSpring(useTransform(normX, [-0.5, 0.5], [-6, 6]), {
-    stiffness: 260,
-    damping: 24,
+  const rotateYSpring = useSpring(useTransform(normX, [-0.5, 0.5], [-5, 5]), {
+    stiffness: 300,
+    damping: 30,
   });
 
   const handleMouseMove = useCallback(
@@ -57,11 +57,11 @@ export default function SpotlightCard({
       style={{
         rotateX: enableTilt ? rotateXSpring : 0,
         rotateY: enableTilt ? rotateYSpring : 0,
-        transformPerspective: 1000,
+        transformPerspective: 1200,
         transformStyle: "preserve-3d",
       }}
-      whileHover={{ y: -6, transition: { duration: 0.3 } }}
-      className={`relative rounded-3xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:border-[#d4622b] transition-colors duration-300 ${className}`}
+      whileHover={{ y: -8, transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }}
+      className={`relative rounded-3xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:border-[#d4622b] hover:shadow-[0_20px_40px_-15px_rgba(212,98,43,0.12)] transition-all duration-500 ${className}`}
     >
       {/* Content wrapper */}
       <div className="relative z-10 h-full">{children}</div>

@@ -192,42 +192,42 @@ const solutions = [
     title: "Managed Office",
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
-    size: "lg",
+    features: ["Dedicated Entrance", "Custom Layout & IT", "24/7 Access"],
     img: "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
-    size: "sm",
+    features: ["Ergonomic Seating", "Soundproof Cabins", "Meeting Credits"],
     img: "https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
-    size: "sm",
+    features: ["Executive Furniture", "Private Lounge", "Concierge Service"],
     img: "https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
-    size: "md",
+    features: ["GST Registration", "Mail Forwarding", "Day Pass Access"],
     img: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
-    size: "md",
+    features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage"],
     img: "https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     title: "Custom Built",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
     tag: "BESPOKE",
-    size: "lg",
+    features: ["Architect-Led Design", "Brand Aesthetics", "Turnkey Build"],
     img: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
 ];
@@ -456,13 +456,6 @@ function GallerySlider() {
     return () => clearInterval(t);
   }, [paused, total, interval]);
 
-  const goTo = (i: number) => {
-    setDir(i > current ? 1 : -1);
-    setCurrent(i);
-  };
-  const prev = () => { setDir(-1); setCurrent((p) => (p - 1 + total) % total); };
-  const next = () => { setDir(1); setCurrent((p) => (p + 1) % total); };
-
   const slide = gallerySlides[current];
 
   const slideVariants = {
@@ -558,54 +551,6 @@ function GallerySlider() {
         </AnimatePresence>
       </div>
 
-      {/* Controls row */}
-      <div className="mt-6 px-6 lg:px-8 max-w-7xl mx-auto flex items-center justify-between">
-        {/* Dot indicators */}
-        <div className="flex gap-2 items-center">
-          {gallerySlides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`rounded-full transition-all duration-300 ${
-                i === current
-                  ? "w-8 h-2 bg-[#d4622b]"
-                  : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
-              }`}
-            />
-          ))}
-        </div>
-
-        {/* Progress bar */}
-        <div className="hidden sm:block flex-1 mx-8 h-px bg-gray-200 relative overflow-hidden rounded-full">
-          <motion.div
-            key={current}
-            className="absolute inset-y-0 left-0 bg-[#d4622b] rounded-full"
-            initial={{ width: "0%" }}
-            animate={{ width: paused ? undefined : "100%" }}
-            transition={{ duration: interval / 1000, ease: "linear" }}
-          />
-        </div>
-
-        {/* Arrow buttons */}
-        <div className="flex gap-2 items-center">
-          <button
-            onClick={prev}
-            className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#d4622b] hover:text-[#d4622b] transition-all hover:scale-105"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            onClick={next}
-            className="w-10 h-10 rounded-full bg-[#d4622b] flex items-center justify-center text-white hover:bg-[#b8501f] transition-all hover:scale-105"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
@@ -878,45 +823,148 @@ function NewsMediaSection() {
   );
 }
 
+function SequelBeliefsSection() {
+  return (
+    <section className="py-24 sm:py-32 bg-[#1a1a2e] text-white relative overflow-hidden border-t border-b border-white/10">
+      {/* Background ambient light */}
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#d4622b]/10 blur-[140px]" />
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-12 lg:gap-20">
+          {/* Left Column: Big Title */}
+          <div className="lg:w-5/12 lg:sticky lg:top-32">
+            <Reveal delay={0.1}>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+                We believe <br />
+                <span className="text-[#d4622b] italic font-serif font-normal">in extraordinary</span>
+              </h2>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <p className="mt-6 text-gray-400 text-base sm:text-lg leading-relaxed max-w-md">
+                A new era of corporate infrastructure built for visionary leaders, high-velocity teams, and enduring enterprises.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <div className="mt-8">
+                <MagneticButton
+                  href="#contact"
+                  className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md px-7 py-3.5 rounded-full text-sm font-semibold transition-all group"
+                >
+                  <span>Read full manifesto</span>
+                  <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </MagneticButton>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Right Column: Sequel-style Belief Statements */}
+          <div className="lg:w-7/12 space-y-8 sm:space-y-12">
+            {[
+              {
+                text: "Backing founders who",
+                italic: "bend reality.",
+              },
+              {
+                text: "Teams who believe impossible is an",
+                italic: "opinion.",
+              },
+              {
+                text: "Choosing courage over",
+                italic: "comfort.",
+              },
+              {
+                text: "Refusing to accept ordinary workspace",
+                italic: "standards.",
+              },
+              {
+                text: "Building corporate infrastructure for",
+                italic: "longevity over hype.",
+              },
+            ].map((b, i) => (
+              <Reveal key={i} delay={i * 0.12} y={30}>
+                <div className="group border-b border-white/10 pb-8 hover:border-[#d4622b]/50 transition-colors duration-500">
+                  <p className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white/90 group-hover:text-white transition-colors duration-300 leading-snug">
+                    {b.text}{" "}
+                    <span className="italic font-serif font-normal text-[#d4622b] block sm:inline mt-1 sm:mt-0">
+                      {b.italic}
+                    </span>
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
-    <SpotlightCard className="h-full min-h-[240px] cursor-pointer group relative overflow-hidden">
-      {/* Full-bleed background image — visible by default on mobile, hover-reveal on desktop */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-cover bg-center opacity-90 scale-100 lg:opacity-0 lg:scale-105 lg:group-hover:opacity-90 lg:group-hover:scale-100 transition-all duration-700 ease-out"
-        style={{ backgroundImage: `url(${sol.img})` }}
-      />
-      {/* Dark overlay */}
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-tr from-black/85 via-black/55 to-black/35 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-500"
-      />
+    <SpotlightCard className="h-full min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white hover:border-[#d4622b] transition-all duration-500 flex flex-col justify-between">
+      {/* Top Image Container with zoom & gradient overlay */}
+      <div className="relative h-44 w-full overflow-hidden bg-gray-100">
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-cover bg-center scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
+          style={{ backgroundImage: `url(${sol.img})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        
+        {/* Top Tag Badge */}
+        <div className="absolute top-4 left-4 z-10">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-[10px] font-semibold tracking-wider text-white uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b]" />
+            {sol.tag}
+          </span>
+        </div>
+      </div>
 
-      <div className="relative z-10 p-8 h-full flex flex-col justify-between">
+      {/* Card Content Area */}
+      <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
-          <div className="flex items-center justify-end">
-            <div className="w-8 h-8 rounded-full bg-[#d4622b] text-white flex items-center justify-center lg:bg-gray-50 lg:text-gray-400 lg:group-hover:bg-[#d4622b] lg:group-hover:text-white transition-colors duration-300 shadow-sm">
-              <svg
-                className="w-3.5 h-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2.5"
-              >
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg>
-            </div>
-          </div>
-          <h3 className="mt-6 text-2xl font-bold text-white lg:text-[#1a1a2e] lg:group-hover:text-white transition-colors duration-300">
+          <h3 className="text-2xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
             {sol.title}
           </h3>
-          <p className="mt-3 text-white/85 leading-relaxed text-sm lg:text-gray-500 lg:group-hover:text-white/85 transition-colors duration-300">
+          <p className="mt-2.5 text-gray-500 text-sm leading-relaxed">
             {sol.desc}
           </p>
+
+          {/* Silversquare-style info reveal badges */}
+          <div className="mt-4 pt-3 border-t border-gray-100">
+            <div className="flex flex-wrap gap-1.5">
+              {sol.features.map((feat, i) => (
+                <span
+                  key={i}
+                  className="inline-flex items-center text-[11px] font-semibold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md group-hover:bg-[#d4622b]/10 group-hover:text-[#d4622b] transition-colors duration-300"
+                >
+                  &bull; {feat}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="mt-6 flex items-center gap-2 text-[#d4622b] text-sm font-semibold opacity-100 translate-y-0 lg:text-[#d4622b] lg:opacity-0 lg:translate-y-2 lg:group-hover:text-[#d4622b] lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
-          Explore Specifications &rarr;
+
+        {/* Silversquare "Know more →" bottom CTA row */}
+        <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+          <span className="text-sm font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
+            Know more
+          </span>
+          <div className="w-8 h-8 rounded-full bg-gray-100 text-gray-700 group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
+            <svg
+              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </div>
         </div>
       </div>
     </SpotlightCard>
@@ -1213,11 +1261,7 @@ export default function Home() {
           {/* Desktop 3D Tilt Spotlight grid */}
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {solutions.map((sol, i) => (
-              <Reveal
-                key={sol.title}
-                delay={i * 0.07}
-                className={sol.size === "lg" ? "lg:col-span-1" : ""}
-              >
+              <Reveal key={sol.title} delay={i * 0.07}>
                 <SolutionCard sol={sol} />
               </Reveal>
             ))}
@@ -1230,6 +1274,9 @@ export default function Home() {
           </AutoSlider>
         </div>
       </section>
+
+      {/* ━━━ MANIFESTO — WE BELIEVE IN (SEQUEL.CO STYLE) ━━━ */}
+      <SequelBeliefsSection />
 
       {/* ━━━ OUR TOP LOCATIONS IN DELHI NCR ━━━ */}
       <section
@@ -1335,10 +1382,10 @@ export default function Home() {
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection />
 
-      {/* ━━━ FOOTER ━━━ */}
-      <footer className="bg-[#faf8f5] text-gray-400 py-10 sm:py-14 border-t border-gray-100">
+      {/* ━━━ FOOTER (SEQUEL.CO STYLE) ━━━ */}
+      <footer className="bg-[#faf8f5] text-gray-500 pt-14 pb-8 border-t border-gray-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10 sm:gap-12 mb-12 sm:mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-10 sm:gap-12 mb-12">
             <div className="col-span-2 sm:col-span-4 lg:col-span-1">
               <a href="#" className="flex items-center gap-3 mb-5 group">
                 <Image
@@ -1357,9 +1404,8 @@ export default function Home() {
                   </span>
                 </div>
               </a>
-              <p className="text-sm leading-relaxed max-w-xs">
-                Premium coworking spaces built around your brand, ambition, and
-                people.
+              <p className="text-sm leading-relaxed max-w-xs text-gray-500">
+                Premium coworking spaces built around your brand, ambition, and people across Delhi NCR.
               </p>
             </div>
             {[
@@ -1389,15 +1435,15 @@ export default function Home() {
               },
             ].map((col) => (
               <div key={col.title}>
-                <h4 className="text-[#1a1a2e] font-semibold text-sm mb-4 sm:mb-5 uppercase tracking-wider">
+                <h4 className="text-[#1a1a2e] font-semibold text-xs mb-5 uppercase tracking-widest">
                   {col.title}
                 </h4>
-                <ul className="space-y-2.5 sm:space-y-3 text-sm">
+                <ul className="space-y-3 text-sm">
                   {col.links.map((l) => (
                     <li key={l}>
                       <a
                         href={l === "Blog" ? "/blog" : "#"}
-                        className="hover:text-[#d4622b] transition-colors"
+                        className="text-gray-500 hover:text-[#d4622b] transition-colors"
                       >
                         {l}
                       </a>
@@ -1407,15 +1453,16 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-center">
-            <p>&copy; 2024 Onward Workspaces. All rights reserved.</p>
+
+          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+            <p>&copy; {new Date().getFullYear()} Onward Workspaces. All rights reserved.</p>
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
               {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
                 (l) => (
                   <a
                     key={l}
                     href="#"
-                    className="hover:text-[#d4622b] transition-colors"
+                    className="text-gray-500 hover:text-[#d4622b] transition-colors"
                   >
                     {l}
                   </a>

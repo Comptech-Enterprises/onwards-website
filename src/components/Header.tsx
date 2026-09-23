@@ -60,7 +60,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             <a
               key={l}
               href={linkHref(l)}
-              className="text-sm font-medium text-white/85 hover:text-[#d4622b] transition-colors"
+              className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1.5px] after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
             >
               {l}
             </a>
@@ -70,9 +70,18 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         <div className="flex items-center gap-4">
           <MagneticButton
             href="/#contact"
-            className="hidden lg:flex bg-[#d4622b] text-white px-7 py-3 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
+            className="hidden lg:inline-flex items-center gap-2 bg-[#d4622b] text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-all shadow-md group"
           >
-            Get Started
+            <span>Get Started</span>
+            <svg
+              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
           </MagneticButton>
           <button onClick={() => setMobileMenu(!mobileMenu)} className="lg:hidden">
             <div className="w-7 h-5 flex flex-col justify-between">
