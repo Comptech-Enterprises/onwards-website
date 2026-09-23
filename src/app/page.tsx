@@ -1258,13 +1258,21 @@ export default function Home() {
             </Reveal>
           </div>
 
-          {/* Desktop 3D Tilt Spotlight grid */}
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {solutions.map((sol, i) => (
-              <Reveal key={sol.title} delay={i * 0.07}>
-                <SolutionCard sol={sol} />
-              </Reveal>
-            ))}
+          {/* Desktop — continuous auto-scrolling slider, no controls */}
+          <div className="hidden md:block relative overflow-hidden">
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
+            <motion.div
+              className="flex w-max gap-6"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            >
+              {[...solutions, ...solutions].map((sol, i) => (
+                <div key={`${sol.title}-${i}`} className="w-[360px] shrink-0">
+                  <SolutionCard sol={sol} />
+                </div>
+              ))}
+            </motion.div>
           </div>
           {/* Mobile auto-slider */}
           <AutoSlider interval={3500}>
