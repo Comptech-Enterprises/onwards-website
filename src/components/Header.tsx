@@ -35,7 +35,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
         <a href="/" id="header-logo" className="flex items-center gap-3 group">
           <Image
             src="/onward-logo.png"
@@ -83,20 +83,24 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </MagneticButton>
-          <button onClick={() => setMobileMenu(!mobileMenu)} className="lg:hidden">
-            <div className="w-7 h-5 flex flex-col justify-between">
+          <button
+            onClick={() => setMobileMenu(!mobileMenu)}
+            className="lg:hidden p-2 rounded-lg text-white hover:text-[#d4622b] focus:outline-none"
+            aria-label="Toggle Navigation Menu"
+          >
+            <div className="w-6 h-5 flex flex-col justify-between">
               <span
-                className={`block h-0.5 bg-white transition-all origin-center ${
+                className={`block h-0.5 w-full bg-white transition-all origin-center ${
                   mobileMenu ? "rotate-45 translate-y-[9px]" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 bg-white transition-all ${
+                className={`block h-0.5 w-full bg-white transition-all ${
                   mobileMenu ? "opacity-0" : ""
                 }`}
               />
               <span
-                className={`block h-0.5 bg-white transition-all origin-center ${
+                className={`block h-0.5 w-full bg-white transition-all origin-center ${
                   mobileMenu ? "-rotate-45 -translate-y-[9px]" : ""
                 }`}
               />
@@ -111,7 +115,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t overflow-hidden"
+            className="lg:hidden bg-[#1a1a2e]/95 backdrop-blur-xl border-t border-white/10 overflow-hidden shadow-2xl"
           >
             <div className="px-6 py-6 space-y-4">
               {navLinks.map((l) => (
@@ -119,7 +123,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   key={l}
                   href={linkHref(l)}
                   onClick={() => setMobileMenu(false)}
-                  className="block text-gray-700 font-medium text-lg"
+                  className="block text-white hover:text-[#d4622b] font-medium text-lg transition-colors"
                 >
                   {l}
                 </a>
@@ -127,7 +131,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <a
                 href="/#contact"
                 onClick={() => setMobileMenu(false)}
-                className="block bg-[#d4622b] text-white text-center py-3.5 rounded-full font-semibold"
+                className="block bg-[#d4622b] text-white text-center py-3.5 rounded-full font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
               >
                 Get Started
               </a>

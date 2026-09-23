@@ -20,6 +20,7 @@ import SpringCounter from "@/components/SpringCounter";
 import FeatureTimeline from "@/components/FeatureTimeline";
 import ContactSection from "@/components/ContactSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import StrategicLocationsMap from "@/components/StrategicLocationsMap";
 import {
   brandPartners,
   DpWorldLogo,
@@ -491,7 +492,7 @@ function GallerySlider() {
       onMouseLeave={() => setPaused(false)}
     >
       {/* Main slider viewport */}
-      <div className="relative overflow-hidden rounded-none lg:rounded-3xl mx-0 lg:mx-8 lg:max-w-7xl lg:mx-auto" style={{ height: 520 }}>
+      <div className="relative overflow-hidden rounded-none lg:rounded-3xl mx-0 lg:mx-8 lg:max-w-7xl lg:mx-auto h-[380px] sm:h-[460px] lg:h-[520px]">
         <AnimatePresence custom={dir} mode="sync" initial={false}>
           <motion.div
             key={current}
@@ -550,16 +551,16 @@ function GallerySlider() {
             </motion.div>
 
             {/* Bottom caption area */}
-            <div className="absolute bottom-0 left-0 right-0 px-8 pb-8 flex items-end justify-between">
-              <div>
-                <h3 className="text-3xl lg:text-4xl font-bold text-[#1a1a2e]">{slide.title}</h3>
-                <p className="mt-1 text-sm text-gray-500 font-medium">{slide.location}</p>
+            <div className="absolute bottom-0 left-0 right-0 px-5 sm:px-8 pb-5 sm:pb-8 flex items-end justify-between gap-4">
+              <div className="min-w-0">
+                <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-[#1a1a2e] leading-snug">{slide.title}</h3>
+                <p className="mt-1 text-xs sm:text-sm text-gray-500 font-medium">{slide.location}</p>
               </div>
               <div className="text-right shrink-0">
-                <span className="text-5xl font-black text-[#1a1a2e]/10 leading-none">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e]/10 leading-none">
                   {String(current + 1).padStart(2, "0")}
                 </span>
-                <div className="text-xs text-gray-400 mt-1">/ {String(total).padStart(2, "0")}</div>
+                <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">/ {String(total).padStart(2, "0")}</div>
               </div>
             </div>
           </motion.div>
@@ -772,14 +773,14 @@ function EnterprisesSection() {
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 items-stretch max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-6 items-stretch max-w-6xl mx-auto">
           {enterpriseBrands.map((brand) => (
             <div
               key={brand.name}
               title={brand.name}
-              className="px-6 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center h-[78px] group cursor-default"
+              className="px-4 sm:px-6 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center h-[72px] sm:h-[78px] group cursor-default"
             >
-              <brand.Logo className="h-7 sm:h-8 w-auto max-w-[125px] object-contain transition-transform duration-300 group-hover:scale-105" />
+              <brand.Logo className="h-6 sm:h-8 w-auto max-w-[110px] sm:max-w-[125px] object-contain transition-transform duration-300 group-hover:scale-105" />
             </div>
           ))}
         </div>
@@ -801,10 +802,10 @@ function NewsMediaSection() {
           <AnimatedHeading
             text="Featured in News & Media"
             highlight="News & Media"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto text-center">
               We understand that selecting the right co-working space is a crucial decision. We&apos;re here to help you make an informed choice and tailor our offerings to meet your specific needs.
             </p>
           </Reveal>
@@ -813,11 +814,11 @@ function NewsMediaSection() {
 
       {/* Infinite Smooth Scrolling Marquee */}
       <div className="relative w-full overflow-hidden">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-24 sm:w-44 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-24 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-44 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
 
         <motion.div
-          className="flex w-max gap-5 sm:gap-6 items-center py-2"
+          className="flex w-max gap-4 sm:gap-6 items-center py-2"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
         >
@@ -826,9 +827,9 @@ function NewsMediaSection() {
               <div
                 key={`media-outlet-${r}-${outlet.name}-${i}`}
                 title={outlet.name}
-                className="shrink-0 px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[170px] h-[78px] group cursor-default"
+                className="shrink-0 px-6 sm:px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[72px] sm:h-[78px] group cursor-default"
               >
-                <outlet.Logo className="h-7 sm:h-8 w-auto max-w-[135px] object-contain transition-transform duration-300 group-hover:scale-105" />
+                <outlet.Logo className="h-6 sm:h-8 w-auto max-w-[120px] sm:max-w-[135px] object-contain transition-transform duration-300 group-hover:scale-105" />
               </div>
             )),
           )}
@@ -985,122 +986,7 @@ function LocationCard({
   );
 }
 
-function FooterNCRMap() {
-  const points = [
-    { name: "Connaught Place", x: 38, y: 38 },
-    { name: "Noida Sector 132", x: 74, y: 16 },
-    { name: "Noida Sector 126", x: 78, y: 34 },
-    { name: "Okhla", x: 58, y: 50 },
-    { name: "Mohan Cooperative", x: 62, y: 66 },
-    { name: "Udyog Vihar", x: 44, y: 80 },
-  ];
 
-  return (
-    <div className="relative w-full aspect-[4/3] max-w-sm p-2 overflow-hidden group bg-transparent">
-      {/* Background blueprint grid pattern */}
-      <div
-        className="absolute inset-0 opacity-30 pointer-events-none"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, #d4622b20 1px, transparent 1px)",
-          backgroundSize: "20px 20px",
-        }}
-      />
-
-      {/* SVG Map Lines & Outline with strict fill="none" */}
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
-        {/* Arterial Connecting Lines */}
-        <line
-          x1="38"
-          y1="38"
-          x2="74"
-          y2="16"
-          stroke="#d4622b"
-          strokeWidth="0.4"
-          strokeDasharray="1.5 1.5"
-          strokeOpacity="0.5"
-        />
-        <line
-          x1="74"
-          y1="16"
-          x2="78"
-          y2="34"
-          stroke="#1a1a2e"
-          strokeWidth="0.3"
-          strokeOpacity="0.15"
-        />
-        <line
-          x1="78"
-          y1="34"
-          x2="58"
-          y2="50"
-          stroke="#1a1a2e"
-          strokeWidth="0.3"
-          strokeOpacity="0.15"
-        />
-        <line
-          x1="38"
-          y1="38"
-          x2="58"
-          y2="50"
-          stroke="#1a1a2e"
-          strokeWidth="0.3"
-          strokeOpacity="0.15"
-        />
-        <line
-          x1="58"
-          y1="50"
-          x2="62"
-          y2="66"
-          stroke="#1a1a2e"
-          strokeWidth="0.3"
-          strokeOpacity="0.15"
-        />
-        <line
-          x1="62"
-          y1="66"
-          x2="44"
-          y2="80"
-          stroke="#1a1a2e"
-          strokeWidth="0.3"
-          strokeOpacity="0.15"
-        />
-        <path
-          d="M 16 42 Q 40 44 84 50"
-          fill="none"
-          stroke="#1a1a2e"
-          strokeWidth="0.25"
-          strokeOpacity="0.1"
-        />
-      </svg>
-
-      {/* Location Pinpoints & Labels */}
-      {points.map((pt) => (
-        <div
-          key={pt.name}
-          style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
-          className="absolute -translate-x-1/2 -translate-y-1/2 flex items-center gap-1.5 group/pin cursor-pointer z-10"
-        >
-          {/* Pulsing ring */}
-          <div className="relative flex items-center justify-center">
-            <span className="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-[#d4622b] opacity-40" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#d4622b] border border-white shadow-xs group-hover/pin:scale-125 transition-transform" />
-          </div>
-
-          {/* Location Name Label */}
-          <span className="text-[10px] font-bold text-[#1a1a2e] whitespace-nowrap group-hover/pin:text-[#d4622b] transition-colors">
-            {pt.name}
-          </span>
-        </div>
-      ))}
-
-      {/* Watermark in bottom right */}
-      <div className="absolute bottom-2 right-2 text-[9px] font-black tracking-[0.25em] uppercase text-[#1a1a2e]/30 pointer-events-none">
-        DELHI NCR
-      </div>
-    </div>
-  );
-}
 
 export default function Home() {
   const [introComplete] = useState(true);
@@ -1176,10 +1062,10 @@ export default function Home() {
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 pb-16 text-center flex flex-col items-center justify-center"
+          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-16 sm:py-24 text-center flex flex-col items-center justify-center"
         >
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full">
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[4rem] xl:text-[4.5rem] font-bold text-white leading-tight tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)] text-center whitespace-nowrap">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)] text-center md:whitespace-nowrap px-2">
               Workspace built around{" "}
               <span className="relative inline-block text-left">
                 <AnimatePresence mode="wait">
@@ -1207,28 +1093,44 @@ export default function Home() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-6 text-base sm:text-lg md:text-xl text-white/90 max-w-6xl mx-auto text-center leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] lg:whitespace-nowrap"
+              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-4xl mx-auto text-center leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] px-4"
             >
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.6 }} className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4 w-full sm:w-auto">
-              <MagneticButton href="#contact" className="inline-flex items-center justify-center bg-[#d4622b] text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              className="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-center items-center gap-3.5 sm:gap-4 w-full sm:w-auto px-4"
+            >
+              <MagneticButton
+                href="#contact"
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d4622b] text-white px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]"
+              >
                 Book a Tour
                 <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </MagneticButton>
-              <a href="tel:9910668152" className="inline-flex items-center justify-center gap-3 text-white hover:text-[#d4622b] px-8 py-4 rounded-full border border-white/30 hover:border-[#d4622b]/60 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all shadow-sm">
+              <a
+                href="tel:9910668152"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 text-white hover:text-[#d4622b] px-8 py-3.5 sm:py-4 rounded-full border border-white/30 hover:border-[#d4622b]/60 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all shadow-sm text-base sm:text-lg font-semibold"
+              >
                 <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
                 +91 9910668152
               </a>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9, duration: 0.7 }} className="mt-14 w-full max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden shadow-sm border border-white/20">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.7 }}
+              className="mt-10 sm:mt-14 w-full max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden shadow-sm border border-white/20"
+            >
               {stats.map((s) => (
-                <div key={s.label} className="bg-white/10 backdrop-blur-md p-5 sm:p-6 text-center group hover:bg-white/20 transition-colors">
-                  <div className="text-2xl sm:text-3xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
-                  <div className="text-white/90 text-xs mt-1 font-medium">{s.label}</div>
-                  <div className="text-white/60 text-[10px] mt-0.5 group-hover:text-[#d4622b] transition-colors">{s.sub}</div>
+                <div key={s.label} className="bg-white/10 backdrop-blur-md p-3.5 sm:p-5 lg:p-6 text-center group hover:bg-white/20 transition-colors">
+                  <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
+                  <div className="text-white/90 text-xs sm:text-sm mt-1 font-medium">{s.label}</div>
+                  <div className="text-white/60 text-[10px] sm:text-xs mt-0.5 group-hover:text-[#d4622b] transition-colors">{s.sub}</div>
                 </div>
               ))}
             </motion.div>
@@ -1254,8 +1156,8 @@ export default function Home() {
           </h2>
         </div>
 
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
 
         <motion.div
           className="flex w-max gap-4 whitespace-nowrap items-center"
@@ -1324,19 +1226,27 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ OUR TOP LOCATIONS IN DELHI NCR ━━━ */}
+      {/* ━━━ OUR TOP CITIES IN DELHI NCR ━━━ */}
       <section
-        id="locations"
-        className="py-20 lg:py-24 bg-white relative overflow-hidden border-t border-gray-100"
+        className="py-16 lg:py-20 bg-white relative overflow-hidden border-t border-gray-100"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-12">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#111827] tracking-tight">
-              Our Top Locations in Delhi NCR
-            </h2>
-            <p className="mt-4 text-sm sm:text-base text-gray-500 leading-relaxed max-w-3xl mx-auto">
-              Begin your path to success with Onward Workspaces in Delhi NCR. Our strategically located facilities ensure unparalleled convenience, accessibility, and excellence for your workspace needs
-            </p>
+            <Reveal>
+              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                <span className="w-6 h-px bg-[#d4622b]" /> NCR Presence <span className="w-6 h-px bg-[#d4622b]" />
+              </span>
+            </Reveal>
+            <AnimatedHeading
+              text="Our Top Cities in Delhi NCR"
+              highlight="Delhi NCR"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
+            />
+            <Reveal delay={0.1}>
+              <p className="mt-4 text-sm sm:text-base text-gray-500 leading-relaxed max-w-3xl mx-auto">
+                Begin your path to success with Onward Workspaces across Delhi, Noida, and Gurugram.
+              </p>
+            </Reveal>
           </div>
 
           {/* Desktop — 3 City Cards (Delhi, Noida, Gurugram) */}
@@ -1387,6 +1297,16 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ━━━ STRATEGIC LOCATIONS SECTION (LIGHT THEME SEAMLESS NERVE MAP) ━━━ */}
+      <section
+        id="locations"
+        className="py-20 lg:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-t border-gray-200/80"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <StrategicLocationsMap />
+        </div>
+      </section>
+
       {/* ━━━ GALLERY ━━━ */}
       <section className="py-16 lg:py-20 bg-white overflow-hidden">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-14 text-center">
@@ -1417,12 +1337,12 @@ export default function Home() {
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection />
 
-      {/* ━━━ FOOTER (LIGHT THEME WITH NCR MAP) ━━━ */}
+      {/* ━━━ FOOTER (CLEAN LIGHT THEME) ━━━ */}
       <footer className="bg-[#faf8f5] text-gray-500 pt-16 pb-10 border-t border-gray-200 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 mb-14 items-start">
             {/* Logo + Bio */}
-            <div className="lg:col-span-3">
+            <div className="lg:col-span-5">
               <a href="#" className="flex items-center gap-3 mb-5 group">
                 <Image
                   src="/onward-logo.png"
@@ -1440,13 +1360,23 @@ export default function Home() {
                   </span>
                 </div>
               </a>
-              <p className="text-sm leading-relaxed text-gray-500 max-w-xs">
+              <p className="text-sm leading-relaxed text-gray-500 max-w-sm">
                 Premium coworking spaces built around your brand, ambition, and people across Delhi NCR.
               </p>
+              <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-6 text-xs text-gray-500">
+                <div>
+                  <span className="font-semibold text-[#1a1a2e] block">Direct Phone:</span>
+                  <a href="tel:9910668152" className="hover:text-[#d4622b] transition-colors">+91 9910668152</a>
+                </div>
+                <div>
+                  <span className="font-semibold text-[#1a1a2e] block">Email:</span>
+                  <a href="mailto:info@onwardworkspaces.com" className="hover:text-[#d4622b] transition-colors">info@onwardworkspaces.com</a>
+                </div>
+              </div>
             </div>
 
             {/* Navigation Columns */}
-            <div className="lg:col-span-5 grid grid-cols-3 gap-6">
+            <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8">
               {[
                 {
                   title: "Solutions",
@@ -1491,11 +1421,6 @@ export default function Home() {
                   </ul>
                 </div>
               ))}
-            </div>
-
-            {/* Right Side NCR Vector Map Visual */}
-            <div className="lg:col-span-4 flex justify-start lg:justify-end">
-              <FooterNCRMap />
             </div>
           </div>
 
