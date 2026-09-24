@@ -81,9 +81,9 @@ export default function StrategicLocationsMap() {
   const activeHub = ncrHubs.find((h) => h.id === activeId) || ncrHubs[0];
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+    <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-8 lg:gap-10 items-center">
       {/* ━━━ LEFT COLUMN: HERO CONTENT & ACTIVE CARD ━━━ */}
-      <div className="lg:col-span-5 flex flex-col justify-between space-y-8 sm:space-y-10 relative z-20">
+      <div className="min-w-0 flex flex-col justify-between space-y-8 sm:space-y-10 relative z-20">
         <div>
           {/* Top Tag with Orange Dash */}
           <div className="flex items-center gap-3 mb-6 sm:mb-8">
@@ -94,15 +94,15 @@ export default function StrategicLocationsMap() {
           </div>
 
           {/* Main Strategic Heading */}
-          <h2 className="text-4xl sm:text-5xl lg:text-[58px] font-bold text-[#1a1a2e] tracking-tight leading-[1.06] mb-6">
-            Strategic<br />
+          <h2 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-bold text-[#1a1a2e] tracking-tight leading-[1.06] mb-6">
+            Strategic{" "}<br className="lg:hidden" />
             locations.<br />
-            Stronger<br />
+            Stronger{" "}<br className="lg:hidden" />
             <span className="text-[#d4622b]">businesses.</span>
           </h2>
 
           {/* Subtitle description */}
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-md">
+          <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-xl">
             Our workspaces are located across Delhi NCR&apos;s key business hubs — keeping you close to opportunity.
           </p>
 
@@ -147,7 +147,7 @@ export default function StrategicLocationsMap() {
                 const el = document.getElementById("contact");
                 el?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="flex items-center gap-4 bg-white border border-gray-200/90 hover:border-[#d4622b]/60 rounded-2xl p-3.5 pr-6 backdrop-blur-md max-w-md group transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg"
+              className="flex items-center gap-4 bg-white border border-gray-200/90 hover:border-[#d4622b]/60 rounded-2xl p-3.5 pr-6 backdrop-blur-md max-w-xl group transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg"
             >
               <div className="relative w-24 h-20 sm:w-28 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-gray-100">
                 <img
@@ -177,11 +177,11 @@ export default function StrategicLocationsMap() {
       </div>
 
       {/* ━━━ RIGHT COLUMN: SEAMLESS BORDERLESS ANIMATED DARK NERVE MAP ━━━ */}
-      <div className="lg:col-span-7 relative w-full aspect-[900/634] flex items-center justify-center select-none">
+      <div className="relative min-w-0 w-full aspect-[1110/770] lg:aspect-auto lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 flex items-center justify-end overflow-hidden select-none">
         <svg
-          viewBox="0 0 900 634"
-          className="w-full h-full overflow-visible"
-          preserveAspectRatio="xMidYMid meet"
+          viewBox="-100 -30 1110 770"
+          className="w-full h-full overflow-hidden"
+          preserveAspectRatio="xMaxYMid meet"
         >
           <defs>
             {/* Orange Pin Ripple Radial Gradient */}

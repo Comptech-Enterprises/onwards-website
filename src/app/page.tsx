@@ -29,7 +29,6 @@ import {
   OpraahLogo,
   SageLogo,
   TvsSupplyChainLogo,
-  newsMediaOutlets,
 } from "@/components/BrandLogos";
 
 /* ═══════════════════════════════════════════
@@ -143,6 +142,25 @@ function AutoSlider({
 /* ═══════════════════════════════════════════
    DATA
    ═══════════════════════════════════════════ */
+
+const whyChoose = [
+  { title: "Strategically Positioned", desc: "Our locations are strategically positioned in vibrant business centers, guaranteeing that you are constantly at the heart of opportunities.", icon: "M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11zm0-8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" },
+  { title: "Culture of Triumph", desc: "Step into a space where every element is meticulously designed to elevate you to new heights, crafted to empower you on your journey to greatness.", icon: "M8 21h8m-4-4v4m-5-18h10v5a5 5 0 01-10 0V3zm10 2h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3" },
+  { title: "Amenities Beyond Ordinary", desc: "Immerse yourself in a world of cutting-edge facilities, from futuristic tech to tailor-made workspaces, all designed to amplify your workflow.", icon: "M13 2L4 14h7l-1 8 9-12h-7l1-8z" },
+];
+
+const newsMediaItems = [
+  { name: "ABP Live", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006545.webp", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
+  { name: "News18", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006623.webp", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
+  { name: "Moneycontrol", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006633.webp", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
+  { name: "NDTV", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006641.webp", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
+  { name: "Indian Retailer", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006742.webp", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
+  { name: "Times of India", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006664.webp", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
+  { name: "PTI News", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006714.webp", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
+  { name: "Realty Plus", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006922.webp", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
+  { name: "Outlook India", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022323187.webp", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
+  { name: "Sugermint", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022323207.webp", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
+];
 
 const heroWords = ["Ambition", "Brand", "People", "Vision"];
 
@@ -755,7 +773,7 @@ function EnterprisesSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
+        <div className="max-w-none mx-auto text-center mb-12 sm:mb-14">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Enterprise Network <span className="w-6 h-px bg-[#d4622b]" />
@@ -764,10 +782,10 @@ function EnterprisesSection() {
           <AnimatedHeading
             text="Enterprises using Onward Workspaces"
             highlight="Onward Workspaces"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-none mx-auto text-center md:whitespace-nowrap">
               Elevate your workspace experience and be part of a movement that redefines success
             </p>
           </Reveal>
@@ -793,19 +811,19 @@ function NewsMediaSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
+        <div className="text-center mb-12 sm:mb-14">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               <span className="w-6 h-px bg-[#d4622b]" /> Press &amp; Recognition <span className="w-6 h-px bg-[#d4622b]" />
             </span>
           </Reveal>
           <AnimatedHeading
-            text="Featured in News & Media"
-            highlight="News & Media"
+            text="News & Media"
+            highlight="Media"
             className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed mx-auto text-center md:whitespace-nowrap">
               We understand that selecting the right co-working space is a crucial decision. We&apos;re here to help you make an informed choice and tailor our offerings to meet your specific needs.
             </p>
           </Reveal>
@@ -823,14 +841,17 @@ function NewsMediaSection() {
           transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
         >
           {[...Array(2)].flatMap((_, r) =>
-            newsMediaOutlets.map((outlet, i) => (
-              <div
-                key={`media-outlet-${r}-${outlet.name}-${i}`}
-                title={outlet.name}
-                className="shrink-0 px-6 sm:px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[72px] sm:h-[78px] group cursor-default"
+            newsMediaItems.map((item, i) => (
+              <a
+                key={`media-${r}-${item.name}-${i}`}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={item.name}
+                className="shrink-0 px-6 sm:px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[72px] sm:h-[78px] group"
               >
-                <outlet.Logo className="h-6 sm:h-8 w-auto max-w-[120px] sm:max-w-[135px] object-contain transition-transform duration-300 group-hover:scale-105" />
-              </div>
+                <img src={item.img} alt={item.name} className="h-6 sm:h-8 w-auto max-w-[120px] sm:max-w-[135px] object-contain transition-transform duration-300 group-hover:scale-105" />
+              </a>
             )),
           )}
         </motion.div>
@@ -1067,7 +1088,8 @@ export default function Home() {
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)] text-center md:whitespace-nowrap px-2">
               Workspace built around{" "}
-              <span className="relative inline-block text-left">
+              <span className="relative inline-grid text-left align-baseline">
+                <span aria-hidden className="invisible col-start-1 row-start-1">Ambition</span>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={heroWord}
@@ -1075,17 +1097,11 @@ export default function Home() {
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: -35, opacity: 0 }}
                     transition={{ duration: 0.35, ease: "easeInOut" }}
-                    className="inline-block text-[#d4622b]"
+                    className="col-start-1 row-start-1 text-[#d4622b]"
                   >
                     {heroWords[heroWord]}
                   </motion.span>
                 </AnimatePresence>
-                <motion.span
-                  className="absolute -bottom-1.5 left-0 h-1 bg-[#d4622b] rounded-full"
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                />
               </span>
             </h1>
 
@@ -1093,7 +1109,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-4xl mx-auto text-center leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] px-4"
+              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-none mx-auto text-center leading-relaxed md:whitespace-nowrap drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] px-4"
             >
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
@@ -1145,15 +1161,50 @@ export default function Home() {
       </section>
 
 
+      {/* ━━━ WHY CHOOSE US ━━━ */}
+      <section id="why-choose-us" className="py-16 lg:py-20 bg-white border-t border-gray-200/60">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center mb-14">
+            <Reveal>
+              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                <span className="w-6 h-px bg-[#d4622b]" /> Why Choose Us
+                <span className="w-6 h-px bg-[#d4622b]" />
+              </span>
+            </Reveal>
+            <AnimatedHeading
+              text="Revolutionise Your Workspace."
+              highlight="Workspace."
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
+            />
+            <Reveal delay={0.2}>
+              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
+                Whether you have questions about membership options, need assistance with technical aspects, or want to explore customization possibilities for your workspace, our experts are here to provide you with personalized guidance and solutions.
+              </p>
+            </Reveal>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {whyChoose.map((w, i) => (
+              <Reveal key={w.title} delay={i * 0.1}>
+                <div className="h-full min-w-0 rounded-3xl bg-[#faf8f5] border border-gray-200/80 p-8 hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] transition-all">
+                  <div className="w-14 h-14 rounded-2xl bg-[#d4622b]/10 flex items-center justify-center mb-6">
+                    <svg className="w-7 h-7 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-3 break-words">{w.title}</h3>
+                  <p className="text-gray-500 leading-relaxed">{w.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ━━━ SECTION 2: BRAND LOGOS TICKER ━━━ */}
       <section className="relative py-14 bg-[#faf8f5] overflow-hidden">
         <div className="max-w-3xl mx-auto text-center mb-10 px-6">
           <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
             In Good Company
           </span>
-          <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight">
-            Trusted by 250+ teams
-          </h2>
+
         </div>
 
         <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
@@ -1201,28 +1252,14 @@ export default function Home() {
             </Reveal>
           </div>
 
-          {/* Desktop — continuous auto-scrolling slider, no controls */}
-          <div className="hidden md:block relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
-            <motion.div
-              className="flex w-max gap-6"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            >
-              {[...solutions, ...solutions].map((sol, i) => (
-                <div key={`${sol.title}-${i}`} className="w-[360px] shrink-0">
-                  <SolutionCard sol={sol} />
-                </div>
-              ))}
-            </motion.div>
-          </div>
-          {/* Mobile auto-slider */}
-          <AutoSlider interval={3500}>
+          {/* Manual horizontal scroll */}
+          <div className="flex gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {solutions.map((sol) => (
-              <SolutionCard key={sol.title} sol={sol} />
+              <div key={sol.title} className="w-[85%] sm:w-[340px] lg:w-[360px] shrink-0 snap-start">
+                <SolutionCard sol={sol} />
+              </div>
             ))}
-          </AutoSlider>
+          </div>
         </div>
       </section>
 
@@ -1307,6 +1344,12 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
+      <TrustedLeadersSection />
+
+      {/* ━━━ ENTERPRISES USING ONWARD WORKSPACES ━━━ */}
+      <EnterprisesSection />
+
       {/* ━━━ GALLERY ━━━ */}
       <section className="py-16 lg:py-20 bg-white overflow-hidden">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-14 text-center">
@@ -1324,12 +1367,6 @@ export default function Home() {
         </div>
         <GallerySlider />
       </section>
-
-      {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
-      <TrustedLeadersSection />
-
-      {/* ━━━ ENTERPRISES USING ONWARD WORKSPACES ━━━ */}
-      <EnterprisesSection />
 
       {/* ━━━ NEWS & MEDIA TICKER ━━━ */}
       <NewsMediaSection />
