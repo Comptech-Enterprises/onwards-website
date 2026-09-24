@@ -701,7 +701,8 @@ function TrustedLeadersSection() {
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+        {/* Desktop grid */}
+        <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
           {enterpriseTestimonials.map((t) => {
             const isExpanded = !!expanded[t.id];
             return (
@@ -710,50 +711,70 @@ function TrustedLeadersSection() {
                 className="bg-white rounded-3xl border border-gray-200/90 p-7 sm:p-8 flex flex-col justify-between shadow-[0_8px_30px_-12px_rgba(26,26,46,0.1)] hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.18)] hover:border-[#d4622b]/40 hover:-translate-y-1.5 transition-all duration-300 relative group"
               >
                 <div>
-                  {/* Top card header: 5 stars rating */}
                   <div className="flex items-center justify-between gap-2 mb-4">
                     <div className="flex items-center gap-1">
                       {[...Array(t.rating)].map((_, i) => (
-                        <svg
-                          key={i}
-                          className="w-4 h-4 text-[#d4622b] fill-current"
-                          viewBox="0 0 20 20"
-                        >
+                        <svg key={i} className="w-4 h-4 text-[#d4622b] fill-current" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                       ))}
                     </div>
                   </div>
-
-                  {/* Testimonial Quote */}
                   <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed font-normal text-justify">
                     &ldquo;{isExpanded ? t.fullQuote : t.shortQuote}&rdquo;
-                    <button
-                      type="button"
-                      onClick={() => toggleExpand(t.id)}
-                      className="ml-2 font-semibold text-[#d4622b] hover:text-[#b8501f] transition-colors inline-flex items-center gap-0.5 text-xs group/btn"
-                    >
+                    <button type="button" onClick={() => toggleExpand(t.id)} className="ml-2 font-semibold text-[#d4622b] hover:text-[#b8501f] transition-colors inline-flex items-center gap-0.5 text-xs group/btn">
                       {isExpanded ? "Read Less" : "Read More"}
                       <span className="transition-transform group-hover/btn:translate-x-0.5">&rarr;</span>
                     </button>
                   </p>
                 </div>
-
-                {/* Author row */}
                 <div className="flex items-center gap-4 pt-6 mt-6 border-t border-gray-100">
                   {t.logo}
                   <div className="min-w-0">
-                    <h4 className="font-bold text-[#1a1a2e] text-sm sm:text-base leading-snug group-hover:text-[#d4622b] transition-colors">
-                      {t.name}
-                    </h4>
-                    <p className="text-xs sm:text-sm text-gray-500 font-normal leading-snug mt-0.5 truncate">
-                      {t.role}
-                    </p>
+                    <h4 className="font-bold text-[#1a1a2e] text-sm sm:text-base leading-snug">{t.name}</h4>
+                    <p className="text-xs sm:text-sm text-gray-500 font-normal leading-snug mt-0.5 truncate">{t.role}</p>
                   </div>
                 </div>
               </div>
             );
           })}
+        </div>
+        {/* Mobile auto-slider */}
+        <div className="md:hidden">
+          <AutoSlider interval={4000}>
+            {enterpriseTestimonials.map((t) => {
+              const isExpanded = !!expanded[t.id];
+              return (
+                <div
+                  key={t.id}
+                  className="bg-white rounded-3xl border border-gray-200/90 p-7 flex flex-col justify-between shadow-[0_8px_30px_-12px_rgba(26,26,46,0.1)]"
+                >
+                  <div>
+                    <div className="flex items-center gap-1 mb-4">
+                      {[...Array(t.rating)].map((_, i) => (
+                        <svg key={i} className="w-4 h-4 text-[#d4622b] fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <p className="text-sm text-gray-600 leading-relaxed font-normal text-justify">
+                      &ldquo;{isExpanded ? t.fullQuote : t.shortQuote}&rdquo;
+                      <button type="button" onClick={() => toggleExpand(t.id)} className="ml-2 font-semibold text-[#d4622b] inline-flex items-center gap-0.5 text-xs">
+                        {isExpanded ? "Read Less" : "Read More"}<span>&rarr;</span>
+                      </button>
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-4 pt-6 mt-6 border-t border-gray-100">
+                    {t.logo}
+                    <div className="min-w-0">
+                      <h4 className="font-bold text-[#1a1a2e] text-sm leading-snug">{t.name}</h4>
+                      <p className="text-xs text-gray-500 font-normal leading-snug mt-0.5 truncate">{t.role}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </AutoSlider>
         </div>
       </div>
     </section>
@@ -791,7 +812,8 @@ function EnterprisesSection() {
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-6 items-stretch max-w-6xl mx-auto">
+        {/* Desktop grid */}
+        <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-6 items-stretch max-w-6xl mx-auto">
           {enterpriseBrands.map((brand) => (
             <div
               key={brand.name}
@@ -801,6 +823,20 @@ function EnterprisesSection() {
               <brand.Logo className="h-6 sm:h-8 w-auto max-w-[110px] sm:max-w-[125px] object-contain transition-transform duration-300 group-hover:scale-105" />
             </div>
           ))}
+        </div>
+        {/* Mobile auto-slider */}
+        <div className="sm:hidden">
+          <AutoSlider interval={2500}>
+            {enterpriseBrands.map((brand) => (
+              <div
+                key={brand.name}
+                title={brand.name}
+                className="px-6 py-6 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] flex items-center justify-center h-[90px]"
+              >
+                <brand.Logo className="h-8 w-auto max-w-[140px] object-contain" />
+              </div>
+            ))}
+          </AutoSlider>
         </div>
       </div>
     </section>
@@ -1160,75 +1196,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-
-      {/* ━━━ WHY CHOOSE US ━━━ */}
-      <section id="why-choose-us" className="py-16 lg:py-20 bg-white border-t border-gray-200/60">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-14">
-            <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> Why Choose Us
-                <span className="w-6 h-px bg-[#d4622b]" />
-              </span>
-            </Reveal>
-            <AnimatedHeading
-              text="Revolutionise Your Workspace."
-              highlight="Workspace."
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
-            />
-            <Reveal delay={0.2}>
-              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
-                Whether you have questions about membership options, need assistance with technical aspects, or want to explore customization possibilities for your workspace, our experts are here to provide you with personalized guidance and solutions.
-              </p>
-            </Reveal>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            {whyChoose.map((w, i) => (
-              <Reveal key={w.title} delay={i * 0.1}>
-                <div className="h-full min-w-0 rounded-3xl bg-[#faf8f5] border border-gray-200/80 p-8 hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] transition-all">
-                  <div className="w-14 h-14 rounded-2xl bg-[#d4622b]/10 flex items-center justify-center mb-6">
-                    <svg className="w-7 h-7 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-3 break-words">{w.title}</h3>
-                  <p className="text-gray-500 leading-relaxed">{w.desc}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ━━━ SECTION 2: BRAND LOGOS TICKER ━━━ */}
-      <section className="relative py-14 bg-[#faf8f5] overflow-hidden">
-        <div className="max-w-3xl mx-auto text-center mb-10 px-6">
-          <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
-            In Good Company
-          </span>
-
-        </div>
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
-
-        <motion.div
-          className="flex w-max gap-4 whitespace-nowrap items-center"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
-        >
-          {[...Array(2)].flatMap((_, r) =>
-            brandPartners.map((partner, i) => (
-              <div
-                key={`logo-ticker-${r}-${partner.name}-${i}`}
-                className="shrink-0 px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.2)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] transition-all flex items-center justify-center min-w-[170px] h-[74px] group"
-                title={partner.name}
-              >
-                <partner.Logo className="h-7 sm:h-8 w-auto max-w-[130px] object-contain transition-transform duration-300 group-hover:scale-105" />
-              </div>
-            )),
-          )}
-        </motion.div>
-      </section>
-
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
       <section id="solutions" className="py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -1261,6 +1228,91 @@ export default function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ━━━ WHY CHOOSE US ━━━ */}
+      <section id="why-choose-us" className="py-16 lg:py-20 bg-white border-t border-gray-200/60">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="mx-auto text-center mb-14">
+            <Reveal>
+              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                <span className="w-6 h-px bg-[#d4622b]" /> Why Choose Us
+                <span className="w-6 h-px bg-[#d4622b]" />
+              </span>
+            </Reveal>
+            <AnimatedHeading
+              text="Revolutionise Your Workspace."
+              highlight="Workspace."
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight md:whitespace-nowrap"
+            />
+            <Reveal delay={0.2}>
+              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
+                Whether you have questions about membership options, need assistance with technical aspects, or want to explore customization possibilities for your workspace, our experts are here to provide you with personalized guidance and solutions.
+              </p>
+            </Reveal>
+          </div>
+          {/* Desktop grid */}
+          <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8">
+            {whyChoose.map((w, i) => (
+              <Reveal key={w.title} delay={i * 0.1}>
+                <div className="h-full min-w-0 rounded-3xl bg-[#faf8f5] border border-gray-200/80 p-8 hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] transition-all">
+                  <div className="w-14 h-14 rounded-2xl bg-[#d4622b]/10 flex items-center justify-center mb-6">
+                    <svg className="w-7 h-7 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-3 break-words">{w.title}</h3>
+                  <p className="text-gray-500 leading-relaxed">{w.desc}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+          {/* Mobile auto-slider */}
+          <div className="md:hidden">
+            <AutoSlider interval={3500}>
+              {whyChoose.map((w) => (
+                <div key={w.title} className="h-full min-w-0 rounded-3xl bg-[#faf8f5] border border-gray-200/80 p-8">
+                  <div className="w-14 h-14 rounded-2xl bg-[#d4622b]/10 flex items-center justify-center mb-6">
+                    <svg className="w-7 h-7 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-3">{w.title}</h3>
+                  <p className="text-gray-500 leading-relaxed">{w.desc}</p>
+                </div>
+              ))}
+            </AutoSlider>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ SECTION 2: BRAND LOGOS TICKER ━━━ */}
+      <section className="relative py-14 bg-[#faf8f5] overflow-hidden">
+        <div className="max-w-3xl mx-auto text-center mb-10 px-6">
+          <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
+            In Good Company
+          </span>
+          <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight">
+            Brands That Trust Us
+          </h2>
+        </div>
+
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
+
+        <motion.div
+          className="flex w-max gap-4 whitespace-nowrap items-center"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
+        >
+          {[...Array(2)].flatMap((_, r) =>
+            brandPartners.map((partner, i) => (
+              <div
+                key={`logo-ticker-${r}-${partner.name}-${i}`}
+                className="shrink-0 px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.2)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] transition-all flex items-center justify-center min-w-[170px] h-[74px] group"
+                title={partner.name}
+              >
+                <partner.Logo className="h-7 sm:h-8 w-auto max-w-[130px] object-contain transition-transform duration-300 group-hover:scale-105" />
+              </div>
+            )),
+          )}
+        </motion.div>
       </section>
 
       {/* ━━━ OUR TOP CITIES IN DELHI NCR ━━━ */}
@@ -1344,9 +1396,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
-      <TrustedLeadersSection />
-
       {/* ━━━ ENTERPRISES USING ONWARD WORKSPACES ━━━ */}
       <EnterprisesSection />
 
@@ -1368,11 +1417,14 @@ export default function Home() {
         <GallerySlider />
       </section>
 
-      {/* ━━━ NEWS & MEDIA TICKER ━━━ */}
-      <NewsMediaSection />
-
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection />
+
+      {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
+      <TrustedLeadersSection />
+
+      {/* ━━━ NEWS & MEDIA TICKER ━━━ */}
+      <NewsMediaSection />
 
       {/* ━━━ FOOTER (CLEAN LIGHT THEME) ━━━ */}
       <footer className="bg-[#faf8f5] text-gray-500 pt-16 pb-10 border-t border-gray-200 relative overflow-hidden">
