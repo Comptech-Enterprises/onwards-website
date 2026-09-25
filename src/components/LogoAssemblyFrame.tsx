@@ -43,9 +43,7 @@ export default function LogoAssemblyFrame() {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-bold tracking-[0.25em] uppercase flex items-center justify-center gap-3">
-              <span className="w-8 h-px bg-[#d4622b]" />
               The Onward Identity
-              <span className="w-8 h-px bg-[#d4622b]" />
             </span>
           </Reveal>
           <AnimatedHeading

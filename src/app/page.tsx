@@ -686,8 +686,7 @@ function TrustedLeadersSection() {
         <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              <span className="w-6 h-px bg-[#d4622b]" /> Testimonials <span className="w-6 h-px bg-[#d4622b]" />
-            </span>
+              Testimonials             </span>
           </Reveal>
           <AnimatedHeading
             text="Trusted by Enterprise Leaders"
@@ -797,8 +796,7 @@ function EnterprisesSection() {
         <div className="max-w-none mx-auto text-center mb-12 sm:mb-14">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              <span className="w-6 h-px bg-[#d4622b]" /> Enterprise Network <span className="w-6 h-px bg-[#d4622b]" />
-            </span>
+              Enterprise Network             </span>
           </Reveal>
           <AnimatedHeading
             text="Enterprises using Onward Workspaces"
@@ -850,8 +848,7 @@ function NewsMediaSection() {
         <div className="text-center mb-12 sm:mb-14">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              <span className="w-6 h-px bg-[#d4622b]" /> Press &amp; Recognition <span className="w-6 h-px bg-[#d4622b]" />
-            </span>
+              Press &amp; Recognition             </span>
           </Reveal>
           <AnimatedHeading
             text="News & Media"
@@ -898,7 +895,7 @@ function NewsMediaSection() {
 
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
-    <SpotlightCard className="h-full min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white hover:border-[#d4622b] transition-all duration-500 flex flex-col justify-between">
+    <SpotlightCard className="h-full min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white transition-all duration-500 flex flex-col justify-between">
       {/* Top Image Container with zoom & gradient overlay */}
       <div className="relative h-44 w-full overflow-hidden bg-gray-100">
         <div
@@ -912,7 +909,7 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
       {/* Card Content Area */}
       <div className="p-6 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-2xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
+          <h3 className="text-2xl font-bold text-black">
             {sol.title}
           </h3>
           <p className="mt-2.5 text-gray-500 text-sm leading-relaxed">
@@ -941,7 +938,7 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
           </span>
           <div className="w-8 h-8 rounded-full bg-gray-100 text-gray-700 group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
             <svg
-              className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
+              className="w-4 h-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -1202,9 +1199,8 @@ export default function Home() {
           <div className="max-w-3xl mx-auto text-center mb-16">
             <Reveal>
               <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> Solutions
-                <span className="w-6 h-px bg-[#d4622b]" />
-              </span>
+                Solutions
+                              </span>
             </Reveal>
             <AnimatedHeading
               text="Office Space Solutions"
@@ -1236,9 +1232,8 @@ export default function Home() {
           <div className="mx-auto text-center mb-14">
             <Reveal>
               <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> Why Choose Us
-                <span className="w-6 h-px bg-[#d4622b]" />
-              </span>
+                Why Choose Us
+                              </span>
             </Reveal>
             <AnimatedHeading
               text="Revolutionise Your Workspace."
@@ -1323,8 +1318,7 @@ export default function Home() {
           <div className="text-center max-w-4xl mx-auto mb-12">
             <Reveal>
               <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-                <span className="w-6 h-px bg-[#d4622b]" /> NCR Presence <span className="w-6 h-px bg-[#d4622b]" />
-              </span>
+                NCR Presence               </span>
             </Reveal>
             <AnimatedHeading
               text="Our Top Cities in Delhi NCR"
@@ -1404,9 +1398,8 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-14 text-center">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              <span className="w-6 h-px bg-[#d4622b]" /> Gallery
-              <span className="w-6 h-px bg-[#d4622b]" />
-            </span>
+              Gallery
+                          </span>
           </Reveal>
           <AnimatedHeading
             text="Explore Our Workspace Gallery"
@@ -1501,7 +1494,7 @@ export default function Home() {
                       <li key={l}>
                         <a
                           href={l === "Blog" ? "/blog" : "#"}
-                          className="relative inline-block text-gray-500 hover:text-[#d4622b] transition-colors py-0.5 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+                          className="relative inline-block text-[#1a1a2e] hover:text-[#d4622b] transition-colors py-0.5 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
                         >
                           {l}
                         </a>
@@ -1521,7 +1514,7 @@ export default function Home() {
                   <a
                     key={l}
                     href="#"
-                    className="relative inline-block text-gray-500 hover:text-[#d4622b] transition-colors py-0.5 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
+                    className="relative inline-block text-[#1a1a2e] hover:text-[#d4622b] transition-colors py-0.5 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
                   >
                     {l}
                   </a>

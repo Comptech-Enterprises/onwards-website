@@ -90,7 +90,7 @@ export default function StrategicLocationsMap() {
             <span className="text-gray-500 text-xs font-bold tracking-[0.25em] uppercase">
               OUR LOCATIONS
             </span>
-            <span className="w-12 h-0.5 bg-[#d4622b] rounded-full" />
+
           </div>
 
           {/* Main Strategic Heading */}
