@@ -1168,13 +1168,13 @@ export default function Home() {
       </section>
 
       {/* ━━━ STATS STRIP ━━━ */}
-      <section className="bg-[#1a1a2e]">
+      <section className="bg-white border-y border-gray-200">
         <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4">
           {stats.map((s, i) => (
-            <div key={s.label} className={`py-6 sm:py-8 text-center ${i > 0 ? "border-l border-white/10" : ""}`}>
+            <div key={s.label} className={`py-8 sm:py-10 text-center ${i > 0 ? "border-l border-gray-200" : ""}`}>
               <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
-              <div className="text-white text-xs sm:text-sm mt-1 font-medium">{s.label}</div>
-              <div className="text-white/50 text-[10px] sm:text-xs mt-0.5">{s.sub}</div>
+              <div className="text-[#1a1a2e] text-xs sm:text-sm mt-1.5 font-semibold">{s.label}</div>
+              <div className="text-gray-500 text-[10px] sm:text-xs mt-0.5">{s.sub}</div>
             </div>
           ))}
         </div>
