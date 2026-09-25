@@ -1093,33 +1093,21 @@ export default function Home() {
         className="relative min-h-screen flex items-center overflow-hidden"
         id="home"
       >
-        {/* Background video */}
-        <video
-          src="/hero-bg.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 z-0 w-full h-full object-cover"
+        {/* Background static image — light coworking space */}
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80')" }}
         />
 
-        {/* Cinematic overlay — navy tint + vignette */}
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-[#1a1a2e]/70" />
-        <div
-          className="pointer-events-none absolute inset-0 z-[1]"
-          style={{
-            background:
-              "radial-gradient(ellipse at 30% 45%, transparent 0%, rgba(15,15,30,0.35) 55%, rgba(10,10,20,0.75) 100%)",
-          }}
-        />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 z-[1] bg-gradient-to-t from-[#0a0a15] to-transparent" />
+        {/* Overlay for text readability */}
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/35" />
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-16 sm:py-24 text-center flex flex-col items-center justify-center"
         >
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)] text-center md:whitespace-nowrap px-2">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center md:whitespace-nowrap px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
               Workspace built around{" "}
               <span className="relative inline-grid text-left align-baseline">
                 <span aria-hidden className="invisible col-start-1 row-start-1">Ambition</span>
@@ -1142,7 +1130,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white/90 max-w-none mx-auto text-center leading-relaxed md:whitespace-nowrap drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)] px-4"
+              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white max-w-none mx-auto text-center leading-relaxed md:whitespace-nowrap px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
             >
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
@@ -1169,20 +1157,6 @@ export default function Home() {
               </a>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.7 }}
-              className="mt-10 sm:mt-14 w-full max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden shadow-sm border border-white/20"
-            >
-              {stats.map((s) => (
-                <div key={s.label} className="bg-white/10 backdrop-blur-md p-3.5 sm:p-5 lg:p-6 text-center group hover:bg-white/20 transition-colors">
-                  <div className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
-                  <div className="text-white/90 text-xs sm:text-sm mt-1 font-medium">{s.label}</div>
-                  <div className="text-white/60 text-[10px] sm:text-xs mt-0.5 group-hover:text-[#d4622b] transition-colors">{s.sub}</div>
-                </div>
-              ))}
-            </motion.div>
           </div>
         </motion.div>
 
@@ -1191,6 +1165,19 @@ export default function Home() {
           <span className="text-gray-400 text-[10px] tracking-widest uppercase">Scroll</span>
           <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-6 bg-gradient-to-b from-[#d4622b]/50 to-transparent" />
         </motion.div>
+      </section>
+
+      {/* ━━━ STATS STRIP ━━━ */}
+      <section className="bg-[#1a1a2e]">
+        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4">
+          {stats.map((s, i) => (
+            <div key={s.label} className={`py-6 sm:py-8 text-center ${i > 0 ? "border-l border-white/10" : ""}`}>
+              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
+              <div className="text-white text-xs sm:text-sm mt-1 font-medium">{s.label}</div>
+              <div className="text-white/50 text-[10px] sm:text-xs mt-0.5">{s.sub}</div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
@@ -1275,39 +1262,6 @@ export default function Home() {
             </AutoSlider>
           </div>
         </div>
-      </section>
-
-      {/* ━━━ SECTION 2: BRAND LOGOS TICKER ━━━ */}
-      <section className="relative py-14 bg-[#faf8f5] overflow-hidden">
-        <div className="max-w-3xl mx-auto text-center mb-10 px-6">
-          <span className="text-[10px] tracking-[0.35em] uppercase text-[#d4622b] font-bold">
-            In Good Company
-          </span>
-          <h2 className="mt-3 text-2xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight">
-            Brands That Trust Us
-          </h2>
-        </div>
-
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
-
-        <motion.div
-          className="flex w-max gap-4 whitespace-nowrap items-center"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 36, repeat: Infinity, ease: "linear" }}
-        >
-          {[...Array(2)].flatMap((_, r) =>
-            brandPartners.map((partner, i) => (
-              <div
-                key={`logo-ticker-${r}-${partner.name}-${i}`}
-                className="shrink-0 px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.2)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] transition-all flex items-center justify-center min-w-[170px] h-[74px] group"
-                title={partner.name}
-              >
-                <partner.Logo className="h-7 sm:h-8 w-auto max-w-[130px] object-contain transition-transform duration-300 group-hover:scale-105" />
-              </div>
-            )),
-          )}
-        </motion.div>
       </section>
 
       {/* ━━━ OUR TOP CITIES IN DELHI NCR ━━━ */}
