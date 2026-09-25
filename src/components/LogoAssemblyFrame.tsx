@@ -49,7 +49,7 @@ export default function LogoAssemblyFrame() {
           <AnimatedHeading
             text="Lines converge. Vision takes shape."
             highlight="Vision takes shape."
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2 leading-tight"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-2 leading-tight"
           />
           <Reveal delay={0.2}>
             <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">

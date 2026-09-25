@@ -179,7 +179,7 @@ export default function TestimonialsSection() {
           <AnimatedHeading
             text="Leaders trust Onward"
             highlight="trust Onward"
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] leading-tight tracking-tight"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-600 leading-tight tracking-tight"
           />
 
           <Reveal delay={0.1}>

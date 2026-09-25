@@ -692,7 +692,7 @@ function TrustedLeadersSection() {
           <AnimatedHeading
             text="Trusted by Enterprise Leaders"
             highlight="Enterprise Leaders"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
           />
           <Reveal delay={0.1}>
             <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
@@ -794,7 +794,7 @@ function EnterprisesSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-none mx-auto text-center mb-10 sm:mb-12">
+        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Enterprise Network
@@ -803,10 +803,10 @@ function EnterprisesSection() {
           <AnimatedHeading
             text="Enterprises using Onward Workspaces"
             highlight="Onward Workspaces"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2 md:whitespace-nowrap"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
           />
           <Reveal delay={0.1}>
-            <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-none mx-auto text-center md:whitespace-nowrap">
+            <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
               Elevate your workspace experience and be part of a movement that redefines success
             </p>
           </Reveal>
@@ -847,7 +847,7 @@ function NewsMediaSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-10 sm:mb-12">
+        <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-12">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Press &amp; Recognition
@@ -856,11 +856,13 @@ function NewsMediaSection() {
           <AnimatedHeading
             text="News & Media"
             highlight="Media"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
           />
           <Reveal delay={0.1}>
-            <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed mx-auto text-center md:whitespace-nowrap">
-              We understand that selecting the right co-working space is a crucial decision. We&apos;re here to help you make an informed choice and tailor our offerings to meet your specific needs.
+            <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed max-w-4xl mx-auto text-center">
+              We understand that selecting the right co-working space is a crucial decision.{" "}
+              <br className="hidden md:inline" />
+              We&apos;re here to help you make an informed choice and tailor our offerings to meet your specific needs.
             </p>
           </Reveal>
         </div>
@@ -1110,7 +1112,7 @@ export default function Home() {
           className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-16 sm:py-24 text-center flex flex-col items-center justify-center"
         >
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center md:whitespace-nowrap px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
               Workspace built around{" "}
               <span className="relative inline-grid text-left align-baseline">
                 <span aria-hidden className="invisible col-start-1 row-start-1">Ambition</span>
@@ -1133,7 +1135,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white max-w-none mx-auto text-center leading-relaxed md:whitespace-nowrap px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
+              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white max-w-3xl mx-auto text-center leading-relaxed px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
             >
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
@@ -1160,27 +1162,34 @@ export default function Home() {
               </a>
             </motion.div>
 
+            {/* ━━━ STATS STRIP ON TOP OF HERO IMAGE ━━━ */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.85, duration: 0.6 }}
+              className="mt-16 sm:mt-20 lg:mt-24 w-full max-w-5xl mx-auto"
+            >
+              <div className="rounded-2xl sm:rounded-3xl bg-white/60 backdrop-blur-2xl border border-white/50 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.2)] p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-gray-300/60">
+                {stats.map((s) => (
+                  <div key={s.label} className="py-3 sm:py-2 text-center px-3">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#d4622b]">
+                      <SpringCounter target={s.value} suffix={s.suffix} />
+                    </div>
+                    <div className="text-[#1a1a2e] text-xs sm:text-sm mt-1 font-bold">{s.label}</div>
+                    <div className="text-gray-700 text-[10px] sm:text-xs mt-0.5 font-semibold">{s.sub}</div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
           </div>
         </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="absolute bottom-6 right-8 flex flex-col items-center gap-2 z-10">
-          <span className="text-gray-400 text-[10px] tracking-widest uppercase">Scroll</span>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-6 bg-gradient-to-b from-[#d4622b]/50 to-transparent" />
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="absolute bottom-6 right-8 hidden lg:flex flex-col items-center gap-2 z-10">
+          <span className="text-white/60 text-[10px] tracking-widest uppercase">Scroll</span>
+          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-6 bg-gradient-to-b from-[#d4622b] to-transparent" />
         </motion.div>
-      </section>
-
-      {/* ━━━ STATS STRIP ━━━ */}
-      <section className="bg-white border-y border-gray-200">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4">
-          {stats.map((s, i) => (
-            <div key={s.label} className={`py-8 sm:py-10 text-center ${i > 0 ? "border-l border-gray-200" : ""}`}>
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
-              <div className="text-[#1a1a2e] text-xs sm:text-sm mt-1.5 font-semibold">{s.label}</div>
-              <div className="text-gray-600 text-[10px] sm:text-xs mt-0.5">{s.sub}</div>
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
@@ -1195,7 +1204,7 @@ export default function Home() {
             <AnimatedHeading
               text="Office Space Solutions"
               highlight="Solutions"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2 leading-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
               <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
@@ -1228,7 +1237,7 @@ export default function Home() {
             <AnimatedHeading
               text="Revolutionise Your Workspace."
               highlight="Workspace."
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2 leading-tight md:whitespace-nowrap"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
               <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
@@ -1281,7 +1290,7 @@ export default function Home() {
             <AnimatedHeading
               text="Our Top Cities in Delhi NCR"
               highlight="Delhi NCR"
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
             />
             <Reveal delay={0.1}>
               <p className="mt-3 text-sm sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
@@ -1362,7 +1371,7 @@ export default function Home() {
           <AnimatedHeading
             text="Explore Our Workspace Gallery"
             highlight="Workspace Gallery"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-600 mt-2"
           />
         </div>
         <GallerySlider />

@@ -94,7 +94,7 @@ export default function StrategicLocationsMap() {
           </div>
 
           {/* Main Strategic Heading */}
-          <h2 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-bold text-[#1a1a2e] tracking-tight leading-[1.06] mb-5">
+          <h2 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-bold text-gray-600 tracking-tight leading-[1.06] mb-5">
             Strategic{" "}<br className="lg:hidden" />
             locations.<br />
             Stronger{" "}<br className="lg:hidden" />

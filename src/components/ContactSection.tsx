@@ -114,7 +114,7 @@ export default function ContactSection() {
             <AnimatedHeading
               text="Ready to move forward with Onward?"
               highlight="forward with Onward?"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-[1.1] tracking-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-3 leading-[1.1] tracking-tight"
             />
 
             <Reveal delay={0.2}>
