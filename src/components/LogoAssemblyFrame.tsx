@@ -40,7 +40,7 @@ export default function LogoAssemblyFrame() {
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-bold tracking-[0.25em] uppercase flex items-center justify-center gap-3">
               The Onward Identity
@@ -49,10 +49,10 @@ export default function LogoAssemblyFrame() {
           <AnimatedHeading
             text="Lines converge. Vision takes shape."
             highlight="Vision takes shape."
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-4 leading-tight"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2 leading-tight"
           />
           <Reveal delay={0.2}>
-            <p className="mt-4 text-gray-500 text-lg leading-relaxed">
+            <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
               Every detail is engineered with momentum — pointing up and forward,
               anchored by a community that drives progress.
             </p>

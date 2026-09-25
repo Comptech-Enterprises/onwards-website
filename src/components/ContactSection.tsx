@@ -114,11 +114,11 @@ export default function ContactSection() {
             <AnimatedHeading
               text="Ready to move forward with Onward?"
               highlight="forward with Onward?"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-4 leading-[1.1] tracking-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-[1.1] tracking-tight"
             />
 
             <Reveal delay={0.2}>
-              <p className="mt-6 text-gray-500 text-lg leading-relaxed max-w-lg">
+              <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed max-w-lg">
                 Whether you need a bespoke enterprise floor for 500+ or a private
                 cabin for your executive team, our workspace specialists will
                 curate the perfect solution within 24 hours.

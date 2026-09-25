@@ -168,7 +168,7 @@ export default function TestimonialsSection() {
         {/* ━━━ SECTION HEADER ━━━ */}
         <div className="max-w-2xl mb-14">
           <Reveal>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4622b]/10 border border-[#d4622b]/20 mb-3.5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4622b]/10 border border-[#d4622b]/20 mb-3">
               <span className="w-2 h-2 rounded-full bg-[#d4622b]" />
               <span className="text-[#d4622b] text-xs font-bold uppercase tracking-widest">
                 Client Testimonials
@@ -183,8 +183,8 @@ export default function TestimonialsSection() {
           />
 
           <Reveal delay={0.1}>
-            <p className="mt-3.5 text-gray-500 text-base sm:text-lg leading-relaxed">
-              Discover how India's fastest-growing enterprises and modern teams scale effortlessly across our workspaces.
+            <p className="mt-2.5 text-gray-700 text-base sm:text-lg leading-relaxed">
+              Discover how India&apos;s fastest-growing enterprises and modern teams scale effortlessly across our workspaces.
             </p>
           </Reveal>
         </div>

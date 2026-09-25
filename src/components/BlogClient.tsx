@@ -152,7 +152,7 @@ export default function BlogClient({ posts }: BlogClientProps) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed max-w-2xl font-normal"
+            className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed max-w-2xl font-normal"
           >
             Explore perspectives on flexible workspaces, enterprise scaling,
             commercial real estate trends, and the future of work across Delhi

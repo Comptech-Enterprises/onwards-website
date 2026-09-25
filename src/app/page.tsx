@@ -683,18 +683,19 @@ function TrustedLeadersSection() {
       <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
+        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              Testimonials             </span>
+              Testimonials
+            </span>
           </Reveal>
           <AnimatedHeading
             text="Trusted by Enterprise Leaders"
             highlight="Enterprise Leaders"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
               These success stories showcase the real impact of our coworking spaces and services, providing valuable insights into how we can support your business needs &amp; aspirations.
             </p>
           </Reveal>
@@ -793,18 +794,19 @@ function EnterprisesSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-none mx-auto text-center mb-12 sm:mb-14">
+        <div className="max-w-none mx-auto text-center mb-10 sm:mb-12">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              Enterprise Network             </span>
+              Enterprise Network
+            </span>
           </Reveal>
           <AnimatedHeading
             text="Enterprises using Onward Workspaces"
             highlight="Onward Workspaces"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3 md:whitespace-nowrap"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2 md:whitespace-nowrap"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base leading-relaxed max-w-none mx-auto text-center md:whitespace-nowrap">
+            <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-none mx-auto text-center md:whitespace-nowrap">
               Elevate your workspace experience and be part of a movement that redefines success
             </p>
           </Reveal>
@@ -845,18 +847,19 @@ function NewsMediaSection() {
   return (
     <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-12 sm:mb-14">
+        <div className="text-center mb-10 sm:mb-12">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              Press &amp; Recognition             </span>
+              Press &amp; Recognition
+            </span>
           </Reveal>
           <AnimatedHeading
             text="News & Media"
             highlight="Media"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2"
           />
           <Reveal delay={0.1}>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed mx-auto text-center md:whitespace-nowrap">
+            <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed mx-auto text-center md:whitespace-nowrap">
               We understand that selecting the right co-working space is a crucial decision. We&apos;re here to help you make an informed choice and tailor our offerings to meet your specific needs.
             </p>
           </Reveal>
@@ -1174,7 +1177,7 @@ export default function Home() {
             <div key={s.label} className={`py-8 sm:py-10 text-center ${i > 0 ? "border-l border-gray-200" : ""}`}>
               <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#d4622b]"><SpringCounter target={s.value} suffix={s.suffix} /></div>
               <div className="text-[#1a1a2e] text-xs sm:text-sm mt-1.5 font-semibold">{s.label}</div>
-              <div className="text-gray-500 text-[10px] sm:text-xs mt-0.5">{s.sub}</div>
+              <div className="text-gray-600 text-[10px] sm:text-xs mt-0.5">{s.sub}</div>
             </div>
           ))}
         </div>
@@ -1183,19 +1186,19 @@ export default function Home() {
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
       <section id="solutions" className="py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-16">
+          <div className="max-w-3xl mx-auto text-center mb-12">
             <Reveal>
               <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 Solutions
-                              </span>
+              </span>
             </Reveal>
             <AnimatedHeading
               text="Office Space Solutions"
               highlight="Solutions"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
-              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
+              <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
                 Flexible office solutions aligned with your business needs and
                 growth trajectory.
               </p>
@@ -1216,19 +1219,19 @@ export default function Home() {
       {/* ━━━ WHY CHOOSE US ━━━ */}
       <section id="why-choose-us" className="py-16 lg:py-20 bg-white border-t border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="mx-auto text-center mb-14">
+          <div className="mx-auto text-center mb-12 max-w-4xl">
             <Reveal>
               <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 Why Choose Us
-                              </span>
+              </span>
             </Reveal>
             <AnimatedHeading
               text="Revolutionise Your Workspace."
               highlight="Workspace."
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3 leading-tight md:whitespace-nowrap"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2 leading-tight md:whitespace-nowrap"
             />
             <Reveal delay={0.2}>
-              <p className="mt-4 text-gray-500 text-lg leading-relaxed">
+              <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
                 Whether you have questions about membership options, need assistance with technical aspects, or want to explore customization possibilities for your workspace, our experts are here to provide you with personalized guidance and solutions.
               </p>
             </Reveal>
@@ -1242,7 +1245,7 @@ export default function Home() {
                     <svg className="w-7 h-7 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
                   </div>
                   <h3 className="text-xl font-bold text-[#1a1a2e] mb-3 break-words">{w.title}</h3>
-                  <p className="text-gray-500 leading-relaxed">{w.desc}</p>
+                  <p className="text-gray-600 leading-relaxed">{w.desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -1256,7 +1259,7 @@ export default function Home() {
                     <svg className="w-7 h-7 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
                   </div>
                   <h3 className="text-xl font-bold text-[#1a1a2e] mb-3">{w.title}</h3>
-                  <p className="text-gray-500 leading-relaxed">{w.desc}</p>
+                  <p className="text-gray-600 leading-relaxed">{w.desc}</p>
                 </div>
               ))}
             </AutoSlider>
@@ -1269,18 +1272,19 @@ export default function Home() {
         className="py-16 lg:py-20 bg-white relative overflow-hidden border-t border-gray-100"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto mb-12">
+          <div className="text-center max-w-4xl mx-auto mb-10">
             <Reveal>
               <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-                NCR Presence               </span>
+                NCR Presence
+              </span>
             </Reveal>
             <AnimatedHeading
               text="Our Top Cities in Delhi NCR"
               highlight="Delhi NCR"
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-3"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1a1a2e] mt-2"
             />
             <Reveal delay={0.1}>
-              <p className="mt-4 text-sm sm:text-base text-gray-500 leading-relaxed max-w-3xl mx-auto">
+              <p className="mt-3 text-sm sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
                 Begin your path to success with Onward Workspaces across Delhi, Noida, and Gurugram.
               </p>
             </Reveal>
@@ -1349,16 +1353,16 @@ export default function Home() {
 
       {/* ━━━ GALLERY ━━━ */}
       <section className="py-16 lg:py-20 bg-white overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-14 text-center">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-10 sm:mb-12 text-center">
           <Reveal>
             <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Gallery
-                          </span>
+            </span>
           </Reveal>
           <AnimatedHeading
             text="Explore Our Workspace Gallery"
             highlight="Workspace Gallery"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-3"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#1a1a2e] mt-2"
           />
         </div>
         <GallerySlider />

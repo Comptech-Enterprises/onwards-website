@@ -100,7 +100,7 @@ export default function TeamPageClient() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed"
+            className="mt-4 text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed"
           >
             Our philosophy is simple; hire great people and give them the
             resources and support to do their best work.
@@ -126,7 +126,7 @@ export default function TeamPageClient() {
                 <p className="text-sm font-semibold text-[#d4622b]">
                   {person.role}
                 </p>
-                <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+                <p className="mt-2 text-sm text-gray-600 leading-relaxed">
                   {person.bio}
                 </p>
               </motion.div>

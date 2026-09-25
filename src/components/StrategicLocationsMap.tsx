@@ -86,15 +86,15 @@ export default function StrategicLocationsMap() {
       <div className="min-w-0 flex flex-col justify-between space-y-8 sm:space-y-10 relative z-20">
         <div>
           {/* Top Tag with Orange Dash */}
-          <div className="flex items-center gap-3 mb-6 sm:mb-8">
-            <span className="text-gray-500 text-xs font-bold tracking-[0.25em] uppercase">
+          <div className="flex items-center gap-3 mb-5 sm:mb-6">
+            <span className="text-gray-600 text-xs font-bold tracking-[0.25em] uppercase">
               OUR LOCATIONS
             </span>
 
           </div>
 
           {/* Main Strategic Heading */}
-          <h2 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-bold text-[#1a1a2e] tracking-tight leading-[1.06] mb-6">
+          <h2 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-bold text-[#1a1a2e] tracking-tight leading-[1.06] mb-5">
             Strategic{" "}<br className="lg:hidden" />
             locations.<br />
             Stronger{" "}<br className="lg:hidden" />
@@ -102,7 +102,7 @@ export default function StrategicLocationsMap() {
           </h2>
 
           {/* Subtitle description */}
-          <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-xl">
+          <p className="text-gray-700 text-sm sm:text-base leading-relaxed max-w-xl">
             Our workspaces are located across Delhi NCR&apos;s key business hubs — keeping you close to opportunity.
           </p>
 
