@@ -87,49 +87,55 @@ const missionVisionValues = [
   },
 ];
 
-/* ━━━ DUMMY TEAM DATA ━━━ */
+/* ━━━ DUMMY TEAM DATA (PLACEHOLDERS) ━━━ */
 const teamMembers = [
   {
     name: "Suvrat Jain",
     role: "Founder & CEO",
     bio: "Visionary entrepreneur steering Onward's strategic growth, real estate portfolio, and corporate partnerships across Delhi NCR.",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80",
     initials: "SJ",
+    accent: "#d4622b",
+    gradient: "from-[#1a1a2e] via-[#242638] to-[#d4622b]/30",
   },
   {
     name: "Aakash Sharma",
     role: "Head of Operations & Expansion",
     bio: "Oversees daily hub performance, facility operations, and seamless member onboarding across all 15+ centres.",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
     initials: "AS",
+    accent: "#3b82f6",
+    gradient: "from-[#1a1a2e] via-[#1e293b] to-[#3b82f6]/25",
   },
   {
     name: "Rhea Sen",
     role: "Director of Enterprise Client Solutions",
     bio: "Partners with Fortune 500 MNCs and unicorn startups to curate bespoke, turnkey enterprise office floors.",
-    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
     initials: "RS",
+    accent: "#10b981",
+    gradient: "from-[#1a1a2e] via-[#1c2e28] to-[#10b981]/25",
   },
   {
     name: "Vikram Malhotra",
     role: "Lead Architect & Workspace Design",
     bio: "Directs interior spatial planning, ergonomic acoustics, biophilic design, and custom brand architectural builds.",
-    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80",
     initials: "VM",
+    accent: "#8b5cf6",
+    gradient: "from-[#1a1a2e] via-[#272138] to-[#8b5cf6]/25",
   },
   {
     name: "Pooja Verma",
     role: "Head of Member Experience & Community",
     bio: "Curates networking events, brand partnerships, and community-building programs for our 425+ corporate clients.",
-    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80",
     initials: "PV",
+    accent: "#f59e0b",
+    gradient: "from-[#1a1a2e] via-[#2e261f] to-[#f59e0b]/25",
   },
   {
     name: "Nitin Mehra",
     role: "Chief Technology & Infrastructure Officer",
     bio: "Ensures enterprise-grade cybersecurity, dual-ISP fiber redundancy, IoT building automation, and seamless 24/7 IT uptime.",
-    img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80",
     initials: "NM",
+    accent: "#06b6d4",
+    gradient: "from-[#1a1a2e] via-[#162a32] to-[#06b6d4]/25",
   },
 ];
 
@@ -405,17 +411,27 @@ export default function AboutPage() {
                 <Reveal key={member.name} delay={idx * 0.08}>
                   <div className="bg-[#faf8f5] rounded-3xl border border-gray-200/80 overflow-hidden shadow-sm hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.25)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group">
                     <div>
-                      {/* Placeholder / Profile Image */}
-                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-200">
-                        <Image
-                          src={member.img}
-                          alt={member.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                      {/* Stylized Avatar Placeholder Frame */}
+                      <div className={`relative aspect-[16/11] w-full overflow-hidden bg-gradient-to-br ${member.gradient} flex items-center justify-center`}>
+                        {/* Subtle pattern grid overlay */}
+                        <div
+                          className="absolute inset-0 opacity-15 pointer-events-none"
+                          style={{
+                            backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+                            backgroundSize: "16px 16px",
+                          }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                        <div className="absolute bottom-4 left-4 right-4 text-white">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-[#d4622b] bg-white/90 px-2.5 py-0.5 rounded-md shadow-sm text-black">
+
+                        {/* Monogram Silhouette Badge */}
+                        <div className="relative flex flex-col items-center justify-center text-center z-10">
+                          <div className="w-20 h-20 rounded-2xl bg-white/10 border-2 border-white/20 backdrop-blur-md flex items-center justify-center text-white text-2xl font-bold tracking-widest shadow-xl group-hover:scale-105 group-hover:border-[#d4622b] transition-all duration-300">
+                            {member.initials}
+                          </div>
+                        </div>
+
+                        {/* Role pill badge */}
+                        <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-10">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
                             {member.role}
                           </span>
                         </div>
@@ -455,13 +471,17 @@ export default function AboutPage() {
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
                 <div className="lg:col-span-5 flex flex-col items-center sm:items-start text-center sm:text-left">
-                  <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-3xl overflow-hidden border-2 border-[#d4622b]/40 shadow-xl mb-6">
-                    <Image
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
-                      alt="Suvrat Jain - Founder & CEO"
-                      fill
-                      className="object-cover"
+                  <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-3xl overflow-hidden border-2 border-[#d4622b]/40 shadow-xl mb-6 bg-gradient-to-br from-[#16171b] via-[#232635] to-[#d4622b]/30 flex items-center justify-center">
+                    <div
+                      className="absolute inset-0 opacity-15 pointer-events-none"
+                      style={{
+                        backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+                        backgroundSize: "16px 16px",
+                      }}
                     />
+                    <div className="w-24 h-24 rounded-2xl bg-white/10 border-2 border-white/20 backdrop-blur-md flex items-center justify-center text-white text-3xl font-bold tracking-widest shadow-2xl">
+                      SJ
+                    </div>
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-bold text-white">
                     Suvrat Jain
