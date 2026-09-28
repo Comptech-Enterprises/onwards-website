@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Reveal from "@/components/Reveal";
@@ -202,225 +200,267 @@ const allHubs: HubDetail[] = [
   },
 ];
 
+/* ━━━ LOCATION NEAR YOU (REAL ONWARD WORKSPACES DELHI CONTENT) ━━━ */
+const delhiAreas = [
+  {
+    name: "Okhla Phase 2",
+    desc: "A bustling hub of creativity and innovation, blending industrial vibrancy with modern design.",
+  },
+  {
+    name: "Mohan Estate",
+    desc: "A serene retreat amidst lush greenery, where the balance between focus and relaxation is seamless.",
+  },
+  {
+    name: "Okhla Phase 3",
+    desc: "An innovation-centric locality home to IT companies, creative agencies, and research institutions.",
+  },
+  {
+    name: "Connaught Place",
+    desc: "State-of-the-art designs with easy metro accessibility, built for teams of all sizes.",
+  },
+];
+
+/* ━━━ AMENITIES (REAL ONWARD WORKSPACES CONTENT) ━━━ */
+const amenities = [
+  {
+    title: "Fully Equipped Meeting Room",
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-4-4" />
+      </svg>
+    ),
+  },
+  {
+    title: "Flexibility",
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+      </svg>
+    ),
+  },
+  {
+    title: "State-of-the-art Infrastructure",
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Small Contracts",
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    ),
+  },
+  {
+    title: "IT Services & Support",
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+      </svg>
+    ),
+  },
+  {
+    title: "Functional Layout",
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h7" />
+      </svg>
+    ),
+  },
+];
+
+/* ━━━ FAQ (REAL ONWARD WORKSPACES CONTENT) ━━━ */
+const faqs = [
+  {
+    q: "What sets Onward Workspaces apart as a coworking space in Delhi NCR?",
+    a: "Onward Workspaces isn't just a space; it's your dynamic hub for innovation in the heart of Delhi NCR. Our coworking ecosystem blends style and substance, ensuring every workday is a step toward success.",
+  },
+  {
+    q: "What amenities can I expect at Onward Workspaces?",
+    a: "From high-tech conference rooms to stylish lounges, our coworking spaces are equipped with modern amenities. Enjoy seamless connectivity, ergonomic furniture, and a vibrant community for networking.",
+  },
+  {
+    q: "How does Onward Workspaces contribute to a collaborative work culture?",
+    a: "Collaboration is in our DNA. Engage in networking events, workshops, and connect with a diverse community of professionals. Onward Workspaces is not just a space; it's a collaborative journey.",
+  },
+  {
+    q: "Are there any special promotions for coworking space?",
+    a: "We frequently offer special deals to make your Onward Workspaces experience even more rewarding. Connect with us to know more — your success deserves the best, at the best value.",
+  },
+];
+
+const delhiHubs = allHubs.filter((hub) => hub.city === "Delhi");
+
 function LocationsContent() {
-  const searchParams = useSearchParams();
-  const [selectedCity, setSelectedCity] = useState<"All" | "Delhi" | "Noida" | "Gurugram">("All");
-  const [searchQuery, setSearchQuery] = useState("");
-
-  useEffect(() => {
-    const cityParam = searchParams.get("city");
-    if (cityParam) {
-      const normalized = cityParam.toLowerCase();
-      if (normalized === "delhi") setSelectedCity("Delhi");
-      else if (normalized === "noida") setSelectedCity("Noida");
-      else if (normalized === "gurugram" || normalized === "gurgaon") setSelectedCity("Gurugram");
-    }
-  }, [searchParams]);
-
-  const filteredHubs = allHubs.filter((hub) => {
-    const matchesCity = selectedCity === "All" || hub.city === selectedCity;
-    const matchesSearch =
-      hub.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hub.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hub.tag.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hub.transit.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCity && matchesSearch;
-  });
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
     <>
-      <Header />
+      <Header alwaysSolid />
 
-      {/* ━━━ HERO SECTION (FULL BLEED MERGED WITH HEADER) ━━━ */}
-      <section className="relative pt-36 sm:pt-40 pb-16 sm:pb-20 lg:pb-24 bg-[#16171a] text-white overflow-hidden">
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center opacity-30"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#16171a]/80 via-[#16171a]/95 to-[#16171a]" />
+      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20">
+        {/* ━━━ PAGE BANNER (BREADCRUMB + TITLE) ━━━ */}
+        <section className="bg-white border-b border-gray-200/80 py-10 lg:py-14">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <nav aria-label="Breadcrumb" className="mb-4">
+              <ol className="flex items-center gap-2 text-xs text-gray-500 font-medium">
+                <li>
+                  <Link href="/" className="hover:text-[#d4622b] transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>/</li>
+                <li>
+                  <Link href="/locations" className="hover:text-[#d4622b] transition-colors">
+                    Locations
+                  </Link>
+                </li>
+                <li>/</li>
+                <li className="text-gray-800 font-semibold">Delhi</li>
+              </ol>
+            </nav>
 
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#d4622b] text-xs font-semibold uppercase tracking-widest mb-6"
-            >
-              Strategic NCR Network
-            </motion.div>
+            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+              Managed Office Space
+            </span>
+            <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-black leading-tight">
+              Premium Coworking Space in Delhi
+            </h1>
+            <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-3xl leading-relaxed">
+              Discover the best coworking spaces in Delhi with state-of-the-art design and easy metro accessibility &mdash; built and designed for teams of every size.
+            </p>
+          </div>
+        </section>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight"
-            >
-              Premium Workspaces Across Delhi, Noida &amp; Gurugram
-            </motion.h1>
+        {/* ━━━ LOCATION NEAR YOU (DELHI AREAS) ━━━ */}
+        <section className="py-16 lg:py-20 bg-white border-b border-gray-200/80">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-2xl mb-10">
+              <Reveal>
+                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                  Location Near You
+                </span>
+              </Reveal>
+              <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-black">
+                Delhi Areas We Serve
+              </h2>
+            </div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mt-5 text-base sm:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed"
-            >
-              Explore 15+ premier centres in Delhi NCR&apos;s most sought-after business districts. Designed with unmatched transit connectivity and enterprise hospitality.
-            </motion.p>
-
-            {/* City Selector Pills */}
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              {(["All", "Delhi", "Noida", "Gurugram"] as const).map((c) => {
-                const isSelected = selectedCity === c;
-                return (
-                  <button
-                    key={c}
-                    onClick={() => setSelectedCity(c)}
-                    className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                      isSelected
-                        ? "bg-[#d4622b] text-white shadow-[0_4px_20px_rgba(212,98,43,0.35)] scale-105"
-                        : "bg-white/10 text-gray-300 hover:text-white hover:bg-white/20 border border-white/15"
-                    }`}
-                  >
-                    {c === "All" ? "All Locations (15+)" : `${c} Centres`}
-                  </button>
-                );
-              })}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {delhiAreas.map((area, i) => (
+                <Reveal key={area.name} delay={i * 0.06}>
+                  <div className="h-full bg-[#faf8f5] rounded-2xl p-6 border border-gray-200">
+                    <h3 className="text-base font-bold text-black mb-2">
+                      {area.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {area.desc}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
 
-        <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e]">
-          {/* ━━━ FILTER & SEARCH BAR ━━━ */}
-        <section className="py-8 bg-white border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="relative w-full md:w-96">
-              <input
-                type="text"
-                placeholder="Search by area, metro, landmark..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-full border border-gray-200 bg-[#faf8f5] text-sm text-[#1a1a2e] focus:outline-none focus:border-[#d4622b] focus:ring-2 focus:ring-[#d4622b]/20 transition-all"
-              />
-              <svg
-                className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-
-            <div className="text-xs sm:text-sm text-gray-500 font-medium">
-              Showing <span className="font-bold text-[#1a1a2e]">{filteredHubs.length}</span> centres matching your filter
-            </div>
-          </div>
-        </section>
-
-        {/* ━━━ LOCATION HUBS GRID ━━━ */}
+        {/* ━━━ CENTRES IN DELHI (CONTENT-LED, MINIMAL IMAGERY) ━━━ */}
         <section className="py-16 lg:py-20 bg-[#faf8f5]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            {filteredHubs.length === 0 ? (
-              <div className="text-center py-20 bg-white rounded-3xl border border-gray-200 max-w-xl mx-auto p-8">
-                <p className="text-lg font-bold text-[#1a1a2e]">No locations found</p>
-                <p className="text-sm text-gray-500 mt-2">Try clearing your search query or selecting &quot;All Locations&quot;.</p>
-                <button
-                  onClick={() => {
-                    setSelectedCity("All");
-                    setSearchQuery("");
-                  }}
-                  className="mt-6 px-6 py-2.5 rounded-full bg-[#d4622b] text-white text-sm font-semibold hover:bg-[#b8501f]"
+            <div className="max-w-2xl mb-10">
+              <Reveal>
+                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                  Delhi &middot; {delhiHubs.length} Centres
+                </span>
+              </Reveal>
+              <h2 className="mt-2 text-2xl sm:text-3xl font-bold text-black">
+                Centres in Delhi
+              </h2>
+            </div>
+
+            <div className="divide-y divide-gray-200 border-t border-b border-gray-200">
+              {delhiHubs.map((hub, idx) => (
+                <motion.div
+                  key={hub.id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.06, duration: 0.4 }}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 py-8 group"
                 >
-                  Reset Filters
-                </button>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredHubs.map((hub, idx) => (
-                  <motion.div
-                    key={hub.id}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.05, duration: 0.4 }}
-                    className="bg-white rounded-3xl border border-gray-200 shadow-sm hover:border-[#d4622b]/60 hover:shadow-[0_16px_40px_-15px_rgba(212,98,43,0.2)] hover:-translate-y-1.5 transition-all duration-300 overflow-hidden flex flex-col justify-between group"
-                  >
-                    <div>
-                      {/* Image Thumbnail */}
-                      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                        <Image
-                          src={hub.img}
-                          alt={hub.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                        <div className="absolute top-4 left-4">
-                          <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/90 text-[#1a1a2e] backdrop-blur-md shadow-sm">
-                            {hub.tag} &bull; {hub.city}
-                          </span>
-                        </div>
-                        <div className="absolute bottom-4 left-4 right-4 text-white">
-                          <h3 className="text-xl font-bold leading-snug drop-shadow-sm">
-                            {hub.name}
-                          </h3>
-                        </div>
+                  <div className="lg:col-span-4">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#d4622b]">
+                      {hub.tag}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-black mt-1 group-hover:text-[#d4622b] transition-colors">
+                      {hub.name}
+                    </h3>
+                  </div>
+
+                  <div className="lg:col-span-6">
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {hub.address}. {hub.highlight}. {hub.transit}.
+                    </p>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3">
+                      {hub.features.map((f) => (
+                        <span key={f} className="text-xs text-gray-500">
+                          &bull; {f}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="lg:col-span-2 flex flex-row lg:flex-col items-center lg:items-end justify-between lg:justify-start gap-2">
+                    <div className="text-left lg:text-right">
+                      <div className="text-2xl font-light text-black leading-none">
+                        {hub.seats.replace(/\D/g, "")}
                       </div>
-
-                      {/* Content Area */}
-                      <div className="p-6">
-                        <div className="flex items-start gap-2 text-xs text-gray-500 mb-3">
-                          <svg className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                          </svg>
-                          <span className="line-clamp-2">{hub.address}</span>
-                        </div>
-
-                        <div className="flex items-center gap-2 text-xs font-semibold text-gray-700 bg-gray-50 p-2.5 rounded-xl border border-gray-100 mb-4">
-                          <svg className="w-4 h-4 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <span>{hub.transit}</span>
-                        </div>
-
-                        <p className="text-xs text-gray-600 leading-relaxed mb-4">
-                          {hub.highlight}
-                        </p>
-
-                        {/* Feature Badges */}
-                        <div className="flex flex-wrap gap-1.5 pt-3 border-t border-gray-100">
-                          {hub.features.map((f, i) => (
-                            <span
-                              key={i}
-                              className="text-[10px] font-medium bg-gray-100 text-gray-600 px-2.5 py-0.5 rounded-md"
-                            >
-                              &bull; {f}
-                            </span>
-                          ))}
-                        </div>
+                      <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mt-1">
+                        Capacity
                       </div>
                     </div>
+                    <MagneticButton
+                      href="/#contact"
+                      className="text-sm font-semibold text-[#d4622b] hover:text-black transition-colors whitespace-nowrap"
+                    >
+                      View Centre &rarr;
+                    </MagneticButton>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
 
-                    {/* Card Bottom CTA */}
-                    <div className="p-6 pt-0 border-t border-gray-100 mt-4 flex items-center justify-between">
-                      <div className="text-xs text-gray-500">
-                        Capacity: <span className="font-bold text-[#1a1a2e]">{hub.seats}</span>
-                      </div>
-                      <MagneticButton
-                        href="/#contact"
-                        className="bg-[#d4622b] text-white px-4 py-2 rounded-full text-xs font-semibold hover:bg-[#b8501f] transition-all shadow-sm"
-                      >
-                        Book a Tour &rarr;
-                      </MagneticButton>
+        {/* ━━━ AMENITIES (REAL ONWARD WORKSPACES CONTENT) ━━━ */}
+        <section className="py-20 lg:py-24 bg-white border-t border-gray-200/80">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-2xl mb-14">
+              <Reveal>
+                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                  What&apos;s Included
+                </span>
+              </Reveal>
+              <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold text-black">
+                Amenities
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
+              {amenities.map((a, i) => (
+                <Reveal key={a.title} delay={i * 0.06}>
+                  <div className="flex flex-col items-start gap-3">
+                    <div className="w-12 h-12 rounded-2xl bg-[#faf8f5] border border-gray-200 flex items-center justify-center">
+                      {a.icon}
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+                    <p className="text-sm font-semibold text-black leading-snug">
+                      {a.title}
+                    </p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -446,6 +486,69 @@ function LocationsContent() {
             </div>
 
             <StrategicLocationsMap />
+          </div>
+        </section>
+
+        {/* ━━━ FAQ (REAL ONWARD WORKSPACES CONTENT) ━━━ */}
+        <section className="py-20 lg:py-24 bg-white border-t border-gray-200/80">
+          <div className="max-w-3xl mx-auto px-6 lg:px-8">
+            <div className="text-center mb-14">
+              <Reveal>
+                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                  Got Questions?
+                </span>
+              </Reveal>
+              <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold text-black">
+                Frequently Asked Questions
+              </h2>
+              <p className="mt-3 text-gray-600 text-base sm:text-lg">
+                Everything you need to know about us.
+              </p>
+            </div>
+
+            <div className="divide-y divide-gray-200 border-t border-gray-200">
+              {faqs.map((f, i) => {
+                const isOpen = openFaq === i;
+                return (
+                  <div key={f.q}>
+                    <button
+                      onClick={() => setOpenFaq(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between gap-6 py-6 text-left"
+                    >
+                      <span className="text-lg sm:text-xl font-bold text-black">
+                        {f.q}
+                      </span>
+                      <span className="shrink-0 w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-black">
+                        {isOpen ? (
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M20 12H4" />
+                          </svg>
+                        ) : (
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                          </svg>
+                        )}
+                      </span>
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <p className="text-gray-600 text-base leading-relaxed pb-6">
+                            {f.a}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </section>
 
@@ -501,9 +604,5 @@ function LocationsContent() {
 }
 
 export default function LocationsPage() {
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-[#faf8f5]" />}>
-      <LocationsContent />
-    </Suspense>
-  );
+  return <LocationsContent />;
 }

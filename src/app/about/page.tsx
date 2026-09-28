@@ -1,21 +1,11 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Reveal from "@/components/Reveal";
 import AnimatedHeading from "@/components/AnimatedHeading";
 import MagneticButton from "@/components/MagneticButton";
-import SpringCounter from "@/components/SpringCounter";
-
-/* ━━━ TABULAR STATS DATA ━━━ */
-const stats = [
-  { value: 9, suffix: "", label: "CITIES", footnote: "*As of March, 2026" },
-  { value: 11.46, suffix: "", label: "MN SQ FT", decimals: 2 },
-  { value: 425, suffix: "+", label: "ENTERPRISE CLIENTS" },
-  { value: 80, suffix: "+", label: "CENTRES" },
-];
 
 /* ━━━ 4 CORE PILLARS (AUTHENTIC ONWARD CONTENT) ━━━ */
 const corePillars = [
@@ -66,24 +56,41 @@ const corePillars = [
 const missionVisionValues = [
   {
     title: "Mission",
-    subtitle: "Empowering Modern Teams",
-    desc: "To provide dynamic, tech-enabled, and hospitality-powered workspaces that foster innovation, seamless collaboration, and sustainable growth for enterprises, startups, and professionals across India.",
+    subtitle: "Our Purpose",
+    desc: "Driven by a passion for excellence, our mission is to empower individuals and businesses to reach their full potential. We believe that by fostering a dynamic and supportive work environment, we can inspire creativity, productivity, and growth.",
     bg: "from-[#1a1a2e] to-[#252542]",
     tag: "OUR PURPOSE",
   },
   {
     title: "Vision",
-    subtitle: "Pioneering Flexible Work",
-    desc: "To be India's most trusted and progressive managed workspace network, transforming commercial real estate into high-performing, connected ecosystems where ambition takes flight.",
+    subtitle: "Our Aspiration",
+    desc: "Our vision is to be the premier destination for professionals seeking a dynamic and vibrant coworking community, where innovation, productivity, and growth are limitless.",
     bg: "from-[#d4622b] to-[#b8501f]",
     tag: "OUR ASPIRATION",
   },
+];
+
+/* ━━━ CORE VALUES (REAL ONWARD WORKSPACES CONTENT) ━━━ */
+const coreValues = [
   {
-    title: "Core Values",
-    subtitle: "Integrity & Excellence",
-    desc: "We are anchored by customer obsession, uncompromising architectural quality, continuous innovation, transparent partnerships, and community-driven excellence.",
-    bg: "from-[#22242a] to-[#16171b]",
-    tag: "OUR ETHOS",
+    title: "Customer always comes first",
+    desc: "We are committed to bringing together elements that help companies scale and make our members happy.",
+  },
+  {
+    title: "No cutting corners",
+    desc: "Our members only deserve the best. That's the reason we focus so much on quality & precision in our every offering.",
+  },
+  {
+    title: "Uninterrupted services",
+    desc: "Keeping our members on the go is what we strive for. Hence, we offer uninterrupted services & complete support.",
+  },
+  {
+    title: "Honesty",
+    desc: "We abide by the quote — Secret of every successful relationship is transparency. You will experience the same in our every interaction & action.",
+  },
+  {
+    title: "Dignity & Respect",
+    desc: "When you associate with us, you become a part of our family where the bonds are made with utmost respect, dignity, integrity, compassion, and thoughtfulness.",
   },
 ];
 
@@ -142,94 +149,57 @@ const teamMembers = [
 export default function AboutPage() {
   return (
     <>
-      <Header />
+      <Header alwaysSolid />
 
-      {/* ━━━ HERO SECTION (FULL BLEED) ━━━ */}
-      <section className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#16171a] text-white">
-        {/* Background image */}
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80')",
-          }}
-        />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/55" />
+      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20 pb-20">
+        {/* ━━━ PAGE BANNER (BREADCRUMB + TITLE) ━━━ */}
+        <section className="bg-white border-b border-gray-200/80 py-10 lg:py-14">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <nav aria-label="Breadcrumb" className="mb-4">
+              <ol className="flex items-center gap-2 text-xs text-gray-500 font-medium">
+                <li>
+                  <Link href="/" className="hover:text-[#d4622b] transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>/</li>
+                <li className="text-gray-800 font-semibold">About Us</li>
+              </ol>
+            </nav>
 
-        {/* Hero Content Area */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-36 sm:pt-40 pb-12 text-center flex flex-col items-center justify-center flex-1 my-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#d4622b] text-xs font-semibold uppercase tracking-widest mb-6"
-          >
-            About Onward Workspaces
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]"
-          >
-            Crafting Workspaces Built Around Ambition, Brand &amp; People
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
-          >
-            Onward Workspaces transforms conventional commercial real estate into high-performing, hospitality-powered office ecosystems tailored for ambitious enterprises across Delhi NCR.
-          </motion.p>
-        </div>
-
-        {/* ━━━ TABULAR STATS STRIP PINNED AT BOTTOM OF HERO ━━━ */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.6 }}
-          className="relative z-20 w-full border-t border-white/15 bg-black/20 backdrop-blur-md text-left"
-        >
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-6 sm:py-8 grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0">
-            {stats.map((s, idx) => (
-              <div
-                key={s.label}
-                className={`flex flex-col justify-start text-left ${
-                  idx === 0
-                    ? "pr-4 sm:pr-6"
-                    : idx === 2
-                    ? "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 md:border-l md:border-white/15 md:pl-6 lg:pl-10"
-                    : idx === 1
-                    ? "border-l border-white/15 pl-6 lg:pl-10"
-                    : "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 border-l border-white/15 pl-6 lg:pl-10"
-                }`}
-              >
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">
-                  <SpringCounter
-                    target={s.value}
-                    suffix={s.suffix}
-                    decimals={s.decimals}
-                    className="tabular-nums font-light sm:font-normal"
-                  />
-                </div>
-                <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] text-white/70 uppercase mt-2">
-                  {s.label}
-                </div>
-                {s.footnote && (
-                  <div className="text-[10px] text-white/50 font-normal mt-2 tracking-normal">
-                    {s.footnote}
-                  </div>
-                )}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+              <div className="lg:col-span-8">
+                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                  About Us
+                </span>
+                <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-black leading-tight">
+                  Crafting Workspaces Built Around Ambition, Brand &amp; People
+                </h1>
+                <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-2xl leading-relaxed">
+                  Established in 2019, Onward Workspaces is a Delhi-based coworking company built to nurture ambitious startups &mdash; designing offices that change the way people feel about coming to work.
+                </p>
               </div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
 
-      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e]">
+              <div className="lg:col-span-4 lg:border-l lg:border-gray-200 lg:pl-10">
+                <div className="flex items-baseline gap-3">
+                  <span className="text-5xl sm:text-6xl font-light text-black tracking-tight leading-none">
+                    2019
+                  </span>
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-[0.2em]">
+                    Founded
+                  </span>
+                </div>
+                <p className="mt-4 text-sm text-gray-600 italic leading-relaxed border-l-2 border-[#d4622b]/40 pl-4">
+                  &ldquo;Every workspace we build is a reflection of our belief that great ideas thrive in great environments.&rdquo;
+                </p>
+                <p className="mt-2 text-xs font-semibold text-gray-500 uppercase tracking-wider pl-4">
+                  Suvrat Jain, Founder &amp; CEO
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ━━━ SECTION 1: WHO WE ARE & OUR GENESIS ━━━ */}
         <section className="py-20 lg:py-28 bg-[#faf8f5]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -353,13 +323,13 @@ export default function AboutPage() {
                 </span>
               </Reveal>
               <AnimatedHeading
-                text="Mission, Vision & Core Values"
-                highlight="Core Values"
+                text="Mission & Vision"
+                highlight="Vision"
                 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
               />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {missionVisionValues.map((v, i) => (
                 <Reveal key={v.title} delay={i * 0.1}>
                   <div
@@ -376,6 +346,42 @@ export default function AboutPage() {
                         {v.subtitle}
                       </p>
                       <p className="text-white/85 text-sm sm:text-base leading-relaxed">
+                        {v.desc}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ━━━ SECTION 3B: OUR CORE VALUES (REAL ONWARD WORKSPACES CONTENT) ━━━ */}
+        <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/80">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="max-w-2xl mb-14">
+              <Reveal>
+                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                  Our Ethos
+                </span>
+              </Reveal>
+              <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold text-black">
+                Our Core Values
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-12">
+              {coreValues.map((v, i) => (
+                <Reveal key={v.title} delay={i * 0.08}>
+                  <div className="flex gap-5">
+                    <span className="text-3xl sm:text-4xl font-light text-[#d4622b]/60 tracking-tight leading-none shrink-0">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="border-l border-gray-200 pl-5">
+                      <h3 className="text-lg sm:text-xl font-bold text-black mb-2">
+                        {v.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                         {v.desc}
                       </p>
                     </div>
@@ -451,12 +457,6 @@ export default function AboutPage() {
                           {member.bio}
                         </p>
                       </div>
-                    </div>
-
-                    <div className="px-6 pb-6 pt-2">
-                      <span className="inline-flex items-center text-xs font-semibold text-[#d4622b] group-hover:underline">
-                        Onward Leadership &rarr;
-                      </span>
                     </div>
                   </div>
                 </Reveal>
