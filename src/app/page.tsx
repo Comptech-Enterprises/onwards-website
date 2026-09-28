@@ -23,9 +23,20 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import StrategicLocationsMap from "@/components/StrategicLocationsMap";
 import {
   brandPartners,
+  RazorpayLogo,
+  JioLogo,
+  AramexLogo,
+  BcgLogo,
+  LvmhLogo,
+  BacardiLogo,
+  PernodRicardLogo,
+  ItcLogo,
+  ThermaxGridLogo,
+  RadicoLogo,
+  DangalGamesLogo,
+  StarWorldLogo,
   DpWorldLogo,
   ClarksonsLogo,
-  ThermaxGridLogo,
   OpraahLogo,
   SageLogo,
   TvsSupplyChainLogo,
@@ -783,8 +794,19 @@ function TrustedLeadersSection() {
 
 const enterpriseBrands = [
   { name: "DP World", Logo: DpWorldLogo },
+  { name: "Razorpay", Logo: RazorpayLogo },
+  { name: "Reliance Jio", Logo: JioLogo },
   { name: "Clarksons", Logo: ClarksonsLogo },
+  { name: "Aramex", Logo: AramexLogo },
+  { name: "Boston Consulting Group", Logo: BcgLogo },
   { name: "Thermax", Logo: ThermaxGridLogo },
+  { name: "LVMH", Logo: LvmhLogo },
+  { name: "Bacardi", Logo: BacardiLogo },
+  { name: "Pernod Ricard", Logo: PernodRicardLogo },
+  { name: "ITC Hotels", Logo: ItcLogo },
+  { name: "Radico Khaitan", Logo: RadicoLogo },
+  { name: "Dangal Games", Logo: DangalGamesLogo },
+  { name: "Star World", Logo: StarWorldLogo },
   { name: "Opraah", Logo: OpraahLogo },
   { name: "Sage", Logo: SageLogo },
   { name: "TVS Supply Chain Solutions", Logo: TvsSupplyChainLogo },
@@ -811,33 +833,30 @@ function EnterprisesSection() {
             </p>
           </Reveal>
         </div>
+      </div>
 
-        {/* Desktop grid */}
-        <div className="hidden sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-6 items-stretch max-w-6xl mx-auto">
-          {enterpriseBrands.map((brand) => (
-            <div
-              key={brand.name}
-              title={brand.name}
-              className="px-4 sm:px-6 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center h-[72px] sm:h-[78px] group cursor-default"
-            >
-              <brand.Logo className="h-6 sm:h-8 w-auto max-w-[110px] sm:max-w-[125px] object-contain transition-transform duration-300 group-hover:scale-105" />
-            </div>
-          ))}
-        </div>
-        {/* Mobile auto-slider */}
-        <div className="sm:hidden">
-          <AutoSlider interval={2500}>
-            {enterpriseBrands.map((brand) => (
+      {/* Infinite Smooth Scrolling Marquee Ticker */}
+      <div className="relative w-full overflow-hidden">
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-44 z-10 bg-gradient-to-r from-[#faf8f5] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
+
+        <motion.div
+          className="flex w-max gap-4 sm:gap-6 items-center py-2"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
+        >
+          {[...Array(2)].flatMap((_, r) =>
+            enterpriseBrands.map((brand, i) => (
               <div
-                key={brand.name}
+                key={`enterprise-${r}-${brand.name}-${i}`}
                 title={brand.name}
-                className="px-6 py-6 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] flex items-center justify-center h-[90px]"
+                className="shrink-0 px-6 sm:px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[72px] sm:h-[78px] group cursor-default"
               >
-                <brand.Logo className="h-8 w-auto max-w-[140px] object-contain" />
+                <brand.Logo className="h-6 sm:h-8 w-auto max-w-[110px] sm:max-w-[125px] object-contain transition-transform duration-300 group-hover:scale-105" />
               </div>
-            ))}
-          </AutoSlider>
-        </div>
+            )),
+          )}
+        </motion.div>
       </div>
     </section>
   );
