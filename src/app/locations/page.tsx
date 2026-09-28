@@ -231,17 +231,16 @@ function LocationsContent() {
     <>
       <Header />
 
-      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-24 pb-20">
-        {/* ━━━ HERO SECTION ━━━ */}
-        <section className="relative py-16 sm:py-20 lg:py-24 bg-[#16171a] text-white overflow-hidden">
-          <div
-            className="absolute inset-0 z-0 bg-cover bg-center opacity-25"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80')",
-            }}
-          />
-          <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#16171a]/80 via-[#16171a]/95 to-[#16171a]" />
+      {/* ━━━ HERO SECTION (FULL BLEED MERGED WITH HEADER) ━━━ */}
+      <section className="relative pt-36 sm:pt-40 pb-16 sm:pb-20 lg:pb-24 bg-[#16171a] text-white overflow-hidden">
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-center opacity-30"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80')",
+          }}
+        />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#16171a]/80 via-[#16171a]/95 to-[#16171a]" />
 
           <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center">
             <motion.div
@@ -292,7 +291,8 @@ function LocationsContent() {
           </div>
         </section>
 
-        {/* ━━━ FILTER & SEARCH BAR ━━━ */}
+        <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e]">
+          {/* ━━━ FILTER & SEARCH BAR ━━━ */}
         <section className="py-8 bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="relative w-full md:w-96">
