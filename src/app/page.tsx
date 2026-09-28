@@ -211,10 +211,10 @@ const heroVideoSlides = [
 ];
 
 const stats = [
-  { value: 3, suffix: "+", label: "Cities", sub: "and growing" },
-  { value: 15, suffix: "+", label: "Centres", sub: "across NCR" },
-  { value: 250, suffix: "+", label: "Clients", sub: "trusted us" },
-  { value: 1, suffix: "M+", label: "Sq. Ft.", sub: "of workspace" },
+  { value: 9, suffix: "", label: "CITIES", decimals: 0, footnote: "*As of March, 2026" },
+  { value: 11.46, suffix: "", label: "MN SQ FT", decimals: 2 },
+  { value: 425, suffix: "+", label: "ENTERPRISE CLIENTS", decimals: 0 },
+  { value: 80, suffix: "+", label: "CENTRES", decimals: 0 },
 ];
 
 const cityCards = [
@@ -703,7 +703,7 @@ function TrustedLeadersSection() {
           <AnimatedHeading
             text="Trusted by Enterprise Leaders"
             highlight="Enterprise Leaders"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
           />
           <Reveal delay={0.1}>
             <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
@@ -825,7 +825,7 @@ function EnterprisesSection() {
           <AnimatedHeading
             text="Enterprises using Onward Workspaces"
             highlight="Onward Workspaces"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
           />
           <Reveal delay={0.1}>
             <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
@@ -875,7 +875,7 @@ function NewsMediaSection() {
           <AnimatedHeading
             text="News & Media"
             highlight="Media"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
           />
           <Reveal delay={0.1}>
             <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed max-w-4xl mx-auto text-center">
@@ -936,7 +936,7 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
           <h3 className="text-2xl font-bold text-black">
             {sol.title}
           </h3>
-          <p className="mt-2.5 text-gray-500 text-sm leading-relaxed">
+          <p className="mt-2.5 text-gray-600 text-sm leading-relaxed">
             {sol.desc}
           </p>
 
@@ -1114,7 +1114,7 @@ export default function Home() {
       <section
         ref={heroRef}
         onMouseMove={handleHeroMouseMove}
-        className="relative min-h-screen flex items-center overflow-hidden"
+        className="relative min-h-screen flex flex-col justify-between overflow-hidden"
         id="home"
       >
         {/* Background static image — light coworking space */}
@@ -1124,13 +1124,14 @@ export default function Home() {
         />
 
         {/* Overlay for text readability */}
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/35" />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/40" />
 
+        {/* Hero Content Area */}
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 pb-16 sm:py-24 text-center flex flex-col items-center justify-center"
+          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 sm:pt-36 pb-12 text-center flex flex-col items-center justify-center flex-1 my-auto"
         >
-          <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full">
+          <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full my-auto">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
               Workspace built around{" "}
               <span className="relative inline-grid text-left align-baseline">
@@ -1180,34 +1181,49 @@ export default function Home() {
                 +91 9910668152
               </a>
             </motion.div>
-
-            {/* ━━━ STATS STRIP ON TOP OF HERO IMAGE ━━━ */}
-            <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.85, duration: 0.6 }}
-              className="mt-16 sm:mt-20 lg:mt-24 w-full max-w-5xl mx-auto"
-            >
-              <div className="rounded-2xl sm:rounded-3xl bg-white/60 backdrop-blur-2xl border border-white/50 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.2)] p-4 sm:p-6 grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-gray-300/60">
-                {stats.map((s) => (
-                  <div key={s.label} className="py-3 sm:py-2 text-center px-3">
-                    <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#d4622b]">
-                      <SpringCounter target={s.value} suffix={s.suffix} />
-                    </div>
-                    <div className="text-[#1a1a2e] text-xs sm:text-sm mt-1 font-bold">{s.label}</div>
-                    <div className="text-gray-700 text-[10px] sm:text-xs mt-0.5 font-semibold">{s.sub}</div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-
           </div>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }} className="absolute bottom-6 right-8 hidden lg:flex flex-col items-center gap-2 z-10">
-          <span className="text-white/60 text-[10px] tracking-widest uppercase">Scroll</span>
-          <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} className="w-px h-6 bg-gradient-to-b from-[#d4622b] to-transparent" />
+        {/* ━━━ TABULAR STATS STRIP PINNED AT THE BOTTOM OF HERO ━━━ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.85, duration: 0.6 }}
+          className="relative z-20 w-full border-t border-white/15 bg-black/20 backdrop-blur-md text-left"
+        >
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-6 sm:py-8 grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0">
+            {stats.map((s, idx) => (
+              <div
+                key={s.label}
+                className={`flex flex-col justify-start text-left ${
+                  idx === 0
+                    ? "pr-4 sm:pr-6"
+                    : idx === 2
+                    ? "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 md:border-l md:border-white/15 md:pl-6 lg:pl-10"
+                    : idx === 1
+                    ? "border-l border-white/15 pl-6 lg:pl-10"
+                    : "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 border-l border-white/15 pl-6 lg:pl-10"
+                }`}
+              >
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">
+                  <SpringCounter
+                    target={s.value}
+                    suffix={s.suffix}
+                    decimals={s.decimals}
+                    className="tabular-nums font-light sm:font-normal"
+                  />
+                </div>
+                <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] text-white/70 uppercase mt-2">
+                  {s.label}
+                </div>
+                {s.footnote && (
+                  <div className="text-[10px] text-white/50 font-normal mt-2 tracking-normal">
+                    {s.footnote}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </motion.div>
       </section>
 
@@ -1223,7 +1239,7 @@ export default function Home() {
             <AnimatedHeading
               text="Office Space Solutions"
               highlight="Solutions"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-2 leading-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
               <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
@@ -1256,7 +1272,7 @@ export default function Home() {
             <AnimatedHeading
               text="Revolutionise Your Workspace."
               highlight="Workspace."
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-600 mt-2 leading-tight"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
               <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
@@ -1309,7 +1325,7 @@ export default function Home() {
             <AnimatedHeading
               text="Our Top Cities in Delhi NCR"
               highlight="Delhi NCR"
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-600 mt-2"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
             />
             <Reveal delay={0.1}>
               <p className="mt-3 text-sm sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
@@ -1390,7 +1406,7 @@ export default function Home() {
           <AnimatedHeading
             text="Explore Our Workspace Gallery"
             highlight="Workspace Gallery"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-600 mt-2"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2"
           />
         </div>
         <GallerySlider />

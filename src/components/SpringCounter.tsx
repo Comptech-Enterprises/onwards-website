@@ -8,19 +8,25 @@ type SpringCounterProps = {
   suffix?: string;
   prefix?: string;
   duration?: number;
+  decimals?: number;
+  className?: string;
 };
 
 /**
- * Spring-physics rolling counter with organic deceleration.
+ * Spring-physics rolling counter with organic deceleration and optional decimals.
  */
 export default function SpringCounter({
   target,
   suffix = "",
   prefix = "",
+  decimals = 0,
+  className = "tabular-nums font-normal",
 }: SpringCounterProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
-  const [displayValue, setDisplayValue] = useState(0);
+  const [displayValue, setDisplayValue] = useState<string | number>(
+    decimals > 0 ? (0).toFixed(decimals) : 0,
+  );
 
   const motionVal = useMotionValue(0);
   const springVal = useSpring(motionVal, {
@@ -37,15 +43,20 @@ export default function SpringCounter({
 
   useEffect(() => {
     return springVal.on("change", (latest) => {
-      setDisplayValue(Math.floor(latest));
+      if (decimals > 0) {
+        setDisplayValue(latest.toFixed(decimals));
+      } else {
+        setDisplayValue(Math.floor(latest));
+      }
     });
-  }, [springVal]);
+  }, [springVal, decimals]);
 
   return (
-    <span ref={ref} className="tabular-nums font-bold">
+    <span ref={ref} className={className}>
       {prefix}
       {displayValue}
       {suffix}
     </span>
   );
 }
+

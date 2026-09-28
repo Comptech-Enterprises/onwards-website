@@ -80,7 +80,7 @@ function initials(name: string) {
 export default function TeamPageClient() {
   return (
     <>
-      <Header alwaysSolid />
+      <Header />
       <main className="bg-[#faf8f5] min-h-screen py-28 lg:py-36">
         <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
           <AnimatedLogoMark />

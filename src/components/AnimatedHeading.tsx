@@ -65,7 +65,7 @@ export default function AnimatedHeading({
             className={`inline-block ${
               hi.has(clean(w))
                 ? "text-[#d4622b] font-bold"
-                : "text-gray-600 font-bold"
+                : "text-black font-bold"
             }`}
           >
             {w}

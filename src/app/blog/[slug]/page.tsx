@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
-import BlogDetailDualView from "@/components/BlogDetailDualView";
+import BlogArticleView from "@/components/BlogArticleView";
 import { blogPosts } from "@/data/blogPosts";
 
 interface PageProps {
@@ -121,20 +121,13 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
     .filter((p) => !p.href.endsWith(slug))
     .slice(3, 7);
 
-  const nextPost =
-    postIndex !== -1 && postIndex + 1 < blogPosts.length
-      ? blogPosts[postIndex + 1]
-      : blogPosts[0];
-
   return (
     <>
-      <Header alwaysSolid />
-      <BlogDetailDualView
+      <Header />
+      <BlogArticleView
         post={post}
         relatedPosts={relatedPosts}
         sidebarPosts={sidebarPosts}
-        nextPost={nextPost}
-        postIndex={postIndex !== -1 ? postIndex : 0}
       />
     </>
   );
