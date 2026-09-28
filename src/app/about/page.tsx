@@ -144,90 +144,92 @@ export default function AboutPage() {
     <>
       <Header />
 
-      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-24 pb-20">
-        {/* ━━━ HERO SECTION ━━━ */}
-        <section className="relative py-20 lg:py-28 overflow-hidden bg-[#16171a] text-white">
-          <div
-            className="absolute inset-0 z-0 bg-cover bg-center opacity-30"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80')",
-            }}
-          />
-          <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#16171a]/80 via-[#16171a]/95 to-[#16171a]" />
+      {/* ━━━ HERO SECTION (FULL BLEED) ━━━ */}
+      <section className="relative min-h-screen flex flex-col justify-between overflow-hidden bg-[#16171a] text-white">
+        {/* Background image */}
+        <div
+          className="absolute inset-0 z-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80')",
+          }}
+        />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/55" />
 
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#d4622b] text-xs font-semibold uppercase tracking-widest mb-6"
-            >
-              About Onward Workspaces
-            </motion.div>
+        {/* Hero Content Area */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-36 sm:pt-40 pb-12 text-center flex flex-col items-center justify-center flex-1 my-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-[#d4622b] text-xs font-semibold uppercase tracking-widest mb-6"
+          >
+            About Onward Workspaces
+          </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight"
-            >
-              Crafting Workspaces Built Around Ambition, Brand &amp; People
-            </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white max-w-4xl mx-auto leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]"
+          >
+            Crafting Workspaces Built Around Ambition, Brand &amp; People
+          </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-6 text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-            >
-              Onward Workspaces transforms conventional commercial real estate into high-performing, hospitality-powered office ecosystems tailored for ambitious enterprises across Delhi NCR.
-            </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-6 text-base sm:text-lg lg:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
+          >
+            Onward Workspaces transforms conventional commercial real estate into high-performing, hospitality-powered office ecosystems tailored for ambitious enterprises across Delhi NCR.
+          </motion.p>
+        </div>
 
-            {/* Tabular Stats Strip */}
-            <motion.div
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35, duration: 0.6 }}
-              className="mt-14 lg:mt-20 w-full max-w-5xl mx-auto text-left"
-            >
-              <div className="rounded-2xl sm:rounded-none bg-black/20 backdrop-blur-md border border-white/15 sm:border-x-0 sm:border-y sm:border-white/15 p-6 sm:py-8 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0">
-                {stats.map((s, idx) => (
-                  <div
-                    key={s.label}
-                    className={`flex flex-col justify-start text-left ${
-                      idx === 0
-                        ? "pr-4 sm:pr-6"
-                        : idx === 2
-                        ? "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 md:border-l md:border-white/15 md:pl-6 lg:pl-10"
-                        : idx === 1
-                        ? "border-l border-white/15 pl-6 lg:pl-10"
-                        : "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 border-l border-white/15 pl-6 lg:pl-10"
-                    }`}
-                  >
-                    <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">
-                      <SpringCounter
-                        target={s.value}
-                        suffix={s.suffix}
-                        decimals={s.decimals}
-                        className="tabular-nums font-light sm:font-normal"
-                      />
-                    </div>
-                    <div className="text-xs sm:text-sm font-semibold tracking-wider text-gray-300 uppercase mt-3">
-                      {s.label}
-                    </div>
-                    {s.footnote && (
-                      <div className="text-[10px] text-white/50 font-normal mt-1 tracking-normal">
-                        {s.footnote}
-                      </div>
-                    )}
+        {/* ━━━ TABULAR STATS STRIP PINNED AT BOTTOM OF HERO ━━━ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.6 }}
+          className="relative z-20 w-full border-t border-white/15 bg-black/20 backdrop-blur-md text-left"
+        >
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-6 sm:py-8 grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0">
+            {stats.map((s, idx) => (
+              <div
+                key={s.label}
+                className={`flex flex-col justify-start text-left ${
+                  idx === 0
+                    ? "pr-4 sm:pr-6"
+                    : idx === 2
+                    ? "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 md:border-l md:border-white/15 md:pl-6 lg:pl-10"
+                    : idx === 1
+                    ? "border-l border-white/15 pl-6 lg:pl-10"
+                    : "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 border-l border-white/15 pl-6 lg:pl-10"
+                }`}
+              >
+                <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">
+                  <SpringCounter
+                    target={s.value}
+                    suffix={s.suffix}
+                    decimals={s.decimals}
+                    className="tabular-nums font-light sm:font-normal"
+                  />
+                </div>
+                <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] text-white/70 uppercase mt-2">
+                  {s.label}
+                </div>
+                {s.footnote && (
+                  <div className="text-[10px] text-white/50 font-normal mt-2 tracking-normal">
+                    {s.footnote}
                   </div>
-                ))}
+                )}
               </div>
-            </motion.div>
+            ))}
           </div>
-        </section>
+        </motion.div>
+      </section>
 
+      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e]">
         {/* ━━━ SECTION 1: WHO WE ARE & OUR GENESIS ━━━ */}
         <section className="py-20 lg:py-28 bg-[#faf8f5]">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
