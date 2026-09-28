@@ -87,14 +87,13 @@ export default function StrategicLocationsMap() {
         <div>
           {/* Top Tag with Orange Dash */}
           <div className="flex items-center gap-3 mb-5 sm:mb-6">
-            <span className="text-gray-600 text-xs font-bold tracking-[0.25em] uppercase">
+            <span className="text-[#d4622b] text-xs font-bold tracking-[0.25em] uppercase">
               OUR LOCATIONS
             </span>
-
           </div>
 
           {/* Main Strategic Heading */}
-          <h2 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-bold text-gray-600 tracking-tight leading-[1.06] mb-5">
+          <h2 className="text-4xl sm:text-5xl lg:text-[52px] xl:text-[60px] font-bold text-black tracking-tight leading-[1.06] mb-5">
             Strategic{" "}<br className="lg:hidden" />
             locations.<br />
             Stronger{" "}<br className="lg:hidden" />
