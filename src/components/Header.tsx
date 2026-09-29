@@ -50,23 +50,15 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
         {/* Brand Logo */}
-        <Link href="/" id="header-logo" className="flex items-center gap-3 group">
+        <Link href="/" id="header-logo" className="flex items-center group py-1">
           <Image
-            src="/onward-logo.png"
+            src="/onward-logo-white.webp"
             alt="Onward Workspaces"
-            width={38}
-            height={38}
-            className="w-9 h-9 object-contain group-hover:rotate-6 transition-transform"
+            width={160}
+            height={36}
+            className="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity"
             priority
           />
-          <div className="leading-none">
-            <span className="text-xl font-bold tracking-tight text-white">
-              Onward
-            </span>
-            <span className="block text-[9px] tracking-[0.25em] text-white/70">
-              WORKSPACES
-            </span>
-          </div>
         </Link>
 
         {/* Desktop Navigation Links */}
@@ -149,13 +141,6 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
           </div>
 
           <Link
-            href="/team"
-            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
-          >
-            Team
-          </Link>
-
-          <Link
             href="/blog"
             className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
           >
@@ -169,7 +154,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             href="/#contact"
             className="hidden lg:inline-flex items-center gap-2 bg-[#d4622b] text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-all shadow-md group"
           >
-            <span>Book a Tour</span>
+            <span>Get Started</span>
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"
@@ -220,7 +205,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <Link
                 href="/"
                 onClick={() => setMobileMenu(false)}
-                className="block text-white font-semibold text-lg hover:text-[#d4622b]"
+                className="block text-white font-medium text-base hover:text-[#d4622b]"
               >
                 Home
               </Link>
@@ -228,7 +213,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <Link
                 href="/about"
                 onClick={() => setMobileMenu(false)}
-                className="block text-white font-semibold text-lg hover:text-[#d4622b]"
+                className="block text-white font-medium text-base hover:text-[#d4622b]"
               >
                 About Us
               </Link>
@@ -237,7 +222,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <div>
                 <button
                   onClick={() => setMobileLocationsOpen(!mobileLocationsOpen)}
-                  className="w-full flex items-center justify-between text-white font-semibold text-lg py-1"
+                  className="w-full flex items-center justify-between text-white font-medium text-base py-1"
                 >
                   <span>Locations</span>
                   <svg
@@ -258,7 +243,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                         key={loc.name}
                         href={loc.href}
                         onClick={() => setMobileMenu(false)}
-                        className="block text-sm text-gray-200 hover:text-[#d4622b] py-1"
+                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#d4622b] py-1"
                       >
                         {loc.name}
                       </Link>
@@ -268,28 +253,20 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               </div>
 
               <Link
-                href="/team"
-                onClick={() => setMobileMenu(false)}
-                className="block text-white font-semibold text-lg hover:text-[#d4622b]"
-              >
-                Team
-              </Link>
-
-              <Link
                 href="/blog"
                 onClick={() => setMobileMenu(false)}
-                className="block text-white font-semibold text-lg hover:text-[#d4622b]"
+                className="block text-white font-medium text-base hover:text-[#d4622b]"
               >
                 Blog
               </Link>
 
-              <div className="pt-4">
+              <div className="pt-2">
                 <Link
                   href="/#contact"
                   onClick={() => setMobileMenu(false)}
-                  className="block bg-[#d4622b] text-white text-center py-3.5 rounded-full font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
+                  className="block bg-[#d4622b] text-white text-center py-2.5 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
                 >
-                  Book a Tour
+                  Get Started
                 </Link>
               </div>
             </div>

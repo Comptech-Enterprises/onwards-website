@@ -42,6 +42,7 @@ import {
   SageLogo,
   TvsSupplyChainLogo,
 } from "@/components/BrandLogos";
+import AutoSlider from "@/components/AutoSlider";
 
 /* ═══════════════════════════════════════════
    PRIMITIVES & MARQUEE
@@ -64,89 +65,6 @@ function Marquee({
         {children}
         {children}
       </motion.div>
-    </div>
-  );
-}
-
-function AutoSlider({
-  children,
-  interval = 3000,
-  className = "",
-  dotColor = "light",
-}: {
-  children: React.ReactNode[];
-  interval?: number;
-  className?: string;
-  dotColor?: "light" | "dark";
-}) {
-  const [current, setCurrent] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const total = children.length;
-  const trackRef = useRef<HTMLDivElement>(null);
-  const startX = useRef(0);
-
-  useEffect(() => {
-    if (paused) return;
-    const timer = setInterval(
-      () => setCurrent((p) => (p + 1) % total),
-      interval,
-    );
-    return () => clearInterval(timer);
-  }, [paused, total, interval]);
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    startX.current = e.touches[0].clientX;
-    setPaused(true);
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const diff = startX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50)
-      setCurrent((p) =>
-        diff > 0 ? (p + 1) % total : (p - 1 + total) % total,
-      );
-    setPaused(false);
-  };
-
-  return (
-    <div className={className || "md:hidden"}>
-      <div
-        className="overflow-hidden"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        <motion.div
-          ref={trackRef}
-          className="flex"
-          animate={{ x: `${-current * 100}%` }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {children.map((child, i) => (
-            <div key={i} className="w-full flex-shrink-0 px-2">
-              {child}
-            </div>
-          ))}
-        </motion.div>
-      </div>
-      <div className="flex justify-center gap-2 mt-6">
-        {children.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              setCurrent(i);
-              setPaused(false);
-            }}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              current === i
-                ? "w-8 bg-[#d4622b]"
-                : `w-1.5 ${
-                    dotColor === "dark" ? "bg-white/30" : "bg-gray-300"
-                  }`
-            }`}
-          />
-        ))}
-      </div>
     </div>
   );
 }
@@ -212,7 +130,7 @@ const heroVideoSlides = [
 ];
 
 const stats = [
-  { value: 9, suffix: "", label: "CITIES", decimals: 0, footnote: "*As of March, 2026" },
+  { value: 9, suffix: "", label: "CITIES", decimals: 0, footnote: "*March, 2026" },
   { value: 11.46, suffix: "", label: "MN SQ FT", decimals: 2 },
   { value: 425, suffix: "+", label: "ENTERPRISE CLIENTS", decimals: 0 },
   { value: 80, suffix: "+", label: "CENTRES", decimals: 0 },
@@ -221,15 +139,15 @@ const stats = [
 const cityCards = [
   {
     name: "Delhi",
-    img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1000&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/cities/1790613615409.webp",
   },
   {
     name: "Noida",
-    img: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=1000&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/cities/1790613615668.webp",
   },
   {
     name: "Gurugram",
-    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/cities/1790613615802.webp",
   },
 ];
 
@@ -239,42 +157,42 @@ const solutions = [
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
     features: ["Dedicated Entrance", "Custom Layout & IT", "24/7 Access"],
-    img: "https://images.pexels.com/photos/380769/pexels-photo-380769.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013140.webp",
   },
   {
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
     features: ["Ergonomic Seating", "Soundproof Cabins", "Meeting Credits"],
-    img: "https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013169.webp",
   },
   {
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
     features: ["Executive Furniture", "Private Lounge", "Concierge Service"],
-    img: "https://images.pexels.com/photos/269077/pexels-photo-269077.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013263.webp",
   },
   {
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
     features: ["GST Registration", "Mail Forwarding", "Day Pass Access"],
-    img: "https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013400.webp",
   },
   {
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
     features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage"],
-    img: "https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013758.webp",
   },
   {
     title: "Custom Built",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
     tag: "BESPOKE",
     features: ["Architect-Led Design", "Brand Aesthetics", "Turnkey Build"],
-    img: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/offices/1790613223676.webp",
   },
 ];
 
@@ -689,25 +607,25 @@ function TrustedLeadersSection() {
   };
 
   return (
-    <section id="testimonials" className="py-20 lg:py-28 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+    <section id="testimonials" className="py-14 sm:py-20 lg:py-28 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       {/* Ambient background glows matching website theme */}
       <div className="pointer-events-none absolute top-1/4 -left-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
+        <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-14">
           <Reveal>
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+            <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Testimonials
             </span>
           </Reveal>
           <AnimatedHeading
             text="Trusted by Enterprise Leaders"
             highlight="Enterprise Leaders"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
+            className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
           />
           <Reveal delay={0.1}>
-            <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-2 sm:mt-3 text-gray-700 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
               These success stories showcase the real impact of our coworking spaces and services, providing valuable insights into how we can support your business needs &amp; aspirations.
             </p>
           </Reveal>
@@ -759,28 +677,28 @@ function TrustedLeadersSection() {
               return (
                 <div
                   key={t.id}
-                  className="bg-white rounded-3xl border border-gray-200/90 p-7 flex flex-col justify-between shadow-[0_8px_30px_-12px_rgba(26,26,46,0.1)]"
+                  className="bg-white rounded-2xl border border-gray-200/90 p-5 flex flex-col justify-between shadow-sm"
                 >
                   <div>
-                    <div className="flex items-center gap-1 mb-4">
+                    <div className="flex items-center gap-1 mb-3">
                       {[...Array(t.rating)].map((_, i) => (
-                        <svg key={i} className="w-4 h-4 text-[#d4622b] fill-current" viewBox="0 0 20 20">
+                        <svg key={i} className="w-3.5 h-3.5 text-[#d4622b] fill-current" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                       ))}
                     </div>
-                    <p className="text-sm text-gray-600 leading-relaxed font-normal text-justify">
+                    <p className="text-xs text-gray-600 leading-relaxed font-normal text-justify">
                       &ldquo;{isExpanded ? t.fullQuote : t.shortQuote}&rdquo;
-                      <button type="button" onClick={() => toggleExpand(t.id)} className="ml-2 font-semibold text-[#d4622b] inline-flex items-center gap-0.5 text-xs">
+                      <button type="button" onClick={() => toggleExpand(t.id)} className="ml-1.5 font-semibold text-[#d4622b] inline-flex items-center gap-0.5 text-[11px]">
                         {isExpanded ? "Read Less" : "Read More"}<span>&rarr;</span>
                       </button>
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 pt-6 mt-6 border-t border-gray-100">
+                  <div className="flex items-center gap-3 pt-4 mt-4 border-t border-gray-100">
                     {t.logo}
                     <div className="min-w-0">
-                      <h4 className="font-bold text-[#1a1a2e] text-sm leading-snug">{t.name}</h4>
-                      <p className="text-xs text-gray-500 font-normal leading-snug mt-0.5 truncate">{t.role}</p>
+                      <h4 className="font-bold text-[#1a1a2e] text-xs leading-snug">{t.name}</h4>
+                      <p className="text-[11px] text-gray-500 font-normal leading-snug mt-0.5 truncate">{t.role}</p>
                     </div>
                   </div>
                 </div>
@@ -815,21 +733,21 @@ const enterpriseBrands = [
 
 function EnterprisesSection() {
   return (
-    <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+    <section className="py-14 sm:py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-12">
+        <div className="max-w-5xl mx-auto text-center mb-8 sm:mb-12">
           <Reveal>
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+            <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Enterprise Network
             </span>
           </Reveal>
           <AnimatedHeading
             text="Enterprises using Onward Workspaces"
             highlight="Onward Workspaces"
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
+            className="text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-black mt-2 whitespace-nowrap"
           />
           <Reveal delay={0.1}>
-            <p className="mt-3 text-gray-700 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
+            <p className="mt-2 sm:mt-3 text-gray-700 text-xs sm:text-base leading-relaxed max-w-2xl mx-auto text-center">
               Elevate your workspace experience and be part of a movement that redefines success
             </p>
           </Reveal>
@@ -920,9 +838,9 @@ function NewsMediaSection() {
 
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
-    <SpotlightCard className="h-full min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white transition-all duration-500 flex flex-col justify-between">
+    <SpotlightCard className="h-full min-h-[340px] sm:min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white transition-all duration-500 flex flex-col justify-between">
       {/* Top Image Container with zoom & gradient overlay */}
-      <div className="relative h-44 w-full overflow-hidden bg-gray-100">
+      <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-gray-100">
         <div
           aria-hidden
           className="absolute inset-0 bg-cover bg-center scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -932,22 +850,22 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
       </div>
 
       {/* Card Content Area */}
-      <div className="p-6 flex-1 flex flex-col justify-between">
+      <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between">
         <div>
-          <h3 className="text-2xl font-bold text-black">
+          <h3 className="text-lg sm:text-2xl font-bold text-black">
             {sol.title}
           </h3>
-          <p className="mt-2.5 text-gray-600 text-sm leading-relaxed">
+          <p className="mt-1.5 sm:mt-2.5 text-gray-600 text-xs sm:text-sm leading-relaxed">
             {sol.desc}
           </p>
 
           {/* Silversquare-style info reveal badges */}
-          <div className="mt-4 pt-3 border-t border-gray-100">
-            <div className="flex flex-wrap gap-1.5">
+          <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-gray-100">
+            <div className="flex flex-wrap gap-1 sm:gap-1.5">
               {sol.features.map((feat, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center text-[11px] font-semibold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md group-hover:bg-[#d4622b]/10 group-hover:text-[#d4622b] transition-colors duration-300"
+                  className="inline-flex items-center text-[10px] sm:text-[11px] font-semibold text-gray-600 bg-gray-100 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md group-hover:bg-[#d4622b]/10 group-hover:text-[#d4622b] transition-colors duration-300"
                 >
                   &bull; {feat}
                 </span>
@@ -957,13 +875,13 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
         </div>
 
         {/* Silversquare "Know more →" bottom CTA row */}
-        <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-sm font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
+        <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-100 flex items-center justify-between">
+          <span className="text-xs sm:text-sm font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
             Know more
           </span>
-          <div className="w-8 h-8 rounded-full bg-gray-100 text-gray-700 group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-100 text-gray-700 group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
             <svg
-              className="w-4 h-4"
+              className="w-3.5 h-3.5 sm:w-4 sm:h-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -1130,10 +1048,10 @@ export default function Home() {
         {/* Hero Content Area */}
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 sm:pt-36 pb-12 text-center flex flex-col items-center justify-center flex-1 my-auto"
+          className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 sm:pt-36 pb-10 sm:pb-12 text-center flex flex-col items-center justify-center flex-1 my-auto"
         >
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full my-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
               Workspace built around{" "}
               <span className="relative inline-grid text-left align-baseline">
                 <span aria-hidden className="invisible col-start-1 row-start-1">Ambition</span>
@@ -1156,7 +1074,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl text-white max-w-3xl mx-auto text-center leading-relaxed px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
+              className="mt-3 sm:mt-6 text-xs sm:text-base md:text-lg lg:text-xl text-white max-w-3xl mx-auto text-center leading-relaxed px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
             >
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
             </motion.p>
@@ -1165,20 +1083,20 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7, duration: 0.6 }}
-              className="mt-8 sm:mt-10 flex flex-col sm:flex-row justify-center items-center gap-3.5 sm:gap-4 w-full sm:w-auto px-4"
+              className="mt-6 sm:mt-10 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full sm:w-auto px-4"
             >
               <MagneticButton
                 href="#contact"
-                className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d4622b] text-white px-8 py-3.5 sm:py-4 rounded-full text-base sm:text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]"
+                className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d4622b] text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full text-xs sm:text-base md:text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]"
               >
                 Book a Tour
-                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                <svg className="ml-2 w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </MagneticButton>
               <a
                 href="tel:9910668152"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 text-white hover:text-[#d4622b] px-8 py-3.5 sm:py-4 rounded-full border border-white/30 hover:border-[#d4622b]/60 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all shadow-sm text-base sm:text-lg font-semibold"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 sm:gap-3 text-white hover:text-[#d4622b] px-5 py-3 sm:px-8 sm:py-4 rounded-full border border-white/30 hover:border-[#d4622b]/60 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all shadow-sm text-xs sm:text-base md:text-lg font-semibold"
               >
-                <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
                 +91 9910668152
               </a>
             </motion.div>
@@ -1192,21 +1110,21 @@ export default function Home() {
           transition={{ delay: 0.85, duration: 0.6 }}
           className="relative z-20 w-full border-t border-white/15 bg-black/20 backdrop-blur-md text-left"
         >
-          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-6 sm:py-8 grid grid-cols-2 md:grid-cols-4 gap-y-6 md:gap-y-0">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-4 sm:py-8 grid grid-cols-2 md:grid-cols-4 gap-y-4 md:gap-y-0">
             {stats.map((s, idx) => (
               <div
                 key={s.label}
                 className={`flex flex-col justify-start text-left ${
                   idx === 0
-                    ? "pr-4 sm:pr-6"
+                    ? "pr-3 sm:pr-6"
                     : idx === 2
-                    ? "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 md:border-l md:border-white/15 md:pl-6 lg:pl-10"
+                    ? "border-t md:border-t-0 border-white/10 pt-3 md:pt-0 md:border-l md:border-white/15 md:pl-6 lg:pl-10"
                     : idx === 1
-                    ? "border-l border-white/15 pl-6 lg:pl-10"
-                    : "border-t md:border-t-0 border-white/10 pt-4 md:pt-0 border-l border-white/15 pl-6 lg:pl-10"
+                    ? "border-l border-white/15 pl-4 sm:pl-6 lg:pl-10"
+                    : "border-t md:border-t-0 border-white/10 pt-3 md:pt-0 border-l border-white/15 pl-4 sm:pl-6 lg:pl-10"
                 }`}
               >
-                <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">
+                <div className="text-2xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">
                   <SpringCounter
                     target={s.value}
                     suffix={s.suffix}
@@ -1214,11 +1132,11 @@ export default function Home() {
                     className="tabular-nums font-light sm:font-normal"
                   />
                 </div>
-                <div className="text-[10px] sm:text-[11px] font-semibold tracking-[0.2em] text-white/70 uppercase mt-2">
+                <div className="text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] text-white/70 uppercase mt-1.5 sm:mt-2">
                   {s.label}
                 </div>
                 {s.footnote && (
-                  <div className="text-[10px] text-white/50 font-normal mt-2 tracking-normal">
+                  <div className="text-[9px] sm:text-[10px] text-white/50 font-normal mt-1 sm:mt-2 tracking-normal">
                     {s.footnote}
                   </div>
                 )}
@@ -1229,29 +1147,40 @@ export default function Home() {
       </section>
 
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
-      <section id="solutions" className="py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/60">
+      <section id="solutions" className="py-14 sm:py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center mb-12">
+          <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-12">
             <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 Solutions
               </span>
             </Reveal>
             <AnimatedHeading
               text="Office Space Solutions"
               highlight="Solutions"
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
-              <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
+              <p className="mt-2 sm:mt-3 text-gray-700 text-xs sm:text-base lg:text-lg leading-relaxed">
                 Flexible office solutions aligned with your business needs and
                 growth trajectory.
               </p>
             </Reveal>
           </div>
 
-          {/* Manual horizontal scroll */}
-          <div className="flex gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {/* Mobile AutoSlider */}
+          <div className="md:hidden">
+            <AutoSlider interval={3800}>
+              {solutions.map((sol) => (
+                <div key={sol.title} className="h-full">
+                  <SolutionCard sol={sol} />
+                </div>
+              ))}
+            </AutoSlider>
+          </div>
+
+          {/* Desktop horizontal scroll */}
+          <div className="hidden md:flex gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {solutions.map((sol) => (
               <div key={sol.title} className="w-[85%] sm:w-[340px] lg:w-[360px] shrink-0 snap-start">
                 <SolutionCard sol={sol} />
@@ -1262,21 +1191,21 @@ export default function Home() {
       </section>
 
       {/* ━━━ WHY CHOOSE US ━━━ */}
-      <section id="why-choose-us" className="py-16 lg:py-20 bg-white border-t border-gray-200/60">
+      <section id="why-choose-us" className="py-14 sm:py-16 lg:py-20 bg-white border-t border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="mx-auto text-center mb-12 max-w-4xl">
+          <div className="mx-auto text-center mb-8 sm:mb-12 max-w-4xl">
             <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 Why Choose Us
               </span>
             </Reveal>
             <AnimatedHeading
               text="Revolutionise Your Workspace."
               highlight="Workspace."
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
-              <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed">
+              <p className="mt-2 sm:mt-3 text-gray-700 text-xs sm:text-base lg:text-lg leading-relaxed">
                 Whether you have questions about membership options, need assistance with technical aspects, or want to explore customization possibilities for your workspace, our experts are here to provide you with personalized guidance and solutions.
               </p>
             </Reveal>
@@ -1299,12 +1228,12 @@ export default function Home() {
           <div className="md:hidden">
             <AutoSlider interval={3500}>
               {whyChoose.map((w) => (
-                <div key={w.title} className="h-full min-w-0 rounded-3xl bg-[#faf8f5] border border-gray-200/80 p-8">
-                  <div className="w-14 h-14 rounded-2xl bg-[#d4622b]/10 flex items-center justify-center mb-6">
-                    <svg className="w-7 h-7 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
+                <div key={w.title} className="h-full min-w-0 rounded-2xl bg-[#faf8f5] border border-gray-200/80 p-5 sm:p-6">
+                  <div className="w-10 h-10 rounded-xl bg-[#d4622b]/10 flex items-center justify-center mb-4">
+                    <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d={w.icon} /></svg>
                   </div>
-                  <h3 className="text-xl font-bold text-[#1a1a2e] mb-3">{w.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{w.desc}</p>
+                  <h3 className="text-base sm:text-lg font-bold text-[#1a1a2e] mb-2">{w.title}</h3>
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{w.desc}</p>
                 </div>
               ))}
             </AutoSlider>
@@ -1314,22 +1243,22 @@ export default function Home() {
 
       {/* ━━━ OUR TOP CITIES IN DELHI NCR ━━━ */}
       <section
-        className="py-16 lg:py-20 bg-white relative overflow-hidden border-t border-gray-100"
+        className="py-14 sm:py-16 lg:py-20 bg-white relative overflow-hidden border-t border-gray-100"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto mb-10">
+          <div className="text-center max-w-4xl mx-auto mb-8 sm:mb-10">
             <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 NCR Presence
               </span>
             </Reveal>
             <AnimatedHeading
               text="Our Top Cities in Delhi NCR"
               highlight="Delhi NCR"
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
+              className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
             />
             <Reveal delay={0.1}>
-              <p className="mt-3 text-sm sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
+              <p className="mt-2 sm:mt-3 text-xs sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
                 Begin your path to success with Onward Workspaces across Delhi, Noida, and Gurugram.
               </p>
             </Reveal>
@@ -1359,34 +1288,36 @@ export default function Home() {
           </div>
 
           {/* Mobile — auto-slider */}
-          <AutoSlider interval={3500}>
-            {cityCards.map((city) => (
-              <div
-                key={city.name}
-                className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm flex flex-col"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                  <img
-                    src={city.img}
-                    alt={city.name}
-                    className="w-full h-full object-cover"
-                  />
+          <div className="md:hidden">
+            <AutoSlider interval={3500}>
+              {cityCards.map((city) => (
+                <div
+                  key={city.name}
+                  className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm flex flex-col"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                    <img
+                      src={city.img}
+                      alt={city.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="py-3.5 text-center bg-white border-t border-gray-100">
+                    <h3 className="text-base sm:text-xl font-bold text-[#111827] tracking-tight">
+                      {city.name}
+                    </h3>
+                  </div>
                 </div>
-                <div className="py-5 text-center bg-white border-t border-gray-100">
-                  <h3 className="text-xl font-bold text-[#111827] tracking-tight">
-                    {city.name}
-                  </h3>
-                </div>
-              </div>
-            ))}
-          </AutoSlider>
+              ))}
+            </AutoSlider>
+          </div>
         </div>
       </section>
 
       {/* ━━━ STRATEGIC LOCATIONS SECTION (LIGHT THEME SEAMLESS NERVE MAP) ━━━ */}
       <section
         id="locations"
-        className="py-20 lg:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-t border-gray-200/80"
+        className="py-14 sm:py-20 lg:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-t border-gray-200/80"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <StrategicLocationsMap />
@@ -1397,17 +1328,17 @@ export default function Home() {
       <EnterprisesSection />
 
       {/* ━━━ GALLERY ━━━ */}
-      <section className="py-16 lg:py-20 bg-white overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-10 sm:mb-12 text-center">
+      <section className="py-14 sm:py-16 lg:py-20 bg-white overflow-hidden">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-8 sm:mb-12 text-center">
           <Reveal>
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+            <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Gallery
             </span>
           </Reveal>
           <AnimatedHeading
             text="Explore Our Workspace Gallery"
             highlight="Workspace Gallery"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2"
+            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2"
           />
         </div>
         <GallerySlider />

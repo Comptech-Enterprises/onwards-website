@@ -8,6 +8,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
+import AutoSlider from "@/components/AutoSlider";
+import CityMicroMarketsMap from "@/components/CityMicroMarketsMap";
 import type { CityData } from "@/data/locations";
 
 const whyChoose = [
@@ -62,20 +64,20 @@ export default function CityLocationsView({ city }: { city: CityData }) {
       <Header alwaysSolid />
 
       <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20">
-        {/* ━━━ PAGE BANNER (FULL-BLEED PHOTO HERO) ━━━ */}
-        <section className="relative py-24 lg:py-32 overflow-hidden">
+        {/* ━━━ PAGE BANNER (BALANCED PHOTO HERO WITH VISIBLE ONWARD BRANDING) ━━━ */}
+        <section className="relative min-h-[400px] sm:min-h-[460px] lg:min-h-[500px] flex items-center py-14 sm:py-18 lg:py-22 overflow-hidden">
           <Image
             src={heroImage}
             alt={`Onward Workspaces ${cityName}`}
             fill
             priority
-            className="object-cover"
+            className="object-cover object-[center_30%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-            <nav aria-label="Breadcrumb" className="mb-4">
-              <ol className="flex items-center gap-2 text-xs text-white/70 font-medium uppercase tracking-wider">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
+            <nav aria-label="Breadcrumb" className="mb-3">
+              <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider">
                 <li>
                   <Link href="/" className="hover:text-white transition-colors">
                     Home
@@ -92,32 +94,35 @@ export default function CityLocationsView({ city }: { city: CityData }) {
               </ol>
             </nav>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[0.95]">
-              <span className="text-white">Managed Office Space</span>
-              <br />
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+              <span className="text-white">Managed Office Space</span>{" "}
               <span className="text-[#d4622b]">in {cityName}</span>
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-white/85 max-w-2xl leading-relaxed">
+            <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
               {heroDescription}
             </p>
           </div>
         </section>
 
+        {/* ━━━ INTERACTIVE MICRO-MARKETS MAP SECTION ━━━ */}
+        <CityMicroMarketsMap city={city} />
+
         {/* ━━━ CENTRES (PHOTO GALLERY) ━━━ */}
-        <section className="py-16 lg:py-20 bg-white border-t border-gray-200/80">
+        <section className="py-10 sm:py-12 lg:py-14 bg-white border-t border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="max-w-2xl mb-10">
+            <div className="max-w-2xl mb-6 sm:mb-8">
               <Reveal>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
                   {cityName} &middot; {areas.length} Centres
                 </span>
               </Reveal>
-              <h2 className="mt-2 text-3xl sm:text-4xl font-extrabold text-black tracking-tight">
+              <h2 className="mt-1.5 text-xl sm:text-3xl font-bold text-black tracking-tight">
                 Centres in {cityName}
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+            {/* Desktop Grid */}
+            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
               {areas.map((area, idx) => (
                 <Reveal key={area.slug} delay={idx * 0.06}>
                   <Link href={`${basePath}/${area.slug}`} className="group block">
@@ -142,18 +147,47 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                 </Reveal>
               ))}
             </div>
+
+            {/* Mobile AutoSlider */}
+            <div className="sm:hidden">
+              <AutoSlider interval={3500}>
+                {areas.map((area) => (
+                  <Link key={area.slug} href={`${basePath}/${area.slug}`} className="group block">
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
+                      <Image
+                        src={area.img}
+                        alt={area.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="pt-3">
+                      <h3 className="text-base font-bold text-black group-hover:text-[#d4622b] transition-colors">
+                        {area.name}
+                      </h3>
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mt-0.5">
+                        {area.type} &middot; {area.seats}
+                      </p>
+                      <span className="inline-flex items-center gap-1 mt-1 text-xs font-semibold text-[#d4622b]">
+                        View Centre &rarr;
+                      </span>
+                    </div>
+                  </Link>
+                ))}
+              </AutoSlider>
+            </div>
           </div>
         </section>
 
         {/* ━━━ WHY CHOOSE ONWARD (STICKY IMAGE + ACCORDION) ━━━ */}
-        <section className="py-20 lg:py-28 bg-[#faf8f5] border-t border-gray-200/80">
+        <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-black tracking-tight leading-[1.05] max-w-4xl">
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight max-w-4xl">
               Why Choose Onward for Your Workspace in{" "}
               <span className="text-[#d4622b]">{cityName}</span>?
             </h2>
 
-            <div className="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+            <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:sticky lg:top-28">
                 <Image
                   src={heroImage}
@@ -170,12 +204,12 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                     <div key={item.title}>
                       <button
                         onClick={() => setOpenWhy(isOpen ? null : i)}
-                        className="w-full flex items-center justify-between gap-6 py-6 text-left"
+                        className="w-full flex items-center justify-between gap-6 py-5 text-left cursor-pointer"
                       >
-                        <span className="text-lg sm:text-xl font-bold text-black">
+                        <span className="text-base sm:text-lg font-bold text-black">
                           {item.title}
                         </span>
-                        <span className="shrink-0 text-2xl font-light text-black leading-none">
+                        <span className="shrink-0 text-xl font-light text-black leading-none">
                           {isOpen ? "−" : "+"}
                         </span>
                       </button>
@@ -188,7 +222,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                             transition={{ duration: 0.3 }}
                             className="overflow-hidden"
                           >
-                            <p className="text-gray-600 text-base leading-relaxed pb-6 max-w-lg">
+                            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed pb-5 max-w-lg">
                               {item.desc}
                             </p>
                           </motion.div>
@@ -203,18 +237,18 @@ export default function CityLocationsView({ city }: { city: CityData }) {
         </section>
 
         {/* ━━━ FAQ ━━━ */}
-        <section className="py-20 lg:py-24 bg-white border-t border-gray-200/80">
+        <section className="py-12 sm:py-16 lg:py-20 bg-white border-t border-gray-200/80">
           <div className="max-w-5xl mx-auto px-6 lg:px-8">
-            <div className="text-center mb-14">
+            <div className="text-center mb-8 sm:mb-12">
               <Reveal>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+                <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
                   Got Questions?
                 </span>
               </Reveal>
-              <h2 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-black tracking-tight">
+              <h2 className="mt-1.5 text-2xl sm:text-3xl lg:text-4xl font-bold text-black tracking-tight">
                 Frequently Asked Questions
               </h2>
-              <p className="mt-3 text-gray-600 text-base sm:text-lg">
+              <p className="mt-2 text-gray-600 text-xs sm:text-sm md:text-base">
                 Everything you need to know about us.
               </p>
             </div>

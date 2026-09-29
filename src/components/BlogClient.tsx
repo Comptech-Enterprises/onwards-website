@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import AutoSlider from "@/components/AutoSlider";
 
 export interface BlogPost {
   title: string;
@@ -131,92 +133,123 @@ export default function BlogClient({ posts }: BlogClientProps) {
   };
 
   return (
-    <div className="relative overflow-hidden bg-[#faf8f5] min-h-screen text-[#1a1a2e]">
-      {/* Subtle warm atmospheric ambient glow */}
-      <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-[#d4622b]/5 via-[#f59e0b]/5 to-transparent blur-[120px]" />
+    <div className="min-h-screen text-[#1a1a2e]">
+      {/* ━━━ TOP EDITORIAL BANNER (DISTINCT LIGHT HERO SECTION) ━━━ */}
+      <section className="relative bg-gradient-to-b from-[#f2ece2] via-[#faf6f0] to-[#f3ede4] text-[#1a1a2e] pt-28 sm:pt-36 pb-14 sm:pb-20 border-b border-[#e4ded5] overflow-hidden">
+        {/* Subtle Ambient Warm Glow */}
+        <div className="pointer-events-none absolute top-0 left-1/3 -translate-x-1/2 w-[700px] h-[350px] bg-[#d4622b]/8 blur-[140px]" />
+        
+        {/* Subtle texture */}
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#00000004_1px,transparent_1px),linear-gradient(to_bottom,#00000004_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-32 pb-24 relative z-10">
-        {/* ━━━ EDITORIAL HERO HEADER ━━━ */}
-        <div className="max-w-3xl mb-14 sm:mb-16">
-          <motion.h1
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1a1a2e] leading-[1.15]"
-          >
-            Ideas, Insights &amp;{" "}
-            <span className="text-[#d4622b]">Workspace Innovation</span>
-          </motion.h1>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="max-w-4xl">
+            {/* Breadcrumb Navigation */}
+            <nav aria-label="Breadcrumb" className="mb-4">
+              <ol className="flex items-center gap-2 text-xs text-gray-500 font-medium uppercase tracking-wider">
+                <li>
+                  <Link href="/" className="hover:text-[#d4622b] transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li className="text-gray-400">/</li>
+                <li className="text-[#d4622b] font-semibold">Blog</li>
+              </ol>
+            </nav>
 
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed max-w-2xl font-normal"
-          >
-            Explore perspectives on flexible workspaces, enterprise scaling,
-            commercial real estate trends, and the future of work across Delhi
-            NCR.
-          </motion.p>
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#1a1a2e] leading-[1.15] mt-2">
+              Ideas, Insights &amp;{" "}
+              <span className="text-[#d4622b]">Workspace Innovation</span>
+            </h1>
+
+            <p className="mt-4 text-gray-600 text-xs sm:text-base lg:text-lg leading-relaxed max-w-2xl font-normal">
+              Explore perspectives on flexible workspaces, enterprise scaling,
+              commercial real estate trends, and the future of work across Delhi
+              NCR.
+            </p>
+          </div>
         </div>
+      </section>
 
-        {/* ━━━ FEATURED STORY ━━━ */}
-        {selectedCategory === "All" && searchQuery.trim() === "" && featuredPost && (
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mb-16 lg:mb-20"
-          >
-            <div className="group rounded-3xl bg-white border border-gray-200/90 shadow-[0_10px_35px_-15px_rgba(26,26,46,0.08)] hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.15)] hover:border-[#d4622b]/40 transition-all duration-300 overflow-hidden p-6 sm:p-8 lg:p-10">
-              <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                {/* Visual Image */}
-                <div className="lg:col-span-7 relative aspect-[16/10] rounded-2xl overflow-hidden bg-gray-100 border border-gray-100">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={featuredPost.img}
-                    alt={featuredPost.title}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
+      {/* ━━━ MAIN BLOG CONTENT & SLIDER ━━━ */}
+      <div className="relative bg-[#faf8f5] py-12 sm:py-16 overflow-hidden">
+        {/* Ambient warm lighting */}
+        <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-[#d4622b]/5 blur-[140px]" />
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          {/* ━━━ RECENT / LATEST BLOGS SLIDER ━━━ */}
+          {selectedCategory === "All" && searchQuery.trim() === "" && (
+            <div className="mb-14 sm:mb-20">
+              <div className="flex items-center justify-between gap-4 mb-6 sm:mb-8">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#d4622b]" />
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1a1a2e] tracking-tight">
+                    Latest Blogs
+                  </h2>
                 </div>
+                <span className="text-xs text-gray-500 font-medium hidden sm:inline-block">
+                  Featured &amp; Trending Stories
+                </span>
+              </div>
 
-                {/* Story Meta & Content */}
-                <div className="lg:col-span-5 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-2.5 text-xs text-gray-500 font-medium mb-3">
-                      <span className="font-bold text-[#d4622b]">
-                        {featuredPost.author}
-                      </span>
-                      <span>&bull;</span>
-                      <span>{featuredPost.date}</span>
+            <AutoSlider interval={4500} showArrows={true} className="w-full">
+              {enrichedPosts.slice(0, 5).map((post) => (
+                <div
+                  key={post.title}
+                  className="group rounded-3xl bg-white border border-gray-200/90 shadow-[0_10px_35px_-15px_rgba(26,26,46,0.08)] hover:shadow-[0_20px_50px_-15px_rgba(212,98,43,0.15)] hover:border-[#d4622b]/40 transition-all duration-300 overflow-hidden p-5 sm:p-8 lg:p-10"
+                >
+                  <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+                    {/* Visual Image */}
+                    <div className="lg:col-span-7 relative aspect-[16/10] rounded-2xl overflow-hidden bg-gray-100 border border-gray-100">
+                      <img
+                        src={post.img}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      />
                     </div>
 
-                    <a href={featuredPost.href} className="group/link block">
-                      <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a2e] leading-tight group-hover/link:text-[#d4622b] transition-colors">
-                        {featuredPost.title}
-                      </h2>
-                    </a>
+                    {/* Story Meta & Content */}
+                    <div className="lg:col-span-5 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-2.5 text-xs text-gray-500 font-medium mb-3">
+                          <span className="font-bold text-[#d4622b]">
+                            {post.author}
+                          </span>
+                          <span>&bull;</span>
+                          <span>{post.date}</span>
+                          <span className="ml-auto text-[10px] uppercase tracking-widest font-semibold px-2 py-0.5 rounded bg-[#d4622b]/10 text-[#d4622b] border border-[#d4622b]/20">
+                            {post.category}
+                          </span>
+                        </div>
 
-                    <p className="mt-4 text-gray-600 text-sm sm:text-base leading-relaxed text-justify font-normal">
-                      {featuredPost.desc}
-                    </p>
-                  </div>
+                        <Link href={post.href} className="group/link block">
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1a1a2e] leading-tight group-hover/link:text-[#d4622b] transition-colors">
+                            {post.title}
+                          </h3>
+                        </Link>
 
-                  <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
-                    <a
-                      href={featuredPost.href}
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-[#d4622b] hover:text-[#b8501f] transition-colors group/btn"
-                    >
-                      <span>Read Article</span>
-                      <span className="transition-transform group-hover/btn:translate-x-1">
-                        &rarr;
-                      </span>
-                    </a>
+                        <p className="mt-3 text-gray-600 text-xs sm:text-sm md:text-base leading-relaxed font-normal">
+                          {post.desc}
+                        </p>
+                      </div>
+
+                      <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                        <Link
+                          href={post.href}
+                          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#d4622b] hover:text-[#b8501f] transition-colors group/btn"
+                        >
+                          <span>Read Article</span>
+                          <span className="transition-transform group-hover/btn:translate-x-1">
+                            &rarr;
+                          </span>
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </motion.section>
+              ))}
+            </AutoSlider>
+          </div>
         )}
 
         {/* ━━━ CATEGORY PILLS & SEARCH ━━━ */}
@@ -442,6 +475,7 @@ export default function BlogClient({ posts }: BlogClientProps) {
             </button>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

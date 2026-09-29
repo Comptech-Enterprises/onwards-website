@@ -23,22 +23,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 mb-14 items-start">
           {/* Logo + Bio */}
           <div className="lg:col-span-5">
-            <Link href="/" className="flex items-center gap-3 mb-5 group">
+            <Link href="/" className="flex items-center mb-5 group">
               <Image
-                src="/onward-logo.png"
+                src="/onward-logo.webp"
                 alt="Onward Workspaces"
-                width={38}
-                height={38}
-                className="w-9 h-9 object-contain group-hover:rotate-6 transition-transform"
+                width={160}
+                height={36}
+                className="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity"
               />
-              <div className="leading-none">
-                <span className="text-xl font-bold text-[#1a1a2e] tracking-tight">
-                  Onward
-                </span>
-                <span className="block text-[9px] text-gray-400 tracking-[0.25em]">
-                  WORKSPACES
-                </span>
-              </div>
             </Link>
             <p className="text-sm leading-relaxed text-gray-500 max-w-sm">
               Premium coworking spaces built around your brand, ambition, and people across Delhi NCR.

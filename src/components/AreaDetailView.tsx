@@ -14,20 +14,20 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
       <Header alwaysSolid />
 
       <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20">
-        {/* ━━━ PAGE BANNER (FULL-BLEED PHOTO HERO) ━━━ */}
-        <section className="relative py-24 lg:py-32 overflow-hidden">
+        {/* ━━━ PAGE BANNER (BALANCED PHOTO HERO WITH VISIBLE ONWARD BRANDING) ━━━ */}
+        <section className="relative min-h-[400px] sm:min-h-[460px] lg:min-h-[500px] flex items-center py-14 sm:py-18 lg:py-22 overflow-hidden">
           <Image
             src={area.img}
             alt={`Onward Workspaces ${area.name}`}
             fill
             priority
-            className="object-cover"
+            className="object-cover object-[center_30%]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/60 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
 
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-            <nav aria-label="Breadcrumb" className="mb-4">
-              <ol className="flex items-center gap-2 text-xs text-white/70 font-medium uppercase tracking-wider">
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
+            <nav aria-label="Breadcrumb" className="mb-3">
+              <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider">
                 <li>
                   <Link href="/" className="hover:text-white transition-colors">
                     Home
@@ -50,37 +50,37 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
               </ol>
             </nav>
 
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
+            <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
               {area.type}
             </span>
-            <h1 className="mt-2 text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-white">
+            <h1 className="mt-1.5 text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white">
               Onward Workspaces {area.name}
             </h1>
-            <p className="mt-6 text-base sm:text-lg text-white/85 max-w-2xl leading-relaxed">
+            <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
               {area.description}
             </p>
           </div>
         </section>
 
         {/* ━━━ AREA DETAILS ━━━ */}
-        <section className="py-14 lg:py-16 bg-white border-b border-gray-200/80">
+        <section className="py-10 lg:py-12 bg-white border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex flex-wrap gap-x-12 gap-y-6 pb-10 border-b border-gray-200">
+            <div className="flex flex-wrap gap-x-12 gap-y-6 pb-8 border-b border-gray-200">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">Address</p>
-                <p className="mt-1.5 text-base font-medium text-black">{area.address}</p>
+                <p className="mt-1 text-sm sm:text-base font-medium text-black">{area.address}</p>
               </div>
-              <div className="pl-12 border-l border-gray-200">
+              <div className="sm:pl-12 sm:border-l sm:border-gray-200">
                 <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">Connectivity</p>
-                <p className="mt-1.5 text-base font-medium text-black">{area.transit}</p>
+                <p className="mt-1 text-sm sm:text-base font-medium text-black">{area.transit}</p>
               </div>
-              <div className="pl-12 border-l border-gray-200">
+              <div className="sm:pl-12 sm:border-l sm:border-gray-200">
                 <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">Capacity</p>
-                <p className="mt-1.5 text-base font-medium text-black">{area.seats}</p>
+                <p className="mt-1 text-sm sm:text-base font-medium text-black">{area.seats}</p>
               </div>
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap gap-2">
               {area.features.map((f) => (
                 <span
                   key={f}
@@ -91,12 +91,12 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
               ))}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-6">
               <MagneticButton
                 href="/#contact"
-                className="inline-flex items-center gap-2 bg-[#d4622b] text-white px-7 py-3.5 rounded-full font-semibold hover:bg-[#b8501f] transition-all shadow-md"
+                className="inline-flex items-center gap-2 bg-[#d4622b] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#b8501f] transition-all shadow-md text-sm sm:text-base"
               >
-                Book a Tour &rarr;
+                Get Started &rarr;
               </MagneticButton>
             </div>
           </div>

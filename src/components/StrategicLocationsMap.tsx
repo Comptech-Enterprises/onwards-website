@@ -20,7 +20,7 @@ export const ncrHubs: LocationHub[] = [
     x: 421.5,
     y: 167.0,
     labelPos: "right",
-    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613882809.webp",
     description: "A landmark address for forward-thinking teams.",
   },
   {
@@ -29,7 +29,7 @@ export const ncrHubs: LocationHub[] = [
     x: 754.3,
     y: 468.2,
     labelPos: "right",
-    img: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=600&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790615094214.webp",
     description: "Modern enterprise campus along the Noida Expressway.",
   },
   {
@@ -38,7 +38,7 @@ export const ncrHubs: LocationHub[] = [
     x: 677.1,
     y: 385.3,
     labelPos: "right",
-    img: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613971906.webp",
     description: "High-growth tech & corporate district with seamless transit.",
   },
   {
@@ -47,7 +47,7 @@ export const ncrHubs: LocationHub[] = [
     x: 546.4,
     y: 401.1,
     labelPos: "right",
-    img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp",
     description: "Central South Delhi connectivity for innovation leaders.",
   },
   {
@@ -56,7 +56,7 @@ export const ncrHubs: LocationHub[] = [
     x: 600.0,
     y: 453.6,
     labelPos: "right",
-    img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp",
     description: "Prime arterial hub with direct highway & metro access.",
   },
   {
@@ -65,7 +65,7 @@ export const ncrHubs: LocationHub[] = [
     x: 139.3,
     y: 475.5,
     labelPos: "right",
-    img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=600&q=80",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790615777181.webp",
     description: "Gurugram's bustling business core adjacent to Cyber City.",
   },
 ];
