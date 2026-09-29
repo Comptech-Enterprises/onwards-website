@@ -8,6 +8,7 @@ type Props = {
   className?: string;
   delay?: number;
   as?: "h1" | "h2" | "h3";
+  textClassName?: string;
 };
 
 const container: Variants = {
@@ -35,6 +36,7 @@ export default function AnimatedHeading({
   className = "",
   delay = 0,
   as = "h2",
+  textClassName = "text-black",
 }: Props) {
   const words = text.split(" ");
   const hi = new Set(
@@ -62,10 +64,8 @@ export default function AnimatedHeading({
         >
           <motion.span
             variants={word}
-            className={`inline-block ${
-              hi.has(clean(w))
-                ? "text-[#d4622b] font-bold"
-                : "text-black font-bold"
+            className={`inline-block font-bold ${
+              hi.has(clean(w)) ? "text-[#d4622b]" : textClassName
             }`}
           >
             {w}
