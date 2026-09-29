@@ -7,9 +7,9 @@ import Link from "next/link";
 import MagneticButton from "./MagneticButton";
 
 const locationsData = [
-  { name: "Delhi", href: "/locations?city=Delhi" },
-  { name: "Noida", href: "/locations?city=Noida" },
-  { name: "Gurgaon", href: "/locations?city=Gurugram" },
+  { name: "Delhi", href: "/locations" },
+  { name: "Noida", href: "/locations/noida" },
+  { name: "Gurgaon", href: "/locations/gurgaon" },
 ];
 
 export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean }) {

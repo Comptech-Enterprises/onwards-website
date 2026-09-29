@@ -8,6 +8,7 @@ import {
   useTransform,
   useSpring,
 } from "framer-motion";
+import Image from "next/image";
 import Reveal from "./Reveal";
 import AnimatedHeading from "./AnimatedHeading";
 import SpotlightCard from "./SpotlightCard";
@@ -51,7 +52,23 @@ const directContacts = [
   },
 ];
 
-export default function ContactSection() {
+export default function ContactSection({
+  bgImage,
+  formOnly = false,
+  title = "Ready to move forward with Onward?",
+  highlight = "forward with Onward?",
+  description = "Whether you need a bespoke enterprise floor for 500+ or a private cabin for your executive team, our workspace specialists will curate the perfect solution within 24 hours.",
+  hideDirectContacts = false,
+  simpleForm = false,
+}: {
+  bgImage?: string;
+  formOnly?: boolean;
+  title?: string;
+  highlight?: string;
+  description?: string;
+  hideDirectContacts?: boolean;
+  simpleForm?: boolean;
+} = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const [status, setStatus] = useState<"idle" | "submitting" | "success">(
     "idle",
@@ -87,6 +104,14 @@ export default function ContactSection() {
       ref={sectionRef}
       className="relative py-20 lg:py-28 bg-[#faf8f5] overflow-hidden"
     >
+      {/* ━━━ OPTIONAL BACKGROUND IMAGE ━━━ */}
+      {bgImage && (
+        <div className="absolute inset-0 z-0">
+          <Image src={bgImage} alt="" fill className="object-cover" />
+          <div className="absolute inset-0 bg-[#faf8f5]/90" />
+        </div>
+      )}
+
       {/* ━━━ PARALLAX AMBIENT BACKGROUND GLOWS ━━━ */}
       <motion.div
         style={{ y: orb1Y }}
@@ -107,25 +132,25 @@ export default function ContactSection() {
         }}
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-start">
+      <div className={`max-w-7xl mx-auto px-6 lg:px-8 relative z-10 ${formOnly ? "max-w-2xl" : ""}`}>
+        <div className={formOnly ? "" : "grid md:grid-cols-2 gap-12 lg:gap-20 items-start"}>
           {/* ━━━ LEFT COLUMN: BRAND NARRATIVE & DIRECT REACH (STICKY) ━━━ */}
+          {!formOnly && (
           <div className="relative md:sticky md:top-28 min-w-0">
             <AnimatedHeading
-              text="Ready to move forward with Onward?"
-              highlight="forward with Onward?"
+              text={title}
+              highlight={highlight}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-black mt-3 leading-[1.1] tracking-tight"
             />
 
             <Reveal delay={0.2}>
               <p className="mt-3 text-gray-700 text-base sm:text-lg leading-relaxed max-w-lg">
-                Whether you need a bespoke enterprise floor for 500+ or a private
-                cabin for your executive team, our workspace specialists will
-                curate the perfect solution within 24 hours.
+                {description}
               </p>
             </Reveal>
 
             {/* Direct Contact Cards */}
+            {!hideDirectContacts && (
             <div className="mt-10 space-y-4">
               {directContacts.map((item, i) => (
                 <Reveal key={item.label} delay={0.1 * i + 0.3}>
@@ -160,8 +185,10 @@ export default function ContactSection() {
                 </Reveal>
               ))}
             </div>
+            )}
 
             {/* Social Links */}
+            {!hideDirectContacts && (
             <Reveal delay={0.1 * directContacts.length + 0.3}>
               <div className="mt-6 flex items-center gap-3">
                 <a
@@ -184,8 +211,10 @@ export default function ContactSection() {
                 </a>
               </div>
             </Reveal>
+            )}
 
           </div>
+          )}
 
           {/* ━━━ RIGHT COLUMN: 3D SPOTLIGHT PARALLAX FORM STAGE ━━━ */}
           <motion.div style={{ y: formOffset }} className="relative min-w-0">
@@ -249,7 +278,7 @@ export default function ContactSection() {
                       </div>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
+                    <div className={simpleForm ? "" : "grid sm:grid-cols-2 gap-4"}>
                       <div>
                         <label className="text-xs font-medium text-gray-500 block mb-1.5">
                           Phone Number *
@@ -261,6 +290,7 @@ export default function ContactSection() {
                           className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
                         />
                       </div>
+                      {!simpleForm && (
                       <div>
                         <label className="text-xs font-medium text-gray-500 block mb-1.5">
                           Team Size (Optional)
@@ -271,8 +301,10 @@ export default function ContactSection() {
                           className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
                         />
                       </div>
+                      )}
                     </div>
 
+                    {!simpleForm && (
                     <div>
                       <label className="text-xs font-medium text-gray-500 block mb-1.5">
                         Requirements or Specific Location
@@ -283,6 +315,7 @@ export default function ContactSection() {
                         className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm resize-none"
                       />
                     </div>
+                    )}
 
                     <motion.button
                       type="submit"

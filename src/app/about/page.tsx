@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import AnimatedHeading from "@/components/AnimatedHeading";
 import MagneticButton from "@/components/MagneticButton";
@@ -540,21 +541,7 @@ export default function AboutPage() {
         </section>
       </main>
 
-      {/* ━━━ FOOTER ━━━ */}
-      <footer className="bg-[#faf8f5] text-gray-500 pt-16 pb-10 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-            <p>&copy; {new Date().getFullYear()} Onward Workspaces. All rights reserved.</p>
-            <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-              <Link href="/about" className="hover:text-[#d4622b] transition-colors">About</Link>
-              <Link href="/locations" className="hover:text-[#d4622b] transition-colors">Locations</Link>
-              <Link href="/team" className="hover:text-[#d4622b] transition-colors">Team</Link>
-              <Link href="/blog" className="hover:text-[#d4622b] transition-colors">Blog</Link>
-              <Link href="/#contact" className="hover:text-[#d4622b] transition-colors">Contact</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }
