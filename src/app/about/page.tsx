@@ -1,572 +1,913 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
-import AnimatedHeading from "@/components/AnimatedHeading";
 import MagneticButton from "@/components/MagneticButton";
-import AutoSlider from "@/components/AutoSlider";
 
-/* ━━━ THE IDEAL WORKSPACE AS A SOLUTION (3-STEP PROCESS) ━━━ */
-const workspaceSteps = [
+/* ━━━ 1. HERO ROTATING KEYWORDS ━━━ */
+const heroWords = [
+  { word: "Scale.", highlight: "Built for Enterprise" },
+  { word: "Execution.", highlight: "75-Day Turnkey Delivery" },
+  { word: "Community.", highlight: "425+ Thriving Businesses" },
+  { word: "Heart.", highlight: "Human-First Hospitality" },
+];
+
+/* ━━━ 2. STICKY WELCOME MARQUEE IMAGES ━━━ */
+const welcomeImagesCol1 = [
   {
-    step: "01",
-    title: "Lease",
-    desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp",
+    alt: "Collaborative team meeting at Onward Okhla",
+    tag: "Enterprise Hub",
   },
   {
-    step: "02",
-    title: "Design & Build",
-    desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp",
+    alt: "Ergonomic workspace workstations",
+    tag: "Ergonomic Layouts",
   },
   {
-    step: "03",
-    title: "Operations",
-    desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp",
+    alt: "Executive board room in Delhi",
+    tag: "Boardrooms",
+  },
+  {
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp",
+    alt: "Sunlit atrium lounge",
+    tag: "Lounge Areas",
   },
 ];
 
-/* ━━━ MISSION, VISION & VALUES ━━━ */
-const missionVisionValues = [
+const welcomeImagesCol2 = [
   {
-    title: "Mission",
-    desc: "Driven by a passion for excellence, our mission is to empower individuals and businesses to reach their full potential. We believe that by fostering a dynamic and supportive work environment, we can inspire creativity, productivity, and growth.",
-    bg: "from-[#1a1a2e] to-[#252542]",
-    tag: "OUR PURPOSE",
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614051010.webp",
+    alt: "Coffee bar and community lounge",
+    tag: "Cafeteria & Barista",
   },
   {
-    title: "Vision",
-    desc: "Our vision is to be the premier destination for professionals seeking a dynamic and vibrant coworking community, where innovation, productivity, and growth are limitless.",
-    bg: "from-[#d4622b] to-[#b8501f]",
-    tag: "OUR ASPIRATION",
-  },
-];
-
-/* ━━━ CORE VALUES (REAL ONWARD WORKSPACES CONTENT) ━━━ */
-const coreValues = [
-  {
-    title: "Customer always comes first",
-    desc: "We are committed to bringing together elements that help companies scale and make our members happy.",
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614136279.webp",
+    alt: "Private office suites",
+    tag: "Private Suites",
   },
   {
-    title: "No cutting corners",
-    desc: "Our members only deserve the best. That's the reason we focus so much on quality & precision in our every offering.",
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614210609.webp",
+    alt: "Collaborative brainstorming studio",
+    tag: "Creative Studios",
   },
   {
-    title: "Uninterrupted services",
-    desc: "Keeping our members on the go is what we strive for. Hence, we offer uninterrupted services & complete support.",
-  },
-  {
-    title: "Honesty",
-    desc: "We abide by the quote — Secret of every successful relationship is transparency. You will experience the same in our every interaction & action.",
-  },
-  {
-    title: "Dignity & Respect",
-    desc: "When you associate with us, you become a part of our family where the bonds are made with utmost respect, dignity, integrity, compassion, and thoughtfulness.",
+    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp",
+    alt: "Modern acoustic phone booths",
+    tag: "Focus Pods",
   },
 ];
 
-/* ━━━ DUMMY TEAM DATA (PLACEHOLDERS) ━━━ */
+/* ━━━ 3. INTERACTIVE ACCORDION VALUES ━━━ */
+const valuesList = [
+  {
+    id: "excellence",
+    title1: "A commitment",
+    title2: "to excellence",
+    desc: "We love building and we are obsessed with crafting spaces that make teams happier, healthier, and distinctly more productive. From sound-dampening acoustic design to high-speed dual-ISP fiber lines, every detail is engineered with uncompromising precision.",
+    icon: (
+      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" strokeDasharray="3 3" />
+        <path d="M20 8v24M8 20h24M12 12l16 16M28 12L12 28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="20" cy="20" r="4" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    id: "wellness",
+    title1: "Work-life &",
+    title2: "human wellness",
+    desc: "We are human-centric to the core. Our workspaces integrate abundant natural biophilic greenery, ergonomic posture seating, dedicated breakout lounges, mother care rooms, and meditation corners. We believe true productivity flows from balanced well-being.",
+    icon: (
+      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <path d="M20 32s-12-7.5-12-16a8 8 0 0116-2.5A8 8 0 0132 16c0 8.5-12 16-12 16z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+        <circle cx="20" cy="16" r="3" fill="currentColor" />
+      </svg>
+    ),
+  },
+  {
+    id: "quality",
+    title1: "Continuous quality",
+    title2: "improvement",
+    desc: "Our spaces are never static. We continuously gather member feedback, optimize energy consumption with IoT building automation, upgrade shared technology, and refresh layouts so that your team always works in a state-of-the-art environment.",
+    icon: (
+      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <path d="M20 6v6m0 16v6M6 20h6m16 0h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="20" cy="20" r="9" stroke="currentColor" strokeWidth="2" />
+        <path d="M20 15v5l3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    id: "transparency",
+    title1: "Radical honesty &",
+    title2: "client dignity",
+    desc: "No hidden CAM charges, no utility surprises, and no cutting corners. When you partner with Onward, you join a community grounded in transparency, integrity, respect, and mutual growth across every single touchpoint.",
+    icon: (
+      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <path d="M20 4L7 10v10c0 9 5.5 14.5 13 16 7.5-1.5 13-7 13-16V10L20 4z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+        <path d="M14 19l4 4 8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
+];
+
+/* ━━━ 4. LIFE AT ONWARD SLIDER ITEMS ━━━ */
+const lifeStories = [
+  {
+    title: "Reflection is part of the process",
+    desc: "Sometimes the most breakthrough ideas happen over a cup of artisan coffee, not inside a boardroom. We build spacious breakout lounges, green outdoor terraces, and contemplative focus pods so your team can step away, recalibrate, and come back sharper.",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719861.webp",
+    tag: "Mindful Spaces",
+  },
+  {
+    title: "A curated physical library & book lounges",
+    desc: "We are high-tech, but we cherish the analog world of literature and timeless design. Our centres feature community book shelves curated with top business, design, and philosophy reads that belong to every single member.",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp",
+    tag: "Knowledge & Growth",
+  },
+  {
+    title: "We celebrate every team milestone",
+    desc: "From Friday community socials and festive celebrations to founders' fireside chats and product launch parties, Onward is an energizing ecosystem where achievements are celebrated together.",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp",
+    tag: "Community Culture",
+  },
+  {
+    title: "We stay active & wellness-oriented",
+    desc: "Wellness isn't an afterthought. With on-campus gaming zones, yoga sessions, ergonomic standing desks, and partnerships with local fitness studios, staying energized is part of daily life at Onward.",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720620.webp",
+    tag: "Active Life",
+  },
+  {
+    title: "Enterprise scaling without logistical headache",
+    desc: "Need 20 seats today and 200 next quarter? Our modular enterprise suites scale dynamically with your hiring velocity so your real estate never bottlenecks your ambition.",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790526.webp",
+    tag: "Seamless Scaling",
+  },
+];
+
+/* ━━━ 5. LEADERSHIP TEAM WITH EXPANDABLE BIO DRAWERS ━━━ */
 const teamMembers = [
   {
     name: "Suvrat Jain",
     role: "Founder & CEO",
-    bio: "Visionary entrepreneur steering Onward's strategic growth, real estate portfolio, and corporate partnerships across Delhi NCR.",
+    bio: "Suvrat leads Onward Workspaces with a vision to eliminate the inefficiencies of conventional corporate leasing. Combining sharp real estate acumen with human-first hospitality, he has spearheaded Onward's expansion across Delhi NCR, hosting Fortune 500 enterprises, unicorns, and fast-scaling tech companies.",
     initials: "SJ",
-    accent: "#d4622b",
-    gradient: "from-[#1a1a2e] via-[#242638] to-[#d4622b]/30",
+    email: "suvrat@onwardworkspaces.com",
+    linkedin: "https://www.linkedin.com/",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp",
   },
   {
     name: "Aakash Sharma",
-    role: "Head of Operations & Expansion",
-    bio: "Oversees daily hub performance, facility operations, and seamless member onboarding across all 15+ centres.",
+    role: "Head of Expansion & Portfolio",
+    bio: "Aakash oversees real estate acquisitions, strategic landlord partnerships, and multi-city hub launches. He ensures that every Onward location occupies prime transit-connected corridors adjacent to major metro arteries and business districts.",
     initials: "AS",
-    accent: "#3b82f6",
-    gradient: "from-[#1a1a2e] via-[#1e293b] to-[#3b82f6]/25",
+    email: "aakash@onwardworkspaces.com",
+    linkedin: "https://www.linkedin.com/",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp",
   },
   {
     name: "Rhea Sen",
-    role: "Director of Enterprise Client Solutions",
-    bio: "Partners with Fortune 500 MNCs and unicorn startups to curate bespoke, turnkey enterprise office floors.",
+    role: "Lead Architect & Spatial Design",
+    bio: "Rhea orchestrates Onward's design philosophy—balancing ergonomic acoustics, biophilic elements, natural daylight optimization, and custom enterprise branding. Her team delivers bespoke turnkey office floors in under 75 days.",
     initials: "RS",
-    accent: "#10b981",
-    gradient: "from-[#1a1a2e] via-[#1c2e28] to-[#10b981]/25",
+    email: "rhea@onwardworkspaces.com",
+    linkedin: "https://www.linkedin.com/",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613882593.webp",
   },
   {
     name: "Vikram Malhotra",
-    role: "Lead Architect & Workspace Design",
-    bio: "Directs interior spatial planning, ergonomic acoustics, biophilic design, and custom brand architectural builds.",
+    role: "Head of Member Experience",
+    bio: "Vikram leads our community curation, concierge services, and enterprise client relations. His mission is to ensure that every team member entering an Onward space experiences seamless hospitality and effortless workday flow.",
     initials: "VM",
-    accent: "#8b5cf6",
-    gradient: "from-[#1a1a2e] via-[#272138] to-[#8b5cf6]/25",
+    email: "vikram@onwardworkspaces.com",
+    linkedin: "https://www.linkedin.com/",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613882635.webp",
   },
   {
     name: "Pooja Verma",
-    role: "Head of Member Experience & Community",
-    bio: "Curates networking events, brand partnerships, and community-building programs for our 425+ corporate clients.",
+    role: "Chief Technology & Operations Officer",
+    bio: "Pooja drives building automation, IoT access control, redundant high-capacity fiber networks, and 24/7 IT uptime for hundreds of technology and financial enterprise clients.",
     initials: "PV",
-    accent: "#f59e0b",
-    gradient: "from-[#1a1a2e] via-[#2e261f] to-[#f59e0b]/25",
+    email: "pooja@onwardworkspaces.com",
+    linkedin: "https://www.linkedin.com/",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613882693.webp",
   },
   {
     name: "Nitin Mehra",
-    role: "Chief Technology & Infrastructure Officer",
-    bio: "Ensures enterprise-grade cybersecurity, dual-ISP fiber redundancy, IoT building automation, and seamless 24/7 IT uptime.",
+    role: "Director of Enterprise Solutions",
+    bio: "Nitin works directly with enterprise CFOs, CXOs, and real estate heads to structure flexible managed office agreements that optimize CAPEX, reduce real estate liability, and accommodate hyper-fast team growth.",
     initials: "NM",
-    accent: "#06b6d4",
-    gradient: "from-[#1a1a2e] via-[#162a32] to-[#06b6d4]/25",
+    email: "nitin@onwardworkspaces.com",
+    linkedin: "https://www.linkedin.com/",
+    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614051010.webp",
   },
 ];
 
+/* ━━━ INTERACTIVE CANVAS SPHERE PARTICLES (HERO 3D ANIMATION) ━━━ */
+function KineticSphereCanvas() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = canvas.parentElement?.clientWidth || 400);
+    let height = (canvas.height = canvas.parentElement?.clientHeight || 400);
+
+    const handleResize = () => {
+      if (!canvas.parentElement) return;
+      width = canvas.width = canvas.parentElement.clientWidth;
+      height = canvas.height = canvas.parentElement.clientHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    const particles: { x: number; y: number; z: number; origX: number; origY: number; origZ: number; size: number }[] = [];
+    const count = 220;
+    const radius = Math.min(width, height) * 0.36;
+
+    for (let i = 0; i < count; i++) {
+      const theta = Math.acos(1 - (2 * (i + 0.5)) / count);
+      const phi = Math.PI * (1 + Math.sqrt(5)) * (i + 0.5);
+      const x = radius * Math.sin(theta) * Math.cos(phi);
+      const y = radius * Math.sin(theta) * Math.sin(phi);
+      const z = radius * Math.cos(theta);
+      particles.push({ x, y, z, origX: x, origY: y, origZ: z, size: Math.random() * 2 + 1.2 });
+    }
+
+    let angleX = 0.003;
+    let angleY = 0.004;
+    let mouseX = 0;
+    let mouseY = 0;
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseX = (e.clientX - rect.left - width / 2) * 0.00008;
+      mouseY = (e.clientY - rect.top - height / 2) * 0.00008;
+    };
+    window.addEventListener("mousemove", onMouseMove);
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      const rotX = angleX + mouseY;
+      const rotY = angleY + mouseX;
+
+      // Draw background halo
+      const radial = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, radius * 1.3);
+      radial.addColorStop(0, "rgba(212, 98, 43, 0.12)");
+      radial.addColorStop(0.6, "rgba(212, 98, 43, 0.03)");
+      radial.addColorStop(1, "rgba(212, 98, 43, 0)");
+      ctx.fillStyle = radial;
+      ctx.fillRect(0, 0, width, height);
+
+      // Rotate and project points
+      particles.forEach((p) => {
+        // Rotate Y
+        let cos = Math.cos(rotY);
+        let sin = Math.sin(rotY);
+        let x1 = p.x * cos - p.z * sin;
+        let z1 = p.z * cos + p.x * sin;
+
+        // Rotate X
+        cos = Math.cos(rotX);
+        sin = Math.sin(rotX);
+        let y2 = p.y * cos - z1 * sin;
+        let z2 = z1 * cos + p.y * sin;
+
+        p.x = x1;
+        p.y = y2;
+        p.z = z2;
+
+        const fov = 400;
+        const scale = fov / (fov + p.z);
+        const projX = p.x * scale + width / 2;
+        const projY = p.y * scale + height / 2;
+        const alpha = Math.max(0.15, Math.min(1, (p.z + radius) / (2 * radius)));
+
+        ctx.beginPath();
+        ctx.arc(projX, projY, p.size * scale, 0, Math.PI * 2);
+        ctx.fillStyle = p.z > 0 ? `rgba(212, 98, 43, ${alpha * 0.95})` : `rgba(26, 26, 46, ${alpha * 0.75})`;
+        ctx.fill();
+      });
+
+      // Connect near neighbors with delicate neural filaments
+      for (let i = 0; i < particles.length; i += 2) {
+        for (let j = i + 1; j < particles.length; j += 4) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dz = particles[i].z - particles[j].z;
+          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          if (dist < 42) {
+            const fov = 400;
+            const s1 = fov / (fov + particles[i].z);
+            const s2 = fov / (fov + particles[j].z);
+            const x1 = particles[i].x * s1 + width / 2;
+            const y1 = particles[i].y * s1 + height / 2;
+            const x2 = particles[j].x * s2 + width / 2;
+            const y2 = particles[j].y * s2 + height / 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.strokeStyle = `rgba(212, 98, 43, ${0.18 * (1 - dist / 42)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", onMouseMove);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="w-full h-full object-contain pointer-events-none" />;
+}
+
 export default function AboutPage() {
+  /* Active hero word cycling */
+  const [activeWordIdx, setActiveWordIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveWordIdx((prev) => (prev + 1) % heroWords.length);
+    }, 2800);
+    return () => clearInterval(timer);
+  }, []);
+
+  /* Values Accordion state */
+  const [activeValueId, setActiveValueId] = useState<string>("excellence");
+
+  /* Life Carousel state */
+  const [lifeIdx, setLifeIdx] = useState(0);
+
+  /* Team member bio drawer state */
+  const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(null);
+
+  /* Scroll hooks for sticky welcome vertical parallax */
+  const welcomeRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress: welcomeProgress } = useScroll({
+    target: welcomeRef,
+    offset: ["start end", "end start"],
+  });
+
+  const col1Y = useTransform(welcomeProgress, [0, 1], ["8%", "-24%"]);
+  const col2Y = useTransform(welcomeProgress, [0, 1], ["-18%", "14%"]);
+
   return (
     <>
       <Header alwaysSolid />
 
-      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20 pb-20">
-        {/* ━━━ SECTION 1: ABOUT US + GENESIS (CLUBBED) ━━━ */}
-        <section className="bg-white border-b border-gray-200/80 py-16 lg:py-24">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <nav aria-label="Breadcrumb" className="mb-8">
-              <ol className="flex items-center gap-2 text-xs text-gray-500 font-medium">
-                <li>
-                  <Link href="/" className="hover:text-[#d4622b] transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>/</li>
-                <li className="text-gray-800 font-semibold">About Us</li>
-              </ol>
-            </nav>
-
-            <Reveal>
-              <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
-                About Us
+      <main className="bg-[#faf8f5] text-[#1a1a2e] min-h-screen overflow-x-hidden pt-20">
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            1. BRILEAN-STYLE HERO: 3D KINETIC SPHERE + ROTATING WORDS
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden border-b border-gray-200/80 bg-gradient-to-b from-white via-[#faf8f5] to-[#f6f1e8] py-16 sm:py-24">
+          <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Top Badge & Breadcrumb */}
+            <div className="flex items-center justify-between gap-4 mb-8">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e8dfd2] text-xs font-bold uppercase tracking-widest text-[#d4622b] shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-[#d4622b] animate-pulse" />
+                Who We Are · Onward Workspaces
               </span>
-            </Reveal>
-
-            <div className="mt-3 font-bold tracking-tight leading-[1.05] sm:leading-[0.95]">
-              <AnimatedHeading
-                as="h1"
-                text="Crafting Workspaces."
-                className="block text-2xl sm:text-4xl md:text-5xl lg:text-7xl"
-                delay={0}
-              />
-              <AnimatedHeading
-                text="Built Around Ambition."
-                className="block text-2xl sm:text-4xl md:text-5xl lg:text-7xl"
-                textClassName="text-gray-400"
-                delay={0.15}
-              />
-              <AnimatedHeading
-                text="Brand & People."
-                className="block text-2xl sm:text-4xl md:text-5xl lg:text-7xl"
-                textClassName="text-gray-300"
-                delay={0.3}
-              />
+              <nav aria-label="Breadcrumb" className="hidden sm:block">
+                <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
+                  <li>
+                    <Link href="/" className="hover:text-[#d4622b] transition-colors">
+                      Home
+                    </Link>
+                  </li>
+                  <li>/</li>
+                  <li className="text-gray-900">About Us</li>
+                </ol>
+              </nav>
             </div>
 
-            <div className="mt-8 sm:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-              <div className="lg:col-span-6">
-                <Reveal delay={0.1}>
-                  <p className="text-gray-600 text-xs sm:text-base lg:text-lg leading-relaxed text-justify">
-                    Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
-                  </p>
-                </Reveal>
-                <Reveal delay={0.2}>
-                  <p className="mt-3 sm:mt-4 text-gray-600 text-xs sm:text-base lg:text-lg leading-relaxed text-justify">
-                    Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
-                  </p>
-                </Reveal>
+            {/* Grid with 3D Canvas on Left & Giant Kinetic Words on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Left Column: 3D Interactive Particle Sphere */}
+              <div className="lg:col-span-5 flex items-center justify-center relative">
+                <div className="w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] lg:w-[440px] lg:h-[440px] relative flex items-center justify-center">
+                  <KineticSphereCanvas />
+                  {/* Center Floating Monogram Emblem */}
+                  <div className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/80 backdrop-blur-md border border-[#d4622b]/30 shadow-xl flex items-center justify-center pointer-events-none">
+                    <span className="text-xl sm:text-2xl font-black text-[#1a1a2e] tracking-tight">
+                      ON<span className="text-[#d4622b]">.</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
 
-                <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3 sm:gap-6">
+              {/* Right Column: Morphing Rotating Typography */}
+              <div className="lg:col-span-7 flex flex-col justify-center">
+                {/* Words Stack */}
+                <div className="h-[75px] sm:h-[110px] lg:h-[135px] overflow-hidden relative">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={heroWords[activeWordIdx].word}
+                      initial={{ y: 80, opacity: 0, rotateX: -40 }}
+                      animate={{ y: 0, opacity: 1, rotateX: 0 }}
+                      exit={{ y: -80, opacity: 0, rotateX: 40 }}
+                      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                      className="origin-bottom"
+                    >
+                      <h1 className="text-4xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-[#1a1a2e] leading-none">
+                        {heroWords[activeWordIdx].word}
+                      </h1>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Active Keyword Tag */}
+                <div className="mt-2 sm:mt-3 flex items-center gap-2">
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] bg-[#d4622b]/10 px-3 py-1 rounded-full">
+                    {heroWords[activeWordIdx].highlight}
+                  </span>
+                </div>
+
+                {/* Mission Statement Paragraph */}
+                <p className="mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed font-normal max-w-2xl">
+                  We are tech-enabled. We are hospitality-aware. We are <strong className="text-[#1a1a2e] font-bold">human first</strong>. Founded in 2019, Onward eliminates the rigidities of conventional commercial leases, delivering bespoke, turnkey workspaces across Delhi NCR where high-growth teams and enterprises thrive.
+                </p>
+
+                {/* CTAs */}
+                <div className="mt-8 flex flex-wrap items-center gap-4">
                   <MagneticButton
                     href="/#contact"
-                    className="inline-flex items-center gap-1.5 sm:gap-2 bg-[#d4622b] text-white px-4 py-2.5 sm:px-7 sm:py-3.5 rounded-full font-semibold hover:bg-[#b8501f] transition-all shadow-md text-xs sm:text-sm md:text-base whitespace-nowrap"
+                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm sm:text-base shadow-lg transition-all"
                   >
                     <span>Schedule a Visit</span>
-                    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
                   </MagneticButton>
                   <Link
                     href="/locations"
-                    className="text-[#1a1a2e] font-semibold text-xs sm:text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1 whitespace-nowrap py-2"
+                    className="px-6 py-3.5 rounded-full font-bold text-sm sm:text-base border border-gray-300 hover:border-[#1a1a2e] text-[#1a1a2e] bg-white transition-all shadow-xs"
                   >
-                    Explore Locations &rarr;
+                    Explore 11+ Centres
                   </Link>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
 
-              <div className="lg:col-span-6">
-                <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
-                  <Image
-                    src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
-                    alt="Onward Workspaces Interior"
-                    width={1200}
-                    height={800}
-                    className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-6 left-6 right-6 text-white">
-                    <span className="text-xs font-semibold uppercase tracking-widest text-[#d4622b]">
-                      Onward Experience
-                    </span>
-                    <h3 className="text-xl font-bold mt-1">
-                      Bespoke Interiors Tailored to Brand Identity
-                    </h3>
-                  </div>
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            2. BRILEAN STICKY WELCOME WALL: PARALLAX PHOTO STREAM
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section
+          ref={welcomeRef}
+          className="relative min-h-[140vh] sm:min-h-[160vh] py-20 bg-[#f6f1e8] overflow-hidden border-b border-[#e8dfd2]"
+        >
+          {/* Sticky Center Title & Scroll Arrow */}
+          <div className="sticky top-28 sm:top-36 z-20 max-w-4xl mx-auto px-4 text-center pointer-events-none">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="bg-white/90 backdrop-blur-md border border-[#e8dfd2] rounded-3xl p-6 sm:p-10 shadow-2xl inline-block max-w-2xl"
+            >
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
+                Our Community & Craft
+              </span>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e] tracking-tight leading-tight">
+                Whatever brought you to this page, <span className="text-[#d4622b]">welcome.</span>
+              </h2>
+              <p className="mt-3 text-xs sm:text-sm text-gray-600 max-w-lg mx-auto">
+                Take a look inside the spaces, community events, and daily moments where hundreds of companies build their future.
+              </p>
+
+              {/* Pulsing Down Arrow */}
+              <div className="mt-6 flex justify-center">
+                <div className="w-10 h-10 rounded-full border border-gray-300 bg-white flex items-center justify-center text-[#1a1a2e] shadow-sm animate-bounce">
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                  </svg>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
-        </section>
 
-        {/* ━━━ SECTION 2: THE IDEAL WORKSPACE AS A SOLUTION ━━━ */}
-        <section className="relative py-24 lg:py-32 overflow-hidden">
-          <Image
-            src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449896.webp"
-            alt="Onward Workspaces skyline"
-            fill
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80" />
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <Reveal>
-                <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase">
-                  What We Do
-                </span>
-              </Reveal>
-              <AnimatedHeading
-                text="The Ideal Workspace as a Solution"
-                highlight="Solution"
-                className="text-2xl sm:text-4xl lg:text-5xl mt-2"
-                textClassName="text-white"
-              />
-            </div>
-
-            <div className="relative">
-              <div className="hidden sm:block absolute top-5 left-[16.66%] right-[16.66%] h-px bg-white/20" />
-              {/* Desktop 3-col grid */}
-              <div className="hidden sm:grid sm:grid-cols-3 gap-8">
-                {workspaceSteps.map((s) => (
-                  <Reveal key={s.step} delay={Number(s.step) * 0.05}>
-                    <div className="relative flex flex-col items-center text-center rounded-2xl bg-white/95 backdrop-blur-sm border border-white/20 px-6 py-8 shadow-xl h-full">
-                      <div className="relative z-10 w-10 h-10 rounded-full bg-white border-2 border-[#d4622b] text-[#d4622b] flex items-center justify-center text-sm font-bold">
-                        {s.step}
-                      </div>
-                      <h3 className="mt-5 text-xl font-bold text-black">
-                        {s.title}
-                      </h3>
-                      <p className="mt-2 text-gray-600 text-sm sm:text-base leading-relaxed max-w-xs">
-                        {s.desc}
-                      </p>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-
-              {/* Mobile AutoSlider */}
-              <div className="sm:hidden">
-                <AutoSlider interval={3500} dotColor="dark">
-                  {workspaceSteps.map((s) => (
-                    <div key={s.step} className="relative flex flex-col items-center text-center rounded-2xl bg-white/95 backdrop-blur-sm border border-white/20 px-5 py-6 shadow-xl">
-                      <div className="relative z-10 w-8 h-8 rounded-full bg-white border-2 border-[#d4622b] text-[#d4622b] flex items-center justify-center text-xs font-bold">
-                        {s.step}
-                      </div>
-                      <h3 className="mt-3 text-lg font-bold text-black">
-                        {s.title}
-                      </h3>
-                      <p className="mt-1.5 text-gray-600 text-xs leading-relaxed max-w-xs">
-                        {s.desc}
-                      </p>
-                    </div>
-                  ))}
-                </AutoSlider>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ━━━ SECTION 3: MISSION, VISION & CORE VALUES ━━━ */}
-        <section className="py-14 sm:py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
-              <Reveal>
-                <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
-                  Our Foundations
-                </span>
-              </Reveal>
-              <AnimatedHeading
-                text="Mission & Vision"
-                highlight="Vision"
-                className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
-              />
-            </div>
-
-            {/* Desktop grid */}
-            <div className="hidden md:grid md:grid-cols-2 gap-8">
-              {missionVisionValues.map((v, i) => (
-                <Reveal key={v.title} delay={i * 0.1}>
+          {/* Dual-Column Vertical Parallax Stream in the background */}
+          <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-none opacity-85 sm:opacity-90">
+            <div className="grid grid-cols-2 gap-4 sm:gap-8 h-full">
+              {/* Column 1: Moving Upwards */}
+              <motion.div style={{ y: col1Y }} className="flex flex-col gap-6 sm:gap-10">
+                {welcomeImagesCol1.map((img, idx) => (
                   <div
-                    className={`h-full rounded-3xl p-8 sm:p-10 text-white bg-gradient-to-br ${v.bg} shadow-xl flex flex-col justify-between hover:-translate-y-1.5 transition-transform duration-300`}
+                    key={idx}
+                    className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#e8dfd2] shadow-xl bg-white aspect-[4/3] group"
                   >
-                    <div>
-                      <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-white/70">
-                        {v.tag}
-                      </span>
-                      <h3 className="text-2xl sm:text-3xl font-bold mt-2 mb-4 text-white">
-                        {v.title}
-                      </h3>
-                      <p className="text-white/85 text-sm sm:text-base leading-relaxed">
-                        {v.desc}
-                      </p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-
-            {/* Mobile AutoSlider */}
-            <div className="md:hidden">
-              <AutoSlider interval={4000}>
-                {missionVisionValues.map((v) => (
-                  <div
-                    key={v.title}
-                    className={`rounded-2xl p-5 text-white bg-gradient-to-br ${v.bg} shadow-lg flex flex-col justify-between min-h-[190px]`}
-                  >
-                    <div>
-                      <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/70">
-                        {v.tag}
-                      </span>
-                      <h3 className="text-lg font-bold mt-1.5 mb-2 text-white">
-                        {v.title}
-                      </h3>
-                      <p className="text-white/90 text-xs leading-relaxed">
-                        {v.desc}
-                      </p>
-                    </div>
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 400px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                    <span className="absolute bottom-3 left-3 text-[9px] sm:text-xs font-bold text-white uppercase tracking-wider bg-black/50 backdrop-blur-xs px-2.5 py-1 rounded-md">
+                      {img.tag}
+                    </span>
                   </div>
                 ))}
-              </AutoSlider>
+              </motion.div>
+
+              {/* Column 2: Moving Downwards */}
+              <motion.div style={{ y: col2Y }} className="flex flex-col gap-6 sm:gap-10 pt-16 sm:pt-28">
+                {welcomeImagesCol2.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#e8dfd2] shadow-xl bg-white aspect-[4/3] group"
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 400px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                    <span className="absolute bottom-3 left-3 text-[9px] sm:text-xs font-bold text-white uppercase tracking-wider bg-black/50 backdrop-blur-xs px-2.5 py-1 rounded-md">
+                      {img.tag}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
             </div>
           </div>
+
+          {/* Top and Bottom Fade Gradients */}
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#f6f1e8] to-transparent pointer-events-none z-10" />
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#f6f1e8] to-transparent pointer-events-none z-10" />
         </section>
 
-        {/* ━━━ SECTION 3B: OUR CORE VALUES (REAL ONWARD WORKSPACES CONTENT) ━━━ */}
-        <section className="py-14 sm:py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="max-w-2xl mb-8 sm:mb-14">
-              <Reveal>
-                <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
-                  Our Ethos
-                </span>
-              </Reveal>
-              <h2 className="mt-2 text-2xl sm:text-4xl lg:text-5xl font-bold text-black">
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            3. BRILEAN-STYLE INTERACTIVE VALUES ACCORDION
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section className="py-20 sm:py-28 bg-[#faf8f5] border-b border-gray-200/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mb-12 sm:mb-16">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
+                Our Guiding Principles
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">
                 Our Core Values
               </h2>
+              <p className="mt-3 text-sm sm:text-base text-gray-600">
+                Click any pillar to explore how our ethos shapes daily building operations and enterprise partnerships.
+              </p>
             </div>
 
-            <div className="border-t border-gray-200">
-              {coreValues.map((v, i) => (
-                <Reveal key={v.title} delay={i * 0.06}>
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-1.5 lg:gap-10 py-5 sm:py-8 border-b border-gray-200">
-                    <span className="lg:col-span-1 text-xs sm:text-sm font-semibold text-[#d4622b]">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="lg:col-span-5 text-lg sm:text-2xl lg:text-3xl font-bold text-black leading-snug">
-                      {v.title}
-                    </h3>
-                    <p className="lg:col-span-6 text-gray-600 text-xs sm:text-base leading-relaxed">
-                      {v.desc}
-                    </p>
-                  </div>
-                </Reveal>
-              ))}
+            {/* Accordion Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {valuesList.map((val) => {
+                const isActive = activeValueId === val.id;
+                return (
+                  <motion.div
+                    key={val.id}
+                    layout
+                    onClick={() => setActiveValueId(val.id)}
+                    className={`cursor-pointer rounded-3xl p-6 sm:p-7 border transition-all duration-300 flex flex-col justify-between ${
+                      isActive
+                        ? "bg-[#1a1a2e] text-white border-[#1a1a2e] shadow-2xl scale-[1.02]"
+                        : "bg-white text-[#1a1a2e] border-gray-200 hover:border-[#d4622b]/50 shadow-sm"
+                    }`}
+                  >
+                    <div>
+                      {/* Icon */}
+                      <div className="mb-6">{val.icon}</div>
+
+                      {/* Header lines */}
+                      <h3 className="text-xl sm:text-2xl font-black tracking-tight leading-tight">
+                        <span>{val.title1}</span>
+                        <br />
+                        <span className={isActive ? "text-[#d4622b]" : "text-gray-900"}>
+                          {val.title2}
+                        </span>
+                      </h3>
+
+                      {/* Expandable description */}
+                      <AnimatePresence initial={false}>
+                        {isActive && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.35, ease: "easeInOut" }}
+                            className="overflow-hidden"
+                          >
+                            <p className="mt-4 text-xs sm:text-sm text-gray-300 leading-relaxed pt-2 border-t border-white/10">
+                              {val.desc}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+
+                    <div className="mt-6 flex items-center justify-between pt-4 border-t border-current/10">
+                      <span className={`text-[10px] font-bold uppercase tracking-widest ${isActive ? "text-[#d4622b]" : "text-gray-400"}`}>
+                        {isActive ? "Active Value" : "Click to view"}
+                      </span>
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isActive ? "bg-[#d4622b] text-white" : "bg-gray-100 text-gray-700"}`}>
+                        {isActive ? "✓" : "+"}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* ━━━ SECTION 4: MEET OUR TEAM (DUMMY TEAM PLACEHOLDERS & DESCRIPTIONS) ━━━ */}
-        <section className="py-14 sm:py-20 lg:py-28 bg-white border-t border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-16">
-              <Reveal>
-                <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
-                  The Minds Behind Onward
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            4. BRILEAN-STYLE "LIFE AT ONWARD" SWIPER / STORY CAROUSEL
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section className="py-20 sm:py-28 bg-[#1a1a2e] text-white relative overflow-hidden">
+          {/* Subtle Ambient Glow */}
+          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-[#d4622b]/15 blur-3xl pointer-events-none" />
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-14">
+              <div>
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
+                  Culture & Environment
                 </span>
-              </Reveal>
-              <AnimatedHeading
-                text="Meet Our Team"
-                highlight="Our Team"
-                className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
-              />
-              <Reveal delay={0.1}>
-                <p className="mt-3 text-gray-600 text-xs sm:text-base lg:text-lg leading-relaxed">
-                  Passionate industry leaders, architects, and community curators dedicated to empowering your workspace journey every single day.
-                </p>
-              </Reveal>
+                <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-1">
+                  Life at Onward
+                </h2>
+              </div>
+
+              {/* Slider Arrows Navigation */}
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setLifeIdx((prev) => (prev > 0 ? prev - 1 : lifeStories.length - 1))}
+                  className="w-12 h-12 rounded-full border border-white/20 hover:border-[#d4622b] bg-white/5 hover:bg-[#d4622b] text-white flex items-center justify-center transition-all duration-200 active:scale-95"
+                  aria-label="Previous story"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLifeIdx((prev) => (prev < lifeStories.length - 1 ? prev + 1 : 0))}
+                  className="w-12 h-12 rounded-full border border-white/20 hover:border-[#d4622b] bg-white/5 hover:bg-[#d4622b] text-white flex items-center justify-center transition-all duration-200 active:scale-95"
+                  aria-label="Next story"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
-            {/* Desktop Team Members Grid */}
-            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-              {teamMembers.map((member, idx) => (
-                <Reveal key={member.name} delay={idx * 0.08}>
-                  <div className="bg-[#faf8f5] rounded-3xl border border-gray-200/80 overflow-hidden shadow-sm hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.25)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group h-full">
+            {/* Slider Content: Big Photo on Left, Synced Story on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Photo Viewport */}
+              <div className="lg:col-span-7">
+                <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={lifeStories[lifeIdx].img}
+                      initial={{ opacity: 0, scale: 1.06 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.96 }}
+                      transition={{ duration: 0.45 }}
+                      className="absolute inset-0"
+                    >
+                      <Image
+                        src={lifeStories[lifeIdx].img}
+                        alt={lifeStories[lifeIdx].title}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 800px"
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <span className="absolute bottom-4 left-4 text-xs font-bold uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">
+                        {lifeStories[lifeIdx].tag}
+                      </span>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Bullet Indicators */}
+                <div className="flex items-center gap-2 mt-4">
+                  {lifeStories.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setLifeIdx(i)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        i === lifeIdx ? "w-8 bg-[#d4622b]" : "w-2 bg-white/20 hover:bg-white/40"
+                      }`}
+                      aria-label={`Go to slide ${i + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Synced Story Card */}
+              <div className="lg:col-span-5">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={lifeStories[lifeIdx].title}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.35 }}
+                    className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-md shadow-xl"
+                  >
+                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
+                      Story 0{lifeIdx + 1} / 0{lifeStories.length}
+                    </span>
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">
+                      {lifeStories[lifeIdx].title}
+                    </h3>
+                    <p className="mt-4 text-sm sm:text-base text-gray-300 leading-relaxed">
+                      {lifeStories[lifeIdx].desc}
+                    </p>
+
+                    <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                      <span className="text-xs text-gray-400 font-semibold">Experience it in person</span>
+                      <Link
+                        href="/#contact"
+                        className="text-xs font-bold text-[#d4622b] hover:text-white transition-colors inline-flex items-center gap-1.5"
+                      >
+                        Book a Day Pass &rarr;
+                      </Link>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            5. BRILEAN-STYLE TEAM SECTION WITH EXPANDABLE BIO DRAWERS
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section className="py-20 sm:py-28 bg-[#faf8f5] border-b border-gray-200/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
+                The Minds Behind Onward
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">
+                Our Present and Future
+              </h2>
+              <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-xl mx-auto">
+                Meet the passionate real estate strategists, architects, and community leaders driving our mission every day.
+              </p>
+            </div>
+
+            {/* Team Members Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {teamMembers.map((member) => {
+                const isExpanded = expandedTeamMember === member.name;
+                return (
+                  <div
+                    key={member.name}
+                    className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                  >
                     <div>
-                      {/* Stylized Avatar Placeholder Frame */}
-                      <div className={`relative aspect-[16/11] w-full overflow-hidden bg-gradient-to-br ${member.gradient} flex items-center justify-center`}>
-                        <div
-                          className="absolute inset-0 opacity-15 pointer-events-none"
-                          style={{
-                            backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-                            backgroundSize: "16px 16px",
-                          }}
+                      {/* Photo Container with Expand/Collapse Icon */}
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
+                        <Image
+                          src={member.img}
+                          alt={member.name}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 400px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
-                        <div className="relative flex flex-col items-center justify-center text-center z-10">
-                          <div className="w-20 h-20 rounded-2xl bg-white/10 border-2 border-white/20 backdrop-blur-md flex items-center justify-center text-white text-2xl font-bold tracking-widest shadow-xl group-hover:scale-105 group-hover:border-[#d4622b] transition-all duration-300">
-                            {member.initials}
-                          </div>
-                        </div>
-                        <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between z-10">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                        {/* Top-Right Expand/Collapse Button */}
+                        <button
+                          type="button"
+                          onClick={() => setExpandedTeamMember(isExpanded ? null : member.name)}
+                          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#1a1a2e]/90 hover:bg-[#d4622b] text-white flex items-center justify-center shadow-lg transition-colors z-20"
+                          aria-label={isExpanded ? `Close ${member.name} bio` : `Expand ${member.name} bio`}
+                        >
+                          <span className="text-lg font-bold leading-none">{isExpanded ? "✕" : "+"}</span>
+                        </button>
+
+                        {/* Bottom Tag */}
+                        <div className="absolute bottom-3 left-4 right-4 z-10">
                           <span className="text-[10px] font-bold uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
                             {member.role}
                           </span>
                         </div>
                       </div>
 
-                      {/* Info & Bio */}
+                      {/* Name & Socials */}
                       <div className="p-6">
-                        <h3 className="text-xl font-bold text-black group-hover:text-[#d4622b] transition-colors">
-                          {member.name}
-                        </h3>
-                        <p className="text-xs font-semibold text-[#d4622b] mt-0.5 mb-3">
-                          {member.role}
-                        </p>
-                        <p className="text-sm text-gray-600 leading-relaxed">
-                          {member.bio}
-                        </p>
+                        <div className="flex items-start justify-between gap-2">
+                          <div>
+                            <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+                              {member.name}
+                            </h3>
+                            <p className="text-xs font-semibold text-gray-500 mt-0.5">
+                              {member.role}
+                            </p>
+                          </div>
+
+                          {/* Social Icons */}
+                          <div className="flex items-center gap-1.5">
+                            <a
+                              href={`mailto:${member.email}`}
+                              aria-label={`Email ${member.name}`}
+                              className="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#d4622b] text-gray-700 hover:text-white flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                            </a>
+                            <a
+                              href={member.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`LinkedIn of ${member.name}`}
+                              className="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#d4622b] text-gray-700 hover:text-white flex items-center justify-center transition-colors"
+                            >
+                              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
+                              </svg>
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* Expandable Bio Drawer */}
+                        <AnimatePresence initial={false}>
+                          {isExpanded && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: "auto" }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.35, ease: "easeInOut" }}
+                              className="overflow-hidden"
+                            >
+                              <p className="mt-4 pt-3 border-t border-gray-100 text-xs sm:text-sm text-gray-600 leading-relaxed">
+                                {member.bio}
+                              </p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     </div>
                   </div>
-                </Reveal>
-              ))}
-            </div>
-
-            {/* Mobile Team AutoSlider */}
-            <div className="sm:hidden">
-              <AutoSlider interval={3500}>
-                {teamMembers.map((member) => (
-                  <div
-                    key={member.name}
-                    className="bg-[#faf8f5] rounded-2xl border border-gray-200/80 overflow-hidden shadow-sm flex flex-col justify-between"
-                  >
-                    <div className={`relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br ${member.gradient} flex items-center justify-center`}>
-                      <div
-                        className="absolute inset-0 opacity-15 pointer-events-none"
-                        style={{
-                          backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-                          backgroundSize: "16px 16px",
-                        }}
-                      />
-                      <div className="w-14 h-14 rounded-xl bg-white/10 border-2 border-white/20 backdrop-blur-md flex items-center justify-center text-white text-lg font-bold tracking-widest shadow-lg">
-                        {member.initials}
-                      </div>
-                      <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between z-10">
-                        <span className="text-[9px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md px-2 py-0.5 rounded border border-white/10">
-                          {member.role}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-base font-bold text-black">
-                        {member.name}
-                      </h3>
-                      <p className="text-[11px] font-semibold text-[#d4622b] mt-0.5 mb-1.5">
-                        {member.role}
-                      </p>
-                      <p className="text-xs text-gray-600 leading-relaxed">
-                        {member.bio}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </AutoSlider>
-            </div>
-          </div>
-        </section>
-
-        {/* ━━━ SECTION 5: FOUNDER & LEADERSHIP MESSAGE ━━━ */}
-        <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="bg-[#1a1a2e] rounded-3xl text-white p-8 sm:p-12 lg:p-16 relative overflow-hidden shadow-2xl">
-              <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#d4622b]/10 blur-3xl pointer-events-none" />
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center relative z-10">
-                <div className="lg:col-span-5 flex flex-col items-center sm:items-start text-center sm:text-left">
-                  <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-3xl overflow-hidden border-2 border-[#d4622b]/40 shadow-xl mb-6 bg-gradient-to-br from-[#16171b] via-[#232635] to-[#d4622b]/30 flex items-center justify-center">
-                    <div
-                      className="absolute inset-0 opacity-15 pointer-events-none"
-                      style={{
-                        backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-                        backgroundSize: "16px 16px",
-                      }}
-                    />
-                    <div className="w-24 h-24 rounded-2xl bg-white/10 border-2 border-white/20 backdrop-blur-md flex items-center justify-center text-white text-3xl font-bold tracking-widest shadow-2xl">
-                      SJ
-                    </div>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white">
-                    Suvrat Jain
-                  </h3>
-                  <span className="text-[#d4622b] text-sm font-semibold uppercase tracking-wider mt-1">
-                    Founder &amp; CEO, Onward Workspaces
-                  </span>
-                </div>
-
-                <div className="lg:col-span-7">
-                  <span className="text-xs uppercase font-bold tracking-widest text-[#d4622b]">
-                    Leadership Ethos
-                  </span>
-                  <blockquote className="mt-4 text-lg sm:text-xl lg:text-2xl text-gray-200 font-light leading-relaxed italic">
-                    &ldquo;Workplaces should inspire creativity and energize people every single morning. At Onward, we don&apos;t just lease desks — we cultivate dynamic corporate environments where ambitious teams feel empowered to do the best work of their lives.&rdquo;
-                  </blockquote>
-                  <p className="mt-6 text-gray-400 text-sm sm:text-base leading-relaxed">
-                    Under Suvrat&apos;s leadership, Onward Workspaces has grown exponentially across the National Capital Region, setting benchmarks in enterprise customization, tech-driven building operations, and collaborative member experiences.
-                  </p>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        {/* ━━━ SECTION 6: BOTTOM CTA ━━━ */}
-        <section className="py-20 bg-white text-center border-t border-gray-200">
-          <div className="max-w-4xl mx-auto px-6 lg:px-8">
-            <Reveal>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black">
-                Ready to Experience Onward?
-              </h2>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <p className="mt-4 text-gray-600 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-                Take a complimentary tour of our premium centres across Delhi, Noida, or Gurugram and find the perfect space for your team.
-              </p>
-            </Reveal>
-            <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            6. BOTTOM CTA
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section className="py-20 sm:py-24 bg-white text-center border-t border-gray-200">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <span className="text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
+              Join the Network
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight">
+              Ready to elevate your workspace?
+            </h2>
+            <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">
+              Book a walkthrough of our centres across Delhi, Noida, or Gurugram and let our team curate your ideal office layout.
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MagneticButton
                 href="/#contact"
-                className="bg-[#d4622b] text-white px-8 py-4 rounded-full font-semibold hover:bg-[#b8501f] transition-all shadow-lg"
+                className="w-full sm:w-auto bg-[#d4622b] hover:bg-[#b8501f] text-white px-8 py-4 rounded-full font-bold text-sm sm:text-base shadow-xl transition-all"
               >
-                Book a Free Day Pass
+                Book a Free Tour & Day Pass
               </MagneticButton>
               <Link
                 href="/locations"
-                className="px-8 py-4 rounded-full font-semibold border border-gray-300 text-gray-700 hover:border-[#d4622b] hover:text-[#d4622b] bg-white transition-all shadow-sm flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-sm sm:text-base border border-gray-300 hover:border-[#1a1a2e] text-[#1a1a2e] bg-white transition-all shadow-xs"
               >
-                View All Centres
+                View All Micro-Markets
               </Link>
             </div>
           </div>
