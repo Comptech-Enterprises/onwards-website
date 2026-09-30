@@ -130,19 +130,19 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
         </div>
 
         {/* ━━━━ BALANCED FULL-WIDTH VECTOR SVG MAP CANVAS ━━━━ */}
-        <div className="w-full bg-[#f6f1e8] rounded-3xl p-5 sm:p-6 lg:p-7 border border-[#e8dfd2] relative overflow-hidden shadow-xs flex flex-col justify-between h-[420px] sm:h-[470px] lg:h-[520px] max-h-[540px]">
+        <div className="w-full bg-[#f6f1e8] rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 lg:p-7 border border-[#e8dfd2] relative overflow-hidden shadow-xs flex flex-col justify-between h-[400px] sm:h-[470px] lg:h-[520px] max-h-[540px]">
           {/* Top Bar inside Map */}
-          <div className="relative z-20 mb-1 flex items-center justify-between">
-            <div>
-              <p className="text-xs sm:text-sm font-bold text-[#1a1a2e] leading-tight">
+          <div className="relative z-20 mb-1 flex items-start sm:items-center justify-between gap-2.5">
+            <div className="min-w-0 flex-1">
+              <p className="text-xs sm:text-sm font-bold text-[#1a1a2e] leading-snug truncate sm:whitespace-normal">
                 {cityName} Transit & Commercial Nerve Map
               </p>
-              <p className="text-[11px] text-gray-500 hidden sm:block">
+              <p className="text-[10px] sm:text-[11px] text-gray-500 hidden sm:block">
                 Click any pin to inspect the hub and navigate to its spaces
               </p>
             </div>
 
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/90 border border-gray-200 text-[11px] font-semibold text-gray-700 shadow-2xs">
+            <span className="shrink-0 inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-white/95 border border-gray-200/90 text-[10px] sm:text-[11px] font-semibold text-gray-700 shadow-2xs whitespace-nowrap">
               <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
               {areas.length} Hubs Available
             </span>
