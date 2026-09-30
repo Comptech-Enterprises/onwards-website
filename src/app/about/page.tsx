@@ -17,55 +17,52 @@ const heroWords = [
 ];
 
 
-/* ━━━ 3. INTERACTIVE ACCORDION VALUES ━━━ */
+/* ━━━ 3. INTERACTIVE VALUES LIST ━━━ */
 const valuesList = [
   {
     id: "excellence",
-    title1: "A commitment",
-    title2: "to excellence",
-    desc: "We love building and we are obsessed with crafting spaces that make teams happier, healthier, and distinctly more productive. From sound-dampening acoustic design to high-speed dual-ISP fiber lines, every detail is engineered with uncompromising precision.",
+    title: "A commitment to excellence",
+    desc: "We love building and we are all rather obsessed with making things better. This is what every client, big or small, can expect from us—from enterprise to Web3 innovators.",
     icon: (
-      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
-        <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="2" strokeDasharray="3 3" />
-        <path d="M20 8v24M8 20h24M12 12l16 16M28 12L12 28" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <circle cx="20" cy="20" r="4" fill="currentColor" />
+      <svg className="w-10 h-10 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="14" r="6" stroke="currentColor" strokeWidth="2.2" />
+        <circle cx="14" cy="25" r="6" stroke="currentColor" strokeWidth="2.2" />
+        <circle cx="26" cy="25" r="6" stroke="currentColor" strokeWidth="2.2" />
+        <circle cx="20" cy="21" r="2.5" fill="currentColor" />
       </svg>
     ),
   },
   {
     id: "wellness",
-    title1: "Work-life &",
-    title2: "human wellness",
+    title: "Work-life & personal wellness",
     desc: "We are human-centric to the core. Our workspaces integrate abundant natural biophilic greenery, ergonomic posture seating, dedicated breakout lounges, mother care rooms, and meditation corners. We believe true productivity flows from balanced well-being.",
     icon: (
-      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
-        <path d="M20 32s-12-7.5-12-16a8 8 0 0116-2.5A8 8 0 0132 16c0 8.5-12 16-12 16z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <svg className="w-10 h-10 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <path d="M20 32s-12-7.5-12-16a8 8 0 0116-2.5A8 8 0 0132 16c0 8.5-12 16-12 16z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
         <circle cx="20" cy="16" r="3" fill="currentColor" />
       </svg>
     ),
   },
   {
     id: "quality",
-    title1: "Continuous quality",
-    title2: "improvement",
+    title: "Continuous quality improvement",
     desc: "Our spaces are never static. We continuously gather member feedback, optimize energy consumption with IoT building automation, upgrade shared technology, and refresh layouts so that your team always works in a state-of-the-art environment.",
     icon: (
-      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
-        <path d="M20 6v6m0 16v6M6 20h6m16 0h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <circle cx="20" cy="20" r="9" stroke="currentColor" strokeWidth="2" />
-        <path d="M20 15v5l3 3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <svg className="w-10 h-10 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <path d="M20 6v6m0 16v6M6 20h6m16 0h6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+        <circle cx="20" cy="20" r="9" stroke="currentColor" strokeWidth="2.2" />
+        <path d="M20 15v5l3 3" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
       </svg>
     ),
   },
   {
     id: "transparency",
-    title1: "Radical honesty &",
-    title2: "client dignity",
+    title: "Radical honesty & client dignity",
     desc: "No hidden CAM charges, no utility surprises, and no cutting corners. When you partner with Onward, you join a community grounded in transparency, integrity, respect, and mutual growth across every single touchpoint.",
     icon: (
-      <svg className="w-8 h-8 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
-        <path d="M20 4L7 10v10c0 9 5.5 14.5 13 16 7.5-1.5 13-7 13-16V10L20 4z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-        <path d="M14 19l4 4 8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <svg className="w-10 h-10 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
+        <path d="M20 5L8 11v9c0 8.5 5 13.5 12 15 7-1.5 12-6.5 12-15v-9L20 5z" stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round" />
+        <path d="M15 19l4 4 7-7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -169,6 +166,9 @@ import ThreeDCardCarousel from "@/components/ThreeDCardCarousel";
 export default function AboutPage() {
   /* Life Carousel state */
   const [lifeIdx, setLifeIdx] = useState(0);
+
+  /* Active value accordion state */
+  const [activeValue, setActiveValue] = useState<string>("excellence");
 
   /* Scroll hooks for 5 scattered photos parallax */
   const welcomeRef = useRef<HTMLDivElement | null>(null);
@@ -443,56 +443,70 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. CORE VALUES: NORMAL EQUAL-HEIGHT CARDS
+            3. "OUR VALUES" INTERACTIVE ACCORDION LIST (EXACT BRILEAN STYLE)
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section id="values-section" className="py-20 sm:py-28 bg-[#faf8f5] border-b border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mb-12 sm:mb-16">
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
-                Our Guiding Principles
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">
-                Our Core Values
-              </h2>
-              <p className="mt-3 text-sm sm:text-base text-gray-600">
-                How our founding ethos and standards shape daily building operations and enterprise partnerships.
-              </p>
-            </div>
+        <section id="values-section" className="py-24 sm:py-32 bg-white border-b border-gray-200/80">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-4xl sm:text-6xl lg:text-7xl font-normal text-[#1a1a2e] text-center tracking-tight mb-14 sm:mb-20">
+              Our values
+            </h2>
 
-            {/* Core Values Normal Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-              {valuesList.map((val, idx) => (
-                <div
-                  key={val.id}
-                  className="bg-white border border-gray-200/80 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xs hover:shadow-lg hover:border-[#d4622b]/40 hover:-translate-y-1 transition-all duration-300 group h-full"
-                >
-                  <div>
-                    {/* Icon Container */}
-                    <div className="w-12 h-12 rounded-2xl bg-[#faf8f5] border border-gray-100 flex items-center justify-center text-[#d4622b] group-hover:scale-110 transition-transform duration-300">
-                      {val.icon}
-                    </div>
+            {/* Values Interactive Rows */}
+            <div className="max-w-4xl mx-auto border-t border-gray-200">
+              {valuesList.map((val) => {
+                const isActive = activeValue === val.id;
+                return (
+                  <div
+                    key={val.id}
+                    onClick={() => setActiveValue(val.id)}
+                    onMouseEnter={() => setActiveValue(val.id)}
+                    className="border-b border-gray-200 transition-colors cursor-pointer select-none"
+                  >
+                    <AnimatePresence mode="wait" initial={false}>
+                      {isActive ? (
+                        <motion.div
+                          key="active"
+                          initial={{ opacity: 0, y: 6 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -6 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="py-10 sm:py-14 px-2 sm:px-4 grid grid-cols-1 md:grid-cols-12 gap-6 items-center"
+                        >
+                          {/* Left Column: Icon + Title in Orange */}
+                          <div className="md:col-span-6 flex items-center gap-4 sm:gap-5">
+                            <div className="shrink-0">
+                              {val.icon}
+                            </div>
+                            <h3 className="text-xl sm:text-2xl lg:text-3xl font-medium text-[#d4622b] leading-tight">
+                              {val.title}
+                            </h3>
+                          </div>
 
-                    {/* Header Title */}
-                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight leading-tight mt-5 mb-3 text-[#1a1a2e]">
-                      <span>{val.title1}</span>{" "}
-                      <span className="text-[#d4622b] block sm:inline">{val.title2}</span>
-                    </h3>
-
-                    {/* Full Description text */}
-                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed text-justify">
-                      {val.desc}
-                    </p>
+                          {/* Right Column: Description */}
+                          <div className="md:col-span-6">
+                            <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                              {val.desc}
+                            </p>
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          key="inactive"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="py-8 sm:py-10 text-center"
+                        >
+                          <h3 className="text-xl sm:text-2xl lg:text-3xl font-normal text-[#1a1a2e] hover:text-[#d4622b] transition-colors inline-block">
+                            {val.title}
+                          </h3>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
                   </div>
-
-                  {/* Bottom Index Badge */}
-                  <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-[#d4622b] transition-colors">
-                      Pillar 0{idx + 1}
-                    </span>
-                    <span className="w-2 h-2 rounded-full bg-[#d4622b]/40 group-hover:bg-[#d4622b] transition-colors" />
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
