@@ -313,16 +313,16 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. VERTICAL 5-PHOTO WELCOME GALLERY WITH 40% CENTER GAP
+            2. VERTICAL 5-PHOTO WELCOME GALLERY WITH 30% CENTER GAP
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={welcomeRef}
-          className="relative min-h-[90vh] sm:min-h-[105vh] bg-white py-16 sm:py-24 overflow-hidden border-b border-gray-200/80 flex items-center justify-center"
+          className="relative min-h-[85vh] sm:min-h-[95vh] bg-white py-12 sm:py-18 overflow-hidden border-b border-gray-200/80 flex items-center justify-center"
         >
           {/* ── Photo 1 (Top Left - Wide Landscape) ── */}
           <motion.div
             style={{ y: y1 }}
-            className="absolute top-4 sm:top-8 left-3 sm:left-8 lg:left-14 w-52 sm:w-72 lg:w-96 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute top-5 sm:top-8 left-3 sm:left-8 lg:left-14 w-52 sm:w-72 lg:w-[380px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
@@ -336,7 +336,7 @@ export default function AboutPage() {
           {/* ── Photo 2 (Top Right - Portrait) ── */}
           <motion.div
             style={{ y: y2 }}
-            className="absolute top-3 sm:top-6 right-3 sm:right-8 lg:right-16 w-32 sm:w-44 lg:w-56 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute top-4 sm:top-7 right-3 sm:right-8 lg:right-16 w-32 sm:w-44 lg:w-56 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
@@ -347,10 +347,10 @@ export default function AboutPage() {
             />
           </motion.div>
 
-          {/* ── Photo 3 (Center Top - Portrait, with clean gap above text) ── */}
+          {/* ── Photo 3 (Center Top - Portrait, with 30% gap above text) ── */}
           <motion.div
             style={{ y: y3 }}
-            className="absolute top-2 sm:top-4 left-1/2 -translate-x-1/2 w-36 sm:w-48 lg:w-60 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute top-3 sm:top-5 left-1/2 -translate-x-1/2 w-36 sm:w-48 lg:w-60 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp"
@@ -361,8 +361,8 @@ export default function AboutPage() {
             />
           </motion.div>
 
-          {/* ── Center Welcome Text with ~40% Generous Gap ── */}
-          <div className="relative z-20 text-center max-w-xl sm:max-w-2xl px-6 my-auto py-12 sm:py-20 select-none">
+          {/* ── Center Welcome Text with ~30% Balanced Gap ── */}
+          <div className="relative z-20 text-center max-w-xl sm:max-w-2xl px-6 my-auto py-10 sm:py-16 select-none">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -398,7 +398,7 @@ export default function AboutPage() {
           {/* ── Photo 4 (Bottom Left - Portrait) ── */}
           <motion.div
             style={{ y: y4 }}
-            className="absolute bottom-3 sm:bottom-6 left-4 sm:left-10 lg:left-20 w-32 sm:w-44 lg:w-56 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute bottom-4 sm:bottom-7 left-4 sm:left-10 lg:left-20 w-32 sm:w-44 lg:w-56 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
@@ -412,7 +412,7 @@ export default function AboutPage() {
           {/* ── Photo 5 (Bottom Right/Center - Wide Landscape) ── */}
           <motion.div
             style={{ y: y5 }}
-            className="absolute bottom-4 sm:bottom-6 left-[46%] sm:left-[48%] lg:left-[46%] w-52 sm:w-72 lg:w-96 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute bottom-4 sm:bottom-7 left-[46%] sm:left-[48%] lg:left-[46%] w-52 sm:w-72 lg:w-[380px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp"
