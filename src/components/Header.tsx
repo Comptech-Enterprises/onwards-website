@@ -7,7 +7,7 @@ import Link from "next/link";
 import MagneticButton from "./MagneticButton";
 
 const locationsData = [
-  { name: "Delhi", href: "/locations" },
+  { name: "Delhi", href: "/locations/delhi" },
   { name: "Noida", href: "/locations/noida" },
   { name: "Gurgaon", href: "/locations/gurgaon" },
 ];

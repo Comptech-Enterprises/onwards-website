@@ -25,7 +25,7 @@ export interface CityData {
 export const delhiCity: CityData = {
   slug: "delhi",
   name: "Delhi",
-  basePath: "/locations",
+  basePath: "/locations/delhi",
   heroImage: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/cities/1790613615409.webp",
   heroDescription:
     "Delhi continues to be one of India's leading business hubs, attracting enterprises, startups, and high-growth companies across sectors. As teams expand their footprint in the city, Onward brings coworking spaces that support flexibility, scalability, and seamless metro connectivity across key commercial districts.",

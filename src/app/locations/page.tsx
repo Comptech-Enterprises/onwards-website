@@ -1,6 +1,5 @@
-import CityLocationsView from "@/components/CityLocationsView";
-import { delhiCity } from "@/data/locations";
+import { redirect } from "next/navigation";
 
 export default function LocationsPage() {
-  return <CityLocationsView city={delhiCity} />;
+  redirect("/locations/delhi");
 }
