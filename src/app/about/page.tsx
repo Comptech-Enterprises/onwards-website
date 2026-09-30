@@ -659,23 +659,19 @@ export default function AboutPage() {
               {teamMembers.map((member) => (
                 <div
                   key={member.name}
-                  className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
                 >
                   <div>
-                    {/* Photo Container */}
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
-                      <Image
-                        src={member.img}
-                        alt={member.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 400px"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    {/* Clean Avatar / Visual Placeholder Box */}
+                    <div className="relative aspect-[4/3] w-full bg-[#f5efe6] border-b border-gray-200/60 flex flex-col items-center justify-center overflow-hidden">
+                      {/* Avatar Initials Badge */}
+                      <div className="w-20 h-20 rounded-2xl bg-white border border-[#e5dcd0] shadow-xs flex items-center justify-center text-[#d4622b] font-bold text-2xl tracking-wider group-hover:scale-105 transition-transform duration-300">
+                        {member.initials}
+                      </div>
 
-                      {/* Bottom Tag */}
-                      <div className="absolute bottom-3 left-4 right-4 z-10">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                      {/* Bottom Role Tag */}
+                      <div className="absolute bottom-3 left-4 right-4 z-10 flex justify-center">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a2e] bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border border-gray-200/80 shadow-xs">
                           {member.role}
                         </span>
                       </div>
