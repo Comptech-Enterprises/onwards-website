@@ -316,157 +316,161 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. SCATTERED 8-PHOTO VERTICAL WELCOME GALLERY
+            2. SCATTERED 8-PHOTO VERTICAL WELCOME GALLERY (CLUSTERED IN MIDDLE)
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={welcomeRef}
           className="relative min-h-[85vh] sm:min-h-[95vh] bg-white py-12 sm:py-18 overflow-hidden border-b border-gray-200/80 flex items-center justify-center"
         >
-          {/* ── Photo 1 (Top Left - Wide) ── */}
-          <motion.div
-            style={{ y: y1 }}
-            className="absolute top-4 sm:top-8 left-3 sm:left-6 lg:left-12 w-40 sm:w-56 lg:w-72 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
-              alt="Onward collaborative team"
-              fill
-              sizes="(max-width: 768px) 160px, 290px"
-              className="object-cover"
-            />
-          </motion.div>
+          <div className="relative w-full max-w-6xl mx-auto h-[80vh] sm:h-[90vh] flex items-center justify-center">
 
-          {/* ── Photo 2 (Top Center-Left - Portrait) ── */}
-          <motion.div
-            style={{ y: y2 }}
-            className="absolute top-3 sm:top-5 left-[24%] sm:left-[27%] lg:left-[29%] w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp"
-              alt="Ergonomic open workspace"
-              fill
-              sizes="(max-width: 768px) 100px, 180px"
-              className="object-cover"
-            />
-          </motion.div>
-
-          {/* ── Photo 3 (Center Top - Portrait) ── */}
-          <motion.div
-            style={{ y: y3 }}
-            className="absolute top-3 sm:top-5 left-1/2 -translate-x-1/2 w-28 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp"
-              alt="Executive meeting suite"
-              fill
-              sizes="(max-width: 768px) 120px, 180px"
-              className="object-cover"
-            />
-          </motion.div>
-
-          {/* ── Photo 4 (Top Right - Portrait) ── */}
-          <motion.div
-            style={{ y: y4 }}
-            className="absolute top-4 sm:top-7 right-3 sm:right-6 lg:right-12 w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
-              alt="Mindful reading library"
-              fill
-              sizes="(max-width: 768px) 100px, 180px"
-              className="object-cover"
-            />
-          </motion.div>
-
-          {/* ── Photo 5 (Mid Right - Landscape) ── */}
-          <motion.div
-            style={{ y: y5 }}
-            className="hidden sm:block absolute top-[44%] right-3 sm:right-6 lg:right-10 w-36 sm:w-48 lg:w-56 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp"
-              alt="Sunlit cafe and lounge"
-              fill
-              sizes="(max-width: 768px) 140px, 230px"
-              className="object-cover"
-            />
-          </motion.div>
-
-          {/* ── Center Welcome Text ── */}
-          <div className="relative z-20 text-center max-w-md sm:max-w-xl px-4 my-auto py-8 sm:py-12 select-none">
+            {/* ── Photo 1 (Top Left-Center - Wide) ── */}
             <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              style={{ y: y1 }}
+              className="absolute top-2 sm:top-6 left-[4%] sm:left-[12%] lg:left-[14%] w-40 sm:w-56 lg:w-72 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
             >
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-1.5">
-                Our Community &amp; Spaces
-              </span>
-              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-normal text-[#1a1a2e] tracking-tight leading-[1.15]">
-                Whatever brought you to this page, <span className="font-semibold text-[#d4622b]">welcome.</span>
-              </h2>
-
-              {/* Scroll Down Button */}
-              <div className="mt-5 flex justify-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const nextSection = document.getElementById("values-section");
-                    nextSection?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  aria-label="Scroll down to core values"
-                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-400 hover:border-[#1a1a2e] hover:bg-black/5 flex items-center justify-center text-[#1a1a2e] transition-all duration-300 shadow-xs cursor-pointer group"
-                >
-                  <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </button>
-              </div>
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
+                alt="Onward collaborative team"
+                fill
+                sizes="(max-width: 768px) 160px, 290px"
+                className="object-cover"
+              />
             </motion.div>
+
+            {/* ── Photo 2 (Top Center-Left - Portrait) ── */}
+            <motion.div
+              style={{ y: y2 }}
+              className="absolute top-1 sm:top-3 left-[28%] sm:left-[32%] lg:left-[34%] w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp"
+                alt="Ergonomic open workspace"
+                fill
+                sizes="(max-width: 768px) 100px, 180px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 3 (Center Top - Portrait, directly above headline) ── */}
+            <motion.div
+              style={{ y: y3 }}
+              className="absolute top-2 sm:top-4 left-1/2 -translate-x-1/2 w-28 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp"
+                alt="Executive meeting suite"
+                fill
+                sizes="(max-width: 768px) 120px, 180px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 4 (Top Right-Center - Portrait) ── */}
+            <motion.div
+              style={{ y: y4 }}
+              className="absolute top-2 sm:top-6 right-[4%] sm:right-[12%] lg:right-[14%] w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
+                alt="Mindful reading library"
+                fill
+                sizes="(max-width: 768px) 100px, 180px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 5 (Mid-Right - Close to center text) ── */}
+            <motion.div
+              style={{ y: y5 }}
+              className="hidden sm:block absolute top-[40%] right-[3%] sm:right-[8%] lg:right-[10%] w-32 sm:w-44 lg:w-52 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp"
+                alt="Sunlit cafe and lounge"
+                fill
+                sizes="(max-width: 768px) 140px, 210px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Center Welcome Text ── */}
+            <div className="relative z-20 text-center max-w-md sm:max-w-xl px-4 my-auto py-8 sm:py-12 select-none">
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-1.5">
+                  Our Community &amp; Spaces
+                </span>
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-normal text-[#1a1a2e] tracking-tight leading-[1.15]">
+                  Whatever brought you to this page, <span className="font-semibold text-[#d4622b]">welcome.</span>
+                </h2>
+
+                {/* Scroll Down Button */}
+                <div className="mt-5 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const nextSection = document.getElementById("values-section");
+                      nextSection?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    aria-label="Scroll down to core values"
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-400 hover:border-[#1a1a2e] hover:bg-black/5 flex items-center justify-center text-[#1a1a2e] transition-all duration-300 shadow-xs cursor-pointer group"
+                  >
+                    <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* ── Photo 6 (Bottom Left-Center - Portrait) ── */}
+            <motion.div
+              style={{ y: y6 }}
+              className="absolute bottom-2 sm:bottom-6 left-[6%] sm:left-[14%] lg:left-[16%] w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
+                alt="Community member"
+                fill
+                sizes="(max-width: 768px) 100px, 180px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 7 (Bottom Center - Wide, right below headline) ── */}
+            <motion.div
+              style={{ y: y7 }}
+              className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 w-40 sm:w-56 lg:w-72 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp"
+                alt="Team milestones & active life"
+                fill
+                sizes="(max-width: 768px) 160px, 290px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 8 (Bottom Right-Center - Portrait) ── */}
+            <motion.div
+              style={{ y: y8 }}
+              className="absolute bottom-2 sm:bottom-6 right-[6%] sm:right-[14%] lg:right-[16%] w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp"
+                alt="Collaborative studio brainstorming"
+                fill
+                sizes="(max-width: 768px) 100px, 180px"
+                className="object-cover"
+              />
+            </motion.div>
+
           </div>
-
-          {/* ── Photo 6 (Bottom Left - Portrait) ── */}
-          <motion.div
-            style={{ y: y6 }}
-            className="absolute bottom-4 sm:bottom-7 left-3 sm:left-6 lg:left-12 w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
-              alt="Community member"
-              fill
-              sizes="(max-width: 768px) 100px, 180px"
-              className="object-cover"
-            />
-          </motion.div>
-
-          {/* ── Photo 7 (Bottom Center - Wide) ── */}
-          <motion.div
-            style={{ y: y7 }}
-            className="absolute bottom-4 sm:bottom-6 left-[34%] sm:left-[36%] lg:left-[38%] w-40 sm:w-56 lg:w-72 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp"
-              alt="Team milestones & active life"
-              fill
-              sizes="(max-width: 768px) 160px, 290px"
-              className="object-cover"
-            />
-          </motion.div>
-
-          {/* ── Photo 8 (Bottom Right - Portrait) ── */}
-          <motion.div
-            style={{ y: y8 }}
-            className="absolute bottom-4 sm:bottom-7 right-3 sm:right-6 lg:right-12 w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
-          >
-            <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp"
-              alt="Collaborative studio brainstorming"
-              fill
-              sizes="(max-width: 768px) 100px, 180px"
-              className="object-cover"
-            />
-          </motion.div>
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
