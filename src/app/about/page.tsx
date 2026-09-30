@@ -210,147 +210,9 @@ const teamMembers = [
 ];
 
 /* ━━━ INTERACTIVE CANVAS SPHERE PARTICLES (HERO 3D ANIMATION) ━━━ */
-function KineticSphereCanvas() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = canvas.parentElement?.clientWidth || 400);
-    let height = (canvas.height = canvas.parentElement?.clientHeight || 400);
-
-    const handleResize = () => {
-      if (!canvas.parentElement) return;
-      width = canvas.width = canvas.parentElement.clientWidth;
-      height = canvas.height = canvas.parentElement.clientHeight;
-    };
-    window.addEventListener("resize", handleResize);
-
-    const particles: { x: number; y: number; z: number; origX: number; origY: number; origZ: number; size: number }[] = [];
-    const count = 220;
-    const radius = Math.min(width, height) * 0.36;
-
-    for (let i = 0; i < count; i++) {
-      const theta = Math.acos(1 - (2 * (i + 0.5)) / count);
-      const phi = Math.PI * (1 + Math.sqrt(5)) * (i + 0.5);
-      const x = radius * Math.sin(theta) * Math.cos(phi);
-      const y = radius * Math.sin(theta) * Math.sin(phi);
-      const z = radius * Math.cos(theta);
-      particles.push({ x, y, z, origX: x, origY: y, origZ: z, size: Math.random() * 2 + 1.2 });
-    }
-
-    let angleX = 0.003;
-    let angleY = 0.004;
-    let mouseX = 0;
-    let mouseY = 0;
-
-    const onMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseX = (e.clientX - rect.left - width / 2) * 0.00008;
-      mouseY = (e.clientY - rect.top - height / 2) * 0.00008;
-    };
-    window.addEventListener("mousemove", onMouseMove);
-
-    const render = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      const rotX = angleX + mouseY;
-      const rotY = angleY + mouseX;
-
-      // Draw background halo
-      const radial = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, radius * 1.3);
-      radial.addColorStop(0, "rgba(212, 98, 43, 0.12)");
-      radial.addColorStop(0.6, "rgba(212, 98, 43, 0.03)");
-      radial.addColorStop(1, "rgba(212, 98, 43, 0)");
-      ctx.fillStyle = radial;
-      ctx.fillRect(0, 0, width, height);
-
-      // Rotate and project points
-      particles.forEach((p) => {
-        // Rotate Y
-        let cos = Math.cos(rotY);
-        let sin = Math.sin(rotY);
-        let x1 = p.x * cos - p.z * sin;
-        let z1 = p.z * cos + p.x * sin;
-
-        // Rotate X
-        cos = Math.cos(rotX);
-        sin = Math.sin(rotX);
-        let y2 = p.y * cos - z1 * sin;
-        let z2 = z1 * cos + p.y * sin;
-
-        p.x = x1;
-        p.y = y2;
-        p.z = z2;
-
-        const fov = 400;
-        const scale = fov / (fov + p.z);
-        const projX = p.x * scale + width / 2;
-        const projY = p.y * scale + height / 2;
-        const alpha = Math.max(0.15, Math.min(1, (p.z + radius) / (2 * radius)));
-
-        ctx.beginPath();
-        ctx.arc(projX, projY, p.size * scale, 0, Math.PI * 2);
-        ctx.fillStyle = p.z > 0 ? `rgba(212, 98, 43, ${alpha * 0.95})` : `rgba(26, 26, 46, ${alpha * 0.75})`;
-        ctx.fill();
-      });
-
-      // Connect near neighbors with delicate neural filaments
-      for (let i = 0; i < particles.length; i += 2) {
-        for (let j = i + 1; j < particles.length; j += 4) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dz = particles[i].z - particles[j].z;
-          const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-          if (dist < 42) {
-            const fov = 400;
-            const s1 = fov / (fov + particles[i].z);
-            const s2 = fov / (fov + particles[j].z);
-            const x1 = particles[i].x * s1 + width / 2;
-            const y1 = particles[i].y * s1 + height / 2;
-            const x2 = particles[j].x * s2 + width / 2;
-            const y2 = particles[j].y * s2 + height / 2;
-
-            ctx.beginPath();
-            ctx.moveTo(x1, y1);
-            ctx.lineTo(x2, y2);
-            ctx.strokeStyle = `rgba(212, 98, 43, ${0.18 * (1 - dist / 42)})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
-      }
-
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    render();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", onMouseMove);
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="w-full h-full object-contain pointer-events-none" />;
-}
+import ThreeDCardCarousel from "@/components/ThreeDCardCarousel";
 
 export default function AboutPage() {
-  /* Active hero word cycling */
-  const [activeWordIdx, setActiveWordIdx] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveWordIdx((prev) => (prev + 1) % heroWords.length);
-    }, 2800);
-    return () => clearInterval(timer);
-  }, []);
-
   /* Values Accordion state */
   const [activeValueId, setActiveValueId] = useState<string>("excellence");
 
@@ -376,81 +238,70 @@ export default function AboutPage() {
 
       <main className="bg-[#faf8f5] text-[#1a1a2e] min-h-screen overflow-x-hidden pt-20">
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            1. BRILEAN-STYLE HERO: 3D KINETIC SPHERE + ROTATING WORDS
+            1. HERO: HEADLINE ON LEFT + 3D ROTATING CARDS ON TOP RIGHT
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center justify-center overflow-hidden border-b border-gray-200/80 bg-gradient-to-b from-white via-[#faf8f5] to-[#f6f1e8] py-16 sm:py-24">
+        <section className="relative overflow-hidden border-b border-gray-200/80 bg-white py-12 sm:py-16 lg:py-20">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* Top Badge & Breadcrumb */}
-            <div className="flex items-center justify-between gap-4 mb-8">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#e8dfd2] text-xs font-bold uppercase tracking-widest text-[#d4622b] shadow-2xs">
-                <span className="w-2 h-2 rounded-full bg-[#d4622b] animate-pulse" />
-                Who We Are · Onward Workspaces
-              </span>
-              <nav aria-label="Breadcrumb" className="hidden sm:block">
-                <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
-                  <li>
-                    <Link href="/" className="hover:text-[#d4622b] transition-colors">
-                      Home
-                    </Link>
-                  </li>
-                  <li>/</li>
-                  <li className="text-gray-900">About Us</li>
-                </ol>
-              </nav>
+            {/* Top Breadcrumbs */}
+            <nav aria-label="Breadcrumb" className="mb-6">
+              <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
+                <li>
+                  <Link href="/" className="hover:text-[#d4622b] transition-colors">
+                    Home
+                  </Link>
+                </li>
+                <li>/</li>
+                <li className="text-gray-900">About Us</li>
+              </ol>
+            </nav>
+
+            <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">
+              About Us
+            </span>
+
+            {/* Main Headline */}
+            <div className="mt-2 mb-10 lg:mb-12 font-black tracking-tight leading-[1.05] sm:leading-[0.98]">
+              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight">
+                Crafting Workspaces.
+                <br />
+                <span className="text-gray-400">Built Around Ambition.</span>
+                <br />
+                <span className="text-gray-300">Brand &amp; People.</span>
+              </h1>
             </div>
 
-            {/* Grid with 3D Canvas on Left & Giant Kinetic Words on Right */}
+            {/* 2-Column Grid: Copy & Actions on Left, 3D Card Carousel on Right */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              {/* Left Column: 3D Interactive Particle Sphere */}
-              <div className="lg:col-span-5 flex items-center justify-center relative">
-                <div className="w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] lg:w-[440px] lg:h-[440px] relative flex items-center justify-center">
-                  <KineticSphereCanvas />
-                  {/* Center Floating Monogram Emblem */}
-                  <div className="absolute w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white/80 backdrop-blur-md border border-[#d4622b]/30 shadow-xl flex items-center justify-center pointer-events-none">
-                    <span className="text-xl sm:text-2xl font-black text-[#1a1a2e] tracking-tight">
-                      ON<span className="text-[#d4622b]">.</span>
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column: Morphing Rotating Typography */}
-              <div className="lg:col-span-7 flex flex-col justify-center">
-                {/* Words Stack */}
-                <div className="h-[75px] sm:h-[110px] lg:h-[135px] overflow-hidden relative">
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={heroWords[activeWordIdx].word}
-                      initial={{ y: 80, opacity: 0, rotateX: -40 }}
-                      animate={{ y: 0, opacity: 1, rotateX: 0 }}
-                      exit={{ y: -80, opacity: 0, rotateX: 40 }}
-                      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                      className="origin-bottom"
-                    >
-                      <h1 className="text-4xl sm:text-7xl lg:text-8xl font-black tracking-tighter text-[#1a1a2e] leading-none">
-                        {heroWords[activeWordIdx].word}
-                      </h1>
-                    </motion.div>
-                  </AnimatePresence>
-                </div>
-
-                {/* Active Keyword Tag */}
-                <div className="mt-2 sm:mt-3 flex items-center gap-2">
-                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] bg-[#d4622b]/10 px-3 py-1 rounded-full">
-                    {heroWords[activeWordIdx].highlight}
-                  </span>
-                </div>
-
-                {/* Mission Statement Paragraph */}
-                <p className="mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed font-normal max-w-2xl">
-                  We are tech-enabled. We are hospitality-aware. We are <strong className="text-[#1a1a2e] font-bold">human first</strong>. Founded in 2019, Onward eliminates the rigidities of conventional commercial leases, delivering bespoke, turnkey workspaces across Delhi NCR where high-growth teams and enterprises thrive.
+              {/* Left Column: Description & CTAs */}
+              <div className="lg:col-span-6 flex flex-col justify-center">
+                <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed text-justify">
+                  Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
+                </p>
+                <p className="mt-4 text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed text-justify">
+                  Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
                 </p>
 
-                {/* CTAs */}
-                <div className="mt-8 flex flex-wrap items-center gap-4">
+                {/* Key Metric Highlights */}
+                <div className="mt-6 grid grid-cols-3 gap-3 border-y border-gray-200/80 py-4">
+                  <div>
+                    <span className="block text-xl sm:text-2xl font-black text-[#d4622b]">11+</span>
+                    <span className="text-[11px] sm:text-xs text-gray-500 font-semibold uppercase">NCR Centres</span>
+                  </div>
+                  <div>
+                    <span className="block text-xl sm:text-2xl font-black text-[#1a1a2e]">75 Days</span>
+                    <span className="text-[11px] sm:text-xs text-gray-500 font-semibold uppercase">Turnkey Build</span>
+                  </div>
+                  <div>
+                    <span className="block text-xl sm:text-2xl font-black text-[#d4622b]">425+</span>
+                    <span className="text-[11px] sm:text-xs text-gray-500 font-semibold uppercase">Companies</span>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="mt-7 flex flex-wrap items-center gap-3 sm:gap-5">
                   <MagneticButton
                     href="/#contact"
-                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm sm:text-base shadow-lg transition-all"
+                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-6 py-3 sm:px-7 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all"
                   >
                     <span>Schedule a Visit</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -459,11 +310,16 @@ export default function AboutPage() {
                   </MagneticButton>
                   <Link
                     href="/locations"
-                    className="px-6 py-3.5 rounded-full font-bold text-sm sm:text-base border border-gray-300 hover:border-[#1a1a2e] text-[#1a1a2e] bg-white transition-all shadow-xs"
+                    className="text-[#1a1a2e] font-bold text-xs sm:text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2"
                   >
-                    Explore 11+ Centres
+                    Explore Locations &rarr;
                   </Link>
                 </div>
+              </div>
+
+              {/* Right Column: 3D Rotating Cards Carousel */}
+              <div className="lg:col-span-6 flex items-center justify-center relative">
+                <ThreeDCardCarousel />
               </div>
             </div>
           </div>
