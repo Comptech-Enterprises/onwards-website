@@ -166,6 +166,27 @@ const teamMembers = [
 /* ━━━ INTERACTIVE CANVAS SPHERE PARTICLES (HERO 3D ANIMATION) ━━━ */
 import ThreeDCardCarousel from "@/components/ThreeDCardCarousel";
 
+const galleryColLeft = [
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp", aspect: "aspect-[16/10]", alt: "Onward collaborative lounge" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp", aspect: "aspect-[3/4]", alt: "Curated reading library" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp", aspect: "aspect-[16/10]", alt: "Ergonomic workstations" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp", aspect: "aspect-[3/4]", alt: "Community member" },
+];
+
+const galleryColCenter = [
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp", aspect: "aspect-[3/4]", alt: "Executive boardroom" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp", aspect: "aspect-[16/10]", alt: "Team outdoor celebration" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790526.webp", aspect: "aspect-[3/4]", alt: "Private enterprise suite" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790610.webp", aspect: "aspect-[16/10]", alt: "Collaborative design studio" },
+];
+
+const galleryColRight = [
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp", aspect: "aspect-[3/4]", alt: "Sunlit cafe lounge" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719861.webp", aspect: "aspect-[16/10]", alt: "Breakout lounge" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp", aspect: "aspect-[3/4]", alt: "Brainstorming studio" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720620.webp", aspect: "aspect-[16/10]", alt: "Wellness active zone" },
+];
+
 export default function AboutPage() {
   /* Life Carousel state */
   const [lifeIdx, setLifeIdx] = useState(0);
@@ -173,21 +194,16 @@ export default function AboutPage() {
   /* Team member bio drawer state */
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(null);
 
-  /* Scroll hooks for sticky welcome photo gallery */
+  /* Scroll hooks for sticky welcome multi-column flowing parallax */
   const welcomeRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: welcomeProgress } = useScroll({
     target: welcomeRef,
-    offset: ["start start", "end end"],
+    offset: ["start end", "end start"],
   });
 
-  // Smooth scroll animations: fade-in at top, parallax glide through center, fade-out at bottom
-  const galleryOpacity = useTransform(welcomeProgress, [0, 0.12, 0.85, 1.0], [0.35, 1, 1, 0]);
-  const y1 = useTransform(welcomeProgress, [0, 1], [100, -120]);
-  const y2 = useTransform(welcomeProgress, [0, 1], [160, -180]);
-  const y3 = useTransform(welcomeProgress, [0, 1], [60, -80]);
-  const y4 = useTransform(welcomeProgress, [0, 1], [140, -150]);
-  const y5 = useTransform(welcomeProgress, [0, 1], [80, -100]);
-  const textScale = useTransform(welcomeProgress, [0, 0.5, 1], [0.96, 1, 0.98]);
+  const colLeftY = useTransform(welcomeProgress, [0, 1], ["12%", "-38%"]);
+  const colCenterY = useTransform(welcomeProgress, [0, 1], ["-6%", "-52%"]);
+  const colRightY = useTransform(welcomeProgress, [0, 1], ["18%", "-32%"]);
 
   return (
     <>
@@ -316,95 +332,37 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. BRILEAN STICKY WELCOME WALL: FLOATING SCATTERED GALLERY
+            2. FLOWING WELCOME GALLERY: MULTI-COLUMN STREAM WITH ENTRY/EXIT FADE
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={welcomeRef}
-          className="relative h-[220vh] bg-white border-b border-gray-200/80"
+          className="relative min-h-[170vh] sm:min-h-[200vh] bg-[#faf8f5] py-20 overflow-hidden border-b border-gray-200/80"
         >
-          {/* Sticky Viewport Container */}
-          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
-            
-            {/* ── Photo 1 (Top Left - Landscape) ── */}
+          {/* Top & Bottom Smooth Gradient Fade Masks */}
+          <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#faf8f5] via-[#faf8f5]/80 to-transparent pointer-events-none z-20" />
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#faf8f5] via-[#faf8f5]/80 to-transparent pointer-events-none z-20" />
+
+          {/* Sticky Center Welcome Card */}
+          <div className="sticky top-28 sm:top-36 z-30 max-w-4xl mx-auto px-4 text-center pointer-events-none">
             <motion.div
-              style={{ y: y1, opacity: galleryOpacity }}
-              className="absolute top-[6%] sm:top-[8%] left-[2%] sm:left-[5%] lg:left-[8%] w-[200px] sm:w-[320px] lg:w-[400px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="bg-white/95 backdrop-blur-md border border-[#e8dfd2] rounded-3xl p-6 sm:p-10 shadow-2xl inline-block max-w-2xl pointer-events-auto"
             >
-              <Image
-                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
-                alt="Onward community team"
-                fill
-                sizes="(max-width: 768px) 200px, 400px"
-                className="object-cover"
-              />
-            </motion.div>
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
+                Our Community &amp; Spaces
+              </span>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e] tracking-tight leading-tight">
+                Whatever brought you to this page, <span className="text-[#d4622b]">welcome.</span>
+              </h2>
+              <p className="mt-3 text-xs sm:text-sm text-gray-600 max-w-lg mx-auto">
+                Discover the collaborative spaces, community events, and daily moments where hundreds of companies build their future.
+              </p>
 
-            {/* ── Photo 2 (Top Right - Portrait) ── */}
-            <motion.div
-              style={{ y: y2, opacity: galleryOpacity }}
-              className="absolute top-[3%] sm:top-[5%] right-[2%] sm:right-[5%] lg:right-[8%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
-            >
-              <Image
-                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
-                alt="Mindful library and reading corner"
-                fill
-                sizes="(max-width: 768px) 130px, 240px"
-                className="object-cover"
-              />
-            </motion.div>
-
-            {/* ── Photo 3 (Center Top - Portrait, overlapping above center text) ── */}
-            <motion.div
-              style={{ y: y3, opacity: galleryOpacity }}
-              className="absolute top-[10%] sm:top-[12%] lg:top-[9%] left-1/2 -translate-x-1/2 w-[140px] sm:w-[200px] lg:w-[250px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
-            >
-              <Image
-                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp"
-                alt="Executive enterprise meeting room"
-                fill
-                sizes="(max-width: 768px) 140px, 250px"
-                className="object-cover"
-              />
-            </motion.div>
-
-            {/* ── Photo 4 (Bottom Left - Portrait) ── */}
-            <motion.div
-              style={{ y: y4, opacity: galleryOpacity }}
-              className="absolute bottom-[4%] sm:bottom-[6%] left-[3%] sm:left-[7%] lg:left-[12%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
-            >
-              <Image
-                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
-                alt="Community member at Onward"
-                fill
-                sizes="(max-width: 768px) 130px, 240px"
-                className="object-cover"
-              />
-            </motion.div>
-
-            {/* ── Photo 5 (Bottom Center/Right - Landscape) ── */}
-            <motion.div
-              style={{ y: y5, opacity: galleryOpacity }}
-              className="absolute bottom-[5%] sm:bottom-[7%] left-[45%] sm:left-[47%] lg:left-[45%] w-[200px] sm:w-[300px] lg:w-[380px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
-            >
-              <Image
-                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp"
-                alt="Team gathering and celebrations"
-                fill
-                sizes="(max-width: 768px) 200px, 380px"
-                className="object-cover"
-              />
-            </motion.div>
-
-            {/* ── Sticky Center Title & Scroll Down Arrow (Brilean style) ── */}
-            <div className="relative z-20 text-center max-w-2xl sm:max-w-4xl px-6 pointer-events-none select-none">
-              <motion.h2
-                style={{ scale: textScale }}
-                className="text-2xl sm:text-4xl lg:text-[54px] font-normal text-[#1a1a2e] tracking-tight leading-[1.14]"
-              >
-                Whatever brought you to this page, welcome.
-              </motion.h2>
-
-              <div className="mt-5 sm:mt-7 flex justify-center pointer-events-auto">
+              {/* Scroll Down Arrow */}
+              <div className="mt-6 flex justify-center">
                 <button
                   type="button"
                   onClick={() => {
@@ -412,15 +370,78 @@ export default function AboutPage() {
                     nextSection?.scrollIntoView({ behavior: "smooth" });
                   }}
                   aria-label="Scroll down to core values"
-                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1a1a2e]/30 hover:border-[#1a1a2e] hover:bg-black/5 flex items-center justify-center text-[#1a1a2e] transition-all duration-300 shadow-xs cursor-pointer group"
+                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-300 bg-white hover:border-[#d4622b] hover:bg-[#d4622b] text-[#1a1a2e] hover:text-white shadow-sm flex items-center justify-center transition-all duration-300 group cursor-pointer"
                 >
-                  <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+                  <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </button>
               </div>
-            </div>
+            </motion.div>
+          </div>
 
+          {/* Flowing 3-Column Parallax Photo Tracks with Entry/Exit Fade Mask */}
+          <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-none [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)]">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 h-full">
+              
+              {/* Column 1: Left Stream */}
+              <motion.div style={{ y: colLeftY }} className="flex flex-col gap-6 sm:gap-8">
+                {galleryColLeft.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200/90 shadow-lg bg-white ${img.aspect} group`}
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 380px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                  </div>
+                ))}
+              </motion.div>
+
+              {/* Column 2: Center Stream (Visible on Desktop) */}
+              <motion.div style={{ y: colCenterY }} className="hidden lg:flex flex-col gap-6 sm:gap-8 pt-20">
+                {galleryColCenter.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200/90 shadow-lg bg-white ${img.aspect} group`}
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="380px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                  </div>
+                ))}
+              </motion.div>
+
+              {/* Column 3: Right Stream */}
+              <motion.div style={{ y: colRightY }} className="flex flex-col gap-6 sm:gap-8 pt-10 sm:pt-14">
+                {galleryColRight.map((img, idx) => (
+                  <div
+                    key={idx}
+                    className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200/90 shadow-lg bg-white ${img.aspect} group`}
+                  >
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      sizes="(max-width: 768px) 50vw, 380px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+                  </div>
+                ))}
+              </motion.div>
+
+            </div>
           </div>
         </section>
 
