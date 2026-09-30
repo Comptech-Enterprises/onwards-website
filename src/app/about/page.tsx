@@ -173,18 +173,21 @@ export default function AboutPage() {
   /* Team member bio drawer state */
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(null);
 
-  /* Scroll hooks for 5 scattered vertical photos parallax */
+  /* Scroll hooks for 8 scattered vertical photos parallax */
   const welcomeRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: welcomeProgress } = useScroll({
     target: welcomeRef,
     offset: ["start end", "end start"],
   });
 
-  const y1 = useTransform(welcomeProgress, [0, 1], [35, -40]);
-  const y2 = useTransform(welcomeProgress, [0, 1], [55, -60]);
-  const y3 = useTransform(welcomeProgress, [0, 1], [20, -25]);
-  const y4 = useTransform(welcomeProgress, [0, 1], [45, -50]);
-  const y5 = useTransform(welcomeProgress, [0, 1], [30, -35]);
+  const y1 = useTransform(welcomeProgress, [0, 1], [30, -35]);
+  const y2 = useTransform(welcomeProgress, [0, 1], [45, -50]);
+  const y3 = useTransform(welcomeProgress, [0, 1], [15, -20]);
+  const y4 = useTransform(welcomeProgress, [0, 1], [50, -55]);
+  const y5 = useTransform(welcomeProgress, [0, 1], [35, -40]);
+  const y6 = useTransform(welcomeProgress, [0, 1], [40, -45]);
+  const y7 = useTransform(welcomeProgress, [0, 1], [25, -30]);
+  const y8 = useTransform(welcomeProgress, [0, 1], [45, -50]);
 
   return (
     <>
@@ -313,50 +316,78 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. TIGHT VERTICAL 5-PHOTO WELCOME GALLERY
+            2. SCATTERED 8-PHOTO VERTICAL WELCOME GALLERY
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={welcomeRef}
-          className="relative min-h-[75vh] sm:min-h-[85vh] bg-white py-8 sm:py-14 overflow-hidden border-b border-gray-200/80 flex items-center justify-center"
+          className="relative min-h-[85vh] sm:min-h-[95vh] bg-white py-12 sm:py-18 overflow-hidden border-b border-gray-200/80 flex items-center justify-center"
         >
-          {/* ── Photo 1 (Top Left - Wide Landscape) ── */}
+          {/* ── Photo 1 (Top Left - Wide) ── */}
           <motion.div
             style={{ y: y1 }}
-            className="absolute top-6 sm:top-10 left-4 sm:left-10 lg:left-20 w-48 sm:w-64 lg:w-[340px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute top-4 sm:top-8 left-3 sm:left-6 lg:left-12 w-40 sm:w-56 lg:w-72 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
               alt="Onward collaborative team"
               fill
-              sizes="(max-width: 768px) 190px, 340px"
+              sizes="(max-width: 768px) 160px, 290px"
               className="object-cover"
             />
           </motion.div>
 
-          {/* ── Photo 2 (Top Right - Portrait) ── */}
+          {/* ── Photo 2 (Top Center-Left - Portrait) ── */}
           <motion.div
             style={{ y: y2 }}
-            className="absolute top-6 sm:top-8 right-4 sm:right-10 lg:right-20 w-28 sm:w-40 lg:w-48 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute top-3 sm:top-5 left-[24%] sm:left-[27%] lg:left-[29%] w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
-              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
-              alt="Mindful reading library"
+              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp"
+              alt="Ergonomic open workspace"
               fill
-              sizes="(max-width: 768px) 120px, 200px"
+              sizes="(max-width: 768px) 100px, 180px"
               className="object-cover"
             />
           </motion.div>
 
-          {/* ── Photo 3 (Center Top - Portrait, close above text) ── */}
+          {/* ── Photo 3 (Center Top - Portrait) ── */}
           <motion.div
             style={{ y: y3 }}
-            className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 w-32 sm:w-40 lg:w-48 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            className="absolute top-3 sm:top-5 left-1/2 -translate-x-1/2 w-28 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp"
               alt="Executive meeting suite"
               fill
-              sizes="(max-width: 768px) 130px, 200px"
+              sizes="(max-width: 768px) 120px, 180px"
+              className="object-cover"
+            />
+          </motion.div>
+
+          {/* ── Photo 4 (Top Right - Portrait) ── */}
+          <motion.div
+            style={{ y: y4 }}
+            className="absolute top-4 sm:top-7 right-3 sm:right-6 lg:right-12 w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+          >
+            <Image
+              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
+              alt="Mindful reading library"
+              fill
+              sizes="(max-width: 768px) 100px, 180px"
+              className="object-cover"
+            />
+          </motion.div>
+
+          {/* ── Photo 5 (Mid Right - Landscape) ── */}
+          <motion.div
+            style={{ y: y5 }}
+            className="hidden sm:block absolute top-[44%] right-3 sm:right-6 lg:right-10 w-36 sm:w-48 lg:w-56 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+          >
+            <Image
+              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp"
+              alt="Sunlit cafe and lounge"
+              fill
+              sizes="(max-width: 768px) 140px, 230px"
               className="object-cover"
             />
           </motion.div>
@@ -395,30 +426,44 @@ export default function AboutPage() {
             </motion.div>
           </div>
 
-          {/* ── Photo 4 (Bottom Left - Portrait) ── */}
+          {/* ── Photo 6 (Bottom Left - Portrait) ── */}
           <motion.div
-            style={{ y: y4 }}
-            className="absolute bottom-6 sm:bottom-8 left-6 sm:left-14 lg:left-24 w-28 sm:w-40 lg:w-48 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            style={{ y: y6 }}
+            className="absolute bottom-4 sm:bottom-7 left-3 sm:left-6 lg:left-12 w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
               alt="Community member"
               fill
-              sizes="(max-width: 768px) 120px, 200px"
+              sizes="(max-width: 768px) 100px, 180px"
               className="object-cover"
             />
           </motion.div>
 
-          {/* ── Photo 5 (Bottom Right/Center - Wide Landscape) ── */}
+          {/* ── Photo 7 (Bottom Center - Wide) ── */}
           <motion.div
-            style={{ y: y5 }}
-            className="absolute bottom-6 sm:bottom-8 left-[44%] sm:left-[46%] lg:left-[44%] w-48 sm:w-64 lg:w-[340px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            style={{ y: y7 }}
+            className="absolute bottom-4 sm:bottom-6 left-[34%] sm:left-[36%] lg:left-[38%] w-40 sm:w-56 lg:w-72 aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
           >
             <Image
               src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp"
               alt="Team milestones & active life"
               fill
-              sizes="(max-width: 768px) 190px, 340px"
+              sizes="(max-width: 768px) 160px, 290px"
+              className="object-cover"
+            />
+          </motion.div>
+
+          {/* ── Photo 8 (Bottom Right - Portrait) ── */}
+          <motion.div
+            style={{ y: y8 }}
+            className="absolute bottom-4 sm:bottom-7 right-3 sm:right-6 lg:right-12 w-24 sm:w-36 lg:w-44 aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+          >
+            <Image
+              src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp"
+              alt="Collaborative studio brainstorming"
+              fill
+              sizes="(max-width: 768px) 100px, 180px"
               className="object-cover"
             />
           </motion.div>
