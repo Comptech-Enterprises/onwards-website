@@ -166,25 +166,22 @@ const teamMembers = [
 /* ━━━ INTERACTIVE CANVAS SPHERE PARTICLES (HERO 3D ANIMATION) ━━━ */
 import ThreeDCardCarousel from "@/components/ThreeDCardCarousel";
 
-const galleryColLeft = [
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp", aspect: "aspect-[16/10]", alt: "Onward collaborative lounge" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp", aspect: "aspect-[3/4]", alt: "Curated reading library" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp", aspect: "aspect-[16/10]", alt: "Ergonomic workstations" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp", aspect: "aspect-[3/4]", alt: "Community member" },
+const galleryRowTop = [
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp", aspect: "w-64 sm:w-80 aspect-[16/10]", alt: "Onward collaborative lounge" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp", aspect: "w-44 sm:w-56 aspect-[3/4]", alt: "Curated reading library" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp", aspect: "w-64 sm:w-80 aspect-[16/10]", alt: "Ergonomic workstations" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp", aspect: "w-44 sm:w-56 aspect-[3/4]", alt: "Community member" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp", aspect: "w-44 sm:w-56 aspect-[3/4]", alt: "Executive boardroom" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp", aspect: "w-64 sm:w-80 aspect-[16/10]", alt: "Team outdoor celebration" },
 ];
 
-const galleryColCenter = [
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp", aspect: "aspect-[3/4]", alt: "Executive boardroom" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp", aspect: "aspect-[16/10]", alt: "Team outdoor celebration" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790526.webp", aspect: "aspect-[3/4]", alt: "Private enterprise suite" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790610.webp", aspect: "aspect-[16/10]", alt: "Collaborative design studio" },
-];
-
-const galleryColRight = [
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp", aspect: "aspect-[3/4]", alt: "Sunlit cafe lounge" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719861.webp", aspect: "aspect-[16/10]", alt: "Breakout lounge" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp", aspect: "aspect-[3/4]", alt: "Brainstorming studio" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720620.webp", aspect: "aspect-[16/10]", alt: "Wellness active zone" },
+const galleryRowBottom = [
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp", aspect: "w-44 sm:w-56 aspect-[3/4]", alt: "Sunlit cafe lounge" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719861.webp", aspect: "w-64 sm:w-80 aspect-[16/10]", alt: "Breakout lounge" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp", aspect: "w-44 sm:w-56 aspect-[3/4]", alt: "Brainstorming studio" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790526.webp", aspect: "w-44 sm:w-56 aspect-[3/4]", alt: "Private enterprise suite" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720620.webp", aspect: "w-64 sm:w-80 aspect-[16/10]", alt: "Wellness active zone" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790610.webp", aspect: "w-64 sm:w-80 aspect-[16/10]", alt: "Collaborative design studio" },
 ];
 
 export default function AboutPage() {
@@ -193,17 +190,6 @@ export default function AboutPage() {
 
   /* Team member bio drawer state */
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(null);
-
-  /* Scroll hooks for sticky welcome multi-column flowing parallax */
-  const welcomeRef = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress: welcomeProgress } = useScroll({
-    target: welcomeRef,
-    offset: ["start end", "end start"],
-  });
-
-  const colLeftY = useTransform(welcomeProgress, [0, 1], ["12%", "-38%"]);
-  const colCenterY = useTransform(welcomeProgress, [0, 1], ["-6%", "-52%"]);
-  const colRightY = useTransform(welcomeProgress, [0, 1], ["18%", "-32%"]);
 
   return (
     <>
@@ -332,117 +318,89 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. FLOWING WELCOME GALLERY: MULTI-COLUMN STREAM WITH ENTRY/EXIT FADE
+            2. COMPACT FLOWING WELCOME GALLERY (ZERO EMPTY SPACE)
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section
-          ref={welcomeRef}
-          className="relative min-h-[170vh] sm:min-h-[200vh] bg-[#faf8f5] py-20 overflow-hidden border-b border-gray-200/80"
-        >
-          {/* Top & Bottom Smooth Gradient Fade Masks */}
-          <div className="absolute top-0 left-0 right-0 h-40 bg-gradient-to-b from-[#faf8f5] via-[#faf8f5]/80 to-transparent pointer-events-none z-20" />
-          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#faf8f5] via-[#faf8f5]/80 to-transparent pointer-events-none z-20" />
-
-          {/* Sticky Center Welcome Card */}
-          <div className="sticky top-28 sm:top-36 z-30 max-w-4xl mx-auto px-4 text-center pointer-events-none">
+        <section className="relative py-12 sm:py-16 bg-[#faf8f5] overflow-hidden border-b border-gray-200/80">
+          
+          {/* Top Flowing Row (Moving Left) */}
+          <div className="flex gap-4 sm:gap-6 overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
-              className="bg-white/95 backdrop-blur-md border border-[#e8dfd2] rounded-3xl p-6 sm:p-10 shadow-2xl inline-block max-w-2xl pointer-events-auto"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 32, ease: "linear" }}
+              className="flex gap-4 sm:gap-6 shrink-0"
             >
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
-                Our Community &amp; Spaces
-              </span>
-              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e] tracking-tight leading-tight">
-                Whatever brought you to this page, <span className="text-[#d4622b]">welcome.</span>
-              </h2>
-              <p className="mt-3 text-xs sm:text-sm text-gray-600 max-w-lg mx-auto">
-                Discover the collaborative spaces, community events, and daily moments where hundreds of companies build their future.
-              </p>
-
-              {/* Scroll Down Arrow */}
-              <div className="mt-6 flex justify-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    const nextSection = document.getElementById("values-section");
-                    nextSection?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  aria-label="Scroll down to core values"
-                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-300 bg-white hover:border-[#d4622b] hover:bg-[#d4622b] text-[#1a1a2e] hover:text-white shadow-sm flex items-center justify-center transition-all duration-300 group cursor-pointer"
+              {[...galleryRowTop, ...galleryRowTop].map((img, idx) => (
+                <div
+                  key={idx}
+                  className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200 shadow-md bg-white ${img.aspect} shrink-0 group hover:shadow-xl transition-shadow duration-300`}
                 >
-                  <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                </button>
-              </div>
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(max-width: 768px) 200px, 320px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity" />
+                </div>
+              ))}
             </motion.div>
           </div>
 
-          {/* Flowing 3-Column Parallax Photo Tracks with Entry/Exit Fade Mask */}
-          <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-none [mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_18%,black_82%,transparent_100%)]">
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 h-full">
-              
-              {/* Column 1: Left Stream */}
-              <motion.div style={{ y: colLeftY }} className="flex flex-col gap-6 sm:gap-8">
-                {galleryColLeft.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200/90 shadow-lg bg-white ${img.aspect} group`}
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 380px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                  </div>
-                ))}
-              </motion.div>
+          {/* Centered Welcome Headline & Down Button */}
+          <div className="text-center max-w-2xl sm:max-w-3xl mx-auto px-4 my-8 sm:my-10">
+            <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
+              Our Community &amp; Spaces
+            </span>
+            <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e] tracking-tight leading-tight">
+              Whatever brought you to this page, <span className="text-[#d4622b]">welcome.</span>
+            </h2>
+            <p className="mt-3 text-xs sm:text-sm text-gray-600 max-w-lg mx-auto">
+              Discover the spaces, community events, and daily moments where hundreds of companies build their future.
+            </p>
 
-              {/* Column 2: Center Stream (Visible on Desktop) */}
-              <motion.div style={{ y: colCenterY }} className="hidden lg:flex flex-col gap-6 sm:gap-8 pt-20">
-                {galleryColCenter.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200/90 shadow-lg bg-white ${img.aspect} group`}
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      sizes="380px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                  </div>
-                ))}
-              </motion.div>
-
-              {/* Column 3: Right Stream */}
-              <motion.div style={{ y: colRightY }} className="flex flex-col gap-6 sm:gap-8 pt-10 sm:pt-14">
-                {galleryColRight.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200/90 shadow-lg bg-white ${img.aspect} group`}
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 380px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-                  </div>
-                ))}
-              </motion.div>
-
+            <div className="mt-6 flex justify-center">
+              <button
+                type="button"
+                onClick={() => {
+                  const nextSection = document.getElementById("values-section");
+                  nextSection?.scrollIntoView({ behavior: "smooth" });
+                }}
+                aria-label="Scroll down to core values"
+                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-300 bg-white hover:border-[#d4622b] hover:bg-[#d4622b] text-[#1a1a2e] hover:text-white shadow-xs flex items-center justify-center transition-all duration-300 group cursor-pointer"
+              >
+                <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </button>
             </div>
           </div>
+
+          {/* Bottom Flowing Row (Moving Right) */}
+          <div className="flex gap-4 sm:gap-6 overflow-hidden select-none [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)]">
+            <motion.div
+              animate={{ x: ["-50%", "0%"] }}
+              transition={{ repeat: Infinity, duration: 32, ease: "linear" }}
+              className="flex gap-4 sm:gap-6 shrink-0"
+            >
+              {[...galleryRowBottom, ...galleryRowBottom].map((img, idx) => (
+                <div
+                  key={idx}
+                  className={`relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-200 shadow-md bg-white ${img.aspect} shrink-0 group hover:shadow-xl transition-shadow duration-300`}
+                >
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(max-width: 768px) 200px, 320px"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-40 group-hover:opacity-60 transition-opacity" />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
