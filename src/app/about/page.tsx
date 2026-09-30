@@ -282,18 +282,30 @@ export default function AboutPage() {
               </div>
 
               {/* Right Side: Key Metric Badges */}
-              <div className="lg:col-span-5 grid grid-cols-3 gap-3 bg-[#faf8f5] p-6 sm:p-7 rounded-3xl border border-[#e8dfd2]">
-                <div>
-                  <span className="block text-3xl sm:text-4xl font-black text-[#d4622b]">11+</span>
-                  <span className="text-xs text-gray-500 font-bold uppercase mt-1.5 block">NCR Centres</span>
+              <div className="lg:col-span-5 grid grid-cols-3 gap-2 sm:gap-4 bg-[#faf8f5] p-5 sm:p-6 lg:p-7 rounded-3xl border border-[#e8dfd2] items-center">
+                <div className="text-center sm:text-left">
+                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
+                    11+
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
+                    NCR Centres
+                  </span>
                 </div>
-                <div>
-                  <span className="block text-3xl sm:text-4xl font-black text-[#1a1a2e]">75 Days</span>
-                  <span className="text-xs text-gray-500 font-bold uppercase mt-1.5 block">Turnkey Build</span>
+                <div className="text-center sm:text-left border-x border-gray-200/80 px-2 sm:px-4">
+                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#1a1a2e] whitespace-nowrap tracking-tight leading-none">
+                    75<span className="text-sm sm:text-lg lg:text-xl font-bold text-gray-700 ml-1">Days</span>
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
+                    Turnkey Build
+                  </span>
                 </div>
-                <div>
-                  <span className="block text-3xl sm:text-4xl font-black text-[#d4622b]">425+</span>
-                  <span className="text-xs text-gray-500 font-bold uppercase mt-1.5 block">Enterprises</span>
+                <div className="text-center sm:text-left pl-1 sm:pl-2">
+                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
+                    425+
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
+                    Enterprises
+                  </span>
                 </div>
               </div>
             </div>
