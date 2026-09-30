@@ -528,20 +528,17 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            4. BRILEAN-STYLE "LIFE AT ONWARD" SWIPER / STORY CAROUSEL
+            4. "LIFE AT ONWARD" SWIPER / STORY CAROUSEL (LIGHT THEME)
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="py-20 sm:py-28 bg-[#1a1a2e] text-white relative overflow-hidden">
-          {/* Subtle Ambient Glow */}
-          <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-[#d4622b]/15 blur-3xl pointer-events-none" />
-
+        <section className="py-20 sm:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-14">
               <div>
                 <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
-                  Culture & Environment
+                  Culture &amp; Environment
                 </span>
-                <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight mt-1">
+                <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">
                   Life at Onward
                 </h2>
               </div>
@@ -551,7 +548,7 @@ export default function AboutPage() {
                 <button
                   type="button"
                   onClick={() => setLifeIdx((prev) => (prev > 0 ? prev - 1 : lifeStories.length - 1))}
-                  className="w-12 h-12 rounded-full border border-white/20 hover:border-[#d4622b] bg-white/5 hover:bg-[#d4622b] text-white flex items-center justify-center transition-all duration-200 active:scale-95"
+                  className="w-12 h-12 rounded-full border border-gray-300 bg-white hover:border-[#d4622b] hover:bg-[#d4622b] text-[#1a1a2e] hover:text-white shadow-xs flex items-center justify-center transition-all duration-200 active:scale-95"
                   aria-label="Previous story"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -561,7 +558,7 @@ export default function AboutPage() {
                 <button
                   type="button"
                   onClick={() => setLifeIdx((prev) => (prev < lifeStories.length - 1 ? prev + 1 : 0))}
-                  className="w-12 h-12 rounded-full border border-white/20 hover:border-[#d4622b] bg-white/5 hover:bg-[#d4622b] text-white flex items-center justify-center transition-all duration-200 active:scale-95"
+                  className="w-12 h-12 rounded-full border border-gray-300 bg-white hover:border-[#d4622b] hover:bg-[#d4622b] text-[#1a1a2e] hover:text-white shadow-xs flex items-center justify-center transition-all duration-200 active:scale-95"
                   aria-label="Next story"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -575,7 +572,7 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               {/* Photo Viewport */}
               <div className="lg:col-span-7">
-                <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black">
+                <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden border border-gray-200 shadow-xl bg-gray-100">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={lifeStories[lifeIdx].img}
@@ -608,7 +605,7 @@ export default function AboutPage() {
                       type="button"
                       onClick={() => setLifeIdx(i)}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
-                        i === lifeIdx ? "w-8 bg-[#d4622b]" : "w-2 bg-white/20 hover:bg-white/40"
+                        i === lifeIdx ? "w-8 bg-[#d4622b]" : "w-2 bg-gray-300 hover:bg-gray-400"
                       }`}
                       aria-label={`Go to slide ${i + 1}`}
                     />
@@ -625,23 +622,23 @@ export default function AboutPage() {
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     transition={{ duration: 0.35 }}
-                    className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 backdrop-blur-md shadow-xl"
+                    className="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xl"
                   >
                     <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
                       Story 0{lifeIdx + 1} / 0{lifeStories.length}
                     </span>
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white tracking-tight">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1a1a2e] tracking-tight">
                       {lifeStories[lifeIdx].title}
                     </h3>
-                    <p className="mt-4 text-sm sm:text-base text-gray-300 leading-relaxed">
+                    <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed">
                       {lifeStories[lifeIdx].desc}
                     </p>
 
-                    <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                    <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
                       <span className="text-xs text-gray-400 font-semibold">Experience it in person</span>
                       <Link
                         href="/#contact"
-                        className="text-xs font-bold text-[#d4622b] hover:text-white transition-colors inline-flex items-center gap-1.5"
+                        className="text-xs font-bold text-[#d4622b] hover:text-[#b8501f] transition-colors inline-flex items-center gap-1.5"
                       >
                         Book a Day Pass &rarr;
                       </Link>
