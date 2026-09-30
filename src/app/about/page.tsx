@@ -16,52 +16,6 @@ const heroWords = [
   { word: "Heart.", highlight: "Human-First Hospitality" },
 ];
 
-/* ━━━ 2. STICKY WELCOME MARQUEE IMAGES ━━━ */
-const welcomeImagesCol1 = [
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp",
-    alt: "Collaborative team meeting at Onward Okhla",
-    tag: "Enterprise Hub",
-  },
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp",
-    alt: "Ergonomic workspace workstations",
-    tag: "Ergonomic Layouts",
-  },
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp",
-    alt: "Executive board room in Delhi",
-    tag: "Boardrooms",
-  },
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp",
-    alt: "Sunlit atrium lounge",
-    tag: "Lounge Areas",
-  },
-];
-
-const welcomeImagesCol2 = [
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614051010.webp",
-    alt: "Coffee bar and community lounge",
-    tag: "Cafeteria & Barista",
-  },
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614136279.webp",
-    alt: "Private office suites",
-    tag: "Private Suites",
-  },
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614210609.webp",
-    alt: "Collaborative brainstorming studio",
-    tag: "Creative Studios",
-  },
-  {
-    src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp",
-    alt: "Modern acoustic phone booths",
-    tag: "Focus Pods",
-  },
-];
 
 /* ━━━ 3. INTERACTIVE ACCORDION VALUES ━━━ */
 const valuesList = [
@@ -222,15 +176,19 @@ export default function AboutPage() {
   /* Team member bio drawer state */
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(null);
 
-  /* Scroll hooks for sticky welcome vertical parallax */
+  /* Scroll hooks for sticky welcome scattered photo parallax */
   const welcomeRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: welcomeProgress } = useScroll({
     target: welcomeRef,
-    offset: ["start end", "end start"],
+    offset: ["start start", "end end"],
   });
 
-  const col1Y = useTransform(welcomeProgress, [0, 1], ["8%", "-24%"]);
-  const col2Y = useTransform(welcomeProgress, [0, 1], ["-18%", "14%"]);
+  const y1 = useTransform(welcomeProgress, [0, 1], [80, -90]);
+  const y2 = useTransform(welcomeProgress, [0, 1], [130, -140]);
+  const y3 = useTransform(welcomeProgress, [0, 1], [50, -60]);
+  const y4 = useTransform(welcomeProgress, [0, 1], [110, -120]);
+  const y5 = useTransform(welcomeProgress, [0, 1], [70, -80]);
+  const textScale = useTransform(welcomeProgress, [0, 0.5, 1], [0.96, 1, 0.98]);
 
   return (
     <>
@@ -359,100 +317,118 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. BRILEAN STICKY WELCOME WALL: PARALLAX PHOTO STREAM
+            2. BRILEAN STICKY WELCOME WALL: FLOATING SCATTERED GALLERY
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={welcomeRef}
-          className="relative min-h-[140vh] sm:min-h-[160vh] py-20 bg-[#f6f1e8] overflow-hidden border-b border-[#e8dfd2]"
+          className="relative h-[220vh] bg-white border-b border-gray-200/80"
         >
-          {/* Sticky Center Title & Scroll Arrow */}
-          <div className="sticky top-28 sm:top-36 z-20 max-w-4xl mx-auto px-4 text-center pointer-events-none">
+          {/* Sticky Viewport Container */}
+          <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+            
+            {/* ── Photo 1 (Top Left - Landscape) ── */}
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-white/90 backdrop-blur-md border border-[#e8dfd2] rounded-3xl p-6 sm:p-10 shadow-2xl inline-block max-w-2xl"
+              style={{ y: y1 }}
+              className="absolute top-[6%] sm:top-[8%] left-[2%] sm:left-[5%] lg:left-[8%] w-[200px] sm:w-[320px] lg:w-[400px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
             >
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
-                Our Community & Craft
-              </span>
-              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e] tracking-tight leading-tight">
-                Whatever brought you to this page, <span className="text-[#d4622b]">welcome.</span>
-              </h2>
-              <p className="mt-3 text-xs sm:text-sm text-gray-600 max-w-lg mx-auto">
-                Take a look inside the spaces, community events, and daily moments where hundreds of companies build their future.
-              </p>
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
+                alt="Onward community team"
+                fill
+                sizes="(max-width: 768px) 200px, 400px"
+                className="object-cover"
+              />
+            </motion.div>
 
-              {/* Pulsing Down Arrow */}
-              <div className="mt-6 flex justify-center">
-                <div className="w-10 h-10 rounded-full border border-gray-300 bg-white flex items-center justify-center text-[#1a1a2e] shadow-sm animate-bounce">
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            {/* ── Photo 2 (Top Right - Portrait) ── */}
+            <motion.div
+              style={{ y: y2 }}
+              className="absolute top-[3%] sm:top-[5%] right-[2%] sm:right-[5%] lg:right-[8%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
+                alt="Mindful library and reading corner"
+                fill
+                sizes="(max-width: 768px) 130px, 240px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 3 (Center Top - Portrait, overlapping above center text) ── */}
+            <motion.div
+              style={{ y: y3 }}
+              className="absolute top-[10%] sm:top-[12%] lg:top-[9%] left-1/2 -translate-x-1/2 w-[140px] sm:w-[200px] lg:w-[250px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614210609.webp"
+                alt="Collaborative workshop space"
+                fill
+                sizes="(max-width: 768px) 140px, 250px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 4 (Bottom Left - Portrait) ── */}
+            <motion.div
+              style={{ y: y4 }}
+              className="absolute bottom-[4%] sm:bottom-[6%] left-[3%] sm:left-[7%] lg:left-[12%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
+                alt="Community member at Onward"
+                fill
+                sizes="(max-width: 768px) 130px, 240px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 5 (Bottom Center/Right - Landscape) ── */}
+            <motion.div
+              style={{ y: y5 }}
+              className="absolute bottom-[5%] sm:bottom-[7%] left-[45%] sm:left-[47%] lg:left-[45%] w-[200px] sm:w-[300px] lg:w-[380px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp"
+                alt="Team gathering and celebrations"
+                fill
+                sizes="(max-width: 768px) 200px, 380px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Sticky Center Title & Scroll Down Arrow (Brilean style) ── */}
+            <div className="relative z-20 text-center max-w-2xl sm:max-w-4xl px-6 pointer-events-none select-none">
+              <motion.h2
+                style={{ scale: textScale }}
+                className="text-2xl sm:text-4xl lg:text-[54px] font-normal text-[#1a1a2e] tracking-tight leading-[1.14]"
+              >
+                Whatever brought you to this page, welcome.
+              </motion.h2>
+
+              <div className="mt-5 sm:mt-7 flex justify-center pointer-events-auto">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const nextSection = document.getElementById("values-section");
+                    nextSection?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  aria-label="Scroll down to core values"
+                  className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-[#1a1a2e]/30 hover:border-[#1a1a2e] hover:bg-black/5 flex items-center justify-center text-[#1a1a2e] transition-all duration-300 shadow-xs cursor-pointer group"
+                >
+                  <svg className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
-                </div>
+                </button>
               </div>
-            </motion.div>
-          </div>
-
-          {/* Dual-Column Vertical Parallax Stream in the background */}
-          <div className="absolute inset-0 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pointer-events-none opacity-85 sm:opacity-90">
-            <div className="grid grid-cols-2 gap-4 sm:gap-8 h-full">
-              {/* Column 1: Moving Upwards */}
-              <motion.div style={{ y: col1Y }} className="flex flex-col gap-6 sm:gap-10">
-                {welcomeImagesCol1.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#e8dfd2] shadow-xl bg-white aspect-[4/3] group"
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 400px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                    <span className="absolute bottom-3 left-3 text-[9px] sm:text-xs font-bold text-white uppercase tracking-wider bg-black/50 backdrop-blur-xs px-2.5 py-1 rounded-md">
-                      {img.tag}
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
-
-              {/* Column 2: Moving Downwards */}
-              <motion.div style={{ y: col2Y }} className="flex flex-col gap-6 sm:gap-10 pt-16 sm:pt-28">
-                {welcomeImagesCol2.map((img, idx) => (
-                  <div
-                    key={idx}
-                    className="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-[#e8dfd2] shadow-xl bg-white aspect-[4/3] group"
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.alt}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 400px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                    <span className="absolute bottom-3 left-3 text-[9px] sm:text-xs font-bold text-white uppercase tracking-wider bg-black/50 backdrop-blur-xs px-2.5 py-1 rounded-md">
-                      {img.tag}
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
             </div>
-          </div>
 
-          {/* Top and Bottom Fade Gradients */}
-          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-[#f6f1e8] to-transparent pointer-events-none z-10" />
-          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#f6f1e8] to-transparent pointer-events-none z-10" />
+          </div>
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             3. BRILEAN-STYLE INTERACTIVE VALUES ACCORDION
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="py-20 sm:py-28 bg-[#faf8f5] border-b border-gray-200/80">
+        <section id="values-section" className="py-20 sm:py-28 bg-[#faf8f5] border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl mb-12 sm:mb-16">
               <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
