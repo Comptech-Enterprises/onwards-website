@@ -238,42 +238,48 @@ export default function AboutPage() {
 
       <main className="bg-[#faf8f5] text-[#1a1a2e] min-h-screen overflow-x-hidden pt-20">
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            1. HERO: HEADLINE ON LEFT + 3D ROTATING CARDS ON TOP RIGHT
+            1. HERO: HEADLINE ON LEFT + COMPACT 3D CARDS AT TOP RIGHT
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="relative overflow-hidden border-b border-gray-200/80 bg-white py-12 sm:py-16 lg:py-20">
+        <section className="relative overflow-hidden border-b border-gray-200/80 bg-white pt-10 pb-14 sm:pt-14 sm:pb-20">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* Top Breadcrumbs */}
-            <nav aria-label="Breadcrumb" className="mb-6">
-              <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
-                <li>
-                  <Link href="/" className="hover:text-[#d4622b] transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>/</li>
-                <li className="text-gray-900">About Us</li>
-              </ol>
-            </nav>
+            {/* Top Row Grid: Headline on Left, 3D Rotating Cylinder on Top Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center mb-10 sm:mb-12">
+              {/* Left Column: Breadcrumb + Tag + Giant Headline */}
+              <div className="lg:col-span-7 flex flex-col justify-center">
+                <nav aria-label="Breadcrumb" className="mb-4">
+                  <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
+                    <li>
+                      <Link href="/" className="hover:text-[#d4622b] transition-colors">
+                        Home
+                      </Link>
+                    </li>
+                    <li>/</li>
+                    <li className="text-gray-900">About Us</li>
+                  </ol>
+                </nav>
 
-            <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">
-              About Us
-            </span>
+                <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase mb-2 block">
+                  About Us
+                </span>
 
-            {/* Main Headline */}
-            <div className="mt-2 mb-10 lg:mb-12 font-black tracking-tight leading-[1.05] sm:leading-[0.98]">
-              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight">
-                Crafting Workspaces.
-                <br />
-                <span className="text-gray-400">Built Around Ambition.</span>
-                <br />
-                <span className="text-gray-300">Brand &amp; People.</span>
-              </h1>
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]">
+                  Crafting Workspaces.
+                  <br />
+                  <span className="text-gray-400">Built Around Ambition.</span>
+                  <br />
+                  <span className="text-gray-300">Brand &amp; People.</span>
+                </h1>
+              </div>
+
+              {/* Right Column (TOP RIGHT): Compact 3D Card Carousel */}
+              <div className="lg:col-span-5 flex items-center justify-center lg:justify-end">
+                <ThreeDCardCarousel />
+              </div>
             </div>
 
-            {/* 2-Column Grid: Copy & Actions on Left, 3D Card Carousel on Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              {/* Left Column: Description & CTAs */}
-              <div className="lg:col-span-6 flex flex-col justify-center">
+            {/* Bottom Row Grid: Story Description & CTAs on Left, Metrics on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start border-t border-gray-100 pt-8 sm:pt-10">
+              <div className="lg:col-span-7">
                 <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed text-justify">
                   Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
                 </p>
@@ -281,24 +287,8 @@ export default function AboutPage() {
                   Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
                 </p>
 
-                {/* Key Metric Highlights */}
-                <div className="mt-6 grid grid-cols-3 gap-3 border-y border-gray-200/80 py-4">
-                  <div>
-                    <span className="block text-xl sm:text-2xl font-black text-[#d4622b]">11+</span>
-                    <span className="text-[11px] sm:text-xs text-gray-500 font-semibold uppercase">NCR Centres</span>
-                  </div>
-                  <div>
-                    <span className="block text-xl sm:text-2xl font-black text-[#1a1a2e]">75 Days</span>
-                    <span className="text-[11px] sm:text-xs text-gray-500 font-semibold uppercase">Turnkey Build</span>
-                  </div>
-                  <div>
-                    <span className="block text-xl sm:text-2xl font-black text-[#d4622b]">425+</span>
-                    <span className="text-[11px] sm:text-xs text-gray-500 font-semibold uppercase">Companies</span>
-                  </div>
-                </div>
-
                 {/* Action Buttons */}
-                <div className="mt-7 flex flex-wrap items-center gap-3 sm:gap-5">
+                <div className="mt-7 flex flex-wrap items-center gap-4">
                   <MagneticButton
                     href="/#contact"
                     className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-6 py-3 sm:px-7 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all"
@@ -309,7 +299,7 @@ export default function AboutPage() {
                     </svg>
                   </MagneticButton>
                   <Link
-                    href="/locations"
+                    href="/locations/delhi"
                     className="text-[#1a1a2e] font-bold text-xs sm:text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2"
                   >
                     Explore Locations &rarr;
@@ -317,9 +307,20 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Right Column: 3D Rotating Cards Carousel */}
-              <div className="lg:col-span-6 flex items-center justify-center relative">
-                <ThreeDCardCarousel />
+              {/* Right Side: Key Metric Badges */}
+              <div className="lg:col-span-5 grid grid-cols-3 gap-3 bg-[#faf8f5] p-5 sm:p-6 rounded-2xl border border-[#e8dfd2]">
+                <div>
+                  <span className="block text-2xl sm:text-3xl font-black text-[#d4622b]">11+</span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-1 block">NCR Centres</span>
+                </div>
+                <div>
+                  <span className="block text-2xl sm:text-3xl font-black text-[#1a1a2e]">75 Days</span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-1 block">Turnkey Build</span>
+                </div>
+                <div>
+                  <span className="block text-2xl sm:text-3xl font-black text-[#d4622b]">425+</span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-1 block">Enterprises</span>
+                </div>
               </div>
             </div>
           </div>

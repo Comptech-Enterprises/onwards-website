@@ -24,7 +24,7 @@ const CARDS: CardItem[] = [
   {
     type: "brand",
     bg: "bg-gradient-to-br from-[#d4622b] to-[#b8501f] text-white",
-    title: "Your ambition,",
+    title: "Your vision,",
     subtitle: "our workspace.",
     tag: "Onward Vision",
   },
@@ -73,7 +73,7 @@ export default function ThreeDCardCarousel() {
   const [rotation, setRotation] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
-  const [tilt, setTilt] = useState({ x: -12, y: 0 });
+  const [tilt, setTilt] = useState({ x: -10, y: 0 });
 
   const totalCards = CARDS.length;
   const angleStep = 360 / totalCards;
@@ -88,7 +88,7 @@ export default function ThreeDCardCarousel() {
       lastTime = time;
 
       if (!isHovered) {
-        setRotation((prev) => (prev + delta * 18) % 360);
+        setRotation((prev) => (prev + delta * 20) % 360);
       }
       animationFrameId = requestAnimationFrame(animate);
     };
@@ -104,14 +104,14 @@ export default function ThreeDCardCarousel() {
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
 
-    const tiltX = -12 + (y / (rect.height / 2)) * -10;
-    const tiltY = (x / (rect.width / 2)) * 14;
+    const tiltX = -10 + (y / (rect.height / 2)) * -8;
+    const tiltY = (x / (rect.width / 2)) * 10;
     setTilt({ x: tiltX, y: tiltY });
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-    setTilt({ x: -12, y: 0 });
+    setTilt({ x: -10, y: 0 });
   };
 
   const currentRotation = rotation + dragOffset;
@@ -122,17 +122,17 @@ export default function ThreeDCardCarousel() {
       onMouseEnter={() => setIsHovered(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[360px] sm:h-[440px] lg:h-[480px] flex items-center justify-center select-none overflow-visible cursor-grab active:cursor-grabbing"
+      className="relative w-full max-w-[340px] sm:max-w-[400px] h-[250px] sm:h-[280px] lg:h-[310px] flex items-center justify-center select-none overflow-visible cursor-grab active:cursor-grabbing mx-auto lg:mx-0"
       style={{
-        perspective: "1100px",
+        perspective: "800px",
       }}
     >
       {/* Central Ambient Glow */}
-      <div className="absolute w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-[#d4622b]/15 blur-3xl pointer-events-none -z-10" />
+      <div className="absolute w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-[#d4622b]/10 blur-2xl pointer-events-none -z-10" />
 
       {/* 3D Carousel Cylinder */}
       <motion.div
-        className="relative w-[220px] h-[140px] sm:w-[280px] sm:h-[180px] lg:w-[320px] lg:h-[200px]"
+        className="relative w-[150px] h-[95px] sm:w-[175px] sm:h-[110px] lg:w-[195px] lg:h-[120px]"
         style={{
           transformStyle: "preserve-3d",
           transform: `rotateX(${tilt.x}deg) rotateY(${currentRotation + tilt.y}deg)`,
@@ -147,13 +147,13 @@ export default function ThreeDCardCarousel() {
       >
         {CARDS.map((card, i) => {
           const cardAngle = i * angleStep;
-          // Responsive 3D Radius (distance from center)
-          const radius = 320; // 3D cylinder depth
+          // Compact 3D cylinder depth radius
+          const radius = 200;
 
           return (
             <div
               key={i}
-              className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl border border-white/20 backface-visible"
+              className="absolute inset-0 rounded-xl overflow-hidden shadow-xl border border-white/25 backface-visible bg-[#1a1a2e]"
               style={{
                 transform: `rotateY(${cardAngle}deg) translateZ(${radius}px)`,
                 transformStyle: "preserve-3d",
@@ -162,34 +162,34 @@ export default function ThreeDCardCarousel() {
               }}
             >
               {card.type === "image" && card.src ? (
-                <div className="relative w-full h-full bg-[#1a1a2e]">
+                <div className="relative w-full h-full">
                   <Image
                     src={card.src}
                     alt={card.alt || "Onward Workspace"}
                     fill
-                    sizes="(max-width: 768px) 240px, 320px"
+                    sizes="200px"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
                   {card.tag && (
-                    <span className="absolute bottom-2.5 left-2.5 sm:bottom-3 sm:left-3 text-[9px] sm:text-[11px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                    <span className="absolute bottom-2 left-2 text-[8px] sm:text-[9px] font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-xs px-2 py-0.5 rounded">
                       {card.tag}
                     </span>
                   )}
                 </div>
               ) : (
-                <div className={`w-full h-full p-4 sm:p-5 flex flex-col justify-between ${card.bg}`}>
+                <div className={`w-full h-full p-3 sm:p-3.5 flex flex-col justify-between ${card.bg}`}>
                   <div className="flex items-center justify-between">
-                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest opacity-80">
+                    <span className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest opacity-80">
                       {card.tag}
                     </span>
-                    <span className="w-2 h-2 rounded-full bg-current opacity-80" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-current opacity-80" />
                   </div>
                   <div>
-                    <h4 className="text-base sm:text-xl font-extrabold leading-tight tracking-tight">
+                    <h4 className="text-xs sm:text-sm font-extrabold leading-tight tracking-tight">
                       {card.title}
                     </h4>
-                    <p className="text-xs sm:text-sm font-medium opacity-90 mt-0.5">
+                    <p className="text-[9px] sm:text-[10px] font-medium opacity-90 mt-0.5">
                       {card.subtitle}
                     </p>
                   </div>
