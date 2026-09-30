@@ -170,9 +170,6 @@ export default function AboutPage() {
   /* Life Carousel state */
   const [lifeIdx, setLifeIdx] = useState(0);
 
-  /* Team member bio drawer state */
-  const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(null);
-
   /* Scroll hooks for 5 scattered photos parallax */
   const welcomeRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: welcomeProgress } = useScroll({
@@ -642,101 +639,43 @@ export default function AboutPage() {
 
             {/* Team Members Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {teamMembers.map((member) => {
-                const isExpanded = expandedTeamMember === member.name;
-                return (
-                  <div
-                    key={member.name}
-                    className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-                  >
-                    <div>
-                      {/* Photo Container with Expand/Collapse Icon */}
-                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
-                        <Image
-                          src={member.img}
-                          alt={member.name}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 400px"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              {teamMembers.map((member) => (
+                <div
+                  key={member.name}
+                  className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    {/* Photo Container */}
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-100">
+                      <Image
+                        src={member.img}
+                        alt={member.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                        {/* Top-Right Expand/Collapse Button */}
-                        <button
-                          type="button"
-                          onClick={() => setExpandedTeamMember(isExpanded ? null : member.name)}
-                          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#1a1a2e]/90 hover:bg-[#d4622b] text-white flex items-center justify-center shadow-lg transition-colors z-20"
-                          aria-label={isExpanded ? `Close ${member.name} bio` : `Expand ${member.name} bio`}
-                        >
-                          <span className="text-lg font-bold leading-none">{isExpanded ? "✕" : "+"}</span>
-                        </button>
-
-                        {/* Bottom Tag */}
-                        <div className="absolute bottom-3 left-4 right-4 z-10">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
-                            {member.role}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Name & Socials */}
-                      <div className="p-6">
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                              {member.name}
-                            </h3>
-                            <p className="text-xs font-semibold text-gray-500 mt-0.5">
-                              {member.role}
-                            </p>
-                          </div>
-
-                          {/* Social Icons */}
-                          <div className="flex items-center gap-1.5">
-                            <a
-                              href={`mailto:${member.email}`}
-                              aria-label={`Email ${member.name}`}
-                              className="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#d4622b] text-gray-700 hover:text-white flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                              </svg>
-                            </a>
-                            <a
-                              href={member.linkedin}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              aria-label={`LinkedIn of ${member.name}`}
-                              className="w-8 h-8 rounded-full bg-gray-100 hover:bg-[#d4622b] text-gray-700 hover:text-white flex items-center justify-center transition-colors"
-                            >
-                              <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
-                              </svg>
-                            </a>
-                          </div>
-                        </div>
-
-                        {/* Expandable Bio Drawer */}
-                        <AnimatePresence initial={false}>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.35, ease: "easeInOut" }}
-                              className="overflow-hidden"
-                            >
-                              <p className="mt-4 pt-3 border-t border-gray-100 text-xs sm:text-sm text-gray-600 leading-relaxed">
-                                {member.bio}
-                              </p>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
+                      {/* Bottom Tag */}
+                      <div className="absolute bottom-3 left-4 right-4 z-10">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-md border border-white/10">
+                          {member.role}
+                        </span>
                       </div>
                     </div>
+
+                    {/* Name & Role Title */}
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
+                        {member.name}
+                      </h3>
+                      <p className="text-xs font-semibold text-gray-500 mt-1">
+                        {member.role}
+                      </p>
+                    </div>
                   </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
           </div>
         </section>
