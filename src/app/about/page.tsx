@@ -167,9 +167,6 @@ const teamMembers = [
 import ThreeDCardCarousel from "@/components/ThreeDCardCarousel";
 
 export default function AboutPage() {
-  /* Values Accordion state */
-  const [activeValueId, setActiveValueId] = useState<string>("excellence");
-
   /* Life Carousel state */
   const [lifeIdx, setLifeIdx] = useState(0);
 
@@ -426,7 +423,7 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. BRILEAN-STYLE INTERACTIVE VALUES ACCORDION
+            3. CORE VALUES: NORMAL EQUAL-HEIGHT CARDS
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section id="values-section" className="py-20 sm:py-28 bg-[#faf8f5] border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -438,67 +435,44 @@ export default function AboutPage() {
                 Our Core Values
               </h2>
               <p className="mt-3 text-sm sm:text-base text-gray-600">
-                Click any pillar to explore how our ethos shapes daily building operations and enterprise partnerships.
+                How our founding ethos and standards shape daily building operations and enterprise partnerships.
               </p>
             </div>
 
-            {/* Accordion Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              {valuesList.map((val) => {
-                const isActive = activeValueId === val.id;
-                return (
-                  <motion.div
-                    key={val.id}
-                    layout
-                    onClick={() => setActiveValueId(val.id)}
-                    className={`cursor-pointer rounded-3xl p-6 sm:p-7 border transition-all duration-300 flex flex-col justify-between ${
-                      isActive
-                        ? "bg-[#1a1a2e] text-white border-[#1a1a2e] shadow-2xl scale-[1.02]"
-                        : "bg-white text-[#1a1a2e] border-gray-200 hover:border-[#d4622b]/50 shadow-sm"
-                    }`}
-                  >
-                    <div>
-                      {/* Icon */}
-                      <div className="mb-6">{val.icon}</div>
-
-                      {/* Header lines */}
-                      <h3 className="text-xl sm:text-2xl font-black tracking-tight leading-tight">
-                        <span>{val.title1}</span>
-                        <br />
-                        <span className={isActive ? "text-[#d4622b]" : "text-gray-900"}>
-                          {val.title2}
-                        </span>
-                      </h3>
-
-                      {/* Expandable description */}
-                      <AnimatePresence initial={false}>
-                        {isActive && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.35, ease: "easeInOut" }}
-                            className="overflow-hidden"
-                          >
-                            <p className="mt-4 text-xs sm:text-sm text-gray-300 leading-relaxed pt-2 border-t border-white/10">
-                              {val.desc}
-                            </p>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+            {/* Core Values Normal Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+              {valuesList.map((val, idx) => (
+                <div
+                  key={val.id}
+                  className="bg-white border border-gray-200/80 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xs hover:shadow-lg hover:border-[#d4622b]/40 hover:-translate-y-1 transition-all duration-300 group h-full"
+                >
+                  <div>
+                    {/* Icon Container */}
+                    <div className="w-12 h-12 rounded-2xl bg-[#faf8f5] border border-gray-100 flex items-center justify-center text-[#d4622b] group-hover:scale-110 transition-transform duration-300">
+                      {val.icon}
                     </div>
 
-                    <div className="mt-6 flex items-center justify-between pt-4 border-t border-current/10">
-                      <span className={`text-[10px] font-bold uppercase tracking-widest ${isActive ? "text-[#d4622b]" : "text-gray-400"}`}>
-                        {isActive ? "Active Value" : "Click to view"}
-                      </span>
-                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${isActive ? "bg-[#d4622b] text-white" : "bg-gray-100 text-gray-700"}`}>
-                        {isActive ? "✓" : "+"}
-                      </span>
-                    </div>
-                  </motion.div>
-                );
-              })}
+                    {/* Header Title */}
+                    <h3 className="text-xl sm:text-2xl font-bold tracking-tight leading-tight mt-5 mb-3 text-[#1a1a2e]">
+                      <span>{val.title1}</span>{" "}
+                      <span className="text-[#d4622b] block sm:inline">{val.title2}</span>
+                    </h3>
+
+                    {/* Full Description text */}
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed text-justify">
+                      {val.desc}
+                    </p>
+                  </div>
+
+                  {/* Bottom Index Badge */}
+                  <div className="mt-6 pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 group-hover:text-[#d4622b] transition-colors">
+                      Pillar 0{idx + 1}
+                    </span>
+                    <span className="w-2 h-2 rounded-full bg-[#d4622b]/40 group-hover:bg-[#d4622b] transition-colors" />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
