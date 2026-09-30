@@ -160,9 +160,6 @@ const teamMembers = [
   },
 ];
 
-/* ━━━ INTERACTIVE CANVAS SPHERE PARTICLES (HERO 3D ANIMATION) ━━━ */
-import ThreeDCardCarousel from "@/components/ThreeDCardCarousel";
-
 export default function AboutPage() {
   /* Life Carousel state */
   const [lifeIdx, setLifeIdx] = useState(0);
@@ -189,92 +186,86 @@ export default function AboutPage() {
 
       <main className="bg-[#faf8f5] text-[#1a1a2e] min-h-screen overflow-x-hidden pt-20">
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            1. HERO: HEADLINE ON LEFT + COMPACT 3D CARDS AT TOP RIGHT
+            1. HERO: CLEAN EDITORIAL HEADLINE, STORY & KEY METRICS
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="relative overflow-hidden border-b border-gray-200/80 bg-white pt-10 pb-14 sm:pt-14 sm:pb-20">
+        <section className="relative overflow-hidden border-b border-gray-200/80 bg-white pt-12 pb-16 sm:pt-16 sm:pb-20">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* Top Row Grid: Headline on Left, 3D Rotating Cylinder on Top Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center mb-10 sm:mb-12">
-              {/* Left Column: Breadcrumb + Tag + Giant Headline */}
-              <div className="lg:col-span-7 flex flex-col justify-center">
-                <nav aria-label="Breadcrumb" className="mb-4">
-                  <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
-                    <li>
-                      <Link href="/" className="hover:text-[#d4622b] transition-colors">
-                        Home
-                      </Link>
-                    </li>
-                    <li>/</li>
-                    <li className="text-gray-900">About Us</li>
-                  </ol>
-                </nav>
+            {/* Breadcrumb + Tag */}
+            <div className="mb-5">
+              <nav aria-label="Breadcrumb" className="mb-4">
+                <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
+                  <li>
+                    <Link href="/" className="hover:text-[#d4622b] transition-colors">
+                      Home
+                    </Link>
+                  </li>
+                  <li>/</li>
+                  <li className="text-gray-900">About Us</li>
+                </ol>
+              </nav>
 
-                <motion.div
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="mb-3"
-                >
-                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
-                    About Us
-                  </span>
-                </motion.div>
-
-                <motion.h1
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]"
-                >
-                  <motion.span
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1, duration: 0.6 }}
-                    className="block"
-                  >
-                    Crafting Workspaces.
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.25, duration: 0.6 }}
-                    className="block text-gray-400 hover:text-gray-600 transition-colors duration-300"
-                  >
-                    Built Around Ambition.
-                  </motion.span>
-                  <motion.span
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="block text-gray-300 hover:text-gray-500 transition-colors duration-300"
-                  >
-                    Brand &amp; People.
-                  </motion.span>
-                </motion.h1>
-              </div>
-
-              {/* Right Column (TOP RIGHT): Compact 3D Card Carousel */}
-              <div className="lg:col-span-5 flex items-center justify-center lg:justify-end">
-                <ThreeDCardCarousel />
-              </div>
+              <motion.div
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
+                  About Us
+                </span>
+              </motion.div>
             </div>
 
-            {/* Bottom Row Grid: Story Description & CTAs on Left, Metrics on Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start border-t border-gray-100 pt-8 sm:pt-10">
+            {/* Giant Editorial Headline */}
+            <div className="max-w-5xl mb-12 sm:mb-16">
+              <motion.h1
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]"
+              >
+                <motion.span
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                  className="block"
+                >
+                  Crafting Workspaces.
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25, duration: 0.6 }}
+                  className="block text-gray-400 hover:text-gray-600 transition-colors duration-300"
+                >
+                  Built Around Ambition.
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="block text-gray-300 hover:text-gray-500 transition-colors duration-300"
+                >
+                  Brand &amp; People.
+                </motion.span>
+              </motion.h1>
+            </div>
+
+            {/* Bottom Row: Story Description & CTAs on Left, Metrics on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start border-t border-gray-100 pt-8 sm:pt-10">
               <div className="lg:col-span-7">
-                <p className="text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed text-justify">
+                <p className="text-gray-600 text-base sm:text-lg leading-relaxed text-justify">
                   Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
                 </p>
-                <p className="mt-4 text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed text-justify">
+                <p className="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed text-justify">
                   Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
                 </p>
 
                 {/* Action Buttons */}
-                <div className="mt-7 flex flex-wrap items-center gap-4">
+                <div className="mt-8 flex flex-wrap items-center gap-4">
                   <MagneticButton
                     href="/#contact"
-                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-6 py-3 sm:px-7 sm:py-3.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all"
+                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm shadow-md transition-all"
                   >
                     <span>Schedule a Visit</span>
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
@@ -283,7 +274,7 @@ export default function AboutPage() {
                   </MagneticButton>
                   <Link
                     href="/locations/delhi"
-                    className="text-[#1a1a2e] font-bold text-xs sm:text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2"
+                    className="text-[#1a1a2e] font-bold text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2"
                   >
                     Explore Locations &rarr;
                   </Link>
@@ -291,18 +282,18 @@ export default function AboutPage() {
               </div>
 
               {/* Right Side: Key Metric Badges */}
-              <div className="lg:col-span-5 grid grid-cols-3 gap-3 bg-[#faf8f5] p-5 sm:p-6 rounded-2xl border border-[#e8dfd2]">
+              <div className="lg:col-span-5 grid grid-cols-3 gap-3 bg-[#faf8f5] p-6 sm:p-7 rounded-3xl border border-[#e8dfd2]">
                 <div>
-                  <span className="block text-2xl sm:text-3xl font-black text-[#d4622b]">11+</span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-1 block">NCR Centres</span>
+                  <span className="block text-3xl sm:text-4xl font-black text-[#d4622b]">11+</span>
+                  <span className="text-xs text-gray-500 font-bold uppercase mt-1.5 block">NCR Centres</span>
                 </div>
                 <div>
-                  <span className="block text-2xl sm:text-3xl font-black text-[#1a1a2e]">75 Days</span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-1 block">Turnkey Build</span>
+                  <span className="block text-3xl sm:text-4xl font-black text-[#1a1a2e]">75 Days</span>
+                  <span className="text-xs text-gray-500 font-bold uppercase mt-1.5 block">Turnkey Build</span>
                 </div>
                 <div>
-                  <span className="block text-2xl sm:text-3xl font-black text-[#d4622b]">425+</span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-1 block">Enterprises</span>
+                  <span className="block text-3xl sm:text-4xl font-black text-[#d4622b]">425+</span>
+                  <span className="text-xs text-gray-500 font-bold uppercase mt-1.5 block">Enterprises</span>
                 </div>
               </div>
             </div>
