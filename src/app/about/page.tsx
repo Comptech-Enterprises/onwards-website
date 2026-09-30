@@ -114,7 +114,7 @@ const teamMembers = [
     initials: "SJ",
     email: "suvrat@onwardworkspaces.com",
     linkedin: "https://www.linkedin.com/",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp",
+    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Aakash Sharma",
@@ -123,7 +123,7 @@ const teamMembers = [
     initials: "AS",
     email: "aakash@onwardworkspaces.com",
     linkedin: "https://www.linkedin.com/",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp",
+    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Rhea Sen",
@@ -132,7 +132,7 @@ const teamMembers = [
     initials: "RS",
     email: "rhea@onwardworkspaces.com",
     linkedin: "https://www.linkedin.com/",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613882593.webp",
+    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Vikram Malhotra",
@@ -141,7 +141,7 @@ const teamMembers = [
     initials: "VM",
     email: "vikram@onwardworkspaces.com",
     linkedin: "https://www.linkedin.com/",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613882635.webp",
+    img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Pooja Verma",
@@ -150,7 +150,7 @@ const teamMembers = [
     initials: "PV",
     email: "pooja@onwardworkspaces.com",
     linkedin: "https://www.linkedin.com/",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613882693.webp",
+    img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Nitin Mehra",
@@ -159,7 +159,7 @@ const teamMembers = [
     initials: "NM",
     email: "nitin@onwardworkspaces.com",
     linkedin: "https://www.linkedin.com/",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614051010.webp",
+    img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
