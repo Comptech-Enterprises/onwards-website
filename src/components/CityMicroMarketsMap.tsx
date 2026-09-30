@@ -39,7 +39,7 @@ interface CityMapConfig {
 
 const cityMapConfigs: Record<string, CityMapConfig> = {
   delhi: {
-    viewBox: "-60 40 880 480",
+    viewBox: "10 110 760 380",
     pins: {
       "connaught-place": { x: 421.5, y: 167.0, labelPos: "right", subtext: "Central Business Dist." },
       "janakpuri": { x: 80.0, y: 310.0, labelPos: "right", subtext: "West Delhi Commercial" },
@@ -49,19 +49,19 @@ const cityMapConfigs: Record<string, CityMapConfig> = {
     },
     watermark: "DELHI",
     tagline: "METRO ARTERIAL MATRIX",
-    watermarkPos: { x: 780, y: 480 },
+    watermarkPos: { x: 730, y: 460 },
     scale: {
-      titleSize: 11.5,
-      subSize: 9,
-      dotRadius: 4.2,
-      crosshairLen: 9.5,
-      pulseMax: 17,
-      watermarkTitle: 13,
-      watermarkSub: 9,
+      titleSize: 18,
+      subSize: 13.5,
+      dotRadius: 6.5,
+      crosshairLen: 14,
+      pulseMax: 24,
+      watermarkTitle: 16,
+      watermarkSub: 11,
     },
   },
   noida: {
-    viewBox: "460 220 480 280",
+    viewBox: "520 260 380 235",
     pins: {
       "sector-4": { x: 605.0, y: 320.0, labelPos: "right", subtext: "Institutional Core" },
       "sector-126": { x: 677.1, y: 385.3, labelPos: "right", subtext: "Tech & Corporate Dist." },
@@ -69,19 +69,19 @@ const cityMapConfigs: Record<string, CityMapConfig> = {
     },
     watermark: "NOIDA",
     tagline: "EXPRESSWAY TECH CORRIDOR",
-    watermarkPos: { x: 900, y: 475 },
+    watermarkPos: { x: 880, y: 475 },
     scale: {
-      titleSize: 7,
-      subSize: 5.5,
-      dotRadius: 3,
-      crosshairLen: 6.5,
-      pulseMax: 12,
-      watermarkTitle: 8.5,
-      watermarkSub: 5.5,
+      titleSize: 11.5,
+      subSize: 8.8,
+      dotRadius: 4.8,
+      crosshairLen: 10,
+      pulseMax: 18,
+      watermarkTitle: 11,
+      watermarkSub: 7.5,
     },
   },
   gurgaon: {
-    viewBox: "20 380 420 270",
+    viewBox: "70 420 355 260",
     pins: {
       "udyog-vihar": { x: 139.3, y: 475.5, labelPos: "right", subtext: "Adjacent Cyber City" },
       "mg-road": { x: 230.0, y: 535.0, labelPos: "right", subtext: "CBD Retail & Tech" },
@@ -89,15 +89,15 @@ const cityMapConfigs: Record<string, CityMapConfig> = {
     },
     watermark: "GURUGRAM",
     tagline: "CYBER CITY & ARTERIALS",
-    watermarkPos: { x: 400, y: 620 },
+    watermarkPos: { x: 400, y: 640 },
     scale: {
-      titleSize: 6.5,
-      subSize: 5.2,
-      dotRadius: 2.8,
-      crosshairLen: 6,
-      pulseMax: 11,
-      watermarkTitle: 8,
-      watermarkSub: 5.2,
+      titleSize: 10.5,
+      subSize: 8.2,
+      dotRadius: 4.5,
+      crosshairLen: 9.5,
+      pulseMax: 17,
+      watermarkTitle: 10.5,
+      watermarkSub: 7,
     },
   },
 };
@@ -130,7 +130,7 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
         </div>
 
         {/* ━━━━ BALANCED FULL-WIDTH VECTOR SVG MAP CANVAS ━━━━ */}
-        <div className="w-full bg-[#f6f1e8] rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 lg:p-7 border border-[#e8dfd2] relative overflow-hidden shadow-xs flex flex-col justify-between h-[400px] sm:h-[470px] lg:h-[520px] max-h-[540px]">
+        <div className="w-full bg-[#f6f1e8] rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 lg:p-7 border border-[#e8dfd2] relative overflow-hidden shadow-xs flex flex-col justify-between h-[450px] sm:h-[480px] lg:h-[520px] max-h-[540px]">
           {/* Top Bar inside Map */}
           <div className="relative z-20 mb-1 flex items-start sm:items-center justify-between gap-2.5">
             <div className="min-w-0 flex-1">
@@ -278,6 +278,14 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                     onMouseLeave={() => setHoveredSlug(null)}
                     className="cursor-pointer group"
                   >
+                    {/* Invisible Generous Touch Area for Mobile */}
+                    <circle
+                      cx={pin.x}
+                      cy={pin.y}
+                      r={mapConfig.scale.pulseMax * 1.8}
+                      fill="transparent"
+                    />
+
                     {/* Crosshair Targeting Lines */}
                     <line
                       x1={pin.x - crosshair}
@@ -285,7 +293,7 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                       x2={pin.x + crosshair}
                       y2={pin.y}
                       stroke={isSelected ? "#d4622b" : "#1a1a2e"}
-                      strokeWidth={isSelected ? 1.5 : 1}
+                      strokeWidth={isSelected ? 1.8 : 1.2}
                       strokeOpacity={isSelected || isHovered ? 1 : 0.45}
                     />
                     <line
@@ -294,7 +302,7 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                       x2={pin.x}
                       y2={pin.y + crosshair}
                       stroke={isSelected ? "#d4622b" : "#1a1a2e"}
-                      strokeWidth={isSelected ? 1.5 : 1}
+                      strokeWidth={isSelected ? 1.8 : 1.2}
                       strokeOpacity={isSelected || isHovered ? 1 : 0.45}
                     />
 
@@ -318,7 +326,7 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                       }}
                       fill="none"
                       stroke={isSelected ? "#d4622b" : "#d4622b"}
-                      strokeWidth={isSelected ? 1.6 : 1.2}
+                      strokeWidth={isSelected ? 1.8 : 1.3}
                     />
 
                     {/* Radial Glow Halo */}
@@ -337,14 +345,14 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                       r={dotR}
                       fill={isSelected ? "#d4622b" : "#1a1a2e"}
                       stroke="#ffffff"
-                      strokeWidth={isSelected ? 2 : 1.5}
+                      strokeWidth={isSelected ? 2.5 : 2}
                       whileHover={{ scale: 1.3 }}
                       transition={{ type: "spring", stiffness: 350 }}
                     />
 
                     {/* Micro-market Name + Subtitle Label */}
                     <text
-                      x={isLeft ? pin.x - crosshair - 5 : pin.x + crosshair + 5}
+                      x={isLeft ? pin.x - crosshair - 6 : pin.x + crosshair + 6}
                       y={pin.y - 2}
                       textAnchor={isLeft ? "end" : "start"}
                       className="font-bold select-none cursor-pointer transition-colors"
@@ -353,23 +361,23 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                         fontSize: `${mapConfig.scale.titleSize}px`,
                         paintOrder: "stroke fill",
                         stroke: "#f6f1e8",
-                        strokeWidth: 3,
+                        strokeWidth: 4,
                         strokeLinejoin: "round",
                       }}
                       fontFamily="inherit"
                     >
-                      <tspan x={isLeft ? pin.x - crosshair - 5 : pin.x + crosshair + 5} dy="0">
+                      <tspan x={isLeft ? pin.x - crosshair - 6 : pin.x + crosshair + 6} dy="0">
                         {area.name}
                       </tspan>
                       <tspan
-                        x={isLeft ? pin.x - crosshair - 5 : pin.x + crosshair + 5}
-                        dy={mapConfig.scale.titleSize + 1}
+                        x={isLeft ? pin.x - crosshair - 6 : pin.x + crosshair + 6}
+                        dy={mapConfig.scale.titleSize + 2}
                         fill={isSelected ? "#d4622b" : isHovered ? "#d4622b" : "#6b7280"}
                         style={{
                           fontSize: `${mapConfig.scale.subSize}px`,
                           fontWeight: isSelected ? 700 : 600,
                           stroke: "#f6f1e8",
-                          strokeWidth: 2,
+                          strokeWidth: 3,
                         }}
                       >
                         {pin.subtext || countText}
