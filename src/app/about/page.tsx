@@ -173,18 +173,31 @@ export default function AboutPage() {
   /* Team member bio drawer state */
   const [expandedTeamMember, setExpandedTeamMember] = useState<string | null>(null);
 
-  /* Scroll hooks for sticky welcome scattered photo parallax */
+  /* Scroll hooks for sticky welcome multi-wave photo gallery */
   const welcomeRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress: welcomeProgress } = useScroll({
     target: welcomeRef,
     offset: ["start start", "end end"],
   });
 
-  const y1 = useTransform(welcomeProgress, [0, 1], [80, -90]);
-  const y2 = useTransform(welcomeProgress, [0, 1], [130, -140]);
-  const y3 = useTransform(welcomeProgress, [0, 1], [50, -60]);
-  const y4 = useTransform(welcomeProgress, [0, 1], [110, -120]);
-  const y5 = useTransform(welcomeProgress, [0, 1], [70, -80]);
+  // Wave 1: active from 0.0 to 0.52 (fades in at start, floats up, fades out smoothly)
+  const wave1Opacity = useTransform(welcomeProgress, [0, 0.08, 0.38, 0.50], [0.4, 1, 1, 0]);
+  const wave1Scale = useTransform(welcomeProgress, [0, 0.25, 0.50], [0.94, 1, 1.04]);
+  const wave1Y1 = useTransform(welcomeProgress, [0, 0.50], [60, -90]);
+  const wave1Y2 = useTransform(welcomeProgress, [0, 0.50], [100, -130]);
+  const wave1Y3 = useTransform(welcomeProgress, [0, 0.50], [40, -60]);
+  const wave1Y4 = useTransform(welcomeProgress, [0, 0.50], [90, -110]);
+  const wave1Y5 = useTransform(welcomeProgress, [0, 0.50], [50, -80]);
+
+  // Wave 2: active from 0.44 to 1.0 (fades in from middle, floats up with fresh photos, fades at end)
+  const wave2Opacity = useTransform(welcomeProgress, [0.44, 0.56, 0.88, 1.0], [0, 1, 1, 0.3]);
+  const wave2Scale = useTransform(welcomeProgress, [0.44, 0.70, 1.0], [0.94, 1, 1.03]);
+  const wave2Y1 = useTransform(welcomeProgress, [0.44, 1.0], [90, -90]);
+  const wave2Y2 = useTransform(welcomeProgress, [0.44, 1.0], [130, -130]);
+  const wave2Y3 = useTransform(welcomeProgress, [0.44, 1.0], [50, -50]);
+  const wave2Y4 = useTransform(welcomeProgress, [0.44, 1.0], [110, -110]);
+  const wave2Y5 = useTransform(welcomeProgress, [0.44, 1.0], [70, -80]);
+
   const textScale = useTransform(welcomeProgress, [0, 0.5, 1], [0.96, 1, 0.98]);
 
   return (
@@ -314,19 +327,20 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. BRILEAN STICKY WELCOME WALL: FLOATING SCATTERED GALLERY
+            2. BRILEAN STICKY WELCOME WALL: MULTI-WAVE FLOATING GALLERY
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={welcomeRef}
-          className="relative h-[220vh] bg-white border-b border-gray-200/80"
+          className="relative h-[320vh] bg-white border-b border-gray-200/80"
         >
           {/* Sticky Viewport Container */}
           <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
             
-            {/* ── Photo 1 (Top Left - Landscape) ── */}
+            {/* ══════════ WAVE 1 PHOTOS (Scroll 0% to 50%) ══════════ */}
+            {/* ── Photo 1.1 (Top Left - Landscape) ── */}
             <motion.div
-              style={{ y: y1 }}
-              className="absolute top-[6%] sm:top-[8%] left-[2%] sm:left-[5%] lg:left-[8%] w-[200px] sm:w-[320px] lg:w-[400px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+              style={{ y: wave1Y1, opacity: wave1Opacity, scale: wave1Scale }}
+              className="absolute top-[6%] sm:top-[8%] left-[2%] sm:left-[5%] lg:left-[8%] w-[200px] sm:w-[320px] lg:w-[400px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
             >
               <Image
                 src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
@@ -337,10 +351,10 @@ export default function AboutPage() {
               />
             </motion.div>
 
-            {/* ── Photo 2 (Top Right - Portrait) ── */}
+            {/* ── Photo 1.2 (Top Right - Portrait) ── */}
             <motion.div
-              style={{ y: y2 }}
-              className="absolute top-[3%] sm:top-[5%] right-[2%] sm:right-[5%] lg:right-[8%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+              style={{ y: wave1Y2, opacity: wave1Opacity, scale: wave1Scale }}
+              className="absolute top-[3%] sm:top-[5%] right-[2%] sm:right-[5%] lg:right-[8%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
             >
               <Image
                 src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp"
@@ -351,24 +365,24 @@ export default function AboutPage() {
               />
             </motion.div>
 
-            {/* ── Photo 3 (Center Top - Portrait, overlapping above center text) ── */}
+            {/* ── Photo 1.3 (Center Top - Portrait, overlapping above center text) ── */}
             <motion.div
-              style={{ y: y3 }}
-              className="absolute top-[10%] sm:top-[12%] lg:top-[9%] left-1/2 -translate-x-1/2 w-[140px] sm:w-[200px] lg:w-[250px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+              style={{ y: wave1Y3, opacity: wave1Opacity, scale: wave1Scale }}
+              className="absolute top-[10%] sm:top-[12%] lg:top-[9%] left-1/2 -translate-x-1/2 w-[140px] sm:w-[200px] lg:w-[250px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
             >
               <Image
-                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790614210609.webp"
-                alt="Collaborative workshop space"
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp"
+                alt="Executive enterprise meeting room"
                 fill
                 sizes="(max-width: 768px) 140px, 250px"
                 className="object-cover"
               />
             </motion.div>
 
-            {/* ── Photo 4 (Bottom Left - Portrait) ── */}
+            {/* ── Photo 1.4 (Bottom Left - Portrait) ── */}
             <motion.div
-              style={{ y: y4 }}
-              className="absolute bottom-[4%] sm:bottom-[6%] left-[3%] sm:left-[7%] lg:left-[12%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+              style={{ y: wave1Y4, opacity: wave1Opacity, scale: wave1Scale }}
+              className="absolute bottom-[4%] sm:bottom-[6%] left-[3%] sm:left-[7%] lg:left-[12%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
             >
               <Image
                 src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp"
@@ -379,16 +393,87 @@ export default function AboutPage() {
               />
             </motion.div>
 
-            {/* ── Photo 5 (Bottom Center/Right - Landscape) ── */}
+            {/* ── Photo 1.5 (Bottom Center/Right - Landscape) ── */}
             <motion.div
-              style={{ y: y5 }}
-              className="absolute bottom-[5%] sm:bottom-[7%] left-[45%] sm:left-[47%] lg:left-[45%] w-[200px] sm:w-[300px] lg:w-[380px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.02]"
+              style={{ y: wave1Y5, opacity: wave1Opacity, scale: wave1Scale }}
+              className="absolute bottom-[5%] sm:bottom-[7%] left-[45%] sm:left-[47%] lg:left-[45%] w-[200px] sm:w-[300px] lg:w-[380px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
             >
               <Image
                 src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp"
                 alt="Team gathering and celebrations"
                 fill
                 sizes="(max-width: 768px) 200px, 380px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ══════════ WAVE 2 PHOTOS (Scroll 45% to 100%) ══════════ */}
+            {/* ── Photo 2.1 (Top Left-Center - Landscape) ── */}
+            <motion.div
+              style={{ y: wave2Y1, opacity: wave2Opacity, scale: wave2Scale }}
+              className="absolute top-[5%] sm:top-[7%] left-[4%] sm:left-[8%] lg:left-[11%] w-[200px] sm:w-[300px] lg:w-[390px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp"
+                alt="Ergonomic workstations & biophilic office"
+                fill
+                sizes="(max-width: 768px) 200px, 390px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 2.2 (Top Right - Portrait) ── */}
+            <motion.div
+              style={{ y: wave2Y2, opacity: wave2Opacity, scale: wave2Scale }}
+              className="absolute top-[4%] sm:top-[6%] right-[3%] sm:right-[6%] lg:right-[9%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp"
+                alt="Sunlit atrium and coffee cafe lounge"
+                fill
+                sizes="(max-width: 768px) 130px, 240px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 2.3 (Center Top - Portrait) ── */}
+            <motion.div
+              style={{ y: wave2Y3, opacity: wave2Opacity, scale: wave2Scale }}
+              className="absolute top-[11%] sm:top-[13%] lg:top-[10%] left-1/2 -translate-x-1/2 w-[140px] sm:w-[200px] lg:w-[250px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790526.webp"
+                alt="Dynamic private enterprise office"
+                fill
+                sizes="(max-width: 768px) 140px, 250px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 2.4 (Bottom Left - Portrait) ── */}
+            <motion.div
+              style={{ y: wave2Y4, opacity: wave2Opacity, scale: wave2Scale }}
+              className="absolute bottom-[4%] sm:bottom-[6%] left-[2%] sm:left-[5%] lg:left-[8%] w-[130px] sm:w-[190px] lg:w-[240px] aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790382.webp"
+                alt="Team collaboration in studio"
+                fill
+                sizes="(max-width: 768px) 130px, 240px"
+                className="object-cover"
+              />
+            </motion.div>
+
+            {/* ── Photo 2.5 (Bottom Right - Landscape) ── */}
+            <motion.div
+              style={{ y: wave2Y5, opacity: wave2Opacity, scale: wave2Scale }}
+              className="absolute bottom-[5%] sm:bottom-[7%] right-[4%] sm:right-[7%] lg:right-[10%] w-[200px] sm:w-[310px] lg:w-[390px] aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-black/5 z-10 transition-shadow duration-300 hover:shadow-2xl"
+            >
+              <Image
+                src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719861.webp"
+                alt="Relaxed breakout lounge and coffee bar"
+                fill
+                sizes="(max-width: 768px) 200px, 390px"
                 className="object-cover"
               />
             </motion.div>
