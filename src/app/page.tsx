@@ -1108,40 +1108,36 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.85, duration: 0.6 }}
-          className="relative z-20 w-full border-t border-white/15 bg-black/20 backdrop-blur-md text-left"
+          className="relative z-20 w-full border-t border-white/15 bg-black/25 backdrop-blur-md"
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-4 sm:py-8 grid grid-cols-2 md:grid-cols-4 gap-y-4 md:gap-y-0">
-            {stats.map((s, idx) => (
-              <div
-                key={s.label}
-                className={`flex flex-col justify-start text-left ${
-                  idx === 0
-                    ? "pr-3 sm:pr-6"
-                    : idx === 2
-                    ? "border-t md:border-t-0 border-white/10 pt-3 md:pt-0 md:border-l md:border-white/15 md:pl-6 lg:pl-10"
-                    : idx === 1
-                    ? "border-l border-white/15 pl-4 sm:pl-6 lg:pl-10"
-                    : "border-t md:border-t-0 border-white/10 pt-3 md:pt-0 border-l border-white/15 pl-4 sm:pl-6 lg:pl-10"
-                }`}
-              >
-                <div className="text-2xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none">
-                  <SpringCounter
-                    target={s.value}
-                    suffix={s.suffix}
-                    decimals={s.decimals}
-                    className="tabular-nums font-light sm:font-normal"
-                  />
-                </div>
-                <div className="text-[9px] sm:text-[11px] font-semibold tracking-[0.2em] text-white/70 uppercase mt-1.5 sm:mt-2">
-                  {s.label}
-                </div>
-                {s.footnote && (
-                  <div className="text-[9px] sm:text-[10px] text-white/50 font-normal mt-1 sm:mt-2 tracking-normal">
-                    {s.footnote}
+          <div className="max-w-5xl mx-auto px-6 py-6 sm:py-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/15">
+              {stats.map((s, idx) => (
+                <div
+                  key={s.label}
+                  className={`flex flex-col items-center justify-center text-center py-3 md:py-0 px-3 sm:px-6 ${
+                    idx >= 2 ? "pt-4 md:pt-0" : ""
+                  }`}
+                >
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none text-center">
+                    <SpringCounter
+                      target={s.value}
+                      suffix={s.suffix}
+                      decimals={s.decimals}
+                      className="tabular-nums font-light sm:font-normal"
+                    />
                   </div>
-                )}
-              </div>
-            ))}
+                  <div className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-white/80 uppercase mt-2 text-center">
+                    {s.label}
+                  </div>
+                  {s.footnote && (
+                    <div className="text-[9px] sm:text-[10px] text-white/50 font-normal mt-1 tracking-normal text-center">
+                      {s.footnote}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </motion.div>
       </section>

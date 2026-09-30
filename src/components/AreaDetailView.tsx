@@ -6,6 +6,7 @@ import Reveal from "@/components/Reveal";
 import MagneticButton from "@/components/MagneticButton";
 import AmenitiesTicker from "@/components/AmenitiesTicker";
 import ContactSection from "@/components/ContactSection";
+import AreaWorkspacesSelector from "@/components/AreaWorkspacesSelector";
 import type { AreaDetail, CityData } from "@/data/locations";
 
 export default function AreaDetailView({ city, area }: { city: CityData; area: AreaDetail }) {
@@ -61,6 +62,9 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
             </p>
           </div>
         </section>
+
+        {/* ━━━ WORKSPACE OFFERINGS SELECTOR (LEVEL 2 FILTERS + LEVEL 3 SLIDER) ━━━ */}
+        <AreaWorkspacesSelector area={area} />
 
         {/* ━━━ AREA DETAILS ━━━ */}
         <section className="py-10 lg:py-12 bg-white border-b border-gray-200/80">
