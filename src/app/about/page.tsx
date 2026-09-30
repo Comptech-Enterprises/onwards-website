@@ -258,17 +258,49 @@ export default function AboutPage() {
                   </ol>
                 </nav>
 
-                <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase mb-2 block">
-                  About Us
-                </span>
+                <motion.div
+                  initial={{ opacity: 0, x: -15 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="mb-3"
+                >
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
+                    About Us
+                  </span>
+                </motion.div>
 
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]">
-                  Crafting Workspaces.
-                  <br />
-                  <span className="text-gray-400">Built Around Ambition.</span>
-                  <br />
-                  <span className="text-gray-300">Brand &amp; People.</span>
-                </h1>
+                <motion.h1
+                  initial={{ opacity: 0, y: 25 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]"
+                >
+                  <motion.span
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1, duration: 0.6 }}
+                    className="block"
+                  >
+                    Crafting Workspaces.
+                  </motion.span>
+                  <motion.span
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25, duration: 0.6 }}
+                    className="block text-gray-400 hover:text-gray-600 transition-colors duration-300"
+                  >
+                    Built Around Ambition.
+                  </motion.span>
+                  <motion.span
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="block text-gray-300 hover:text-gray-500 transition-colors duration-300"
+                  >
+                    Brand &amp; People.
+                  </motion.span>
+                </motion.h1>
               </div>
 
               {/* Right Column (TOP RIGHT): Compact 3D Card Carousel */}
