@@ -104,12 +104,14 @@ const teamMembers = [
   { name: "Nitin Mehra", role: "Director of Enterprise Solutions", initials: "NM" },
 ];
 
-const welcomePhotos = [
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp", pos: "top-[8%] left-[4%] sm:left-[6%] lg:left-[8%]", w: "w-44 sm:w-64 lg:w-80", aspect: "aspect-[16/10]", speed: 0.4 },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp", pos: "top-[4%] right-[6%] sm:right-[10%] lg:right-[14%]", w: "w-28 sm:w-40 lg:w-48", aspect: "aspect-[3/4]", speed: 0.6 },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp", pos: "top-[16%] left-1/2 -translate-x-1/2", w: "w-28 sm:w-36 lg:w-44", aspect: "aspect-[3/4]", speed: 0.3 },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp", pos: "bottom-[6%] left-[8%] sm:left-[14%] lg:left-[18%]", w: "w-28 sm:w-36 lg:w-44", aspect: "aspect-[3/4]", speed: 0.5 },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp", pos: "bottom-[8%] left-[42%] sm:left-[45%] lg:left-[48%] -translate-x-[20%]", w: "w-44 sm:w-60 lg:w-72", aspect: "aspect-[16/10]", speed: 0.35 },
+const welcomeRow1 = [
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
+];
+const welcomeRow2 = [
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
 ];
 
 /* ━━━ SCROLL-REVEAL ━━━ */
@@ -127,22 +129,19 @@ function ScrollReveal({ children, className = "", delay = 0, y = 60 }: { childre
   );
 }
 
-/* ━━━ WELCOME PHOTO with individual parallax ━━━ */
-function WelcomePhoto({ src, pos, w, aspect, speed, idx }: { src: string; pos: string; w: string; aspect: string; speed: number; idx: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [speed * 150, speed * -150]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [idx % 2 === 0 ? -4 : 4, idx % 2 === 0 ? 4 : -4]);
+/* ━━━ WELCOME GRID PHOTO — scroll-scrubbed fade+slide ━━━ */
+function WelcomeGridPhoto({ src, aspect, w, progress, start, end }: {
+  src: string; aspect: string; w: string;
+  progress: import("framer-motion").MotionValue<number>;
+  start: number; end: number;
+}) {
+  const opacity = useTransform(progress, [start, end, 0.92, 1], [0, 1, 1, 0]);
+  const y = useTransform(progress, [start, end], [48, 0]);
 
   return (
     <motion.div
-      ref={ref}
-      style={{ y, rotate }}
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 1, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-      className={`absolute ${pos} ${w} ${aspect} rounded-2xl overflow-hidden shadow-lg border border-black/5 z-10 transition-transform duration-500 hover:scale-[1.04]`}
+      style={{ opacity, y }}
+      className={`relative ${w} ${aspect} rounded-2xl overflow-hidden shadow-lg border border-black/5 shrink-0`}
     >
       <Image src={src} alt="Onward Workspaces" fill sizes="(max-width:768px) 180px, 320px" className="object-cover" />
     </motion.div>
@@ -183,8 +182,8 @@ export default function AboutPage() {
     target: welcomeStickyRef,
     offset: ["start start", "end end"],
   });
-  const welcomeTextScale = useTransform(welcomeProgress, [0, 0.3, 0.7, 1], [0.92, 1, 1, 0.95]);
-  const welcomeTextOp = useTransform(welcomeProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
+  const welcomeTextScale = useTransform(welcomeProgress, [0, 0.03, 0.88, 1], [0.92, 1, 1, 0.95]);
+  const welcomeTextOp = useTransform(welcomeProgress, [0, 0.02, 0.88, 1], [0, 1, 1, 0]);
 
   /* ═══════════════════════════════════════════════════════════
      SECTION BG SWEEP: dark background sweeps left-to-right
@@ -308,75 +307,79 @@ export default function AboutPage() {
         </div>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. WELCOME — PINNED STICKY with scattered parallax photos
-            Tall wrapper, sticky centered title, photos float around.
+            2. WELCOME — PINNED STICKY with flex grid photos
+            Brilean pattern: photos in 2-row flex grid, scroll-scrubbed
+            fade+slide (opacity 0→1, translateY 48→0). Title sticky centered.
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div ref={welcomeStickyRef} className="relative bg-white border-b border-gray-200/80" style={{ height: "180vh" }}>
+        <div ref={welcomeStickyRef} className="relative bg-white border-b border-gray-200/80" style={{ height: "350vh" }}>
           <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden flex items-center justify-center">
-            <div className="relative w-full max-w-7xl mx-auto h-full">
+            {/* Top gradient fade */}
+            <div className="absolute top-0 left-0 right-0 h-[120px] bg-gradient-to-b from-white via-white/60 to-transparent z-30 pointer-events-none" />
+            {/* Bottom gradient fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-[120px] bg-gradient-to-t from-white via-white/60 to-transparent z-30 pointer-events-none" />
 
-              {/* Parallax photos */}
-              {welcomePhotos.map((photo, i) => (
-                <WelcomePhoto key={photo.src} idx={i} {...photo} />
-              ))}
+            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 sm:gap-10">
+
+              {/* Row 1: 3 photos, space-between */}
+              <div className="flex w-full justify-between items-end gap-4">
+                {welcomeRow1.map((photo, i) => (
+                  <WelcomeGridPhoto
+                    key={photo.src}
+                    {...photo}
+                    progress={welcomeProgress}
+                    start={0.0 + i * 0.015}
+                    end={0.03 + i * 0.015}
+                  />
+                ))}
+              </div>
 
               {/* Sticky centered welcome text */}
               <motion.div
                 style={{ scale: welcomeTextScale, opacity: welcomeTextOp }}
-                className="absolute inset-0 flex items-center justify-center z-20"
+                className="z-20 text-center max-w-xl sm:max-w-2xl px-4 select-none"
               >
-                <div className="text-center max-w-xl sm:max-w-2xl px-4 select-none">
-                  <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-light text-[#1a1a2e] tracking-tight leading-[1.12]">
-                    {"Whatever brought you to this page,".split(" ").map((word, i) => (
-                      <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
-                        <motion.span
-                          initial={{ y: "100%" }}
-                          whileInView={{ y: "0%" }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.6, delay: 0.2 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                          className="inline-block"
-                        >
-                          {word}
-                        </motion.span>
-                      </span>
-                    ))}
-                    <span className="inline-block overflow-hidden mr-[0.3em]">
+                <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gray-400 mb-4">Who We Are</p>
+                <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-light text-[#1a1a2e] tracking-tight leading-[1.12]">
+                  {"Whatever brought you to this page,".split(" ").map((word, i) => (
+                    <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
                       <motion.span
                         initial={{ y: "100%" }}
                         whileInView={{ y: "0%" }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                        className="inline-block font-normal text-[#1a1a2e]"
+                        transition={{ duration: 0.6, delay: 0.2 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                        className="inline-block"
                       >
-                        welcome.
+                        {word}
                       </motion.span>
                     </span>
-                  </h2>
-
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.7 }}
-                    className="mt-6 flex justify-center"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => document.getElementById("values-section")?.scrollIntoView({ behavior: "smooth" })}
-                      aria-label="Scroll down"
-                      className="w-10 h-10 sm:w-11 sm:h-11 rounded-full border border-gray-300 hover:border-[#1a1a2e] hover:bg-black/5 flex items-center justify-center text-[#1a1a2e] transition-all duration-300 shadow-xs cursor-pointer"
+                  ))}
+                  <span className="inline-block overflow-hidden mr-[0.3em]">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      whileInView={{ y: "0%" }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                      className="inline-block font-normal text-[#1a1a2e]"
                     >
-                      <motion.svg
-                        animate={{ y: [0, 4, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                      </motion.svg>
-                    </button>
-                  </motion.div>
-                </div>
+                      welcome.
+                    </motion.span>
+                  </span>
+                </h2>
               </motion.div>
+
+              {/* Row 2: 2 photos, centered with gap */}
+              <div className="flex w-full justify-center items-start gap-[16%]">
+                {welcomeRow2.map((photo, i) => (
+                  <WelcomeGridPhoto
+                    key={photo.src}
+                    {...photo}
+                    progress={welcomeProgress}
+                    start={0.03 + i * 0.02}
+                    end={0.06 + i * 0.02}
+                  />
+                ))}
+              </div>
+
             </div>
           </div>
         </div>
