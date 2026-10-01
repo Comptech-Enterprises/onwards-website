@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MagneticButton from "@/components/MagneticButton";
+import RotatingPhotoStack from "@/components/RotatingPhotoStack";
 
 /* ━━━ 1. HERO ROTATING KEYWORDS ━━━ */
 const heroWords = [
@@ -189,6 +190,10 @@ export default function AboutPage() {
             1. HERO: CLEAN EDITORIAL HEADLINE, STORY & KEY METRICS
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section className="relative overflow-hidden border-b border-gray-200/80 bg-white pt-12 pb-16 sm:pt-16 sm:pb-20">
+          <div className="hidden xl:block absolute top-[30%] right-0 w-[620px] z-0">
+            <RotatingPhotoStack />
+          </div>
+
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Breadcrumb + Tag */}
             <div className="mb-5">
@@ -203,17 +208,6 @@ export default function AboutPage() {
                   <li className="text-gray-900">About Us</li>
                 </ol>
               </nav>
-
-              <motion.div
-                initial={{ opacity: 0, x: -15 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
-                  About Us
-                </span>
-              </motion.div>
             </div>
 
             {/* Giant Editorial Headline */}
@@ -251,9 +245,9 @@ export default function AboutPage() {
               </motion.h1>
             </div>
 
-            {/* Bottom Row: Story Description & CTAs on Left, Metrics on Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start border-t border-gray-100 pt-8 sm:pt-10">
-              <div className="lg:col-span-7">
+            {/* Story Description & CTAs */}
+            <div className="pt-8 sm:pt-10">
+              <div className="max-w-3xl">
                 <p className="text-gray-600 text-base sm:text-lg leading-relaxed text-justify">
                   Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
                 </p>
@@ -278,34 +272,6 @@ export default function AboutPage() {
                   >
                     Explore Locations &rarr;
                   </Link>
-                </div>
-              </div>
-
-              {/* Right Side: Key Metric Badges */}
-              <div className="lg:col-span-5 grid grid-cols-3 gap-2 sm:gap-4 bg-[#faf8f5] p-5 sm:p-6 lg:p-7 rounded-3xl border border-[#e8dfd2] items-center">
-                <div className="text-center sm:text-left">
-                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
-                    11+
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
-                    NCR Centres
-                  </span>
-                </div>
-                <div className="text-center sm:text-left border-x border-gray-200/80 px-2 sm:px-4">
-                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#1a1a2e] whitespace-nowrap tracking-tight leading-none">
-                    75<span className="text-sm sm:text-lg lg:text-xl font-bold text-gray-700 ml-1">Days</span>
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
-                    Turnkey Build
-                  </span>
-                </div>
-                <div className="text-center sm:text-left pl-1 sm:pl-2">
-                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
-                    425+
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
-                    Enterprises
-                  </span>
                 </div>
               </div>
             </div>
