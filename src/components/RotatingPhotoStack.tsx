@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-/* A compact, responsive 360° ring of photo cards.
-   Each card sits in 3D circular perspective with smooth auto-rotation,
-   mouse-drag steering, and scroll-linked rotation. */
+/* A full 360° ring of photo cards in 3D perspective.
+   Full-size on desktop, scales down progressively and smoothly
+   on tablet, laptop, and mobile viewports. */
 const srcs = [
   "/images/locations/delhi/gallery/okhla-3/2.jpg",
   "/images/locations/delhi/gallery/okhla-2/3.jpg",
@@ -17,9 +17,9 @@ const srcs = [
   "/images/locations/delhi/gallery/okhla-3/7.jpg",
 ];
 
-const R = 180;
-const CARD_W = 100;
-const CARD_H = 135;
+const R = 230;
+const CARD_W = 125;
+const CARD_H = 168;
 const step = 360 / srcs.length;
 
 const cards = srcs.map((src, i) => ({ src, theta: i * step }));
@@ -33,12 +33,12 @@ export default function RotatingPhotoStack() {
   const startX = useRef(0);
   const startRotate = useRef(0);
 
-  // Auto-rotation loop
+  // Smooth continuous auto-rotation
   useEffect(() => {
     let animId: number;
     const loop = () => {
       if (!isHovering.current && !isDragging.current) {
-        rotateYRef.current += 0.25;
+        rotateYRef.current += 0.22;
         setRotateY(rotateYRef.current);
       }
       animId = requestAnimationFrame(loop);
@@ -53,7 +53,7 @@ export default function RotatingPhotoStack() {
     const onScroll = () => {
       const delta = window.scrollY - lastScrollY;
       lastScrollY = window.scrollY;
-      rotateYRef.current += delta * 0.18;
+      rotateYRef.current += delta * 0.16;
       setRotateY(rotateYRef.current);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -71,7 +71,7 @@ export default function RotatingPhotoStack() {
     isHovering.current = true;
     const rect = e.currentTarget.getBoundingClientRect();
     const relX = (e.clientX - rect.left) / rect.width;
-    rotateYRef.current += (relX - 0.5) * 1.5;
+    rotateYRef.current += (relX - 0.5) * 1.4;
     setRotateY(rotateYRef.current);
   };
 
@@ -90,7 +90,7 @@ export default function RotatingPhotoStack() {
     isDragging.current = false;
   };
 
-  // Touch drag steering for mobile responsiveness
+  // Touch drag steering for mobile
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     isDragging.current = true;
     startX.current = e.touches[0].clientX;
@@ -118,15 +118,15 @@ export default function RotatingPhotoStack() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className="relative w-full h-[250px] sm:h-[280px] flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
-      style={{ perspective: "1100px" }}
+      className="relative w-full h-[220px] sm:h-[270px] md:h-[310px] lg:h-[340px] xl:h-[360px] flex items-center justify-center cursor-grab active:cursor-grabbing select-none overflow-visible"
+      style={{ perspective: "1400px" }}
     >
       <div
         style={{
           transform: `rotateY(${rotateY}deg)`,
           transformStyle: "preserve-3d",
         }}
-        className="absolute left-1/2 top-1/2 w-0 h-0 transition-transform duration-75 ease-out"
+        className="absolute left-1/2 top-1/2 w-0 h-0 transition-transform duration-75 ease-out scale-[0.56] sm:scale-[0.72] md:scale-[0.84] lg:scale-[0.92] xl:scale-100 origin-center"
       >
         {cards.map((c, i) => (
           <div
@@ -139,13 +139,13 @@ export default function RotatingPhotoStack() {
               marginLeft: -CARD_W / 2,
               marginTop: -CARD_H / 2,
             }}
-            className="absolute rounded-xl overflow-hidden shadow-xl border border-black/10 bg-gray-100 group"
+            className="absolute rounded-2xl overflow-hidden shadow-2xl border border-black/10 bg-gray-100"
           >
             <Image
               src={c.src}
-              alt="Onward Workspaces workspace preview"
+              alt="Onward Workspaces workspace"
               fill
-              sizes="110px"
+              sizes="140px"
               className="object-cover pointer-events-none"
             />
           </div>

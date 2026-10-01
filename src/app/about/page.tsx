@@ -191,58 +191,68 @@ export default function AboutPage() {
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section className="relative overflow-hidden bg-white border-b border-gray-200/80 pt-12 pb-16 sm:pt-16 sm:pb-24">
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Breadcrumb + Tag */}
-            <div className="mb-6">
-              <nav aria-label="Breadcrumb" className="mb-4">
-                <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
-                  <li><Link href="/" className="hover:text-[#d4622b] transition-colors">Home</Link></li>
-                  <li>/</li>
-                  <li className="text-gray-900">About Us</li>
-                </ol>
-              </nav>
+            {/* Breadcrumb */}
+            <nav aria-label="Breadcrumb" className="mb-6">
+              <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
+                <li><Link href="/" className="hover:text-[#d4622b] transition-colors">Home</Link></li>
+                <li>/</li>
+                <li className="text-gray-900">About Us</li>
+              </ol>
+            </nav>
 
-              <motion.div
-                initial={{ opacity: 0, x: -15 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
-                  About Us
-                </span>
-              </motion.div>
-            </div>
-
-            {/* Top Row Grid: Headline on Left, Compact 3D Photo Circle on Right */}
+            {/* Top Row Grid: Headline on Left, 3D Photo Circle on Right */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-10 sm:mb-14">
-              {/* Left Column: Giant Responsive Headline */}
+              {/* Left Column: Line-by-Line Masked Slide-Up Headline */}
               <div className="lg:col-span-7 xl:col-span-8">
-                <motion.h1
-                  initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]"
-                >
-                  <span className="block">Crafting Workspaces.</span>
-                  <span className="block text-gray-400 hover:text-gray-600 transition-colors duration-300">
-                    Built Around Ambition.
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.06]">
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                      className="block"
+                    >
+                      Crafting Workspaces.
+                    </motion.span>
                   </span>
-                  <span className="block text-gray-300 hover:text-gray-500 transition-colors duration-300">
-                    Brand &amp; People.
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                      className="block text-gray-400 hover:text-gray-600 transition-colors duration-300"
+                    >
+                      Built Around Ambition.
+                    </motion.span>
                   </span>
-                </motion.h1>
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
+                      className="block text-gray-300 hover:text-gray-500 transition-colors duration-300"
+                    >
+                      Brand &amp; People.
+                    </motion.span>
+                  </span>
+                </h1>
               </div>
 
-              {/* Right Column: Compact, Perfectly Contained 3D Rotating Photo Ring */}
+              {/* Right Column: 3D Rotating Photo Ring (large on desktop, progressively smaller on mobile) */}
               <div className="lg:col-span-5 xl:col-span-4 flex items-center justify-center lg:justify-end overflow-visible">
-                <div className="w-full max-w-[320px] sm:max-w-[360px] h-[240px] sm:h-[270px] flex items-center justify-center">
+                <div className="w-full max-w-[360px] sm:max-w-[420px] h-[240px] sm:h-[280px] md:h-[320px] lg:h-[340px] flex items-center justify-center">
                   <RotatingPhotoStack />
                 </div>
               </div>
             </div>
 
             {/* Story Description & Action CTAs */}
-            <div className="border-t border-gray-100 pt-8 sm:pt-10 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="border-t border-gray-100 pt-8 sm:pt-10 max-w-4xl"
+            >
               <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
                 Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
               </p>
@@ -263,7 +273,7 @@ export default function AboutPage() {
                   Explore Locations &rarr;
                 </Link>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
