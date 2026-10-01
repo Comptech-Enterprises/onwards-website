@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MagneticButton from "@/components/MagneticButton";
+import RotatingPhotoStack from "@/components/RotatingPhotoStack";
 
 /* ━━━ DATA ━━━ */
 
@@ -212,22 +213,32 @@ export default function AboutPage() {
               </motion.div>
             </div>
 
-            {/* Giant Responsive Headline */}
-            <div className="max-w-5xl mb-12 sm:mb-16">
-              <motion.h1
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]"
-              >
-                <span className="block">Crafting Workspaces.</span>
-                <span className="block text-gray-400 hover:text-gray-600 transition-colors duration-300">
-                  Built Around Ambition.
-                </span>
-                <span className="block text-gray-300 hover:text-gray-500 transition-colors duration-300">
-                  Brand &amp; People.
-                </span>
-              </motion.h1>
+            {/* Top Row Grid: Headline on Left, Compact 3D Photo Circle on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-10 sm:mb-14">
+              {/* Left Column: Giant Responsive Headline */}
+              <div className="lg:col-span-7 xl:col-span-8">
+                <motion.h1
+                  initial={{ opacity: 0, y: 25 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]"
+                >
+                  <span className="block">Crafting Workspaces.</span>
+                  <span className="block text-gray-400 hover:text-gray-600 transition-colors duration-300">
+                    Built Around Ambition.
+                  </span>
+                  <span className="block text-gray-300 hover:text-gray-500 transition-colors duration-300">
+                    Brand &amp; People.
+                  </span>
+                </motion.h1>
+              </div>
+
+              {/* Right Column: Compact, Perfectly Contained 3D Rotating Photo Ring */}
+              <div className="lg:col-span-5 xl:col-span-4 flex items-center justify-center lg:justify-end overflow-visible">
+                <div className="w-full max-w-[320px] sm:max-w-[360px] h-[240px] sm:h-[270px] flex items-center justify-center">
+                  <RotatingPhotoStack />
+                </div>
+              </div>
             </div>
 
             {/* Story Description & Action CTAs */}

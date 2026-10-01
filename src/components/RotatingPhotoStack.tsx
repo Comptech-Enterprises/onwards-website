@@ -3,11 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
-/* A full 360° ring of photo cards, carousel-style — each card sits on a
-   circle (rotateY + translateZ), facing outward. The browser's own 3D
-   perspective naturally foreshortens/shrinks cards as they swing toward
-   the back. Rotation tracks page scroll position (scrub, reversible);
-   hovering takes over and the ring tracks the mouse position instead. */
+/* A compact, responsive 360° ring of photo cards.
+   Each card sits in 3D circular perspective with smooth auto-rotation,
+   mouse-drag steering, and scroll-linked rotation. */
 const srcs = [
   "/images/locations/delhi/gallery/okhla-3/2.jpg",
   "/images/locations/delhi/gallery/okhla-2/3.jpg",
@@ -17,56 +15,118 @@ const srcs = [
   "/images/locations/delhi/gallery/okhla-3/6.jpg",
   "/images/locations/delhi/gallery/okhla-2/4.jpg",
   "/images/locations/delhi/gallery/okhla-3/7.jpg",
-  "/images/locations/delhi/gallery/okhla-2/5.jpg",
-  "/images/locations/delhi/gallery/okhla-3/1.jpg",
 ];
 
-const R = 240;
-const CARD_W = 130;
-const CARD_H = 172;
+const R = 180;
+const CARD_W = 100;
+const CARD_H = 135;
 const step = 360 / srcs.length;
-const DEG_PER_PX = 0.15;
 
 const cards = srcs.map((src, i) => ({ src, theta: i * step }));
 
 export default function RotatingPhotoStack() {
-  const ref = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [rotateY, setRotateY] = useState(0);
-  const hovering = useRef(false);
+  const rotateYRef = useRef(0);
+  const isHovering = useRef(false);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const startRotate = useRef(0);
 
+  // Auto-rotation loop
   useEffect(() => {
-    const onScroll = () => {
-      if (hovering.current) return;
-      setRotateY(window.scrollY * DEG_PER_PX);
+    let animId: number;
+    const loop = () => {
+      if (!isHovering.current && !isDragging.current) {
+        rotateYRef.current += 0.25;
+        setRotateY(rotateYRef.current);
+      }
+      animId = requestAnimationFrame(loop);
     };
-    onScroll();
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, []);
+
+  // Scroll scrub rotation
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const onScroll = () => {
+      const delta = window.scrollY - lastScrollY;
+      lastScrollY = window.scrollY;
+      rotateYRef.current += delta * 0.18;
+      setRotateY(rotateYRef.current);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Mouse move steering
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    hovering.current = true;
+    if (isDragging.current) {
+      const delta = (e.clientX - startX.current) * 0.5;
+      rotateYRef.current = startRotate.current + delta;
+      setRotateY(rotateYRef.current);
+      return;
+    }
+    isHovering.current = true;
     const rect = e.currentTarget.getBoundingClientRect();
     const relX = (e.clientX - rect.left) / rect.width;
-    setRotateY((relX - 0.5) * 2 * 220);
+    rotateYRef.current += (relX - 0.5) * 1.5;
+    setRotateY(rotateYRef.current);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    isDragging.current = true;
+    startX.current = e.clientX;
+    startRotate.current = rotateYRef.current;
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
   };
 
   const handleMouseLeave = () => {
-    hovering.current = false;
-    setRotateY(window.scrollY * DEG_PER_PX);
+    isHovering.current = false;
+    isDragging.current = false;
+  };
+
+  // Touch drag steering for mobile responsiveness
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    isDragging.current = true;
+    startX.current = e.touches[0].clientX;
+    startRotate.current = rotateYRef.current;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging.current) return;
+    const delta = (e.touches[0].clientX - startX.current) * 0.5;
+    rotateYRef.current = startRotate.current + delta;
+    setRotateY(rotateYRef.current);
+  };
+
+  const handleTouchEnd = () => {
+    isDragging.current = false;
   };
 
   return (
     <div
-      ref={ref}
+      ref={containerRef}
       onMouseMove={handleMouseMove}
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
-      className="relative w-full h-[320px] cursor-grab"
-      style={{ perspective: "1600px" }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className="relative w-full h-[250px] sm:h-[280px] flex items-center justify-center cursor-grab active:cursor-grabbing select-none"
+      style={{ perspective: "1100px" }}
     >
       <div
-        style={{ transform: `rotateY(${rotateY}deg)`, transformStyle: "preserve-3d" }}
-        className="absolute left-1/2 top-1/2 w-0 h-0 transition-transform duration-150 ease-out"
+        style={{
+          transform: `rotateY(${rotateY}deg)`,
+          transformStyle: "preserve-3d",
+        }}
+        className="absolute left-1/2 top-1/2 w-0 h-0 transition-transform duration-75 ease-out"
       >
         {cards.map((c, i) => (
           <div
@@ -79,9 +139,15 @@ export default function RotatingPhotoStack() {
               marginLeft: -CARD_W / 2,
               marginTop: -CARD_H / 2,
             }}
-            className="absolute rounded-xl overflow-hidden shadow-2xl border border-white/30"
+            className="absolute rounded-xl overflow-hidden shadow-xl border border-black/10 bg-gray-100 group"
           >
-            <Image src={c.src} alt="Onward Workspaces" fill className="object-cover" />
+            <Image
+              src={c.src}
+              alt="Onward Workspaces workspace preview"
+              fill
+              sizes="110px"
+              className="object-cover pointer-events-none"
+            />
           </div>
         ))}
       </div>
