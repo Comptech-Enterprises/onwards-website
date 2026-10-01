@@ -129,7 +129,13 @@ const heroVideoSlides = [
   },
 ];
 
-const stats = [
+const stats: Array<{
+  value: number;
+  suffix: string;
+  label: string;
+  decimals: number;
+  footnote?: string;
+}> = [
   { value: 9, suffix: "", label: "CITIES", decimals: 0 },
   { value: 11.46, suffix: "", label: "MN SQ FT", decimals: 2 },
   { value: 425, suffix: "+", label: "ENTERPRISE CLIENTS", decimals: 0 },

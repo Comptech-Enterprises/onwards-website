@@ -192,7 +192,7 @@ export default function AboutPage() {
   const sweepRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: sweepProgress } = useScroll({
     target: sweepRef,
-    offset: ["start center", "start top"],
+    offset: ["start center", "start start"],
   });
   const sweepX = useTransform(sweepProgress, [0, 1], ["100%", "0%"]);
 
