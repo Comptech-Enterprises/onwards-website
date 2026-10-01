@@ -129,25 +129,6 @@ function ScrollReveal({ children, className = "", delay = 0, y = 60 }: { childre
   );
 }
 
-/* ━━━ WELCOME GRID PHOTO — scroll-scrubbed fade+slide ━━━ */
-function WelcomeGridPhoto({ src, aspect, w, progress, start, end }: {
-  src: string; aspect: string; w: string;
-  progress: import("framer-motion").MotionValue<number>;
-  start: number; end: number;
-}) {
-  const opacity = useTransform(progress, [start, end, 0.92, 1], [0, 1, 1, 0]);
-  const y = useTransform(progress, [start, end], [48, 0]);
-
-  return (
-    <motion.div
-      style={{ opacity, y }}
-      className={`relative ${w} ${aspect} rounded-2xl overflow-hidden shadow-lg border border-black/5 shrink-0`}
-    >
-      <Image src={src} alt="Onward Workspaces" fill sizes="(max-width:768px) 180px, 320px" className="object-cover" />
-    </motion.div>
-  );
-}
-
 export default function AboutPage() {
   const [lifeIdx, setLifeIdx] = useState(0);
   const [activeValue, setActiveValue] = useState<string>("excellence");
@@ -174,16 +155,16 @@ export default function AboutPage() {
   });
 
   /* ═══════════════════════════════════════════════════════════
-     WELCOME: Tall wrapper (150vh) with sticky centered title.
-     Photos parallax around it at different speeds.
+     WELCOME: Natural height section with smooth scroll entry & exit fade.
+     No sticky pinning or height hijacking.
   ═══════════════════════════════════════════════════════════ */
-  const welcomeStickyRef = useRef<HTMLDivElement>(null);
+  const welcomeSectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: welcomeProgress } = useScroll({
-    target: welcomeStickyRef,
-    offset: ["start start", "end end"],
+    target: welcomeSectionRef,
+    offset: ["start end", "end start"],
   });
-  const welcomeTextScale = useTransform(welcomeProgress, [0, 0.03, 0.88, 1], [0.92, 1, 1, 0.95]);
-  const welcomeTextOp = useTransform(welcomeProgress, [0, 0.02, 0.88, 1], [0, 1, 1, 0]);
+  const welcomeOpacity = useTransform(welcomeProgress, [0, 0.2, 0.8, 1], [0.1, 1, 1, 0]);
+  const welcomeY = useTransform(welcomeProgress, [0, 0.2, 0.8, 1], [30, 0, 0, -30]);
 
   /* ═══════════════════════════════════════════════════════════
      SECTION BG SWEEP: dark background sweeps left-to-right
@@ -307,82 +288,50 @@ export default function AboutPage() {
         </div>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. WELCOME — PINNED STICKY with flex grid photos
-            Brilean pattern: photos in 2-row flex grid, scroll-scrubbed
-            fade+slide (opacity 0→1, translateY 48→0). Title sticky centered.
+            2. WELCOME — NATURAL SECTION WITH SCROLL-LINKED FADE IN / FADE OUT
+            No sticky pinning or height hijacking. Stays fully visible and smoothly fades out on scroll out.
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div ref={welcomeStickyRef} className="relative bg-white border-b border-gray-200/80" style={{ height: "350vh" }}>
-          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden flex items-center justify-center">
-            {/* Top gradient fade */}
-            <div className="absolute top-0 left-0 right-0 h-[120px] bg-gradient-to-b from-white via-white/60 to-transparent z-30 pointer-events-none" />
-            {/* Bottom gradient fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-[120px] bg-gradient-to-t from-white via-white/60 to-transparent z-30 pointer-events-none" />
-
-            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 sm:gap-10">
-
-              {/* Row 1: 3 photos, space-between */}
-              <div className="flex w-full justify-between items-end gap-4">
-                {welcomeRow1.map((photo, i) => (
-                  <WelcomeGridPhoto
-                    key={photo.src}
-                    {...photo}
-                    progress={welcomeProgress}
-                    start={0.0 + i * 0.015}
-                    end={0.03 + i * 0.015}
-                  />
-                ))}
-              </div>
-
-              {/* Sticky centered welcome text */}
-              <motion.div
-                style={{ scale: welcomeTextScale, opacity: welcomeTextOp }}
-                className="z-20 text-center max-w-xl sm:max-w-2xl px-4 select-none"
-              >
-                <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gray-400 mb-4">Who We Are</p>
-                <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-light text-[#1a1a2e] tracking-tight leading-[1.12]">
-                  {"Whatever brought you to this page,".split(" ").map((word, i) => (
-                    <span key={i} className="inline-block overflow-hidden mr-[0.3em]">
-                      <motion.span
-                        initial={{ y: "100%" }}
-                        whileInView={{ y: "0%" }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 + i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-                        className="inline-block"
-                      >
-                        {word}
-                      </motion.span>
-                    </span>
-                  ))}
-                  <span className="inline-block overflow-hidden mr-[0.3em]">
-                    <motion.span
-                      initial={{ y: "100%" }}
-                      whileInView={{ y: "0%" }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                      className="inline-block font-normal text-[#1a1a2e]"
-                    >
-                      welcome.
-                    </motion.span>
-                  </span>
-                </h2>
-              </motion.div>
-
-              {/* Row 2: 2 photos, centered with gap */}
-              <div className="flex w-full justify-center items-start gap-[16%]">
-                {welcomeRow2.map((photo, i) => (
-                  <WelcomeGridPhoto
-                    key={photo.src}
-                    {...photo}
-                    progress={welcomeProgress}
-                    start={0.03 + i * 0.02}
-                    end={0.06 + i * 0.02}
-                  />
-                ))}
-              </div>
-
+        <section
+          ref={welcomeSectionRef}
+          className="relative bg-white border-b border-gray-200/80 py-16 sm:py-24 lg:py-28 overflow-hidden"
+        >
+          <motion.div
+            style={{ opacity: welcomeOpacity, y: welcomeY }}
+            className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 sm:gap-12"
+          >
+            {/* Row 1: 3 photos */}
+            <div className="flex w-full justify-between items-end gap-3 sm:gap-6">
+              {welcomeRow1.map((photo) => (
+                <div
+                  key={photo.src}
+                  className={`relative ${photo.w} ${photo.aspect} rounded-2xl overflow-hidden shadow-lg border border-black/5 shrink-0 [mask-image:linear-gradient(to_bottom,transparent_0%,black_24%)]`}
+                >
+                  <Image src={photo.src} alt="Onward Workspaces" fill sizes="(max-width:768px) 180px, 320px" className="object-cover" />
+                </div>
+              ))}
             </div>
-          </div>
-        </div>
+
+            {/* Centered welcome text */}
+            <div className="z-20 text-center max-w-xl sm:max-w-2xl px-4 select-none my-2 sm:my-4">
+              <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gray-400 mb-3">Who We Are</p>
+              <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-light text-[#1a1a2e] tracking-tight leading-[1.12]">
+                Whatever brought you to this page, <span className="font-normal text-[#1a1a2e]">welcome.</span>
+              </h2>
+            </div>
+
+            {/* Row 2: 2 photos */}
+            <div className="flex w-full justify-center items-start gap-[12%] sm:gap-[16%]">
+              {welcomeRow2.map((photo) => (
+                <div
+                  key={photo.src}
+                  className={`relative ${photo.w} ${photo.aspect} rounded-2xl overflow-hidden shadow-lg border border-black/5 shrink-0 [mask-image:linear-gradient(to_top,transparent_0%,black_24%)]`}
+                >
+                  <Image src={photo.src} alt="Onward Workspaces" fill sizes="(max-width:768px) 180px, 320px" className="object-cover" />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             3. VALUES — with background sweep + scroll reveals
