@@ -230,57 +230,27 @@ export default function AboutPage() {
               </motion.h1>
             </div>
 
-            {/* Responsive 2-Column Grid: Story Description & CTAs on Left, Metrics on Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start border-t border-gray-100 pt-8 sm:pt-10">
-              <div className="lg:col-span-7">
-                <p className="text-gray-600 text-base sm:text-lg leading-relaxed text-justify">
-                  Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
-                </p>
-                <p className="mt-4 text-gray-600 text-base sm:text-lg leading-relaxed text-justify">
-                  Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
-                </p>
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <MagneticButton
-                    href="/#contact"
-                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm shadow-md transition-all"
-                  >
-                    <span>Schedule a Visit</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </MagneticButton>
-                  <Link href="/locations/delhi" className="text-[#1a1a2e] font-bold text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2">
-                    Explore Locations &rarr;
-                  </Link>
-                </div>
-              </div>
-
-              {/* Right Side: Key Metric Badges */}
-              <div className="lg:col-span-5 grid grid-cols-3 gap-2 sm:gap-4 bg-[#faf8f5] p-5 sm:p-6 lg:p-7 rounded-3xl border border-[#e8dfd2] items-center">
-                <div className="text-center sm:text-left">
-                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
-                    11+
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
-                    NCR Centres
-                  </span>
-                </div>
-                <div className="text-center sm:text-left border-x border-gray-200/80 px-2 sm:px-4">
-                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#1a1a2e] whitespace-nowrap tracking-tight leading-none">
-                    75<span className="text-sm sm:text-lg lg:text-xl font-bold text-gray-700 ml-1">Days</span>
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
-                    Turnkey Build
-                  </span>
-                </div>
-                <div className="text-center sm:text-left pl-1 sm:pl-2">
-                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
-                    425+
-                  </span>
-                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
-                    Enterprises
-                  </span>
-                </div>
+            {/* Story Description & Action CTAs */}
+            <div className="border-t border-gray-100 pt-8 sm:pt-10 max-w-4xl">
+              <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
+                Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
+              </p>
+              <p className="mt-4 text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
+                Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <MagneticButton
+                  href="/#contact"
+                  className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm shadow-md transition-all"
+                >
+                  <span>Schedule a Visit</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </MagneticButton>
+                <Link href="/locations/delhi" className="text-[#1a1a2e] font-bold text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2">
+                  Explore Locations &rarr;
+                </Link>
               </div>
             </div>
           </div>
