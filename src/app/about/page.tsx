@@ -3,14 +3,12 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MagneticButton from "@/components/MagneticButton";
-import RotatingPhotoStack from "@/components/RotatingPhotoStack";
 
 /* ━━━ DATA ━━━ */
-const heroLines = ["Crafting Workspaces.", "Built Around Ambition.", "Brand & People."];
 
 const valuesList = [
   {
@@ -132,27 +130,6 @@ function ScrollReveal({ children, className = "", delay = 0, y = 60 }: { childre
 export default function AboutPage() {
   const [lifeIdx, setLifeIdx] = useState(0);
   const [activeValue, setActiveValue] = useState<string>("excellence");
-  const [activeHeroLine, setActiveHeroLine] = useState(0);
-  const [descVisible, setDescVisible] = useState(false);
-
-  /* ═══════════════════════════════════════════════════════════
-     HERO: Tall wrapper (220vh) with sticky pinned child.
-     As user scrolls through, heading words light up one by one,
-     description expands, photo ring rotates (handled by RotatingPhotoStack).
-     Exact Brilean pattern: sticky_wrapper > sticky child.
-  ═══════════════════════════════════════════════════════════ */
-  const heroStickyRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: heroProgress } = useScroll({
-    target: heroStickyRef,
-    offset: ["start start", "end end"],
-  });
-
-  useMotionValueEvent(heroProgress, "change", (v) => {
-    if (v < 0.2) { setActiveHeroLine(0); setDescVisible(false); }
-    else if (v < 0.38) { setActiveHeroLine(1); setDescVisible(false); }
-    else if (v < 0.55) { setActiveHeroLine(2); setDescVisible(false); }
-    else { setActiveHeroLine(2); setDescVisible(true); }
-  });
 
   /* ═══════════════════════════════════════════════════════════
      WELCOME: Natural height section with smooth scroll entry & exit fade.
@@ -208,22 +185,14 @@ export default function AboutPage() {
       <main className="bg-[#faf8f5] text-[#1a1a2e] min-h-screen pt-20">
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            1. HERO — PINNED STICKY SECTION (Brilean scroll pattern)
-            Tall wrapper scrolls through while content stays pinned.
-            Heading words activate one-by-one, description fades in.
+            1. HERO — CLEAN FULLY RESPONSIVE EDITORIAL HERO
+            No sticky pinning, no text collisions, 100% fluid across all screens.
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div ref={heroStickyRef} className="relative" style={{ height: "280vh" }}>
-          {/* Sticky pinned child — stays at top of viewport */}
-          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden bg-white border-b border-gray-200/80">
-
-            {/* Photo ring — parallax via RotatingPhotoStack (scroll-driven) */}
-            <div className="hidden xl:block absolute top-[28%] right-0 w-[620px] z-0">
-              <RotatingPhotoStack />
-            </div>
-
-            <div className="relative z-10 h-full flex flex-col justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              {/* Breadcrumb */}
-              <nav aria-label="Breadcrumb" className="mb-6">
+        <section className="relative overflow-hidden bg-white border-b border-gray-200/80 pt-12 pb-16 sm:pt-16 sm:pb-24">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Breadcrumb + Tag */}
+            <div className="mb-6">
+              <nav aria-label="Breadcrumb" className="mb-4">
                 <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
                   <li><Link href="/" className="hover:text-[#d4622b] transition-colors">Home</Link></li>
                   <li>/</li>
@@ -231,37 +200,39 @@ export default function AboutPage() {
                 </ol>
               </nav>
 
-              {/* Heading words — activate one-by-one on scroll */}
-              <div className="max-w-5xl mb-10">
-                {heroLines.map((line, i) => (
-                  <div key={line} className="overflow-hidden">
-                    <motion.div
-                      initial={{ y: "100%" }}
-                      animate={{ y: "0%" }}
-                      transition={{ duration: 0.8, delay: 0.15 + i * 0.18, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      <h1
-                        className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] transition-colors duration-500"
-                        style={{
-                          color: i <= activeHeroLine ? "#1a1a2e" : "#d1d1d1",
-                        }}
-                      >
-                        {line}
-                      </h1>
-                    </motion.div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Description — expands from height:0/opacity:0 on scroll */}
               <motion.div
-                animate={{
-                  height: descVisible ? "auto" : 0,
-                  opacity: descVisible ? 1 : 0,
-                }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="overflow-hidden max-w-3xl"
+                initial={{ opacity: 0, x: -15 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
               >
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
+                  About Us
+                </span>
+              </motion.div>
+            </div>
+
+            {/* Giant Responsive Headline */}
+            <div className="max-w-5xl mb-12 sm:mb-16">
+              <motion.h1
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.04]"
+              >
+                <span className="block">Crafting Workspaces.</span>
+                <span className="block text-gray-400 hover:text-gray-600 transition-colors duration-300">
+                  Built Around Ambition.
+                </span>
+                <span className="block text-gray-300 hover:text-gray-500 transition-colors duration-300">
+                  Brand &amp; People.
+                </span>
+              </motion.h1>
+            </div>
+
+            {/* Responsive 2-Column Grid: Story Description & CTAs on Left, Metrics on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start border-t border-gray-100 pt-8 sm:pt-10">
+              <div className="lg:col-span-7">
                 <p className="text-gray-600 text-base sm:text-lg leading-relaxed text-justify">
                   Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
                 </p>
@@ -282,10 +253,38 @@ export default function AboutPage() {
                     Explore Locations &rarr;
                   </Link>
                 </div>
-              </motion.div>
+              </div>
+
+              {/* Right Side: Key Metric Badges */}
+              <div className="lg:col-span-5 grid grid-cols-3 gap-2 sm:gap-4 bg-[#faf8f5] p-5 sm:p-6 lg:p-7 rounded-3xl border border-[#e8dfd2] items-center">
+                <div className="text-center sm:text-left">
+                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
+                    11+
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
+                    NCR Centres
+                  </span>
+                </div>
+                <div className="text-center sm:text-left border-x border-gray-200/80 px-2 sm:px-4">
+                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#1a1a2e] whitespace-nowrap tracking-tight leading-none">
+                    75<span className="text-sm sm:text-lg lg:text-xl font-bold text-gray-700 ml-1">Days</span>
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
+                    Turnkey Build
+                  </span>
+                </div>
+                <div className="text-center sm:text-left pl-1 sm:pl-2">
+                  <span className="block text-2xl sm:text-3xl lg:text-3xl xl:text-4xl font-black text-[#d4622b] whitespace-nowrap tracking-tight leading-none">
+                    425+
+                  </span>
+                  <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase mt-2.5 block tracking-wider leading-tight">
+                    Enterprises
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             2. WELCOME — NATURAL SECTION WITH SCROLL-LINKED FADE IN / FADE OUT
