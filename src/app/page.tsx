@@ -130,7 +130,7 @@ const heroVideoSlides = [
 ];
 
 const stats = [
-  { value: 9, suffix: "", label: "CITIES", decimals: 0, footnote: "*March, 2026" },
+  { value: 9, suffix: "", label: "CITIES", decimals: 0 },
   { value: 11.46, suffix: "", label: "MN SQ FT", decimals: 2 },
   { value: 425, suffix: "+", label: "ENTERPRISE CLIENTS", decimals: 0 },
   { value: 80, suffix: "+", label: "CENTRES", decimals: 0 },

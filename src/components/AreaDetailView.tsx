@@ -69,18 +69,18 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
         {/* ━━━ AREA DETAILS ━━━ */}
         <section className="py-10 lg:py-12 bg-white border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <div className="flex flex-wrap gap-x-12 gap-y-6 pb-8 border-b border-gray-200">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">Address</p>
-                <p className="mt-1 text-sm sm:text-base font-medium text-black">{area.address}</p>
+            <div className="pb-8 border-b border-gray-200 divide-y divide-gray-100">
+              <div className="flex items-center justify-between gap-6 py-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 shrink-0">Address</p>
+                <p className="text-sm sm:text-base font-medium text-black text-right">{area.address}</p>
               </div>
-              <div className="sm:pl-12 sm:border-l sm:border-gray-200">
-                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">Connectivity</p>
-                <p className="mt-1 text-sm sm:text-base font-medium text-black">{area.transit}</p>
+              <div className="flex items-center justify-between gap-6 py-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 shrink-0">Connectivity</p>
+                <p className="text-sm sm:text-base font-medium text-black text-right">{area.transit}</p>
               </div>
-              <div className="sm:pl-12 sm:border-l sm:border-gray-200">
-                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">Capacity</p>
-                <p className="mt-1 text-sm sm:text-base font-medium text-black">{area.seats}</p>
+              <div className="flex items-center justify-between gap-6 py-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 shrink-0">Capacity</p>
+                <p className="text-sm sm:text-base font-medium text-black text-right">{area.seats}</p>
               </div>
             </div>
 
