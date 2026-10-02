@@ -167,9 +167,8 @@ export default function AboutPage() {
     target: welcomeWrapperRef,
     offset: ["start start", "end end"],
   });
-  const welcomeTextOp = useTransform(welcomeProgress, [0, 0.01, 0.85, 1], [0.8, 1, 1, 0]);
-  const welcomeTextScale = useTransform(welcomeProgress, [0, 0.05, 0.85, 1], [0.97, 1, 1, 0.97]);
-  const welcomeLayoutY = useTransform(welcomeProgress, [0, 0.25], ["-12vh", "0vh"]);
+  const welcomeTextOp = useTransform(welcomeProgress, [0, 0.85, 1], [1, 1, 0]);
+  const welcomeTextScale = useTransform(welcomeProgress, [0, 0.85, 1], [1, 1, 0.97]);
 
   /* ═══════════════════════════════════════════════════════════
      SECTION BG SWEEP: dark background sweeps left-to-right
@@ -307,16 +306,17 @@ export default function AboutPage() {
             Text stays pinned while photos slowly appear around it on scroll.
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <div ref={welcomeWrapperRef} className="relative bg-white border-b border-gray-200/80" style={{ height: "300vh" }}>
-          <div className="sticky top-0 h-screen overflow-hidden flex items-center justify-center">
-            <motion.div
-              style={{ y: welcomeLayoutY }}
-              className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 sm:gap-12"
-            >
+          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden flex items-center justify-center">
+            {/* Top gradient fade */}
+            <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white to-transparent z-30 pointer-events-none" />
+            {/* Bottom gradient fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-30 pointer-events-none" />
+            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 sm:gap-12">
               {/* Row 1: 3 photos */}
               <div className="flex w-full justify-between items-end gap-3 sm:gap-6">
                 {welcomeRow1.map((photo, i) => (
                   <WelcomePhoto key={photo.src} {...photo} progress={welcomeProgress}
-                    enterStart={0.08 + i * 0.06} enterEnd={0.18 + i * 0.06} />
+                    enterStart={0.02 + i * 0.05} enterEnd={0.12 + i * 0.05} />
                 ))}
               </div>
 
@@ -339,10 +339,10 @@ export default function AboutPage() {
               <div className="flex w-full justify-center items-start gap-[12%] sm:gap-[16%]">
                 {welcomeRow2.map((photo, i) => (
                   <WelcomePhoto key={photo.src} {...photo} progress={welcomeProgress}
-                    enterStart={0.22 + i * 0.08} enterEnd={0.32 + i * 0.08} />
+                    enterStart={0.15 + i * 0.06} enterEnd={0.25 + i * 0.06} />
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
 
