@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
 import AmenitiesTicker from "@/components/AmenitiesTicker";
+import AutoSlider from "@/components/AutoSlider";
 import type { CityData, AreaDetail } from "@/data/locations";
 import type { WorkspaceUnit } from "@/data/workspaces";
 
@@ -105,20 +106,22 @@ export default function CentreDetailView({
               </h2>
             </Reveal>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            <AutoSlider
+              interval={3000}
+              showArrows
+              slideClassName="w-[75%] sm:w-[45%] lg:w-[32%] flex-shrink-0 px-2"
+            >
               {area.gallery.map((src, i) => (
-                <Reveal key={`${src}-${i}`} delay={i * 0.05}>
-                  <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100">
-                    <Image
-                      src={src}
-                      alt={`${centre.title} gallery ${i + 1}`}
-                      fill
-                      className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                </Reveal>
+                <div key={`${src}-${i}`} className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100">
+                  <Image
+                    src={src}
+                    alt={`${centre.title} gallery ${i + 1}`}
+                    fill
+                    className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                </div>
               ))}
-            </div>
+            </AutoSlider>
           </div>
         </section>
 
