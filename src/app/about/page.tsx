@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MagneticButton from "@/components/MagneticButton";
@@ -113,12 +113,6 @@ const welcomeRow2 = [
   { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
 ];
 
-const heroLines = [
-  "Crafting Workspaces.",
-  "Built Around Ambition.",
-  "Brand & People.",
-];
-
 /* ━━━ SCROLL-REVEAL ━━━ */
 function ScrollReveal({ children, className = "", delay = 0, y = 60 }: { children: React.ReactNode; className?: string; delay?: number; y?: number }) {
   return (
@@ -137,26 +131,14 @@ function ScrollReveal({ children, className = "", delay = 0, y = 60 }: { childre
 export default function AboutPage() {
   const [lifeIdx, setLifeIdx] = useState(0);
   const [activeValue, setActiveValue] = useState<string>("excellence");
-  const [activeHeroLine, setActiveHeroLine] = useState(0);
-  const [descVisible, setDescVisible] = useState(false);
 
+  /* ═══════════════════════════════════════════════════════════
+     HERO DESCRIPTION: scroll-linked slide-up reveal (Brilean pattern).
+     Hidden initially, slides up + fades in as user scrolls.
+  ═══════════════════════════════════════════════════════════ */
   const { scrollY } = useScroll();
-
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest < 20) {
-      setActiveHeroLine(0);
-      setDescVisible(false);
-    } else if (latest < 50) {
-      setActiveHeroLine(1);
-      setDescVisible(false);
-    } else if (latest < 90) {
-      setActiveHeroLine(2);
-      setDescVisible(false);
-    } else {
-      setActiveHeroLine(2);
-      setDescVisible(true);
-    }
-  });
+  const descOpacity = useTransform(scrollY, [30, 120], [0, 1]);
+  const descY = useTransform(scrollY, [30, 120], [50, 0]);
 
   /* ═══════════════════════════════════════════════════════════
      WELCOME: Natural height section with smooth scroll entry & exit fade.
@@ -227,25 +209,40 @@ export default function AboutPage() {
             </nav>
 
             {/* Top Row Grid: Headline on Left, 3D Photo Circle on Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-6 sm:mb-8">
-              {/* Left Column: Line-by-Line Masked Slide-Up Headline with Scroll Color Transition */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center mb-10 sm:mb-14">
+              {/* Left Column: Line-by-Line Masked Slide-Up Headline */}
               <div className="lg:col-span-7 xl:col-span-8">
-                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.06]">
-                  {heroLines.map((line, i) => (
-                    <span key={line} className="block overflow-hidden">
-                      <motion.span
-                        initial={{ y: "100%" }}
-                        animate={{ y: "0%" }}
-                        transition={{ duration: 0.8, delay: 0.15 + i * 0.16, ease: [0.16, 1, 0.3, 1] }}
-                        className="block transition-colors duration-500"
-                        style={{
-                          color: i <= activeHeroLine ? "#1a1a2e" : (i === 1 ? "#9ca3af" : "#d1d5db"),
-                        }}
-                      >
-                        {line}
-                      </motion.span>
-                    </span>
-                  ))}
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.06]">
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                      className="block"
+                    >
+                      Crafting Workspaces.
+                    </motion.span>
+                  </span>
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                      className="block text-gray-400 hover:text-gray-600 transition-colors duration-300"
+                    >
+                      Built Around Ambition.
+                    </motion.span>
+                  </span>
+                  <span className="block overflow-hidden">
+                    <motion.span
+                      initial={{ y: "100%" }}
+                      animate={{ y: "0%" }}
+                      transition={{ duration: 0.8, delay: 0.48, ease: [0.16, 1, 0.3, 1] }}
+                      className="block text-gray-300 hover:text-gray-500 transition-colors duration-300"
+                    >
+                      Brand &amp; People.
+                    </motion.span>
+                  </span>
                 </h1>
               </div>
 
@@ -257,37 +254,30 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Story Description & Action CTAs — Expands open on scroll */}
+            {/* Story Description & Action CTAs — slides up from bottom on scroll (Brilean pattern) */}
             <motion.div
-              initial={false}
-              animate={{
-                height: descVisible ? "auto" : 0,
-                opacity: descVisible ? 1 : 0,
-              }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden max-w-4xl"
+              style={{ opacity: descOpacity, y: descY }}
+              className="border-t border-gray-100 pt-8 sm:pt-10 max-w-4xl"
             >
-              <div className="border-t border-gray-100 pt-8 sm:pt-10">
-                <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
-                  Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
-                </p>
-                <p className="mt-4 text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
-                  Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
-                </p>
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                  <MagneticButton
-                    href="/#contact"
-                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm shadow-md transition-all"
-                  >
-                    <span>Schedule a Visit</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </MagneticButton>
-                  <Link href="/locations/delhi" className="text-[#1a1a2e] font-bold text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2">
-                    Explore Locations &rarr;
-                  </Link>
-                </div>
+              <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
+                Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
+              </p>
+              <p className="mt-4 text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
+                Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <MagneticButton
+                  href="/#contact"
+                  className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm shadow-md transition-all"
+                >
+                  <span>Schedule a Visit</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </MagneticButton>
+                <Link href="/locations/delhi" className="text-[#1a1a2e] font-bold text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2">
+                  Explore Locations &rarr;
+                </Link>
               </div>
             </motion.div>
           </div>
