@@ -13,35 +13,45 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
       <Header alwaysSolid />
 
       <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20">
-        {/* ━━━ 1. TOPIC HEADING ━━━ */}
-        <section className="bg-white border-b border-gray-200/80 pt-10 pb-12 sm:pt-14 sm:pb-16">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <nav aria-label="Breadcrumb" className="mb-5">
-              <ol className="flex items-center gap-2 text-xs text-gray-500 font-semibold">
-                <li><Link href="/" className="hover:text-[#d4622b] transition-colors">Home</Link></li>
+        {/* ━━━ 1. HERO BANNER ━━━ */}
+        <section className="relative min-h-[400px] sm:min-h-[460px] lg:min-h-[500px] flex items-center py-14 sm:py-18 lg:py-22 overflow-hidden">
+          <Image
+            src={area.img}
+            alt={`Onward Workspaces ${area.name}`}
+            fill
+            priority
+            className="object-cover object-[center_30%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
+
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
+            <nav aria-label="Breadcrumb" className="mb-3">
+              <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider">
+                <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
                 <li>/</li>
-                <li><Link href="/locations" className="hover:text-[#d4622b] transition-colors">Locations</Link></li>
+                <li><Link href="/locations" className="hover:text-white transition-colors">Locations</Link></li>
                 <li>/</li>
-                <li><Link href={city.basePath} className="hover:text-[#d4622b] transition-colors">{city.name}</Link></li>
+                <li><Link href={city.basePath} className="hover:text-white transition-colors">{city.name}</Link></li>
                 <li>/</li>
-                <li className="text-gray-900">{area.name}</li>
+                <li className="text-white font-semibold">{area.name}</li>
               </ol>
             </nav>
 
             <span className="text-[#d4622b] text-[11px] sm:text-xs font-bold tracking-widest uppercase">
               {area.type}
             </span>
-            <h1 className="mt-2 text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.08]">
-              Onward in {area.name}
+            <h1 className="mt-2 text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+              <span className="text-white">Onward in</span>{" "}
+              <span className="text-[#d4622b]">{area.name}</span>
             </h1>
-            <p className="mt-4 text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed max-w-3xl">
+            <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
               {area.description}
             </p>
           </div>
         </section>
 
         {/* ━━━ 2. WORKSPACE SELECTOR (FILTER PILLS + SLIDER) ━━━ */}
-        <AreaWorkspacesSelector area={area} />
+        <AreaWorkspacesSelector area={area} cityBasePath={city.basePath} />
 
         {/* ━━━ 4. GALLERY ━━━ */}
         <section className="py-14 lg:py-18 bg-[#faf8f5] border-b border-gray-200/80">
