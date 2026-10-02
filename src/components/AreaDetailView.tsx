@@ -37,10 +37,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
               </ol>
             </nav>
 
-            <span className="text-[#d4622b] text-[11px] sm:text-xs font-bold tracking-widest uppercase">
-              {area.type}
-            </span>
-            <h1 className="mt-2 text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
               <span className="text-white">Onward in</span>{" "}
               <span className="text-[#d4622b]">{area.name}</span>
             </h1>

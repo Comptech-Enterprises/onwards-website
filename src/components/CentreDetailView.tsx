@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
+import AmenitiesTicker from "@/components/AmenitiesTicker";
 import type { CityData, AreaDetail } from "@/data/locations";
 import type { WorkspaceUnit } from "@/data/workspaces";
 
@@ -49,71 +50,52 @@ export default function CentreDetailView({
               </ol>
             </nav>
 
-            <span className="inline-block bg-[#d4622b] text-white text-[10px] sm:text-xs font-bold tracking-wider px-3 py-1 rounded-full uppercase shadow-md">
-              {centre.badge}
-            </span>
-            <h1 className="mt-3 text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white">
               {centre.title}
             </h1>
             <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
               {centre.tagline}
             </p>
 
-            <div className="flex flex-wrap items-center gap-5 mt-5 text-xs sm:text-sm text-white/80">
-              <div className="flex items-center gap-1.5 font-medium">
-                <svg className="w-4 h-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                </svg>
-                <span>{centre.seats}</span>
-              </div>
-              <div className="flex items-center gap-1.5 font-medium">
-                <svg className="w-4 h-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                <span>{centre.transit}</span>
-              </div>
-              <div className="flex items-center gap-1.5 font-medium">
-                <svg className="w-4 h-4 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                <span>{area.address}</span>
-              </div>
-            </div>
           </div>
         </section>
 
-        {/* 3. HIGHLIGHTS & FEATURES */}
-        <section className="py-12 sm:py-16 bg-white border-b border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <Reveal>
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Why This Centre</span>
-              <h2 className="mt-1 mb-3 text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight">
-                {area.highlight}
-              </h2>
-              <p className="text-gray-600 text-sm sm:text-base leading-relaxed max-w-3xl mb-8">
-                {area.description}
-              </p>
-            </Reveal>
+        {/* 2. INFO STRIP */}
+        <section className="bg-white border-b border-gray-200/80">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 sm:py-10">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+              <div>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Address</span>
+                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{area.address}</p>
+              </div>
+              <div>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Connectivity</span>
+                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.transit}</p>
+              </div>
+              <div>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Capacity</span>
+                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.seats}</p>
+              </div>
+            </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {area.features.map((feature, i) => (
-                <Reveal key={feature} delay={i * 0.05}>
-                  <div className="bg-[#f6f1e8] rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-[#e8dfd2]">
-                    <div className="w-8 h-8 rounded-lg bg-[#d4622b]/10 flex items-center justify-center mb-3">
-                      <svg className="w-4 h-4 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    <span className="text-xs sm:text-sm font-bold text-[#1a1a2e]">{feature}</span>
-                  </div>
-                </Reveal>
+            <div className="flex flex-wrap items-center gap-2.5 mt-6 pt-6 border-t border-gray-200/80">
+              {area.features.map((feature) => (
+                <span key={feature} className="px-4 py-2 rounded-full text-xs font-semibold text-gray-700 bg-white border border-gray-200">
+                  {feature}
+                </span>
               ))}
             </div>
+
+            <button
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="mt-6 inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
+            >
+              Get Started <span>&rarr;</span>
+            </button>
           </div>
         </section>
 
-        {/* 4. GALLERY */}
+        {/* 3. GALLERY */}
         <section className="py-14 lg:py-18 bg-[#faf8f5] border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <Reveal>
@@ -140,7 +122,36 @@ export default function CentreDetailView({
           </div>
         </section>
 
-        {/* 5. CONTACT FORM */}
+        {/* 4. LOCATION MAP */}
+        {area.mapEmbed && (
+          <section className="py-14 lg:py-18 bg-white border-b border-gray-200/80">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+              <Reveal>
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Location</span>
+                <h2 className="mt-1 mb-8 text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight">
+                  Find Us Here
+                </h2>
+              </Reveal>
+              <div className="rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm">
+                <iframe
+                  src={area.mapEmbed}
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`${area.name} location map`}
+                />
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* 5. AMENITIES */}
+        <AmenitiesTicker />
+
+        {/* 6. CONTACT FORM */}
         <ContactSection
           bgImage={centre.img}
           title={`Book a tour at ${area.name}`}
