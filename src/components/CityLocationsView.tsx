@@ -10,6 +10,7 @@ import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
 import AutoSlider from "@/components/AutoSlider";
 import CityMicroMarketsMap from "@/components/CityMicroMarketsMap";
+import AmenitiesTicker from "@/components/AmenitiesTicker";
 import type { CityData } from "@/data/locations";
 
 const whyChoose = [
@@ -235,6 +236,8 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             </div>
           </div>
         </section>
+
+        <AmenitiesTicker />
 
         {/* ━━━ FAQ ━━━ */}
         <section className="py-12 sm:py-16 lg:py-20 bg-white border-t border-gray-200/80">
