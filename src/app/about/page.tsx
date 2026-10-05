@@ -61,36 +61,21 @@ const valuesList = [
   },
 ];
 
-const lifeStories = [
+const whatWeDoSteps = [
   {
-    title: "Reflection is part of the process",
-    desc: "Sometimes the most breakthrough ideas happen over a cup of artisan coffee, not inside a boardroom. We build spacious breakout lounges, green outdoor terraces, and contemplative focus pods so your team can step away, recalibrate, and come back sharper.",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719861.webp",
-    tag: "Mindful Spaces",
+    step: "01",
+    title: "Lease",
+    desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
   },
   {
-    title: "A curated physical library & book lounges",
-    desc: "We are high-tech, but we cherish the analog world of literature and timeless design. Our centres feature community book shelves curated with top business, design, and philosophy reads that belong to every single member.",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp",
-    tag: "Knowledge & Growth",
+    step: "02",
+    title: "Design & Build",
+    desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
   },
   {
-    title: "We celebrate every team milestone",
-    desc: "From Friday community socials and festive celebrations to founders' fireside chats and product launch parties, Onward is an energizing ecosystem where achievements are celebrated together.",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp",
-    tag: "Community Culture",
-  },
-  {
-    title: "We stay active & wellness-oriented",
-    desc: "Wellness isn't an afterthought. With on-campus gaming zones, yoga sessions, ergonomic standing desks, and partnerships with local fitness studios, staying energized is part of daily life at Onward.",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720620.webp",
-    tag: "Active Life",
-  },
-  {
-    title: "Enterprise scaling without logistical headache",
-    desc: "Need 20 seats today and 200 next quarter? Our modular enterprise suites scale dynamically with your hiring velocity so your real estate never bottlenecks your ambition.",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790526.webp",
-    tag: "Seamless Scaling",
+    step: "03",
+    title: "Operations",
+    desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
   },
 ];
 
@@ -147,7 +132,6 @@ function ScrollReveal({ children, className = "", delay = 0, y = 60 }: { childre
 }
 
 export default function AboutPage() {
-  const [lifeIdx, setLifeIdx] = useState(0);
   const [activeValue, setActiveValue] = useState<string>("excellence");
 
   /* ═══════════════════════════════════════════════════════════
@@ -186,12 +170,6 @@ export default function AboutPage() {
   const { scrollYProgress: valuesProgress } = useScroll({ target: valuesRef, offset: ["start end", "end start"] });
   const valuesHeadY = useTransform(valuesProgress, [0, 0.3], [60, 0]);
   const valuesHeadOp = useTransform(valuesProgress, [0, 0.25], [0, 1]);
-
-  /* Life section parallax */
-  const lifeRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: lifeProgress } = useScroll({ target: lifeRef, offset: ["start end", "end start"] });
-  const lifeImgY = useTransform(lifeProgress, [0, 1], [50, -50]);
-  const lifeCardY = useTransform(lifeProgress, [0, 1], [80, -40]);
 
   /* Team */
   const teamRef = useRef<HTMLDivElement>(null);
@@ -428,57 +406,138 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            4. LIFE AT ONWARD — parallax split (image vs card)
+            4. WHAT WE DO — THE IDEAL WORKSPACE AS A SOLUTION
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section ref={lifeRef} className="py-20 sm:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
+        <section className="py-20 sm:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <ScrollReveal className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10 sm:mb-14">
-              <div>
-                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Culture &amp; Environment</span>
-                <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">Life at Onward</h2>
-              </div>
-              <div className="flex items-center gap-3">
-                <button type="button" onClick={() => setLifeIdx((p) => (p > 0 ? p - 1 : lifeStories.length - 1))} className="w-12 h-12 rounded-full border border-gray-300 bg-white hover:border-[#d4622b] hover:bg-[#d4622b] text-[#1a1a2e] hover:text-white shadow-xs flex items-center justify-center transition-all duration-200 active:scale-95" aria-label="Previous">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-                </button>
-                <button type="button" onClick={() => setLifeIdx((p) => (p < lifeStories.length - 1 ? p + 1 : 0))} className="w-12 h-12 rounded-full border border-gray-300 bg-white hover:border-[#d4622b] hover:bg-[#d4622b] text-[#1a1a2e] hover:text-white shadow-xs flex items-center justify-center transition-all duration-200 active:scale-95" aria-label="Next">
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
-                </button>
-              </div>
+            {/* Section Header */}
+            <ScrollReveal className="max-w-3xl mb-10 sm:mb-14">
+              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
+                What We Do
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">
+                The ideal workspace as a solution
+              </h2>
+              <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+                From finding and leasing prime real estate to bespoke custom architecture and end-to-end daily operations — we deliver high-performing office ecosystems.
+              </p>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              <motion.div style={{ y: lifeImgY }} className="lg:col-span-7">
-                <div className="relative aspect-[16/10] w-full rounded-3xl overflow-hidden border border-gray-200 shadow-xl bg-gray-100">
-                  <AnimatePresence mode="wait">
-                    <motion.div key={lifeStories[lifeIdx].img} initial={{ opacity: 0, scale: 1.08 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.96 }} transition={{ duration: 0.5 }} className="absolute inset-0">
-                      <Image src={lifeStories[lifeIdx].img} alt={lifeStories[lifeIdx].title} fill sizes="(max-width:1024px) 100vw, 800px" className="object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                      <span className="absolute bottom-4 left-4 text-xs font-bold uppercase tracking-widest text-white bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">{lifeStories[lifeIdx].tag}</span>
-                    </motion.div>
-                  </AnimatePresence>
+            {/* Cityscape Architectural Container Matching Slide Reference */}
+            <ScrollReveal y={40}>
+              <div className="relative rounded-3xl overflow-hidden bg-[#23222a] shadow-2xl border border-gray-800">
+                {/* Background Cityscape with warm dusk gradient overlay */}
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
+                    alt="City skyline"
+                    fill
+                    sizes="(max-width: 1280px) 100vw, 1280px"
+                    className="object-cover opacity-30 mix-blend-luminosity brightness-75"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#1b1c24]/90 via-[#26242e]/85 to-[#16171f]/95" />
                 </div>
-                <div className="flex items-center gap-2 mt-4">
-                  {lifeStories.map((_, i) => (
-                    <button key={i} type="button" onClick={() => setLifeIdx(i)} className={`h-1.5 rounded-full transition-all duration-300 ${i === lifeIdx ? "w-8 bg-[#d4622b]" : "w-2 bg-gray-300 hover:bg-gray-400"}`} aria-label={`Slide ${i + 1}`} />
-                  ))}
-                </div>
-              </motion.div>
 
-              <motion.div style={{ y: lifeCardY }} className="lg:col-span-5">
-                <AnimatePresence mode="wait">
-                  <motion.div key={lifeStories[lifeIdx].title} initial={{ opacity: 0, x: 30, y: 20 }} animate={{ opacity: 1, x: 0, y: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.4 }} className="bg-white border border-gray-200/90 rounded-3xl p-6 sm:p-8 shadow-xl">
-                    <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">Story 0{lifeIdx + 1} / 0{lifeStories.length}</span>
-                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1a1a2e] tracking-tight">{lifeStories[lifeIdx].title}</h3>
-                    <p className="mt-4 text-sm sm:text-base text-gray-600 leading-relaxed">{lifeStories[lifeIdx].desc}</p>
-                    <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
-                      <span className="text-xs text-gray-400 font-semibold">Experience it in person</span>
-                      <Link href="/#contact" className="text-xs font-bold text-[#d4622b] hover:text-[#b8501f] transition-colors inline-flex items-center gap-1.5">Book a Day Pass &rarr;</Link>
+                {/* Content Overlay */}
+                <div className="relative z-10 p-6 sm:p-10 lg:p-14">
+                  {/* Top Bar: Slide Title & Onward Logo */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 sm:mb-14">
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
+                      The ideal workspace as a solution
+                    </h3>
+                    <div className="flex items-center gap-2 self-start sm:self-auto">
+                      <div className="w-7 h-7 bg-[#d4622b] rounded-md flex items-center justify-center shadow-md">
+                        <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
+                        </svg>
+                      </div>
+                      <span className="font-bold text-xl tracking-tight text-white">Onward</span>
                     </div>
-                  </motion.div>
-                </AnimatePresence>
-              </motion.div>
-            </div>
+                  </div>
+
+                  {/* Stepper / Process Track */}
+                  <div className="mb-8 sm:mb-12 max-w-4xl mx-auto">
+                    {/* Stepper Pin Badges */}
+                    <div className="grid grid-cols-3 gap-2 sm:gap-6 mb-3">
+                      {whatWeDoSteps.map((item, idx) => {
+                        const isFirst = idx === 0;
+                        const isSecond = idx === 1;
+                        return (
+                          <div key={item.step} className="flex flex-col items-center">
+                            {/* Pin Bubble */}
+                            <div
+                              className={`relative flex items-center justify-center rounded-full font-black transition-all duration-300 ${
+                                isFirst
+                                  ? "w-14 h-14 sm:w-20 sm:h-20 bg-black text-white text-lg sm:text-2xl border-[3.5px] border-black shadow-xl"
+                                  : isSecond
+                                  ? "w-14 h-14 sm:w-20 sm:h-20 bg-[#40414f] text-white text-lg sm:text-2xl border-[3.5px] border-[#535565] shadow-md"
+                                  : "w-14 h-14 sm:w-20 sm:h-20 bg-[#747688] text-white text-lg sm:text-2xl border-[3.5px] border-[#9294a6] shadow-sm"
+                              }`}
+                            >
+                              <span>{item.step}</span>
+                              {/* Bottom pointer triangle */}
+                              <div
+                                className={`absolute -bottom-2 sm:-bottom-2.5 left-1/2 -translate-x-1/2 w-0 h-0 border-x-6 sm:border-x-8 border-x-transparent border-t-6 sm:border-t-8 ${
+                                  isFirst
+                                    ? "border-t-black"
+                                    : isSecond
+                                    ? "border-t-[#40414f]"
+                                    : "border-t-[#747688]"
+                                }`}
+                              />
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Timeline connecting bar */}
+                    <div className="relative flex items-center mt-4">
+                      {/* Base Track */}
+                      <div className="w-full h-2.5 sm:h-3 bg-[#525464] rounded-full overflow-hidden shadow-inner">
+                        <div className="h-full bg-black rounded-full w-[36%]" />
+                      </div>
+                      {/* Node Dots on track */}
+                      <div className="absolute inset-0 flex justify-between items-center px-[16%]">
+                        <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white border-4 border-black -ml-2 shadow-xs" />
+                        <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white border-4 border-[#525464] shadow-xs" />
+                        <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white border-4 border-[#525464] -mr-2 shadow-xs" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 3-Column Unified Solution Card */}
+                  <div className="bg-[#f5f3ec] text-[#1a1a2e] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-white/20">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-gray-300/80">
+                      {whatWeDoSteps.map((step, idx) => (
+                        <div
+                          key={step.title}
+                          className={`flex flex-col justify-start ${
+                            idx === 0
+                              ? "md:pr-8 lg:pr-10"
+                              : idx === 1
+                              ? "pt-6 md:pt-0 md:px-8 lg:px-10"
+                              : "pt-6 md:pt-0 md:pl-8 lg:pl-10"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2 mb-2 md:mb-3">
+                            <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider md:hidden">
+                              Phase {step.step}
+                            </span>
+                          </div>
+                          <h4 className="text-xl sm:text-2xl font-black text-[#1a1a2e] tracking-tight mb-3">
+                            {step.title}
+                          </h4>
+                          <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-normal">
+                            {step.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 
