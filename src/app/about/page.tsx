@@ -198,6 +198,20 @@ export default function AboutPage() {
   const valuesHeadY = useTransform(valuesProgress, [0, 0.3], [60, 0]);
   const valuesHeadOp = useTransform(valuesProgress, [0, 0.25], [0, 1]);
 
+  /* What We Do parallax */
+  const whatWeDoRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: whatWeDoProgress } = useScroll({
+    target: whatWeDoRef,
+    offset: ["start end", "end start"],
+  });
+  const whatWeDoHeadY = useTransform(whatWeDoProgress, [0, 0.3], [40, 0]);
+  const whatWeDoHeadOp = useTransform(whatWeDoProgress, [0, 0.25], [0, 1]);
+  const card1Y = useTransform(whatWeDoProgress, [0, 1], [50, -35]);
+  const card2Y = useTransform(whatWeDoProgress, [0, 1], [100, -80]);
+  const card3Y = useTransform(whatWeDoProgress, [0, 1], [40, -25]);
+  const lineFill = useTransform(whatWeDoProgress, [0.15, 0.6], ["0%", "100%"]);
+  const decorY = useTransform(whatWeDoProgress, [0, 1], [-80, 80]);
+
   /* Team */
   const teamRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: teamProgress } = useScroll({ target: teamRef, offset: ["start end", "end start"] });
@@ -433,41 +447,51 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            4. WHAT WE DO — THE IDEAL WORKSPACE AS A SOLUTION
+            4. WHAT WE DO — THE IDEAL WORKSPACE AS A SOLUTION (PARALLAX)
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="py-20 sm:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* Section Header */}
-            <div className="max-w-3xl mb-12 sm:mb-16">
-              <ScrollReveal>
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
-                  What We Do
-                </div>
-              </ScrollReveal>
-              <ScrollReveal delay={0.1}>
-                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
-                  The ideal workspace as a solution
-                </h2>
-              </ScrollReveal>
-              <ScrollReveal delay={0.2}>
-                <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
-                  A seamless three-phase framework designed to eliminate the friction of enterprise real estate — from identifying the right building to custom architecture and daily managed operations.
-                </p>
-              </ScrollReveal>
-            </div>
+        <section ref={whatWeDoRef} className="py-24 sm:py-32 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
+          {/* Subtle Ambient Parallax Background Orbs */}
+          <motion.div
+            style={{ y: decorY }}
+            className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#d4622b]/5 blur-3xl pointer-events-none z-0"
+          />
+          <motion.div
+            style={{ y: decorY }}
+            className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#d4622b]/5 blur-3xl pointer-events-none z-0"
+          />
 
-            {/* Desktop Connected Sequence Tracker */}
-            <div className="hidden lg:block mb-8">
-              <div className="grid grid-cols-3 gap-8 relative">
-                {/* Connecting Line behind nodes */}
-                <div className="absolute top-5 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-[#d4622b]/30 via-[#d4622b] to-[#d4622b]/30 z-0" />
-                {whatWeDoSteps.map((step, idx) => (
-                  <div key={step.step} className="flex items-center justify-center gap-3 relative z-10">
-                    <span className="w-10 h-10 rounded-full bg-white border-2 border-[#d4622b] text-[#d4622b] font-bold text-sm flex items-center justify-center shadow-xs">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Parallax Section Header */}
+            <motion.div style={{ y: whatWeDoHeadY, opacity: whatWeDoHeadOp }} className="max-w-3xl mb-14 sm:mb-20">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase mb-4 shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
+                What We Do
+              </div>
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.08]">
+                The ideal workspace as a solution
+              </h2>
+              <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed max-w-2xl">
+                A seamless three-phase framework designed to eliminate the friction of enterprise real estate — from identifying the right building to custom architecture and daily managed operations.
+              </p>
+            </motion.div>
+
+            {/* Desktop Connected Sequence Tracker with Scroll-Linked Line Fill */}
+            <div className="hidden lg:block mb-12">
+              <div className="grid grid-cols-3 gap-8 relative max-w-5xl mx-auto">
+                {/* Background Connecting Track */}
+                <div className="absolute top-5 left-[12%] right-[12%] h-[3px] bg-gray-200 rounded-full z-0 overflow-hidden">
+                  {/* Animated Dynamic Scroll Fill */}
+                  <motion.div
+                    style={{ width: lineFill }}
+                    className="h-full bg-gradient-to-r from-[#d4622b] via-[#e5733f] to-[#d4622b] rounded-full"
+                  />
+                </div>
+                {whatWeDoSteps.map((step) => (
+                  <div key={step.step} className="flex flex-col items-center gap-2 relative z-10">
+                    <span className="w-11 h-11 rounded-full bg-white border-2 border-[#d4622b] text-[#d4622b] font-black text-sm flex items-center justify-center shadow-md">
                       {step.step}
                     </span>
-                    <span className="text-xs font-bold uppercase tracking-wider text-gray-600 bg-[#faf8f5] px-2 py-0.5 rounded-md">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-gray-600 bg-[#faf8f5] px-2.5 py-0.5 rounded-md border border-gray-200/60 shadow-xs">
                       {step.title}
                     </span>
                   </div>
@@ -475,21 +499,28 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* 3 Process Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-              {whatWeDoSteps.map((step, idx) => (
-                <ScrollReveal key={step.title} delay={idx * 0.12} y={35}>
-                  <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/90 shadow-sm hover:shadow-xl hover:border-[#d4622b]/40 transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 h-full relative overflow-hidden">
-                    {/* Subtle top accent line on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#d4622b] to-[#f28e2b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            {/* 3 Process Cards with Multi-Plane Parallax Scroll */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+              {whatWeDoSteps.map((step, idx) => {
+                const cardParallax = idx === 0 ? card1Y : idx === 1 ? card2Y : card3Y;
+                return (
+                  <motion.div
+                    key={step.title}
+                    style={{ y: cardParallax }}
+                    whileHover={{ y: -8 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/90 shadow-sm hover:shadow-2xl hover:border-[#d4622b]/50 transition-all duration-300 flex flex-col justify-between group h-full relative overflow-hidden"
+                  >
+                    {/* Top gradient glow on hover */}
+                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4622b] via-[#e5733f] to-[#f28e2b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                     <div>
                       {/* Top Row: Icon + Large Step Number */}
                       <div className="flex items-center justify-between gap-4 mb-6">
-                        <div className="w-13 h-13 rounded-2xl bg-[#d4622b]/10 text-[#d4622b] flex items-center justify-center group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 shadow-xs">
+                        <div className="w-14 h-14 rounded-2xl bg-[#d4622b]/10 text-[#d4622b] flex items-center justify-center group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 shadow-xs">
                           {step.icon}
                         </div>
-                        <span className="text-4xl sm:text-5xl font-black text-gray-200 group-hover:text-[#d4622b]/30 transition-colors">
+                        <span className="text-4xl sm:text-5xl font-black text-gray-200 group-hover:text-[#d4622b]/30 transition-colors duration-300">
                           {step.step}
                         </span>
                       </div>
@@ -500,7 +531,7 @@ export default function AboutPage() {
                       </span>
 
                       {/* Step Title */}
-                      <h3 className="text-2xl sm:text-3xl font-black text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors mb-3">
+                      <h3 className="text-2xl sm:text-3xl font-black text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors duration-300 mb-3">
                         {step.title}
                       </h3>
 
@@ -523,47 +554,16 @@ export default function AboutPage() {
                     </div>
 
                     {/* Bottom Highlight Badge */}
-                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a1a2e] bg-[#faf8f5] px-3.5 py-1.5 rounded-full border border-gray-200/80">
+                    <div className="pt-5 border-t border-gray-100 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a1a2e] bg-[#faf8f5] px-3.5 py-1.5 rounded-full border border-gray-200/80 group-hover:border-[#d4622b]/30 transition-colors">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b]" />
                         {step.badge}
                       </span>
                     </div>
-                  </div>
-                </ScrollReveal>
-              ))}
+                  </motion.div>
+                );
+              })}
             </div>
-
-            {/* Bottom Support Banner */}
-            <ScrollReveal delay={0.35} y={20} className="mt-12 sm:mt-14">
-              <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-gray-200/90 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
-                <div className="text-center sm:text-left">
-                  <h4 className="text-lg sm:text-xl font-bold text-[#1a1a2e]">
-                    Ready to build your bespoke enterprise workspace?
-                  </h4>
-                  <p className="text-xs sm:text-sm text-gray-600 mt-1">
-                    Talk to our workspace strategists to explore custom design and delivery in under 75 days.
-                  </p>
-                </div>
-                <div className="flex items-center gap-3 shrink-0">
-                  <MagneticButton
-                    href="/#contact"
-                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-6 py-3 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all"
-                  >
-                    <span>Schedule a Consultation</span>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </MagneticButton>
-                  <Link
-                    href="/locations/delhi"
-                    className="text-[#1a1a2e] font-bold text-xs sm:text-sm hover:text-[#d4622b] transition-colors py-2 px-3"
-                  >
-                    Explore Centers &rarr;
-                  </Link>
-                </div>
-              </div>
-            </ScrollReveal>
           </div>
         </section>
 
