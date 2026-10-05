@@ -61,6 +61,32 @@ const valuesList = [
   },
 ];
 
+const workspaceSolutionSteps = [
+  {
+    step: "01",
+    title: "Lease",
+    desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
+    borderColor: "border-black",
+    textColor: "text-black",
+    tailColor: "after:border-t-black",
+  },
+  {
+    step: "02",
+    title: "Design & Build",
+    desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
+    borderColor: "border-[#6b7280]",
+    textColor: "text-[#6b7280]",
+    tailColor: "after:border-t-[#6b7280]",
+  },
+  {
+    step: "03",
+    title: "Operations",
+    desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
+    borderColor: "border-[#d1d5db]",
+    textColor: "text-[#9ca3af]",
+    tailColor: "after:border-t-[#d1d5db]",
+  },
+];
 
 const teamMembers = [
   { name: "Suvrat Jain", role: "Founder & CEO", initials: "SJ" },
@@ -309,7 +335,93 @@ export default function AboutPage() {
         </div>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. VALUES — with background sweep + scroll reveals
+            3. THE IDEAL WORKSPACE AS A SOLUTION
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section className="relative py-20 sm:py-28 lg:py-32 bg-[#1a1a2e] text-white overflow-hidden border-b border-gray-800">
+          {/* Background Skyline Image with dusk atmospheric overlay */}
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/images/home/get-in-touch.webp"
+              alt="City Skyline"
+              fill
+              className="object-cover object-center opacity-45"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e]/85 via-[#2b2438]/70 to-[#1a1a2e]/90" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-black/50" />
+          </div>
+
+          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Top Header Row */}
+            <div className="text-center mb-12 sm:mb-16">
+              <ScrollReveal>
+                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
+                  The ideal workspace as a solution
+                </h2>
+              </ScrollReveal>
+            </div>
+
+            {/* Step Indicators & Progressive Timeline Bar */}
+            <ScrollReveal delay={0.15}>
+              <div className="relative mb-6 sm:mb-8">
+                {/* 3 Circular Pins with Speech Bubble Downward Tails */}
+                <div className="grid grid-cols-3 items-end mb-3 sm:mb-4">
+                  {workspaceSolutionSteps.map((s) => (
+                    <div key={s.step} className="flex justify-center">
+                      <div
+                        className={`w-14 h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 rounded-full bg-white ${s.borderColor} border-[3px] sm:border-[3.5px] flex items-center justify-center font-bold text-lg sm:text-2xl md:text-3xl ${s.textColor} shadow-xl relative after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-solid ${s.tailColor} after:border-t-[8px] sm:after:border-t-[10px] after:border-x-transparent after:border-x-[6px] sm:after:border-x-[8px] after:border-b-0`}
+                      >
+                        {s.step}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Horizontal Progress Track with Nodes */}
+                <div className="relative w-full h-3.5 sm:h-4.5 rounded-full overflow-hidden flex bg-white/20 backdrop-blur-xs p-0.5 shadow-inner">
+                  <div className="w-1/3 bg-black h-full rounded-l-full relative flex items-center justify-end pr-1 sm:pr-1.5">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white border-2 border-black" />
+                  </div>
+                  <div className="w-1/3 bg-[#6b7280] h-full relative flex items-center justify-end pr-1 sm:pr-1.5">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white border-2 border-[#6b7280]" />
+                  </div>
+                  <div className="w-1/3 bg-[#d1d5db] h-full rounded-r-full relative flex items-center justify-end pr-1 sm:pr-1.5">
+                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white border-2 border-[#d1d5db]" />
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+
+            {/* White / Cream Bento Solution Details Card */}
+            <ScrollReveal delay={0.25}>
+              <div className="bg-[#f5f2eb] rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl border border-[#e5dfd3] text-[#1a1a2e]">
+                <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#ded6c7]">
+                  {workspaceSolutionSteps.map((step, idx) => (
+                    <div
+                      key={step.step}
+                      className={`text-center flex flex-col justify-start ${
+                        idx === 0
+                          ? "pb-6 md:pb-0 md:pr-8 lg:pr-10"
+                          : idx === 1
+                          ? "py-6 md:py-0 md:px-8 lg:px-10"
+                          : "pt-6 md:pt-0 md:pl-8 lg:pl-10"
+                      }`}
+                    >
+                      <h3 className="text-xl sm:text-2xl font-bold text-[#1a1a2e] mb-2 sm:mb-3">
+                        {step.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm lg:text-[15px] text-gray-700 leading-relaxed font-normal">
+                        {step.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            4. VALUES — with background sweep + scroll reveals
             Dark bg sweeps from right on entrance (Brilean pattern).
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section ref={sweepRef} id="values-section" className="relative overflow-hidden">
