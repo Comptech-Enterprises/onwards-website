@@ -64,27 +64,39 @@ const valuesList = [
 const workspaceSolutionSteps = [
   {
     step: "01",
+    label: "PHASE 01",
     title: "Lease",
     desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
-    borderColor: "border-black",
-    textColor: "text-black",
-    tailColor: "after:border-t-black",
+    highlights: ["Prime Asset Sourcing", "Landlord Negotiations", "Zero Direct Lease Risk"],
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+    ),
   },
   {
     step: "02",
+    label: "PHASE 02",
     title: "Design & Build",
     desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
-    borderColor: "border-[#6b7280]",
-    textColor: "text-[#6b7280]",
-    tailColor: "after:border-t-[#6b7280]",
+    highlights: ["Turnkey 75-Day Delivery", "Bespoke Spatial Architecture", "Ergonomic & Tech Fit-Out"],
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
+      </svg>
+    ),
   },
   {
     step: "03",
+    label: "PHASE 03",
     title: "Operations",
     desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
-    borderColor: "border-[#d1d5db]",
-    textColor: "text-[#9ca3af]",
-    tailColor: "after:border-t-[#d1d5db]",
+    highlights: ["Day-1 Move-in Ready", "24/7 Facility Management", "Hospitality & IT Support"],
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
   },
 ];
 
@@ -335,88 +347,76 @@ export default function AboutPage() {
         </div>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. THE IDEAL WORKSPACE AS A SOLUTION
+            3. THE IDEAL WORKSPACE AS A SOLUTION (LIGHT THEME CONNECTED BENTO)
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="relative py-20 sm:py-28 lg:py-32 bg-[#1a1a2e] text-white overflow-hidden border-b border-gray-800">
-          {/* Background Skyline Image with dusk atmospheric overlay */}
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="/images/home/get-in-touch.webp"
-              alt="City Skyline"
-              fill
-              className="object-cover object-center opacity-45"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#1a1a2e]/85 via-[#2b2438]/70 to-[#1a1a2e]/90" />
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-black/50" />
-          </div>
+        <section className="py-20 sm:py-28 lg:py-32 bg-[#faf8f5] text-[#1a1a2e] border-b border-gray-200/80 relative overflow-hidden">
+          {/* Subtle warm ambient background glow */}
+          <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[140px]" />
 
-          <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Top Header Row */}
-            <div className="text-center mb-12 sm:mb-16">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Header Area */}
+            <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-20">
               <ScrollReveal>
-                <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight leading-tight">
-                  The ideal workspace as a solution
+                <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-2">
+                  End-to-End Enterprise Delivery
+                </span>
+              </ScrollReveal>
+              <ScrollReveal delay={0.1}>
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.12] mt-3">
+                  The ideal workspace as a{" "}
+                  <span className="text-[#d4622b]">solution.</span>
                 </h2>
+              </ScrollReveal>
+              <ScrollReveal delay={0.2}>
+                <p className="mt-4 text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
+                  From securing prime commercial real estate to bespoke design and seamless daily facility operations — we take care of the entire lifecycle.
+                </p>
               </ScrollReveal>
             </div>
 
-            {/* Step Indicators & Progressive Timeline Bar */}
-            <ScrollReveal delay={0.15}>
-              <div className="relative mb-6 sm:mb-8">
-                {/* 3 Circular Pins with Speech Bubble Downward Tails */}
-                <div className="grid grid-cols-3 items-end mb-3 sm:mb-4">
-                  {workspaceSolutionSteps.map((s) => (
-                    <div key={s.step} className="flex justify-center">
-                      <div
-                        className={`w-14 h-14 sm:w-20 sm:h-20 md:w-22 md:h-22 rounded-full bg-white ${s.borderColor} border-[3px] sm:border-[3.5px] flex items-center justify-center font-bold text-lg sm:text-2xl md:text-3xl ${s.textColor} shadow-xl relative after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-solid ${s.tailColor} after:border-t-[8px] sm:after:border-t-[10px] after:border-x-transparent after:border-x-[6px] sm:after:border-x-[8px] after:border-b-0`}
-                      >
-                        {s.step}
+            {/* 3 Connected Bento Cards with Step Pills & Flow */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 relative items-stretch">
+              {workspaceSolutionSteps.map((step, idx) => (
+                <ScrollReveal key={step.step} delay={idx * 0.12} className="h-full">
+                  <div className="h-full bg-white rounded-3xl p-7 sm:p-9 border border-gray-200/90 shadow-[0_8px_30px_-12px_rgba(26,26,46,0.08)] hover:shadow-[0_20px_45px_-12px_rgba(212,98,43,0.18)] hover:border-[#d4622b]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative">
+                    {/* Top Row: Phase Pill + Icon */}
+                    <div>
+                      <div className="flex items-center justify-between gap-4 mb-6">
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-8 h-8 rounded-full bg-[#1a1a2e] text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                            {step.step}
+                          </span>
+                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#d4622b] bg-[#d4622b]/10 px-3 py-1 rounded-full">
+                            {step.label}
+                          </span>
+                        </div>
+                        <div className="w-11 h-11 rounded-2xl bg-[#faf8f5] border border-gray-200/70 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#d4622b]/10 transition-all duration-300">
+                          {step.icon}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
 
-                {/* Horizontal Progress Track with Nodes */}
-                <div className="relative w-full h-3.5 sm:h-4.5 rounded-full overflow-hidden flex bg-white/20 backdrop-blur-xs p-0.5 shadow-inner">
-                  <div className="w-1/3 bg-black h-full rounded-l-full relative flex items-center justify-end pr-1 sm:pr-1.5">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white border-2 border-black" />
-                  </div>
-                  <div className="w-1/3 bg-[#6b7280] h-full relative flex items-center justify-end pr-1 sm:pr-1.5">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white border-2 border-[#6b7280]" />
-                  </div>
-                  <div className="w-1/3 bg-[#d1d5db] h-full rounded-r-full relative flex items-center justify-end pr-1 sm:pr-1.5">
-                    <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white border-2 border-[#d1d5db]" />
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-
-            {/* White / Cream Bento Solution Details Card */}
-            <ScrollReveal delay={0.25}>
-              <div className="bg-[#f5f2eb] rounded-3xl p-6 sm:p-10 md:p-12 shadow-2xl border border-[#e5dfd3] text-[#1a1a2e]">
-                <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#ded6c7]">
-                  {workspaceSolutionSteps.map((step, idx) => (
-                    <div
-                      key={step.step}
-                      className={`text-center flex flex-col justify-start ${
-                        idx === 0
-                          ? "pb-6 md:pb-0 md:pr-8 lg:pr-10"
-                          : idx === 1
-                          ? "py-6 md:py-0 md:px-8 lg:px-10"
-                          : "pt-6 md:pt-0 md:pl-8 lg:pl-10"
-                      }`}
-                    >
-                      <h3 className="text-xl sm:text-2xl font-bold text-[#1a1a2e] mb-2 sm:mb-3">
+                      {/* Title & Description */}
+                      <h3 className="text-2xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors mb-3">
                         {step.title}
                       </h3>
-                      <p className="text-xs sm:text-sm lg:text-[15px] text-gray-700 leading-relaxed font-normal">
+                      <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed font-normal">
                         {step.desc}
                       </p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
+
+                    {/* Bottom Feature Tags */}
+                    <div className="pt-6 mt-6 border-t border-gray-100 flex flex-col gap-2">
+                      {step.highlights.map((h, i) => (
+                        <div key={i} className="flex items-center gap-2 text-xs font-semibold text-gray-700">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] shrink-0" />
+                          <span>{h}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
           </div>
         </section>
 
