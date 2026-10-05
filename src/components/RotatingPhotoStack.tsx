@@ -7,14 +7,14 @@ import Image from "next/image";
    Full-size on desktop, scales down progressively and smoothly
    on tablet, laptop, and mobile viewports. */
 const srcs = [
-  "/images/home/gallery/1.png",
-  "/images/home/gallery/2.png",
-  "/images/home/gallery/3.png",
-  "/images/home/gallery/4.png",
-  "/images/home/gallery/5.png",
-  "/images/home/gallery/6.png",
-  "/images/home/gallery/7.png",
-  "/images/home/gallery/8.png",
+  "/images/main-home-page/gallery/1.png",
+  "/images/main-home-page/gallery/2.png",
+  "/images/main-home-page/gallery/3.png",
+  "/images/main-home-page/gallery/4.png",
+  "/images/main-home-page/gallery/5.png",
+  "/images/main-home-page/gallery/6.png",
+  "/images/main-home-page/gallery/7.png",
+  "/images/main-home-page/gallery/8.png",
 ];
 
 const R = 230;

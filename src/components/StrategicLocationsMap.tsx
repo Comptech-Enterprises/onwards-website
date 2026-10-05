@@ -20,7 +20,7 @@ export const ncrHubs: LocationHub[] = [
     x: 421.5,
     y: 167.0,
     labelPos: "right",
-    img: "/images/locations/delhi/connaught-place.png",
+    img: "/images/delhi/delhi-cp.png",
     description: "A landmark address for forward-thinking teams.",
   },
   {
@@ -29,7 +29,7 @@ export const ncrHubs: LocationHub[] = [
     x: 754.3,
     y: 468.2,
     labelPos: "right",
-    img: "/images/locations/noida/photos/9bdc3c13-14d9-4de0-a660-540a03adf91e.png",
+    img: "/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.png",
     description: "Modern enterprise campus along the Noida Expressway.",
   },
   {
@@ -38,7 +38,7 @@ export const ncrHubs: LocationHub[] = [
     x: 677.1,
     y: 385.3,
     labelPos: "right",
-    img: "/images/locations/noida/photos/img_0331-1.jpg",
+    img: "/images/noida/img-0331-1.jpg",
     description: "High-growth tech & corporate district with seamless transit.",
   },
   {
@@ -47,7 +47,7 @@ export const ncrHubs: LocationHub[] = [
     x: 546.4,
     y: 401.1,
     labelPos: "right",
-    img: "/images/locations/delhi/okhla-phase-2/hero.png",
+    img: "/images/delhi/okhla-phase-2-delhi.png",
     description: "Central South Delhi connectivity for innovation leaders.",
   },
   {
@@ -56,7 +56,7 @@ export const ncrHubs: LocationHub[] = [
     x: 600.0,
     y: 453.6,
     labelPos: "right",
-    img: "/images/locations/delhi/spaces/mohan-estate.jpg",
+    img: "/images/delhi/delhi-mohan-estate.png",
     description: "Prime arterial hub with direct highway & metro access.",
   },
   {
@@ -65,7 +65,7 @@ export const ncrHubs: LocationHub[] = [
     x: 139.3,
     y: 475.5,
     labelPos: "right",
-    img: "/images/locations/gurgaon/udyog-vihar/img_0504.jpg",
+    img: "/images/udyog-vihar/img-0504.jpg",
     description: "Gurugram's bustling business core adjacent to Cyber City.",
   },
 ];

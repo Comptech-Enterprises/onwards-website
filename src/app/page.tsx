@@ -80,16 +80,16 @@ const whyChoose = [
 ];
 
 const newsMediaItems = [
-  { name: "Times of India", img: "/images/home/media/1.png", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
-  { name: "News18", img: "/images/home/media/2.png", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
-  { name: "Moneycontrol", img: "/images/home/media/3.png", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
-  { name: "NDTV", img: "/images/home/media/4.png", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
-  { name: "Indian Retailer", img: "/images/home/media/5.png", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
-  { name: "ABP Live", img: "/images/home/media/6.png", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
-  { name: "PTI News", img: "/images/home/media/7.png", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
-  { name: "Realty Plus", img: "/images/home/media/8.png", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
-  { name: "Outlook India", img: "/images/home/media/9.png", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
-  { name: "Sugermint", img: "/images/home/media/10.png", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
+  { name: "Times of India", img: "/images/main-home-page/new-and-media-add/1.png", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
+  { name: "News18", img: "/images/main-home-page/new-and-media-add/2.png", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
+  { name: "Moneycontrol", img: "/images/main-home-page/new-and-media-add/3.png", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
+  { name: "NDTV", img: "/images/main-home-page/new-and-media-add/4.png", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
+  { name: "Indian Retailer", img: "/images/main-home-page/new-and-media-add/5.png", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
+  { name: "ABP Live", img: "/images/main-home-page/new-and-media-add/6.png", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
+  { name: "PTI News", img: "/images/main-home-page/new-and-media-add/7.png", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
+  { name: "Realty Plus", img: "/images/main-home-page/new-and-media-add/8.png", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
+  { name: "Outlook India", img: "/images/main-home-page/new-and-media-add/9.png", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
+  { name: "Sugermint", img: "/images/main-home-page/new-and-media-add/10.png", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
 ];
 
 const heroWords = ["Ambition", "Brand", "People", "Vision"];
@@ -145,15 +145,15 @@ const stats: Array<{
 const cityCards = [
   {
     name: "Delhi",
-    img: "/images/home/locations-delhi-ncr/delhi.png",
+    img: "/images/main-home-page/locations-delhi-ncr/1672-x-600/delhi.png",
   },
   {
     name: "Noida",
-    img: "/images/home/locations-delhi-ncr/noida.png",
+    img: "/images/main-home-page/locations-delhi-ncr/1672-x-600/noida.png",
   },
   {
     name: "Gurugram",
-    img: "/images/home/locations-delhi-ncr/gurgaon.png",
+    img: "/images/main-home-page/locations-delhi-ncr/1672-x-600/gurgaon.png",
   },
 ];
 
@@ -163,35 +163,35 @@ const solutions = [
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
     features: ["Dedicated Entrance", "Custom Layout & IT", "24/7 Access"],
-    img: "/images/home/solutions/1.png",
+    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/1.png",
   },
   {
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
     features: ["Ergonomic Seating", "Soundproof Cabins", "Meeting Credits"],
-    img: "/images/home/solutions/2.png",
+    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/2.png",
   },
   {
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
     features: ["Executive Furniture", "Private Lounge", "Concierge Service"],
-    img: "/images/home/solutions/3.png",
+    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/3.png",
   },
   {
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
     features: ["GST Registration", "Mail Forwarding", "Day Pass Access"],
-    img: "/images/home/solutions/4.png",
+    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/4.png",
   },
   {
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
     features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage"],
-    img: "/images/home/solutions/5.png",
+    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/5.png",
   },
   {
     title: "Custom Built",
@@ -288,85 +288,85 @@ const gallerySlides = [
     title: "Open Collaboration Spaces",
     location: "Connaught Place, Delhi",
     tag: "Co-Working Floor",
-    img: "/images/enterprises/826a1449.jpg",
+    img: "/images/main-home-page/gallery/1.png",
   },
   {
     title: "Private Executive Suites",
     location: "Cyber City, Gurgaon",
     tag: "Managed Office",
-    img: "/images/enterprises/826a1193-1.jpg",
+    img: "/images/main-home-page/gallery/2.png",
   },
   {
     title: "Modern Boardrooms & Conference",
     location: "Okhla Phase 3, Delhi",
     tag: "Meeting Suites",
-    img: "/images/locations/delhi/solutions/img_0527.jpg",
+    img: "/images/main-home-page/gallery/3.png",
   },
   {
     title: "Commons & Breakout Lounge",
     location: "Sector 126, Noida",
     tag: "Common Areas",
-    img: "/images/locations/gurgaon/udyog-vihar/img_0775.jpg",
+    img: "/images/main-home-page/gallery/4.png",
   },
   {
     title: "Focus Pods & Ergonomic Cabins",
     location: "Udyog Vihar, Gurgaon",
     tag: "Private Cabins",
-    img: "/images/locations/gurgaon/udyog-vihar/img_0504.jpg",
+    img: "/images/main-home-page/gallery/5.png",
   },
   {
     title: "High-Energy Community Workstations",
     location: "Okhla Phase 2, Delhi",
     tag: "Dedicated Desks",
-    img: "/images/enterprises/826a1348-1-1.jpg",
+    img: "/images/main-home-page/gallery/6.png",
   },
   {
     title: "Enterprise Custom Built Suites",
     location: "Sector 132, Noida",
     tag: "Bespoke Enterprise",
-    img: "/images/locations/noida/photos/img_0364.jpg",
+    img: "/images/main-home-page/gallery/7.png",
   },
   {
     title: "Hospitality & Reception Lounge",
     location: "MG Road, Gurgaon",
     tag: "Reception Lounge",
-    img: "/images/locations/gurgaon/mg-road/dsc04206.jpg",
+    img: "/images/main-home-page/gallery/8.png",
   },
   {
     title: "Collaborative Breakout Arenas",
     location: "Mohan Cooperative, Delhi",
     tag: "Breakout Arena",
-    img: "/images/locations/delhi/spaces/mohan-estate.jpg",
+    img: "/images/main-home-page/gallery/9.png",
   },
   {
     title: "Scalable Enterprise Desks",
     location: "Sector 4, Noida",
     tag: "Enterprise Pods",
-    img: "/images/locations/noida/photos/img_0331-1.jpg",
+    img: "/images/main-home-page/gallery/10.png",
   },
   {
     title: "Quiet Focus Zones",
     location: "Okhla Phase 2, Delhi",
     tag: "Quiet Zone",
-    img: "/images/locations/delhi/spaces/okhla-phase-2-44.jpg",
+    img: "/images/main-home-page/gallery/11.png",
   },
   {
     title: "Executive Director Cabins",
     location: "Okhla Phase 3, Delhi",
     tag: "Director Suite",
-    img: "/images/locations/delhi/spaces/okhla-phase-3-41.jpg",
+    img: "/images/main-home-page/gallery/12.png",
   },
   {
     title: "Modern Cafe & Refreshments",
     location: "Udyog Vihar, Gurgaon",
     tag: "Community Cafe",
-    img: "/images/locations/delhi/solutions/img_0568-4.jpg",
+    img: "/images/main-home-page/gallery/13.png",
   },
   {
     title: "3D Virtual Spatial Model",
     location: "Sohna Road, Gurgaon",
     tag: "Virtual Tour",
-    img: "/images/locations/gurgaon/sohna-road/screenshot-2026-08-01-at-11.51.31-am-1.png",
+    img: "/images/main-home-page/gallery/14.png",
   },
 ];
 
@@ -780,22 +780,22 @@ function TrustedLeadersSection() {
 }
 
 const enterpriseLeaderLogos = [
-  { id: 1, src: "/images/home/enterprise-leaders/1.png" },
-  { id: 2, src: "/images/home/enterprise-leaders/2.png" },
-  { id: 3, src: "/images/home/enterprise-leaders/3.png" },
-  { id: 4, src: "/images/home/enterprise-leaders/4.png" },
-  { id: 5, src: "/images/home/enterprise-leaders/5.png" },
-  { id: 6, src: "/images/home/enterprise-leaders/6.png" },
-  { id: 7, src: "/images/home/enterprise-leaders/7.png" },
-  { id: 8, src: "/images/home/enterprise-leaders/8.png" },
-  { id: 9, src: "/images/home/enterprise-leaders/9.png" },
-  { id: 10, src: "/images/home/enterprise-leaders/10.png" },
-  { id: 11, src: "/images/home/enterprise-leaders/11.png" },
-  { id: 12, src: "/images/home/enterprise-leaders/12.png" },
-  { id: 13, src: "/images/home/enterprise-leaders/13.png" },
-  { id: 14, src: "/images/home/enterprise-leaders/14.png" },
-  { id: 15, src: "/images/home/enterprise-leaders/15.png" },
-  { id: 16, src: "/images/home/enterprise-leaders/16.png" },
+  { id: 1, src: "/images/main-home-page/enterprise-leaders/1.png" },
+  { id: 2, src: "/images/main-home-page/enterprise-leaders/2.png" },
+  { id: 3, src: "/images/main-home-page/enterprise-leaders/3.png" },
+  { id: 4, src: "/images/main-home-page/enterprise-leaders/4.png" },
+  { id: 5, src: "/images/main-home-page/enterprise-leaders/5.png" },
+  { id: 6, src: "/images/main-home-page/enterprise-leaders/6.png" },
+  { id: 7, src: "/images/main-home-page/enterprise-leaders/7.png" },
+  { id: 8, src: "/images/main-home-page/enterprise-leaders/8.png" },
+  { id: 9, src: "/images/main-home-page/enterprise-leaders/9.png" },
+  { id: 10, src: "/images/main-home-page/enterprise-leaders/10.png" },
+  { id: 11, src: "/images/main-home-page/enterprise-leaders/11.png" },
+  { id: 12, src: "/images/main-home-page/enterprise-leaders/12.png" },
+  { id: 13, src: "/images/main-home-page/enterprise-leaders/13.png" },
+  { id: 14, src: "/images/main-home-page/enterprise-leaders/14.png" },
+  { id: 15, src: "/images/main-home-page/enterprise-leaders/15.png" },
+  { id: 16, src: "/images/main-home-page/enterprise-leaders/16.png" },
 ];
 
 function EnterprisesSection() {
@@ -1112,7 +1112,7 @@ export default function Home() {
         {/* Background static image — Onward hero photo */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/home/hero.png')" }}
+          style={{ backgroundImage: "url('/images/main-home-page/image-at-the-top.png')" }}
         />
 
         {/* Overlay for text readability */}
@@ -1414,7 +1414,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
-      <ContactSection />
+      <ContactSection bgImage="/images/main-home-page/get-in-touch-with-us.png" />
 
       {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
       <TrustedLeadersSection />

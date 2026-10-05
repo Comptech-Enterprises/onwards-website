@@ -72,13 +72,13 @@ const teamMembers = [
 ];
 
 const welcomeRow1 = [
-  { src: "/images/locations/delhi/okhla-phase-2/gallery/1.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
-  { src: "/images/locations/delhi/okhla-phase-2/gallery/2.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "/images/locations/delhi/okhla-phase-3/gallery/3.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/okhla-phase-2/office-gallery/1.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
+  { src: "/images/okhla-phase-2/office-gallery/2.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/okhla-phase-3/gallery-images/3.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
 ];
 const welcomeRow2 = [
-  { src: "/images/locations/delhi/connaught-place.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "/images/locations/delhi/okhla-phase-3/gallery/5.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
+  { src: "/images/delhi/delhi-cp.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/okhla-phase-3/gallery-images/5.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
 ];
 
 /* ━━━ WELCOME PHOTO ━━━ */
