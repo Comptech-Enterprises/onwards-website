@@ -9,6 +9,7 @@ export interface AreaDetail {
   features: string[];
   img: string;
   gallery: string[];
+  clients?: string[];
   description: string;
   mapEmbed?: string;
 }
@@ -52,6 +53,11 @@ export const delhiCity: CityData = {
         "/images/locations/delhi/okhla-phase-2/gallery/6.png",
         "/images/locations/delhi/okhla-phase-2/gallery/7.png",
       ],
+      clients: [
+        "/images/locations/delhi/okhla-phase-2/clients/1.png",
+        "/images/locations/delhi/okhla-phase-2/clients/2.png",
+        "/images/locations/delhi/okhla-phase-2/clients/3.png",
+      ],
       description:
         "Step into the dynamic realm of Okhla Phase 2, where Onward Workspaces invites you to experience a workspace like no other. Nestled amidst the industrial and commercial vibrancy of South Delhi, this centre blends modernity with a touch of local charm, backed by collaborative spaces, ergonomic design, and a thriving business community.",
       mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.8!2d77.2716!3d28.5312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3e1a4b0b0b1%3A0x1234567890!2sOkhla+Phase+2%2C+New+Delhi!5e0!3m2!1sen!2sin!4v1",
@@ -74,6 +80,14 @@ export const delhiCity: CityData = {
         "/images/locations/delhi/okhla-phase-3/gallery/5.png",
         "/images/locations/delhi/okhla-phase-3/gallery/6.png",
         "/images/locations/delhi/okhla-phase-3/gallery/7.png",
+      ],
+      clients: [
+        "/images/locations/delhi/okhla-phase-3/clients/4.png",
+        "/images/locations/delhi/okhla-phase-3/clients/5.png",
+        "/images/locations/delhi/okhla-phase-3/clients/6.png",
+        "/images/locations/delhi/okhla-phase-3/clients/7.png",
+        "/images/locations/delhi/okhla-phase-3/clients/9.png",
+        "/images/locations/delhi/okhla-phase-3/clients/10.png",
       ],
       description:
         "Okhla Phase 3 is synonymous with innovation and technological advancement. This industrial zone is home to a multitude of IT companies, creative agencies, and research institutions. Onward's centre here offers shared office spaces designed to foster creativity and collaboration, with a focus on modern amenities and a conducive work environment.",

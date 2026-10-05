@@ -50,6 +50,38 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
         {/* ━━━ 2. WORKSPACE SELECTOR (FILTER PILLS + SLIDER) ━━━ */}
         <AreaWorkspacesSelector area={area} cityBasePath={city.basePath} />
 
+        {/* ━━━ 3. CLIENTS AT THIS CENTRE ━━━ */}
+        {area.clients && area.clients.length > 0 && (
+          <section className="py-12 bg-white border-b border-gray-200/80">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+              <Reveal>
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
+                  Community &amp; Clients
+                </span>
+                <h2 className="mt-1 mb-8 text-xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight">
+                  Trusted by Teams at {area.name}
+                </h2>
+              </Reveal>
+
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6">
+                {area.clients.map((logoSrc, idx) => (
+                  <Reveal key={`${logoSrc}-${idx}`} delay={idx * 0.05}>
+                    <div className="px-6 py-4 rounded-2xl bg-[#faf8f5] border border-gray-200/80 flex items-center justify-center h-20 min-w-[140px] hover:border-[#d4622b] transition-colors">
+                      <Image
+                        src={logoSrc}
+                        alt={`${area.name} client ${idx + 1}`}
+                        width={120}
+                        height={40}
+                        className="max-h-10 w-auto object-contain"
+                      />
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* ━━━ 4. GALLERY ━━━ */}
         <section className="py-14 lg:py-18 bg-[#faf8f5] border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
