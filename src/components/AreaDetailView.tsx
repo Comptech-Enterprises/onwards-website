@@ -82,32 +82,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
           </section>
         )}
 
-        {/* ━━━ 4. GALLERY ━━━ */}
-        <section className="py-14 lg:py-18 bg-[#faf8f5] border-b border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <Reveal>
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Inside the Space</span>
-              <h2 className="mt-1 mb-8 text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight">
-                Gallery
-              </h2>
-            </Reveal>
 
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              {area.gallery.map((src, i) => (
-                <Reveal key={`${src}-${i}`} delay={i * 0.05}>
-                  <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100">
-                    <Image
-                      src={src}
-                      alt={`${area.name} gallery ${i + 1}`}
-                      fill
-                      className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ━━━ 5. CONTACT FORM ━━━ */}
         <ContactSection
