@@ -65,44 +65,17 @@ const whatWeDoSteps = [
   {
     step: "01",
     title: "Lease",
-    tagline: "Location & Risk Mitigation",
     desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
-    badge: "Zero Lease Liability",
-    points: ["Tailored location scouting", "Onward holds the master lease", "Flexible terms without Capex lock-in"],
-    icon: (
-      <svg className="w-6 h-6 text-[#d4622b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-        <polyline points="9 22 9 12 15 12 15 22" />
-      </svg>
-    ),
   },
   {
     step: "02",
     title: "Design & Build",
-    tagline: "Turnkey Bespoke Architecture",
     desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
-    badge: "Under 75-Day Delivery",
-    points: ["Custom branded interiors & layouts", "Ergonomic & biophilic design", "Complete turnkey execution"],
-    icon: (
-      <svg className="w-6 h-6 text-[#d4622b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <path d="M3 9h18M9 21V9" />
-      </svg>
-    ),
   },
   {
     step: "03",
     title: "Operations",
-    tagline: "End-to-End Managed Hospitality",
     desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
-    badge: "100% Worry-Free Facilities",
-    points: ["On-site community & IT management", "Artisan cafeterias & daily housekeeping", "Enterprise security & IoT controls"],
-    icon: (
-      <svg className="w-6 h-6 text-[#d4622b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-      </svg>
-    ),
   },
 ];
 
@@ -223,7 +196,6 @@ export default function AboutPage() {
   const card1Y = useTransform(whatWeDoProgress, [0, 1], [40, -30]);
   const card2Y = useTransform(whatWeDoProgress, [0, 1], [80, -60]);
   const card3Y = useTransform(whatWeDoProgress, [0, 1], [30, -20]);
-  const lineFill = useTransform(whatWeDoProgress, [0.15, 0.6], ["0%", "100%"]);
   const decorY = useTransform(whatWeDoProgress, [0, 1], [-80, 80]);
 
   /* Team */
@@ -461,7 +433,7 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            4. WHAT WE DO — THE IDEAL WORKSPACE AS A SOLUTION (PARALLAX)
+            4. WHAT WE DO — THE IDEAL WORKSPACE AS A SOLUTION
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section ref={whatWeDoRef} className="py-24 sm:py-32 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
           {/* Subtle Ambient Parallax Background Orbs */}
@@ -485,94 +457,40 @@ export default function AboutPage() {
               </p>
             </motion.div>
 
-            {/* Desktop Connected Sequence Tracker with Scroll-Linked Line Fill */}
-            <div className="hidden lg:block mb-12">
-              <div className="grid grid-cols-3 gap-8 relative max-w-5xl mx-auto">
-                {/* Background Connecting Track */}
-                <div className="absolute top-5 left-[12%] right-[12%] h-[3px] bg-gray-200 rounded-full z-0 overflow-hidden">
-                  {/* Animated Dynamic Scroll Fill */}
-                  <motion.div
-                    style={{ width: lineFill }}
-                    className="h-full bg-gradient-to-r from-[#d4622b] via-[#e5733f] to-[#d4622b] rounded-full"
-                  />
-                </div>
-                {whatWeDoSteps.map((step) => (
-                  <div key={step.step} className="flex flex-col items-center gap-2 relative z-10">
-                    <span className="w-11 h-11 rounded-full bg-white border-2 border-[#d4622b] text-[#d4622b] font-black text-sm flex items-center justify-center shadow-md">
-                      {step.step}
-                    </span>
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-gray-600 bg-[#faf8f5] px-2.5 py-0.5 rounded-md border border-gray-200/60 shadow-xs">
-                      {step.title}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* 3 Process Cards with Right-to-Left Stacked Parallax Entrance */}
+            {/* 3 Clean Simple Process Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
               {whatWeDoSteps.map((step, idx) => {
                 const cardY = idx === 0 ? card1Y : idx === 1 ? card2Y : card3Y;
-                const cardX = idx === 0 ? card1X : idx === 1 ? card2X : card3X;
-                const cardRotate = idx === 0 ? card1Rotate : idx === 1 ? card2Rotate : card3Rotate;
-                const cardOp = idx === 0 ? card1Op : idx === 1 ? card2Op : card3Op;
 
                 return (
                   <motion.div
                     key={step.title}
-                    style={{ x: cardX, y: cardY, rotate: cardRotate, opacity: cardOp }}
-                    whileHover={{ y: -8, scale: 1.01 }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/90 shadow-sm hover:shadow-2xl hover:border-[#d4622b]/50 transition-all duration-300 flex flex-col justify-between group h-full relative overflow-hidden will-change-transform"
+                    style={{ y: cardY }}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    whileHover={{ y: -8, scale: 1.015 }}
+                    transition={{ duration: 0.6, delay: idx * 0.14, ease: [0.16, 1, 0.3, 1] }}
+                    className="bg-white rounded-3xl p-8 sm:p-10 lg:p-12 border border-gray-200/90 shadow-sm hover:shadow-2xl hover:border-[#d4622b]/50 transition-all duration-300 flex flex-col justify-between group h-full relative overflow-hidden"
                   >
                     {/* Top gradient glow on hover */}
                     <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4622b] via-[#e5733f] to-[#f28e2b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                     <div>
-                      {/* Top Row: Icon + Large Step Number */}
-                      <div className="flex items-center justify-between gap-4 mb-6">
-                        <div className="w-14 h-14 rounded-2xl bg-[#d4622b]/10 text-[#d4622b] flex items-center justify-center group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 shadow-xs">
-                          {step.icon}
-                        </div>
-                        <span className="text-4xl sm:text-5xl font-black text-gray-200 group-hover:text-[#d4622b]/30 transition-colors duration-300">
-                          {step.step}
-                        </span>
-                      </div>
-
-                      {/* Step Tagline */}
-                      <span className="text-[11px] font-bold uppercase tracking-widest text-[#d4622b] block mb-1">
-                        Phase {step.step} &bull; {step.tagline}
+                      {/* Step Number */}
+                      <span className="text-5xl sm:text-6xl font-black text-gray-200 group-hover:text-[#d4622b] transition-colors duration-300 block mb-6">
+                        {step.step}
                       </span>
 
                       {/* Step Title */}
-                      <h3 className="text-2xl sm:text-3xl font-black text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors duration-300 mb-3">
+                      <h3 className="text-2xl sm:text-3xl font-black text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors duration-300 mb-4">
                         {step.title}
                       </h3>
 
                       {/* Main Description */}
-                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-6 font-normal">
+                      <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-normal">
                         {step.desc}
                       </p>
-
-                      {/* Key Value Points */}
-                      <ul className="space-y-2.5 pt-4 border-t border-gray-100 mb-6">
-                        {step.points.map((pt) => (
-                          <li key={pt} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700 font-medium">
-                            <svg className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                            <span>{pt}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Bottom Highlight Badge */}
-                    <div className="pt-5 border-t border-gray-100 flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a1a2e] bg-[#faf8f5] px-3.5 py-1.5 rounded-full border border-gray-200/80 group-hover:border-[#d4622b]/30 transition-colors">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b]" />
-                        {step.badge}
-                      </span>
                     </div>
                   </motion.div>
                 );
