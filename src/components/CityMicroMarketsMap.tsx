@@ -429,7 +429,7 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                 >
                   <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-lg overflow-hidden shrink-0 bg-gray-100 border border-gray-200 shadow-2xs">
                     <Image
-                      src={activeArea.img}
+                      src={activeArea.mapPopupImg || activeArea.img}
                       alt={activeArea.name}
                       fill
                       sizes="48px"

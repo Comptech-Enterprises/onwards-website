@@ -188,12 +188,12 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             </h2>
 
             <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
-              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:sticky lg:top-28">
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden lg:sticky lg:top-28 shadow-md">
                 <Image
-                  src={heroImage}
-                  alt={`Onward Workspaces ${cityName}`}
+                  src={city.whyChooseImage || heroImage}
+                  alt={`Why Choose Onward ${cityName}`}
                   fill
-                  className="object-cover grayscale"
+                  className="object-cover"
                 />
               </div>
 

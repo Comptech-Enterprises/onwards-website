@@ -80,16 +80,18 @@ const whyChoose = [
 ];
 
 const newsMediaItems = [
-  { name: "Times of India", img: "/images/main-home-page/new-and-media-add/1.png", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
-  { name: "News18", img: "/images/main-home-page/new-and-media-add/2.png", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
-  { name: "Moneycontrol", img: "/images/main-home-page/new-and-media-add/3.png", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
-  { name: "NDTV", img: "/images/main-home-page/new-and-media-add/4.png", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
-  { name: "Indian Retailer", img: "/images/main-home-page/new-and-media-add/5.png", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
-  { name: "ABP Live", img: "/images/main-home-page/new-and-media-add/6.png", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
-  { name: "PTI News", img: "/images/main-home-page/new-and-media-add/7.png", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
-  { name: "Realty Plus", img: "/images/main-home-page/new-and-media-add/8.png", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
-  { name: "Outlook India", img: "/images/main-home-page/new-and-media-add/9.png", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
-  { name: "Sugermint", img: "/images/main-home-page/new-and-media-add/10.png", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
+  { name: "PTI News", img: "/images/redesigned/home-page/news-and-media/1.png", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
+  { name: "Realty Plus", img: "/images/redesigned/home-page/news-and-media/2.png", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
+  { name: "The Economic Times", img: "/images/redesigned/home-page/news-and-media/3.png", href: "https://economictimes.indiatimes.com/industry/services/property-/-cstruction/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/articleshow/129696672.cms?from=mdr" },
+  { name: "News18", img: "/images/redesigned/home-page/news-and-media/4.png", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
+  { name: "NDTV", img: "/images/redesigned/home-page/news-and-media/5.png", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
+  { name: "BW Businessworld", img: "/images/redesigned/home-page/news-and-media/6.png", href: "https://www.businessworld.in/article/real-estate-deals-slow-as-investors-reassess-risk-and-pricing-602182" },
+  { name: "Moneycontrol", img: "/images/redesigned/home-page/news-and-media/7.png", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
+  { name: "ABP Live", img: "/images/redesigned/home-page/news-and-media/8.png", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
+  { name: "Indian Retailer", img: "/images/redesigned/home-page/news-and-media/9.png", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
+  { name: "Times of India", img: "/images/redesigned/home-page/news-and-media/10.png", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
+  { name: "Sugermint", img: "/images/redesigned/home-page/news-and-media/11.png", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
+  { name: "Outlook India", img: "/images/redesigned/home-page/news-and-media/12.png", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
 ];
 
 const heroWords = ["Ambition", "Brand", "People", "Vision"];
@@ -145,15 +147,15 @@ const stats: Array<{
 const cityCards = [
   {
     name: "Delhi",
-    img: "/images/main-home-page/locations-delhi-ncr/1672-x-600/delhi.png",
+    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.png",
   },
   {
     name: "Noida",
-    img: "/images/main-home-page/locations-delhi-ncr/1672-x-600/noida.png",
+    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.png",
   },
   {
     name: "Gurugram",
-    img: "/images/main-home-page/locations-delhi-ncr/1672-x-600/gurgaon.png",
+    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.png",
   },
 ];
 
@@ -163,42 +165,42 @@ const solutions = [
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
     features: ["Dedicated Entrance", "Custom Layout & IT", "24/7 Access"],
-    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/1.png",
+    img: "/images/redesigned/home-page/office-space-solutions/managed-space.png",
   },
   {
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
     features: ["Ergonomic Seating", "Soundproof Cabins", "Meeting Credits"],
-    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/2.png",
+    img: "/images/redesigned/home-page/office-space-solutions/private-suites.png",
   },
   {
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
     features: ["Executive Furniture", "Private Lounge", "Concierge Service"],
-    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/3.png",
+    img: "/images/redesigned/home-page/office-space-solutions/private-cabins.png",
   },
   {
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
     features: ["GST Registration", "Mail Forwarding", "Day Pass Access"],
-    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/4.png",
+    img: "/images/redesigned/home-page/office-space-solutions/virtual-office.png",
   },
   {
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
     features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage"],
-    img: "/images/main-home-page/office-space-solutions-2/1200-x-600/5.png",
+    img: "/images/redesigned/home-page/office-space-solutions/on-demand.png",
   },
   {
     title: "Custom Built",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
     tag: "BESPOKE",
     features: ["Architect-Led Design", "Brand Aesthetics", "Turnkey Build"],
-    img: "/images/enterprises/826a1449.jpg",
+    img: "/images/redesigned/home-page/office-space-solutions/custom-built.png",
   },
 ];
 
@@ -288,85 +290,61 @@ const gallerySlides = [
     title: "Open Collaboration Spaces",
     location: "Connaught Place, Delhi",
     tag: "Co-Working Floor",
-    img: "/images/main-home-page/gallery/1.png",
+    img: "/images/redesigned/home-page/gallery/1.png",
   },
   {
     title: "Private Executive Suites",
     location: "Cyber City, Gurgaon",
     tag: "Managed Office",
-    img: "/images/main-home-page/gallery/2.png",
+    img: "/images/redesigned/home-page/gallery/2.png",
   },
   {
     title: "Modern Boardrooms & Conference",
     location: "Okhla Phase 3, Delhi",
     tag: "Meeting Suites",
-    img: "/images/main-home-page/gallery/3.png",
+    img: "/images/redesigned/home-page/gallery/3.png",
   },
   {
     title: "Commons & Breakout Lounge",
     location: "Sector 126, Noida",
     tag: "Common Areas",
-    img: "/images/main-home-page/gallery/4.png",
+    img: "/images/redesigned/home-page/gallery/4.png",
   },
   {
     title: "Focus Pods & Ergonomic Cabins",
     location: "Udyog Vihar, Gurgaon",
     tag: "Private Cabins",
-    img: "/images/main-home-page/gallery/5.png",
+    img: "/images/redesigned/home-page/gallery/5.png",
   },
   {
     title: "High-Energy Community Workstations",
     location: "Okhla Phase 2, Delhi",
     tag: "Dedicated Desks",
-    img: "/images/main-home-page/gallery/6.png",
+    img: "/images/redesigned/home-page/gallery/6.png",
   },
   {
     title: "Enterprise Custom Built Suites",
     location: "Sector 132, Noida",
     tag: "Bespoke Enterprise",
-    img: "/images/main-home-page/gallery/7.png",
+    img: "/images/redesigned/home-page/gallery/7.png",
   },
   {
     title: "Hospitality & Reception Lounge",
     location: "MG Road, Gurgaon",
     tag: "Reception Lounge",
-    img: "/images/main-home-page/gallery/8.png",
+    img: "/images/redesigned/home-page/gallery/8.png",
   },
   {
     title: "Collaborative Breakout Arenas",
     location: "Mohan Cooperative, Delhi",
     tag: "Breakout Arena",
-    img: "/images/main-home-page/gallery/9.png",
+    img: "/images/redesigned/home-page/gallery/9.png",
   },
   {
     title: "Scalable Enterprise Desks",
     location: "Sector 4, Noida",
     tag: "Enterprise Pods",
-    img: "/images/main-home-page/gallery/10.png",
-  },
-  {
-    title: "Quiet Focus Zones",
-    location: "Okhla Phase 2, Delhi",
-    tag: "Quiet Zone",
-    img: "/images/main-home-page/gallery/11.png",
-  },
-  {
-    title: "Executive Director Cabins",
-    location: "Okhla Phase 3, Delhi",
-    tag: "Director Suite",
-    img: "/images/main-home-page/gallery/12.png",
-  },
-  {
-    title: "Modern Cafe & Refreshments",
-    location: "Udyog Vihar, Gurgaon",
-    tag: "Community Cafe",
-    img: "/images/main-home-page/gallery/13.png",
-  },
-  {
-    title: "3D Virtual Spatial Model",
-    location: "Sohna Road, Gurgaon",
-    tag: "Virtual Tour",
-    img: "/images/main-home-page/gallery/14.png",
+    img: "/images/redesigned/home-page/gallery/10.png",
   },
 ];
 
@@ -780,22 +758,23 @@ function TrustedLeadersSection() {
 }
 
 const enterpriseLeaderLogos = [
-  { id: 1, src: "/images/main-home-page/enterprise-leaders/1.png" },
-  { id: 2, src: "/images/main-home-page/enterprise-leaders/2.png" },
-  { id: 3, src: "/images/main-home-page/enterprise-leaders/3.png" },
-  { id: 4, src: "/images/main-home-page/enterprise-leaders/4.png" },
-  { id: 5, src: "/images/main-home-page/enterprise-leaders/5.png" },
-  { id: 6, src: "/images/main-home-page/enterprise-leaders/6.png" },
-  { id: 7, src: "/images/main-home-page/enterprise-leaders/7.png" },
-  { id: 8, src: "/images/main-home-page/enterprise-leaders/8.png" },
-  { id: 9, src: "/images/main-home-page/enterprise-leaders/9.png" },
-  { id: 10, src: "/images/main-home-page/enterprise-leaders/10.png" },
-  { id: 11, src: "/images/main-home-page/enterprise-leaders/11.png" },
-  { id: 12, src: "/images/main-home-page/enterprise-leaders/12.png" },
-  { id: 13, src: "/images/main-home-page/enterprise-leaders/13.png" },
-  { id: 14, src: "/images/main-home-page/enterprise-leaders/14.png" },
-  { id: 15, src: "/images/main-home-page/enterprise-leaders/15.png" },
-  { id: 16, src: "/images/main-home-page/enterprise-leaders/16.png" },
+  { id: 1, src: "/images/redesigned/home-page/enterprise-leaders/1.png" },
+  { id: 2, src: "/images/redesigned/home-page/enterprise-leaders/2.png" },
+  { id: 3, src: "/images/redesigned/home-page/enterprise-leaders/3.png" },
+  { id: 4, src: "/images/redesigned/home-page/enterprise-leaders/4.png" },
+  { id: 5, src: "/images/redesigned/home-page/enterprise-leaders/5.png" },
+  { id: 6, src: "/images/redesigned/home-page/enterprise-leaders/6.png" },
+  { id: 7, src: "/images/redesigned/home-page/enterprise-leaders/7.png" },
+  { id: 8, src: "/images/redesigned/home-page/enterprise-leaders/8.png" },
+  { id: 9, src: "/images/redesigned/home-page/enterprise-leaders/9.png" },
+  { id: 10, src: "/images/redesigned/home-page/enterprise-leaders/10.png" },
+  { id: 11, src: "/images/redesigned/home-page/enterprise-leaders/11.png" },
+  { id: 12, src: "/images/redesigned/home-page/enterprise-leaders/12.png" },
+  { id: 13, src: "/images/redesigned/home-page/enterprise-leaders/13.png" },
+  { id: 14, src: "/images/redesigned/home-page/enterprise-leaders/14.png" },
+  { id: 15, src: "/images/redesigned/home-page/enterprise-leaders/15.png" },
+  { id: 16, src: "/images/redesigned/home-page/enterprise-leaders/16.png" },
+  { id: 17, src: "/images/redesigned/home-page/enterprise-leaders/17.png" },
 ];
 
 function EnterprisesSection() {
@@ -827,7 +806,7 @@ function EnterprisesSection() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
 
         <motion.div
-          className="flex w-max gap-4 sm:gap-6 items-center py-2"
+          className="flex w-max gap-4 sm:gap-6 items-center py-3"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
         >
@@ -836,12 +815,12 @@ function EnterprisesSection() {
               <div
                 key={`enterprise-${r}-${brand.id}-${i}`}
                 title={`Enterprise Partner ${brand.id}`}
-                className="shrink-0 px-6 sm:px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[72px] sm:h-[78px] group cursor-default"
+                className="shrink-0 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[190px] sm:min-w-[230px] md:min-w-[260px] h-[88px] sm:h-[105px] md:h-[115px] group cursor-default"
               >
                 <img
                   src={brand.src}
                   alt={`Enterprise Partner ${brand.id}`}
-                  className="h-7 sm:h-9 w-auto max-w-[110px] sm:max-w-[130px] object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[185px] md:max-w-[215px] object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             )),
@@ -883,7 +862,7 @@ function NewsMediaSection() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
 
         <motion.div
-          className="flex w-max gap-4 sm:gap-6 items-center py-2"
+          className="flex w-max gap-4 sm:gap-6 items-center py-3"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
         >
@@ -895,9 +874,13 @@ function NewsMediaSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title={item.name}
-                className="shrink-0 px-6 sm:px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[72px] sm:h-[78px] group"
+                className="shrink-0 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[190px] sm:min-w-[230px] md:min-w-[260px] h-[88px] sm:h-[105px] md:h-[115px] group"
               >
-                <img src={item.img} alt={item.name} className="h-6 sm:h-8 w-auto max-w-[120px] sm:max-w-[135px] object-contain transition-transform duration-300 group-hover:scale-105" />
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[185px] md:max-w-[215px] object-contain transition-transform duration-300 group-hover:scale-105"
+                />
               </a>
             )),
           )}
@@ -1109,11 +1092,20 @@ export default function Home() {
         className="relative min-h-screen flex flex-col justify-between overflow-hidden"
         id="home"
       >
-        {/* Background static image — Onward hero photo */}
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/images/main-home-page/image-at-the-top.png')" }}
-        />
+        {/* Background video / image — Onward hero video from redesigned assets */}
+        <div className="absolute inset-0 z-0 overflow-hidden bg-gray-900">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/images/main-home-page/image-at-the-top.png"
+            className="w-full h-full object-cover"
+          >
+            <source src="/images/redesigned/home-page/hero-video-at-the-top.mov" type="video/mp4" />
+            <source src="/images/redesigned/home-page/hero-video-at-the-top.mov" type="video/quicktime" />
+          </video>
+        </div>
 
         {/* Overlay for text readability */}
         <div className="pointer-events-none absolute inset-0 z-[1] bg-black/50" />

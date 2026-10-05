@@ -8,6 +8,7 @@ export interface AreaDetail {
   highlight: string;
   features: string[];
   img: string;
+  mapPopupImg?: string;
   gallery: string[];
   clients?: string[];
   description: string;
@@ -19,6 +20,7 @@ export interface CityData {
   name: string;
   basePath: string;
   heroImage: string;
+  whyChooseImage?: string;
   heroDescription: string;
   contactDescription: string;
   areas: AreaDetail[];
@@ -28,7 +30,8 @@ export const delhiCity: CityData = {
   slug: "delhi",
   name: "Delhi",
   basePath: "/locations/delhi",
-  heroImage: "/images/delhi/delhi.png",
+  heroImage: "/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.png",
+  whyChooseImage: "/images/redesigned/locations/delhi/why-choose-onward-for-your-workspace-in-delhi.png",
   heroDescription:
     "Delhi continues to be one of India's leading business hubs, attracting enterprises, startups, and high-growth companies across sectors. As teams expand their footprint in the city, Onward brings coworking spaces that support flexibility, scalability, and seamless metro connectivity across key commercial districts.",
   contactDescription:
@@ -43,7 +46,8 @@ export const delhiCity: CityData = {
       transit: "3 min to Harkesh Nagar Okhla Metro",
       highlight: "Scalable Enterprise Campuses & Turnkey Layouts",
       features: ["Large Team Suites", "Loading Bay", "High-Power Backup", "Gaming Zone"],
-      img: "/images/delhi/okhla-phase-2-delhi.png",
+      img: "/images/redesigned/locations/delhi/centres-in-delhi/okhla-phasee-2.png",
+      mapPopupImg: "/images/redesigned/locations/delhi/map-pop-ups-micro-markets-in-delhi/okhla-phase-3-1.png",
       gallery: [
         "/images/okhla-phase-2/office-gallery/1.png",
         "/images/okhla-phase-2/office-gallery/2.png",
@@ -71,7 +75,8 @@ export const delhiCity: CityData = {
       transit: "5 min to Govind Puri Metro Station",
       highlight: "Custom-Fitted Enterprise Floors & Collaborative Studios",
       features: ["Dedicated Server Room", "Cafeteria", "24/7 Security", "Ample Parking"],
-      img: "/images/delhi/delhi-okhla-phase-3.png",
+      img: "/images/redesigned/locations/delhi/centres-in-delhi/okhla-phase-3.png",
+      mapPopupImg: "/images/redesigned/locations/delhi/map-pop-ups-micro-markets-in-delhi/okhla-phase-3.png",
       gallery: [
         "/images/okhla-phase-3/gallery-images/1.png",
         "/images/okhla-phase-3/gallery-images/2.png",
@@ -102,7 +107,8 @@ export const delhiCity: CityData = {
       transit: "Direct Access from Mohan Estate Metro",
       highlight: "Grand Atrium Offices & Logistics-Connected Suites",
       features: ["National Highway Access", "Ample Parking", "Terrace Garden", "High-Speed WiFi"],
-      img: "/images/delhi/delhi-mohan-estate.png",
+      img: "/images/redesigned/locations/delhi/centres-in-delhi/mohan-cooperative.png",
+      mapPopupImg: "/images/redesigned/locations/delhi/map-pop-ups-micro-markets-in-delhi/mohan-cooperative.png",
       gallery: [
         "/images/delhi/our-spaces-in-delhi-ncr/mohan-estate.jpg",
         "/images/delhi/office-space-solutions/img-0508-1.jpg",
@@ -122,7 +128,8 @@ export const delhiCity: CityData = {
       transit: "2 min walk to Rajiv Chowk Metro",
       highlight: "CBD Landmark with Executive Boardrooms & Private Suites",
       features: ["Valet Parking", "24/7 Access", "Executive Boardrooms", "Cafeteria Lounge"],
-      img: "/images/delhi/delhi-cp.png",
+      img: "/images/redesigned/locations/delhi/centres-in-delhi/connaught-place.png",
+      mapPopupImg: "/images/redesigned/locations/delhi/map-pop-ups-micro-markets-in-delhi/connaught-place.png",
       gallery: [
         "/images/delhi/delhi-cp.png",
         "/images/delhi/our-spaces-in-delhi-ncr/okhla-phase-2-44.jpg",
@@ -141,7 +148,8 @@ export const delhiCity: CityData = {
       transit: "Direct Access from Janakpuri West Metro Station",
       highlight: "Accessible West Delhi Hub for Local Teams & Startups",
       features: ["Metro-Adjacent", "Flexible Lease Terms", "High-Speed WiFi", "Meeting Credits"],
-      img: "/images/delhi/our-spaces-in-delhi-ncr/okhla-phse-3-20.jpg",
+      img: "/images/redesigned/locations/delhi/centres-in-delhi/janakpuri.png",
+      mapPopupImg: "/images/redesigned/locations/delhi/map-pop-ups-micro-markets-in-delhi/janakpuri.png",
       gallery: [
         "/images/delhi/our-spaces-in-delhi-ncr/okhla-phse-3-20.jpg",
         "/images/delhi/our-spaces-in-delhi-ncr/okhla-phase-3-41.jpg",
@@ -157,7 +165,8 @@ export const noidaCity: CityData = {
   slug: "noida",
   name: "Noida",
   basePath: "/locations/noida",
-  heroImage: "/images/main-home-page/locations-delhi-ncr/1672-x-600/noida.png",
+  heroImage: "/images/redesigned/locations/noida/top-section-hero-image-managed-office-space-in-noida.png",
+  whyChooseImage: "/images/redesigned/locations/noida/why-choose-onward-for-your-workspace-in-noida.png",
   heroDescription:
     "Noida continues to be one of India's leading business and technology hubs, attracting enterprises, GCCs, and high-growth companies across sectors. As teams expand their footprint in the city, Onward brings coworking spaces that support flexibility, scalability, and seamless expressway connectivity across key commercial districts.",
   contactDescription:
@@ -172,7 +181,8 @@ export const noidaCity: CityData = {
       transit: "10 min to Noida Sector 15 Metro Station",
       highlight: "Managed Enterprise Floors in a Well-Connected Civic Hub",
       features: ["24/7 Security", "Ample Parking", "Dedicated Server Room", "Cafeteria"],
-      img: "/images/noida/img-0364.jpg",
+      img: "/images/redesigned/locations/noida/centres-in-noida/sector-4.png",
+      mapPopupImg: "/images/redesigned/locations/noida/map-pop-ups-micro-markets-in-noida/sector-4.png",
       gallery: [
         "/images/noida/img-0364.jpg",
         "/images/noida/img-0367.jpg",
@@ -191,7 +201,8 @@ export const noidaCity: CityData = {
       transit: "Direct Expressway Ramp & Okhla Bird Sanctuary Metro",
       highlight: "Custom-Fitted MNC Headquarters & High-Growth Pods",
       features: ["Green Certified", "Multi-Cuisine Cafe", "Dual High-Speed ISP", "Podcast Studio"],
-      img: "/images/noida/img-0331-1.jpg",
+      img: "/images/redesigned/locations/noida/centres-in-noida/sector-126.png",
+      mapPopupImg: "/images/redesigned/locations/noida/map-pop-ups-micro-markets-in-noida/sector-126.png",
       gallery: [
         "/images/noida/img-0331-1.jpg",
         "/images/noida/img-0336.jpg",
@@ -210,7 +221,8 @@ export const noidaCity: CityData = {
       transit: "Noida Expressway Arterial & Sector 137 Metro",
       highlight: "Sprawling Enterprise Floors with Bespoke Branding",
       features: ["Dedicated Entrance", "Private Breakout Zones", "Biometric Turnstiles", "Creche Facility"],
-      img: "/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.png",
+      img: "/images/redesigned/locations/noida/centres-in-noida/sector-132.png",
+      mapPopupImg: "/images/redesigned/locations/noida/map-pop-ups-micro-markets-in-noida/sector-132.png",
       gallery: [
         "/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.png",
         "/images/noida/img-0387.jpg",
@@ -227,7 +239,8 @@ export const gurgaonCity: CityData = {
   slug: "gurgaon",
   name: "Gurugram",
   basePath: "/locations/gurgaon",
-  heroImage: "/images/main-home-page/locations-delhi-ncr/1672-x-600/gurgaon.png",
+  heroImage: "/images/redesigned/locations/gurgaon/top-section-hero-image-managed-office-space-in-gurgaon.png",
+  whyChooseImage: "/images/redesigned/locations/gurgaon/why-choose-onward-for-your-workspace-in-gurgaon.png",
   heroDescription:
     "Gurugram continues to be one of India's leading business and technology hubs, attracting enterprises, GCCs, and high-growth companies across sectors. As teams expand their footprint in the city, Onward brings coworking spaces that support flexibility, scalability, and seamless connectivity across key commercial districts.",
   contactDescription:
@@ -242,7 +255,8 @@ export const gurgaonCity: CityData = {
       transit: "Direct Access from MG Road Rapid Metro Station",
       highlight: "Managed Enterprise Suites on Gurugram's Original Commercial Spine",
       features: ["Rapid Metro Access", "Premium Reception", "24/7 Power Backup", "Cafeteria"],
-      img: "/images/mg-road/dsc04206.jpg",
+      img: "/images/redesigned/locations/gurgaon/centres-in-gurgaon/mg-road.png",
+      mapPopupImg: "/images/redesigned/locations/gurgaon/map-pop-ups-micro-markets-in-gurgaon/mg-road.png",
       gallery: [
         "/images/mg-road/dsc04206.jpg",
         "/images/mg-road/img-4113-1.jpg",
@@ -260,7 +274,8 @@ export const gurgaonCity: CityData = {
       transit: "5 min to IndusInd Bank Cyber City Metro & NH-48",
       highlight: "Independent Enterprise Buildings & Tailored Layouts",
       features: ["Direct Airport Link (IGI 15 min)", "Dedicated Server Labs", "Custom Signage", "Cafeteria"],
-      img: "/images/udyog-vihar/img-0504.jpg",
+      img: "/images/redesigned/locations/gurgaon/centres-in-gurgaon/udyog-vihar.png",
+      mapPopupImg: "/images/redesigned/locations/gurgaon/map-pop-ups-micro-markets-in-gurgaon/udyog-vihar.png",
       gallery: [
         "/images/udyog-vihar/img-0504.jpg",
         "/images/udyog-vihar/img-0508-1.jpg",
@@ -284,7 +299,8 @@ export const gurgaonCity: CityData = {
       transit: "Subhash Chowk Junction & Direct Elevated Corridor",
       highlight: "Flexible Team Suites with Collaborative Open Commons",
       features: ["Ample Open Parking", "Recreation Area", "Flexible Lease Terms", "High-Speed WiFi"],
-      img: "/images/sohna-road-3ds/screenshot-2026-08-01-at-11-51-31-am-1.png",
+      img: "/images/redesigned/locations/gurgaon/centres-in-gurgaon/sohna-road.png",
+      mapPopupImg: "/images/redesigned/locations/gurgaon/map-pop-ups-micro-markets-in-gurgaon/sohna-road.png",
       gallery: [
         "/images/sohna-road-3ds/screenshot-2026-08-01-at-11-51-31-am-1.png",
         "/images/sohna-road-3ds/screenshot-2026-08-01-at-11-51-51-am-1.png",

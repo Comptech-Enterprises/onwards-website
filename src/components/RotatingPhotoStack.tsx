@@ -7,14 +7,14 @@ import Image from "next/image";
    Full-size on desktop, scales down progressively and smoothly
    on tablet, laptop, and mobile viewports. */
 const srcs = [
-  "/images/main-home-page/gallery/1.png",
-  "/images/main-home-page/gallery/2.png",
-  "/images/main-home-page/gallery/3.png",
-  "/images/main-home-page/gallery/4.png",
-  "/images/main-home-page/gallery/5.png",
-  "/images/main-home-page/gallery/6.png",
-  "/images/main-home-page/gallery/7.png",
-  "/images/main-home-page/gallery/8.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/1.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/2.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/3.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/4.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/5.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/6.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/7.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/8.png",
 ];
 
 const R = 230;
