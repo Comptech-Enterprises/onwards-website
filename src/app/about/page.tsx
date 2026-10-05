@@ -106,33 +106,6 @@ const teamMembers = [
   { name: "Nitin Mehra", role: "Director of Enterprise Solutions", initials: "NM" },
 ];
 
-const welcomeRow1 = [
-  { src: "/images/redesigned/about-us/second-section/1.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
-  { src: "/images/redesigned/about-us/second-section/2.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "/images/redesigned/about-us/second-section/9.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
-];
-const welcomeRow2 = [
-  { src: "/images/redesigned/about-us/second-section/10.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "/images/redesigned/about-us/second-section/11.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
-];
-
-/* ━━━ WELCOME PHOTO ━━━ */
-function WelcomePhoto({ src, aspect, w, progress, enterStart, enterEnd }: {
-  src: string; aspect: string; w: string;
-  progress: import("framer-motion").MotionValue<number>;
-  enterStart: number; enterEnd: number;
-}) {
-  const opacity = useTransform(progress, [enterStart, enterEnd, 0.88, 1], [0, 1, 1, 0]);
-  const y = useTransform(progress, [enterStart, enterEnd], [40, 0]);
-  return (
-    <motion.div
-      style={{ opacity, y }}
-      className={`relative ${w} ${aspect} rounded-2xl overflow-hidden shadow-lg border border-black/5 shrink-0`}
-    >
-      <Image src={src} alt="Onward Workspaces" fill sizes="(max-width:768px) 180px, 320px" className="object-cover" />
-    </motion.div>
-  );
-}
 
 /* ━━━ SCROLL-REVEAL ━━━ */
 function ScrollReveal({ children, className = "", delay = 0, y = 60 }: { children: React.ReactNode; className?: string; delay?: number; y?: number }) {
@@ -159,18 +132,6 @@ export default function AboutPage() {
   const { scrollY } = useScroll();
   const descOpacity = useTransform(scrollY, [30, 120], [0, 1]);
   const descY = useTransform(scrollY, [30, 120], [50, 0]);
-
-  /* ═══════════════════════════════════════════════════════════
-     WELCOME: Sticky text + scroll-scrubbed staggered photo reveals (Brilean pattern).
-     Text starts at top, scrolls to center as photos appear.
-  ═══════════════════════════════════════════════════════════ */
-  const welcomeWrapperRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: welcomeProgress } = useScroll({
-    target: welcomeWrapperRef,
-    offset: ["start start", "end end"],
-  });
-  const welcomeTextOp = useTransform(welcomeProgress, [0, 0.85, 1], [1, 1, 0]);
-  const welcomeTextScale = useTransform(welcomeProgress, [0, 0.85, 1], [1, 1, 0.97]);
 
   /* ═══════════════════════════════════════════════════════════
      SECTION BG SWEEP: dark background sweeps left-to-right
@@ -299,107 +260,52 @@ export default function AboutPage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. WELCOME — STICKY TEXT + STAGGERED PHOTO REVEALS (Brilean pattern)
-            Text stays pinned while photos slowly appear around it on scroll.
+            2. WHAT WE DO — CITY SKYLINE BG + 3 STEP CARDS
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <div ref={welcomeWrapperRef} className="relative bg-white border-b border-gray-200/80" style={{ height: "300vh" }}>
-          <div className="sticky top-20 h-[calc(100vh-5rem)] overflow-hidden flex items-center justify-center">
-            {/* Top gradient fade */}
-            <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-white to-transparent z-30 pointer-events-none" />
-            {/* Bottom gradient fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-30 pointer-events-none" />
-            <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center gap-8 sm:gap-12">
-              {/* Row 1: 3 photos */}
-              <div className="flex w-full justify-between items-end gap-3 sm:gap-6">
-                {welcomeRow1.map((photo, i) => (
-                  <WelcomePhoto key={photo.src} {...photo} progress={welcomeProgress}
-                    enterStart={0.02 + i * 0.05} enterEnd={0.12 + i * 0.05} />
-                ))}
-              </div>
-
-              {/* Sticky centered welcome text */}
-              <motion.div style={{ scale: welcomeTextScale, opacity: welcomeTextOp }}
-                className="z-20 text-center max-w-xl sm:max-w-2xl px-4 select-none my-2 sm:my-4">
-                <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.25em] text-gray-400 mb-3">Who We Are</p>
-                <h2 className="text-3xl sm:text-5xl lg:text-[3.25rem] font-light text-[#1a1a2e] tracking-tight leading-[1.12]">
-                  Whatever brought you to this page, <span className="font-normal text-[#1a1a2e]">welcome.</span>
-                </h2>
-                <div className="mt-6 flex justify-center">
-                  <svg className="w-8 h-8 text-gray-400" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <circle cx="16" cy="16" r="14" />
-                    <path d="M11 14l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </div>
-              </motion.div>
-
-              {/* Row 2: 2 photos */}
-              <div className="flex w-full justify-center items-start gap-[12%] sm:gap-[16%]">
-                {welcomeRow2.map((photo, i) => (
-                  <WelcomePhoto key={photo.src} {...photo} progress={welcomeProgress}
-                    enterStart={0.15 + i * 0.06} enterEnd={0.25 + i * 0.06} />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. THE IDEAL WORKSPACE AS A SOLUTION (LIGHT THEME CONNECTED BENTO)
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="py-20 sm:py-28 lg:py-32 bg-[#faf8f5] text-[#1a1a2e] border-b border-gray-200/80 relative overflow-hidden">
-          {/* Subtle warm ambient background glow */}
-          <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[140px]" />
+        <section className="relative py-20 sm:py-28 lg:py-32 overflow-hidden border-b border-gray-200/80">
+          <Image
+            src="/images/redesigned/about-us/second-section/1.webp"
+            alt="City skyline"
+            fill
+            className="object-cover object-[center_70%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Header Area */}
-            <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-20">
+            <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
               <ScrollReveal>
-                <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-2">
-                  End-to-End Enterprise Delivery
-                </span>
-              </ScrollReveal>
-              <ScrollReveal delay={0.1}>
-                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.12] mt-3">
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.12]">
                   The ideal workspace as a{" "}
-                  <span className="text-[#d4622b]">solution.</span>
+                  <span className="text-[#d4622b]">solution</span>
                 </h2>
-              </ScrollReveal>
-              <ScrollReveal delay={0.2}>
-                <p className="mt-4 text-gray-600 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto">
-                  From securing prime commercial real estate to bespoke design and seamless daily facility operations — we take care of the entire lifecycle.
-                </p>
               </ScrollReveal>
             </div>
 
-            {/* 3 Connected Bento Cards with Step Pills & Flow */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 relative items-stretch">
+            {/* Numbered circles with connecting bar */}
+            <div className="hidden sm:flex items-center justify-center mb-12 max-w-2xl mx-auto">
               {workspaceSolutionSteps.map((step, idx) => (
-                <ScrollReveal key={step.step} delay={idx * 0.12} className="h-full">
-                  <div className="h-full bg-white rounded-3xl p-7 sm:p-9 border border-gray-200/90 shadow-[0_8px_30px_-12px_rgba(26,26,46,0.08)] hover:shadow-[0_20px_45px_-12px_rgba(212,98,43,0.18)] hover:border-[#d4622b]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group relative">
-                    {/* Top Row: Phase Pill + Icon */}
-                    <div>
-                      <div className="flex items-center justify-between gap-4 mb-6">
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-8 h-8 rounded-full bg-[#1a1a2e] text-white font-bold text-xs flex items-center justify-center shadow-xs">
-                            {step.step}
-                          </span>
-                          <span className="text-[11px] font-bold uppercase tracking-wider text-[#d4622b] bg-[#d4622b]/10 px-3 py-1 rounded-full">
-                            {step.label}
-                          </span>
-                        </div>
-                        <div className="w-11 h-11 rounded-2xl bg-[#faf8f5] border border-gray-200/70 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#d4622b]/10 transition-all duration-300">
-                          {step.icon}
-                        </div>
-                      </div>
+                <div key={step.step} className="flex items-center flex-1 last:flex-none">
+                  <div className="w-14 h-14 rounded-full bg-white text-[#1a1a2e] font-bold text-lg flex items-center justify-center shadow-lg shrink-0">
+                    {step.step}
+                  </div>
+                  {idx < workspaceSolutionSteps.length - 1 && (
+                    <div className="flex-1 h-1 bg-white/40 mx-1" />
+                  )}
+                </div>
+              ))}
+            </div>
 
-                      {/* Title & Description */}
-                      <h3 className="text-2xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors mb-3">
-                        {step.title}
-                      </h3>
-                      <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed font-normal">
-                        {step.desc}
-                      </p>
-                    </div>
+            {/* 3 Step Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+              {workspaceSolutionSteps.map((step, idx) => (
+                <ScrollReveal key={step.step} delay={idx * 0.1}>
+                  <div className={`bg-white/95 backdrop-blur-sm p-7 sm:p-8 h-full text-center ${idx < workspaceSolutionSteps.length - 1 ? "sm:border-r border-b sm:border-b-0 border-gray-200/60" : ""}`}>
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#1a1a2e] tracking-tight mb-3">
+                      {step.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-relaxed">
+                      {step.desc}
+                    </p>
                   </div>
                 </ScrollReveal>
               ))}

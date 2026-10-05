@@ -16,7 +16,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
         {/* ━━━ 1. HERO BANNER ━━━ */}
         <section className="relative min-h-[400px] sm:min-h-[460px] lg:min-h-[500px] flex items-center py-14 sm:py-18 lg:py-22 overflow-hidden">
           <Image
-            src={area.img}
+            src={area.heroBanner || area.img}
             alt={`Onward Workspaces ${area.name}`}
             fill
             priority

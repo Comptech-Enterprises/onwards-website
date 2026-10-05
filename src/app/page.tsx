@@ -1025,7 +1025,7 @@ export default function Home() {
             muted
             loop
             playsInline
-            poster="/images/main-home-page/image-at-the-top.png"
+            poster="/images/redesigned/home-page/gallery/1.webp"
             className="w-full h-full object-cover"
           >
             <source src="/images/redesigned/home-page/hero-video-at-the-top.mp4" type="video/mp4" />
@@ -1331,7 +1331,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
-      <ContactSection bgImage="/images/main-home-page/get-in-touch-with-us.png" />
+      <ContactSection bgImage="/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.webp" />
 
       {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
       <TrustedLeadersSection />

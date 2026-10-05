@@ -27,7 +27,7 @@ export default function CentreDetailView({
         {/* 1. HERO BANNER */}
         <section className="relative min-h-[400px] sm:min-h-[460px] lg:min-h-[500px] flex items-center py-14 sm:py-18 lg:py-22 overflow-hidden">
           <Image
-            src={centre.img}
+            src={centre.bannerImg || centre.img}
             alt={centre.title}
             fill
             priority
