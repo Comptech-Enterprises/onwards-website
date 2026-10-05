@@ -80,16 +80,16 @@ const whyChoose = [
 ];
 
 const newsMediaItems = [
-  { name: "ABP Live", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006545.webp", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
-  { name: "News18", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006623.webp", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
-  { name: "Moneycontrol", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006633.webp", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
-  { name: "NDTV", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006641.webp", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
-  { name: "Indian Retailer", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006742.webp", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
-  { name: "Times of India", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006664.webp", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
-  { name: "PTI News", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006714.webp", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
-  { name: "Realty Plus", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022006922.webp", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
-  { name: "Outlook India", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022323187.webp", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
-  { name: "Sugermint", img: "https://onwardwork.s3.ap-south-1.amazonaws.com/onward/Home/1786022323207.webp", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
+  { name: "Times of India", img: "/images/home/media/1.png", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
+  { name: "News18", img: "/images/home/media/2.png", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
+  { name: "Moneycontrol", img: "/images/home/media/3.png", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
+  { name: "NDTV", img: "/images/home/media/4.png", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
+  { name: "Indian Retailer", img: "/images/home/media/5.png", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
+  { name: "ABP Live", img: "/images/home/media/6.png", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
+  { name: "PTI News", img: "/images/home/media/7.png", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
+  { name: "Realty Plus", img: "/images/home/media/8.png", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
+  { name: "Outlook India", img: "/images/home/media/9.png", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
+  { name: "Sugermint", img: "/images/home/media/10.png", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
 ];
 
 const heroWords = ["Ambition", "Brand", "People", "Vision"];
@@ -145,15 +145,15 @@ const stats: Array<{
 const cityCards = [
   {
     name: "Delhi",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/cities/1790613615409.webp",
+    img: "/images/home/locations-delhi-ncr/delhi.png",
   },
   {
     name: "Noida",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/cities/1790613615668.webp",
+    img: "/images/home/locations-delhi-ncr/noida.png",
   },
   {
     name: "Gurugram",
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/cities/1790613615802.webp",
+    img: "/images/home/locations-delhi-ncr/gurgaon.png",
   },
 ];
 
@@ -163,42 +163,42 @@ const solutions = [
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
     features: ["Dedicated Entrance", "Custom Layout & IT", "24/7 Access"],
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013140.webp",
+    img: "/images/home/solutions/1.png",
   },
   {
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
     features: ["Ergonomic Seating", "Soundproof Cabins", "Meeting Credits"],
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013169.webp",
+    img: "/images/home/solutions/2.png",
   },
   {
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
     features: ["Executive Furniture", "Private Lounge", "Concierge Service"],
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013263.webp",
+    img: "/images/home/solutions/3.png",
   },
   {
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
     features: ["GST Registration", "Mail Forwarding", "Day Pass Access"],
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013400.webp",
+    img: "/images/home/solutions/4.png",
   },
   {
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
     features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage"],
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/solution/1790614013758.webp",
+    img: "/images/home/solutions/5.png",
   },
   {
     title: "Custom Built",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
     tag: "BESPOKE",
     features: ["Architect-Led Design", "Brand Aesthetics", "Turnkey Build"],
-    img: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/offices/1790613223676.webp",
+    img: "/images/enterprises/826a1449.jpg",
   },
 ];
 
@@ -285,39 +285,88 @@ const cities = [
 
 const gallerySlides = [
   {
-    title: "Open Collaboration",
+    title: "Open Collaboration Spaces",
     location: "Connaught Place, Delhi",
     tag: "Co-Working Floor",
-    grad: ["#fff3ec", "#ffe4d0", "#ffd0b0"],
-    shape: "#d4622b",
+    img: "/images/home/gallery/1.png",
   },
   {
     title: "Private Executive Suites",
     location: "Cyber City, Gurgaon",
     tag: "Managed Office",
-    grad: ["#f0f4f8", "#dde6f0", "#c8d8e8"],
-    shape: "#1a1a2e",
+    img: "/images/home/gallery/2.png",
   },
   {
-    title: "The Boardroom",
-    location: "Nehru Place, Delhi",
+    title: "Modern Boardrooms & Conference",
+    location: "Okhla Phase 3, Delhi",
     tag: "Meeting Suites",
-    grad: ["#fdf6ec", "#f7e8cf", "#f0d8ae"],
-    shape: "#d4622b",
+    img: "/images/home/gallery/3.png",
   },
   {
-    title: "Commons & Lounge",
-    location: "Sector 62, Noida",
+    title: "Commons & Breakout Lounge",
+    location: "Sector 126, Noida",
     tag: "Common Areas",
-    grad: ["#f5f5f0", "#eaeae0", "#ddddd0"],
-    shape: "#6b7280",
+    img: "/images/home/gallery/4.png",
   },
   {
-    title: "Focus Pods",
-    location: "Golf Course Rd, Gurgaon",
+    title: "Focus Pods & Ergonomic Cabins",
+    location: "Udyog Vihar, Gurgaon",
     tag: "Private Cabins",
-    grad: ["#fef3ed", "#fce4d4", "#f9d5bb"],
-    shape: "#d4622b",
+    img: "/images/home/gallery/5.png",
+  },
+  {
+    title: "High-Energy Community Workstations",
+    location: "Okhla Phase 2, Delhi",
+    tag: "Dedicated Desks",
+    img: "/images/home/gallery/6.png",
+  },
+  {
+    title: "Enterprise Custom Built Suites",
+    location: "Sector 132, Noida",
+    tag: "Bespoke Enterprise",
+    img: "/images/home/gallery/7.png",
+  },
+  {
+    title: "Hospitality & Reception Lounge",
+    location: "MG Road, Gurgaon",
+    tag: "Reception Lounge",
+    img: "/images/home/gallery/8.png",
+  },
+  {
+    title: "Collaborative Breakout Arenas",
+    location: "Mohan Cooperative, Delhi",
+    tag: "Breakout Arena",
+    img: "/images/home/gallery/9.png",
+  },
+  {
+    title: "Scalable Enterprise Desks",
+    location: "Sector 4, Noida",
+    tag: "Enterprise Pods",
+    img: "/images/home/gallery/10.png",
+  },
+  {
+    title: "Quiet Work Zones",
+    location: "Sohna Road, Gurgaon",
+    tag: "Quiet Zone",
+    img: "/images/home/gallery/11.png",
+  },
+  {
+    title: "Modern Cafe & Refreshments",
+    location: "Janakpuri, Delhi",
+    tag: "Community Cafe",
+    img: "/images/home/gallery/12.png",
+  },
+  {
+    title: "High-Tech Meeting Rooms",
+    location: "Okhla Phase 2, Delhi",
+    tag: "Conference Room",
+    img: "/images/home/gallery/13.png",
+  },
+  {
+    title: "Executive Director Cabins",
+    location: "Connaught Place, Delhi",
+    tag: "Director Suite",
+    img: "/images/home/gallery/14.png",
   },
 ];
 
@@ -415,7 +464,7 @@ function GallerySlider() {
   const [dir, setDir] = useState(1);
   const [paused, setPaused] = useState(false);
   const total = gallerySlides.length;
-  const interval = 3000;
+  const interval = 3500;
 
   useEffect(() => {
     if (paused) return;
@@ -429,14 +478,9 @@ function GallerySlider() {
   const slide = gallerySlides[current];
 
   const slideVariants = {
-    enter: (d: number) => ({ x: `${d * 100}%`, opacity: 1 }),
+    enter: (d: number) => ({ x: `${d * 100}%`, opacity: 0.8 }),
     center: { x: "0%", opacity: 1 },
-    exit: (d: number) => ({ x: `${d * -100}%`, opacity: 1 }),
-  };
-  const parallaxVariants = {
-    enter: (d: number) => ({ x: `${d * 30}%` }),
-    center: { x: "0%" },
-    exit: (d: number) => ({ x: `${d * -30}%` }),
+    exit: (d: number) => ({ x: `${d * -100}%`, opacity: 0.8 }),
   };
 
   return (
@@ -446,7 +490,7 @@ function GallerySlider() {
       onMouseLeave={() => setPaused(false)}
     >
       {/* Main slider viewport */}
-      <div className="relative overflow-hidden rounded-none lg:rounded-3xl mx-0 lg:mx-8 lg:max-w-7xl lg:mx-auto h-[380px] sm:h-[460px] lg:h-[520px]">
+      <div className="relative overflow-hidden rounded-none lg:rounded-3xl mx-0 lg:mx-8 lg:max-w-7xl lg:mx-auto h-[380px] sm:h-[460px] lg:h-[540px] shadow-sm bg-gray-900">
         <AnimatePresence custom={dir} mode="sync" initial={false}>
           <motion.div
             key={current}
@@ -455,72 +499,89 @@ function GallerySlider() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="absolute inset-0"
           >
-            {/* Parallax inner layer */}
-            <motion.div
-              key={`inner-${current}`}
-              custom={dir}
-              variants={parallaxVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0 bg-[#faf8f5]"
-            >
-              {/* Decorative geometric shapes */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice" fill="none">
-                <circle cx="900" cy="100" r="220" stroke="#d4622b" strokeOpacity="0.08" strokeWidth="80" />
-                <circle cx="900" cy="100" r="120" stroke="#d4622b" strokeOpacity="0.06" strokeWidth="40" />
-                <rect x="80" y="300" width="200" height="200" rx="40" fill="#d4622b" fillOpacity="0.04" />
-                <rect x="120" y="340" width="120" height="120" rx="24" fill="#d4622b" fillOpacity="0.05" />
-                <line x1="0" y1="200" x2="1200" y2="200" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
-                <line x1="0" y1="320" x2="1200" y2="320" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
-                <line x1="400" y1="0" x2="400" y2="520" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
-                <line x1="800" y1="0" x2="800" y2="520" stroke="#d4622b" strokeOpacity="0.04" strokeWidth="1" />
-              </svg>
-
-              {/* Central illustration — floating building */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="opacity-15"
-                >
-                  <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-                    <rect x="40" y="60" width="100" height="100" rx="8" fill="#d4622b" />
-                    <rect x="55" y="40" width="70" height="25" rx="4" fill="#d4622b" />
-                    <rect x="65" y="25" width="50" height="18" rx="3" fill="#d4622b" />
-                    <rect x="55" y="80" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
-                    <rect x="85" y="80" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
-                    <rect x="115" y="80" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
-                    <rect x="55" y="110" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
-                    <rect x="85" y="110" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
-                    <rect x="115" y="110" width="20" height="20" rx="3" fill="white" fillOpacity="0.6" />
-                    <rect x="72" y="140" width="36" height="20" rx="4" fill="white" fillOpacity="0.5" />
-                  </svg>
-                </motion.div>
-              </div>
-            </motion.div>
+            {/* Real Photo */}
+            <div className="relative w-full h-full">
+              <Image
+                src={slide.img}
+                alt={slide.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
+            </div>
 
             {/* Bottom caption area */}
-            <div className="absolute bottom-0 left-0 right-0 px-5 sm:px-8 pb-5 sm:pb-8 flex items-end justify-between gap-4">
+            <div className="absolute bottom-0 left-0 right-0 px-5 sm:px-8 pb-5 sm:pb-8 flex items-end justify-between gap-4 z-10">
               <div className="min-w-0">
-                <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-[#1a1a2e] leading-snug">{slide.title}</h3>
-                <p className="mt-1 text-xs sm:text-sm text-gray-500 font-medium">{slide.location}</p>
+                <span className="inline-block px-3 py-1 rounded-full bg-[#d4622b] text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-2">
+                  {slide.tag}
+                </span>
+                <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white leading-snug drop-shadow-md">
+                  {slide.title}
+                </h3>
+                <p className="mt-1 text-xs sm:text-sm text-white/80 font-medium">
+                  {slide.location}
+                </p>
               </div>
               <div className="text-right shrink-0">
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e]/10 leading-none">
+                <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-white/30 leading-none">
                   {String(current + 1).padStart(2, "0")}
                 </span>
-                <div className="text-[10px] sm:text-xs text-gray-400 mt-0.5">/ {String(total).padStart(2, "0")}</div>
+                <div className="text-[10px] sm:text-xs text-white/60 mt-0.5">
+                  / {String(total).padStart(2, "0")}
+                </div>
               </div>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
+      {/* Navigation Controls */}
+      <div className="flex items-center justify-center gap-3 mt-6">
+        <button
+          type="button"
+          onClick={() => {
+            setDir(-1);
+            setCurrent((p) => (p - 1 + total) % total);
+          }}
+          className="w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-700 hover:bg-[#d4622b] hover:text-white hover:border-[#d4622b] transition-all flex items-center justify-center shadow-sm"
+          aria-label="Previous slide"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <div className="flex items-center gap-1.5 max-w-[200px] sm:max-w-none overflow-x-auto py-1 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {gallerySlides.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => {
+                setDir(idx > current ? 1 : -1);
+                setCurrent(idx);
+              }}
+              className={`h-2 rounded-full transition-all duration-300 shrink-0 ${
+                idx === current ? "w-7 bg-[#d4622b]" : "w-2 bg-gray-300 hover:bg-gray-400"
+              }`}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={() => {
+            setDir(1);
+            setCurrent((p) => (p + 1) % total);
+          }}
+          className="w-10 h-10 rounded-full bg-white border border-gray-200 text-gray-700 hover:bg-[#d4622b] hover:text-white hover:border-[#d4622b] transition-all flex items-center justify-center shadow-sm"
+          aria-label="Next slide"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
     </div>
   );
 }
@@ -717,24 +778,23 @@ function TrustedLeadersSection() {
   );
 }
 
-const enterpriseBrands = [
-  { name: "DP World", Logo: DpWorldLogo },
-  { name: "Razorpay", Logo: RazorpayLogo },
-  { name: "Reliance Jio", Logo: JioLogo },
-  { name: "Clarksons", Logo: ClarksonsLogo },
-  { name: "Aramex", Logo: AramexLogo },
-  { name: "Boston Consulting Group", Logo: BcgLogo },
-  { name: "Thermax", Logo: ThermaxGridLogo },
-  { name: "LVMH", Logo: LvmhLogo },
-  { name: "Bacardi", Logo: BacardiLogo },
-  { name: "Pernod Ricard", Logo: PernodRicardLogo },
-  { name: "ITC Hotels", Logo: ItcLogo },
-  { name: "Radico Khaitan", Logo: RadicoLogo },
-  { name: "Dangal Games", Logo: DangalGamesLogo },
-  { name: "Star World", Logo: StarWorldLogo },
-  { name: "Opraah", Logo: OpraahLogo },
-  { name: "Sage", Logo: SageLogo },
-  { name: "TVS Supply Chain Solutions", Logo: TvsSupplyChainLogo },
+const enterpriseLeaderLogos = [
+  { id: 1, src: "/images/home/enterprise-leaders/1.png" },
+  { id: 2, src: "/images/home/enterprise-leaders/2.png" },
+  { id: 3, src: "/images/home/enterprise-leaders/3.png" },
+  { id: 4, src: "/images/home/enterprise-leaders/4.png" },
+  { id: 5, src: "/images/home/enterprise-leaders/5.png" },
+  { id: 6, src: "/images/home/enterprise-leaders/6.png" },
+  { id: 7, src: "/images/home/enterprise-leaders/7.png" },
+  { id: 8, src: "/images/home/enterprise-leaders/8.png" },
+  { id: 9, src: "/images/home/enterprise-leaders/9.png" },
+  { id: 10, src: "/images/home/enterprise-leaders/10.png" },
+  { id: 11, src: "/images/home/enterprise-leaders/11.png" },
+  { id: 12, src: "/images/home/enterprise-leaders/12.png" },
+  { id: 13, src: "/images/home/enterprise-leaders/13.png" },
+  { id: 14, src: "/images/home/enterprise-leaders/14.png" },
+  { id: 15, src: "/images/home/enterprise-leaders/15.png" },
+  { id: 16, src: "/images/home/enterprise-leaders/16.png" },
 ];
 
 function EnterprisesSection() {
@@ -771,13 +831,17 @@ function EnterprisesSection() {
           transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
         >
           {[...Array(2)].flatMap((_, r) =>
-            enterpriseBrands.map((brand, i) => (
+            enterpriseLeaderLogos.map((brand, i) => (
               <div
-                key={`enterprise-${r}-${brand.name}-${i}`}
-                title={brand.name}
+                key={`enterprise-${r}-${brand.id}-${i}`}
+                title={`Enterprise Partner ${brand.id}`}
                 className="shrink-0 px-6 sm:px-8 py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[150px] sm:min-w-[170px] h-[72px] sm:h-[78px] group cursor-default"
               >
-                <brand.Logo className="h-6 sm:h-8 w-auto max-w-[110px] sm:max-w-[125px] object-contain transition-transform duration-300 group-hover:scale-105" />
+                <img
+                  src={brand.src}
+                  alt={`Enterprise Partner ${brand.id}`}
+                  className="h-7 sm:h-9 w-auto max-w-[110px] sm:max-w-[130px] object-contain transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
             )),
           )}
@@ -1042,14 +1106,14 @@ export default function Home() {
         className="relative min-h-screen flex flex-col justify-between overflow-hidden"
         id="home"
       >
-        {/* Background static image — light coworking space */}
+        {/* Background static image — Onward hero photo */}
         <div
           className="absolute inset-0 z-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2000&q=80')" }}
+          style={{ backgroundImage: "url('/images/home/hero.png')" }}
         />
 
         {/* Overlay for text readability */}
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/40" />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/50" />
 
         {/* Hero Content Area */}
         <motion.div

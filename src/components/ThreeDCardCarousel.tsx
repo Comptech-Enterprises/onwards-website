@@ -17,7 +17,7 @@ interface CardData {
 const CARDS_DATA: CardData[] = [
   {
     type: "image",
-    imgUrl: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp",
+    imgUrl: "/images/locations/delhi/okhla-phase-2/hero.png",
     tag: "Enterprise Hub",
     title: "Okhla Phase 2",
     subtitle: "500+ Desks · South Delhi",
@@ -33,7 +33,7 @@ const CARDS_DATA: CardData[] = [
   },
   {
     type: "image",
-    imgUrl: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613790287.webp",
+    imgUrl: "/images/locations/delhi/okhla-phase-3/hero.png",
     tag: "Enterprise Suites",
     title: "Okhla Phase 3",
     subtitle: "900+ Desks · Tech Hub",
@@ -49,7 +49,7 @@ const CARDS_DATA: CardData[] = [
   },
   {
     type: "image",
-    imgUrl: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613881869.webp",
+    imgUrl: "/images/locations/delhi/spaces/mohan-estate.jpg",
     tag: "Atrium Lounge",
     title: "Mohan Estate",
     subtitle: "Direct Metro Connectivity",
@@ -65,7 +65,7 @@ const CARDS_DATA: CardData[] = [
   },
   {
     type: "image",
-    imgUrl: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp",
+    imgUrl: "/images/locations/delhi/connaught-place.png",
     tag: "Executive CBD",
     title: "Connaught Place",
     subtitle: "Landmark Business Address",

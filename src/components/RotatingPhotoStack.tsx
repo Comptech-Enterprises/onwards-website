@@ -7,14 +7,14 @@ import Image from "next/image";
    Full-size on desktop, scales down progressively and smoothly
    on tablet, laptop, and mobile viewports. */
 const srcs = [
-  "/images/locations/delhi/gallery/okhla-3/2.jpg",
-  "/images/locations/delhi/gallery/okhla-2/3.jpg",
-  "/images/locations/delhi/gallery/okhla-3/5.jpg",
-  "/images/locations/delhi/gallery/okhla-2/2.jpg",
-  "/images/locations/delhi/gallery/okhla-2/6.jpg",
-  "/images/locations/delhi/gallery/okhla-3/6.jpg",
-  "/images/locations/delhi/gallery/okhla-2/4.jpg",
-  "/images/locations/delhi/gallery/okhla-3/7.jpg",
+  "/images/home/gallery/1.png",
+  "/images/home/gallery/2.png",
+  "/images/home/gallery/3.png",
+  "/images/home/gallery/4.png",
+  "/images/home/gallery/5.png",
+  "/images/home/gallery/6.png",
+  "/images/home/gallery/7.png",
+  "/images/home/gallery/8.png",
 ];
 
 const R = 230;

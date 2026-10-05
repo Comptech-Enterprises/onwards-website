@@ -89,13 +89,13 @@ const teamMembers = [
 ];
 
 const welcomeRow1 = [
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720474.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720403.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/locations/delhi/okhla-phase-2/gallery/1.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
+  { src: "/images/locations/delhi/okhla-phase-2/gallery/2.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/locations/delhi/okhla-phase-3/gallery/3.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
 ];
 const welcomeRow2 = [
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/about/1790662449490.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613720553.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
+  { src: "/images/locations/delhi/connaught-place.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/locations/delhi/okhla-phase-3/gallery/5.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
 ];
 
 /* ━━━ WELCOME PHOTO ━━━ */
