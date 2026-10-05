@@ -67,7 +67,6 @@ const workspaceSolutionSteps = [
     label: "PHASE 01",
     title: "Lease",
     desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
-    highlights: ["Prime Asset Sourcing", "Landlord Negotiations", "Zero Direct Lease Risk"],
     icon: (
       <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -79,7 +78,6 @@ const workspaceSolutionSteps = [
     label: "PHASE 02",
     title: "Design & Build",
     desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
-    highlights: ["Turnkey 75-Day Delivery", "Bespoke Spatial Architecture", "Ergonomic & Tech Fit-Out"],
     icon: (
       <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" />
@@ -91,7 +89,6 @@ const workspaceSolutionSteps = [
     label: "PHASE 03",
     title: "Operations",
     desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
-    highlights: ["Day-1 Move-in Ready", "24/7 Facility Management", "Hospitality & IT Support"],
     icon: (
       <svg className="w-6 h-6 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -402,16 +399,6 @@ export default function AboutPage() {
                       <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed font-normal">
                         {step.desc}
                       </p>
-                    </div>
-
-                    {/* Bottom Feature Tags */}
-                    <div className="pt-6 mt-6 border-t border-gray-100 flex flex-col gap-2">
-                      {step.highlights.map((h, i) => (
-                        <div key={i} className="flex items-center gap-2 text-xs font-semibold text-gray-700">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] shrink-0" />
-                          <span>{h}</span>
-                        </div>
-                      ))}
                     </div>
                   </div>
                 </ScrollReveal>
