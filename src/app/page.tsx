@@ -732,7 +732,7 @@ function EnterprisesSection() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
 
         <motion.div
-          className="flex w-max gap-4 sm:gap-6 items-center py-3"
+          className="flex w-max gap-4 sm:gap-6 items-center py-4"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 42, repeat: Infinity, ease: "linear" }}
         >
@@ -741,12 +741,12 @@ function EnterprisesSection() {
               <div
                 key={`enterprise-${r}-${brand.id}-${i}`}
                 title={`Enterprise Partner ${brand.id}`}
-                className="shrink-0 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[190px] sm:min-w-[230px] md:min-w-[260px] h-[88px] sm:h-[105px] md:h-[115px] group cursor-default"
+                className="shrink-0 px-7 sm:px-9 py-4 sm:py-5 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[200px] sm:min-w-[240px] md:min-w-[280px] h-[95px] sm:h-[110px] md:h-[120px] group cursor-default"
               >
                 <img
                   src={brand.src}
                   alt={`Enterprise Partner ${brand.id}`}
-                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[185px] md:max-w-[215px] object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-12 sm:h-14 md:h-16 w-auto max-w-[170px] sm:max-w-[200px] md:max-w-[230px] object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             )),
@@ -788,7 +788,7 @@ function NewsMediaSection() {
         <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-44 z-10 bg-gradient-to-l from-[#faf8f5] to-transparent" />
 
         <motion.div
-          className="flex w-max gap-4 sm:gap-6 items-center py-3"
+          className="flex w-max gap-4 sm:gap-6 items-center py-4"
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
         >
@@ -800,12 +800,12 @@ function NewsMediaSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title={item.name}
-                className="shrink-0 px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[190px] sm:min-w-[230px] md:min-w-[260px] h-[88px] sm:h-[105px] md:h-[115px] group"
+                className="shrink-0 px-7 sm:px-9 py-4 sm:py-5 rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[200px] sm:min-w-[240px] md:min-w-[280px] h-[95px] sm:h-[110px] md:h-[120px] group"
               >
                 <img
                   src={item.img}
                   alt={item.name}
-                  className="h-10 sm:h-12 md:h-14 w-auto max-w-[150px] sm:max-w-[185px] md:max-w-[215px] object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-12 sm:h-14 md:h-16 w-auto max-w-[170px] sm:max-w-[200px] md:max-w-[230px] object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </a>
             )),
