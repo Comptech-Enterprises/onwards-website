@@ -288,85 +288,85 @@ const gallerySlides = [
     title: "Open Collaboration Spaces",
     location: "Connaught Place, Delhi",
     tag: "Co-Working Floor",
-    img: "/images/home/gallery/1.png",
+    img: "/images/enterprises/826a1449.jpg",
   },
   {
     title: "Private Executive Suites",
     location: "Cyber City, Gurgaon",
     tag: "Managed Office",
-    img: "/images/home/gallery/2.png",
+    img: "/images/enterprises/826a1193-1.jpg",
   },
   {
     title: "Modern Boardrooms & Conference",
     location: "Okhla Phase 3, Delhi",
     tag: "Meeting Suites",
-    img: "/images/home/gallery/3.png",
+    img: "/images/locations/delhi/solutions/img_0527.jpg",
   },
   {
     title: "Commons & Breakout Lounge",
     location: "Sector 126, Noida",
     tag: "Common Areas",
-    img: "/images/home/gallery/4.png",
+    img: "/images/locations/gurgaon/udyog-vihar/img_0775.jpg",
   },
   {
     title: "Focus Pods & Ergonomic Cabins",
     location: "Udyog Vihar, Gurgaon",
     tag: "Private Cabins",
-    img: "/images/home/gallery/5.png",
+    img: "/images/locations/gurgaon/udyog-vihar/img_0504.jpg",
   },
   {
     title: "High-Energy Community Workstations",
     location: "Okhla Phase 2, Delhi",
     tag: "Dedicated Desks",
-    img: "/images/home/gallery/6.png",
+    img: "/images/enterprises/826a1348-1-1.jpg",
   },
   {
     title: "Enterprise Custom Built Suites",
     location: "Sector 132, Noida",
     tag: "Bespoke Enterprise",
-    img: "/images/home/gallery/7.png",
+    img: "/images/locations/noida/photos/img_0364.jpg",
   },
   {
     title: "Hospitality & Reception Lounge",
     location: "MG Road, Gurgaon",
     tag: "Reception Lounge",
-    img: "/images/home/gallery/8.png",
+    img: "/images/locations/gurgaon/mg-road/dsc04206.jpg",
   },
   {
     title: "Collaborative Breakout Arenas",
     location: "Mohan Cooperative, Delhi",
     tag: "Breakout Arena",
-    img: "/images/home/gallery/9.png",
+    img: "/images/locations/delhi/spaces/mohan-estate.jpg",
   },
   {
     title: "Scalable Enterprise Desks",
     location: "Sector 4, Noida",
     tag: "Enterprise Pods",
-    img: "/images/home/gallery/10.png",
+    img: "/images/locations/noida/photos/img_0331-1.jpg",
   },
   {
-    title: "Quiet Work Zones",
-    location: "Sohna Road, Gurgaon",
-    tag: "Quiet Zone",
-    img: "/images/home/gallery/11.png",
-  },
-  {
-    title: "Modern Cafe & Refreshments",
-    location: "Janakpuri, Delhi",
-    tag: "Community Cafe",
-    img: "/images/home/gallery/12.png",
-  },
-  {
-    title: "High-Tech Meeting Rooms",
+    title: "Quiet Focus Zones",
     location: "Okhla Phase 2, Delhi",
-    tag: "Conference Room",
-    img: "/images/home/gallery/13.png",
+    tag: "Quiet Zone",
+    img: "/images/locations/delhi/spaces/okhla-phase-2-44.jpg",
   },
   {
     title: "Executive Director Cabins",
-    location: "Connaught Place, Delhi",
+    location: "Okhla Phase 3, Delhi",
     tag: "Director Suite",
-    img: "/images/home/gallery/14.png",
+    img: "/images/locations/delhi/spaces/okhla-phase-3-41.jpg",
+  },
+  {
+    title: "Modern Cafe & Refreshments",
+    location: "Udyog Vihar, Gurgaon",
+    tag: "Community Cafe",
+    img: "/images/locations/delhi/solutions/img_0568-4.jpg",
+  },
+  {
+    title: "3D Virtual Spatial Model",
+    location: "Sohna Road, Gurgaon",
+    tag: "Virtual Tour",
+    img: "/images/locations/gurgaon/sohna-road/screenshot-2026-08-01-at-11.51.31-am-1.png",
   },
 ];
 
@@ -510,6 +510,7 @@ function GallerySlider() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 1280px) 100vw, 1280px"
+                quality={95}
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
