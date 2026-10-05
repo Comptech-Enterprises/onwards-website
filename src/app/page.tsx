@@ -286,66 +286,16 @@ const cities = [
 ];
 
 const gallerySlides = [
-  {
-    title: "Open Collaboration Spaces",
-    location: "Connaught Place, Delhi",
-    tag: "Co-Working Floor",
-    img: "/images/redesigned/home-page/gallery/1.png",
-  },
-  {
-    title: "Private Executive Suites",
-    location: "Cyber City, Gurgaon",
-    tag: "Managed Office",
-    img: "/images/redesigned/home-page/gallery/2.png",
-  },
-  {
-    title: "Modern Boardrooms & Conference",
-    location: "Okhla Phase 3, Delhi",
-    tag: "Meeting Suites",
-    img: "/images/redesigned/home-page/gallery/3.png",
-  },
-  {
-    title: "Commons & Breakout Lounge",
-    location: "Sector 126, Noida",
-    tag: "Common Areas",
-    img: "/images/redesigned/home-page/gallery/4.png",
-  },
-  {
-    title: "Focus Pods & Ergonomic Cabins",
-    location: "Udyog Vihar, Gurgaon",
-    tag: "Private Cabins",
-    img: "/images/redesigned/home-page/gallery/5.png",
-  },
-  {
-    title: "High-Energy Community Workstations",
-    location: "Okhla Phase 2, Delhi",
-    tag: "Dedicated Desks",
-    img: "/images/redesigned/home-page/gallery/6.png",
-  },
-  {
-    title: "Enterprise Custom Built Suites",
-    location: "Sector 132, Noida",
-    tag: "Bespoke Enterprise",
-    img: "/images/redesigned/home-page/gallery/7.png",
-  },
-  {
-    title: "Hospitality & Reception Lounge",
-    location: "MG Road, Gurgaon",
-    tag: "Reception Lounge",
-    img: "/images/redesigned/home-page/gallery/8.png",
-  },
-  {
-    title: "Collaborative Breakout Arenas",
-    location: "Mohan Cooperative, Delhi",
-    tag: "Breakout Arena",
-    img: "/images/redesigned/home-page/gallery/9.png",
-  },
-  {
-    title: "Scalable Enterprise Desks",
-    location: "Sector 4, Noida",
-    tag: "Enterprise Pods",
-    img: "/images/redesigned/home-page/gallery/10.png",
-  },
+  { img: "/images/redesigned/home-page/gallery/1.png" },
+  { img: "/images/redesigned/home-page/gallery/2.png" },
+  { img: "/images/redesigned/home-page/gallery/3.png" },
+  { img: "/images/redesigned/home-page/gallery/4.png" },
+  { img: "/images/redesigned/home-page/gallery/5.png" },
+  { img: "/images/redesigned/home-page/gallery/6.png" },
+  { img: "/images/redesigned/home-page/gallery/7.png" },
+  { img: "/images/redesigned/home-page/gallery/8.png" },
+  { img: "/images/redesigned/home-page/gallery/9.png" },
+  { img: "/images/redesigned/home-page/gallery/10.png" },
 ];
 
 const logos = [
@@ -484,37 +434,13 @@ function GallerySlider() {
             <div className="relative w-full h-full">
               <Image
                 src={slide.img}
-                alt={slide.title}
+                alt={`Workspace Gallery ${current + 1}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 1280px) 100vw, 1280px"
                 quality={95}
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
-            </div>
-
-            {/* Bottom caption area */}
-            <div className="absolute bottom-0 left-0 right-0 px-5 sm:px-8 pb-5 sm:pb-8 flex items-end justify-between gap-4 z-10">
-              <div className="min-w-0">
-                <span className="inline-block px-3 py-1 rounded-full bg-[#d4622b] text-white text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-2">
-                  {slide.tag}
-                </span>
-                <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white leading-snug drop-shadow-md">
-                  {slide.title}
-                </h3>
-                <p className="mt-1 text-xs sm:text-sm text-white/80 font-medium">
-                  {slide.location}
-                </p>
-              </div>
-              <div className="text-right shrink-0">
-                <span className="text-3xl sm:text-4xl lg:text-5xl font-black text-white/30 leading-none">
-                  {String(current + 1).padStart(2, "0")}
-                </span>
-                <div className="text-[10px] sm:text-xs text-white/60 mt-0.5">
-                  / {String(total).padStart(2, "0")}
-                </div>
-              </div>
             </div>
           </motion.div>
         </AnimatePresence>
