@@ -65,17 +65,44 @@ const whatWeDoSteps = [
   {
     step: "01",
     title: "Lease",
+    tagline: "Location & Risk Mitigation",
     desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
+    badge: "Zero Lease Liability",
+    points: ["Tailored location scouting", "Onward holds the master lease", "Flexible terms without Capex lock-in"],
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg>
+    ),
   },
   {
     step: "02",
     title: "Design & Build",
+    tagline: "Turnkey Bespoke Architecture",
     desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
+    badge: "Under 75-Day Delivery",
+    points: ["Custom branded interiors & layouts", "Ergonomic & biophilic design", "Complete turnkey execution"],
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18M9 21V9" />
+      </svg>
+    ),
   },
   {
     step: "03",
     title: "Operations",
+    tagline: "End-to-End Managed Hospitality",
     desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
+    badge: "100% Worry-Free Facilities",
+    points: ["On-site community & IT management", "Artisan cafeterias & daily housekeeping", "Enterprise security & IoT controls"],
+    icon: (
+      <svg className="w-6 h-6 text-[#d4622b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+      </svg>
+    ),
   },
 ];
 
@@ -411,130 +438,129 @@ export default function AboutPage() {
         <section className="py-20 sm:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Section Header */}
-            <ScrollReveal className="max-w-3xl mb-10 sm:mb-14">
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
-                What We Do
-              </span>
-              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">
-                The ideal workspace as a solution
-              </h2>
-              <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
-                From finding and leasing prime real estate to bespoke custom architecture and end-to-end daily operations — we deliver high-performing office ecosystems.
-              </p>
-            </ScrollReveal>
-
-            {/* Cityscape Architectural Container Matching Slide Reference */}
-            <ScrollReveal y={40}>
-              <div className="relative rounded-3xl overflow-hidden bg-[#23222a] shadow-2xl border border-gray-800">
-                {/* Background Cityscape with warm dusk gradient overlay */}
-                <div className="absolute inset-0 z-0">
-                  <Image
-                    src="https://pub-378f88a78cba4484be6bf66065e91a59.r2.dev/onward/locations/1790613719810.webp"
-                    alt="City skyline"
-                    fill
-                    sizes="(max-width: 1280px) 100vw, 1280px"
-                    className="object-cover opacity-30 mix-blend-luminosity brightness-75"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-b from-[#1b1c24]/90 via-[#26242e]/85 to-[#16171f]/95" />
+            <div className="max-w-3xl mb-12 sm:mb-16">
+              <ScrollReveal>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
+                  What We Do
                 </div>
+              </ScrollReveal>
+              <ScrollReveal delay={0.1}>
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
+                  The ideal workspace as a solution
+                </h2>
+              </ScrollReveal>
+              <ScrollReveal delay={0.2}>
+                <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed">
+                  A seamless three-phase framework designed to eliminate the friction of enterprise real estate — from identifying the right building to custom architecture and daily managed operations.
+                </p>
+              </ScrollReveal>
+            </div>
 
-                {/* Content Overlay */}
-                <div className="relative z-10 p-6 sm:p-10 lg:p-14">
-                  {/* Top Bar: Slide Title & Onward Logo */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 sm:mb-14">
-                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-                      The ideal workspace as a solution
-                    </h3>
-                    <div className="flex items-center gap-2 self-start sm:self-auto">
-                      <div className="w-7 h-7 bg-[#d4622b] rounded-md flex items-center justify-center shadow-md">
-                        <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
-                        </svg>
-                      </div>
-                      <span className="font-bold text-xl tracking-tight text-white">Onward</span>
-                    </div>
+            {/* Desktop Connected Sequence Tracker */}
+            <div className="hidden lg:block mb-8">
+              <div className="grid grid-cols-3 gap-8 relative">
+                {/* Connecting Line behind nodes */}
+                <div className="absolute top-5 left-[16%] right-[16%] h-[2px] bg-gradient-to-r from-[#d4622b]/30 via-[#d4622b] to-[#d4622b]/30 z-0" />
+                {whatWeDoSteps.map((step, idx) => (
+                  <div key={step.step} className="flex items-center justify-center gap-3 relative z-10">
+                    <span className="w-10 h-10 rounded-full bg-white border-2 border-[#d4622b] text-[#d4622b] font-bold text-sm flex items-center justify-center shadow-xs">
+                      {step.step}
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-gray-600 bg-[#faf8f5] px-2 py-0.5 rounded-md">
+                      {step.title}
+                    </span>
                   </div>
+                ))}
+              </div>
+            </div>
 
-                  {/* Stepper / Process Track */}
-                  <div className="mb-8 sm:mb-12 max-w-4xl mx-auto">
-                    {/* Stepper Pin Badges */}
-                    <div className="grid grid-cols-3 gap-2 sm:gap-6 mb-3">
-                      {whatWeDoSteps.map((item, idx) => {
-                        const isFirst = idx === 0;
-                        const isSecond = idx === 1;
-                        return (
-                          <div key={item.step} className="flex flex-col items-center">
-                            {/* Pin Bubble */}
-                            <div
-                              className={`relative flex items-center justify-center rounded-full font-black transition-all duration-300 ${
-                                isFirst
-                                  ? "w-14 h-14 sm:w-20 sm:h-20 bg-black text-white text-lg sm:text-2xl border-[3.5px] border-black shadow-xl"
-                                  : isSecond
-                                  ? "w-14 h-14 sm:w-20 sm:h-20 bg-[#40414f] text-white text-lg sm:text-2xl border-[3.5px] border-[#535565] shadow-md"
-                                  : "w-14 h-14 sm:w-20 sm:h-20 bg-[#747688] text-white text-lg sm:text-2xl border-[3.5px] border-[#9294a6] shadow-sm"
-                              }`}
-                            >
-                              <span>{item.step}</span>
-                              {/* Bottom pointer triangle */}
-                              <div
-                                className={`absolute -bottom-2 sm:-bottom-2.5 left-1/2 -translate-x-1/2 w-0 h-0 border-x-6 sm:border-x-8 border-x-transparent border-t-6 sm:border-t-8 ${
-                                  isFirst
-                                    ? "border-t-black"
-                                    : isSecond
-                                    ? "border-t-[#40414f]"
-                                    : "border-t-[#747688]"
-                                }`}
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
+            {/* 3 Process Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+              {whatWeDoSteps.map((step, idx) => (
+                <ScrollReveal key={step.title} delay={idx * 0.12} y={35}>
+                  <div className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/90 shadow-sm hover:shadow-xl hover:border-[#d4622b]/40 transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 h-full relative overflow-hidden">
+                    {/* Subtle top accent line on hover */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#d4622b] to-[#f28e2b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* Timeline connecting bar */}
-                    <div className="relative flex items-center mt-4">
-                      {/* Base Track */}
-                      <div className="w-full h-2.5 sm:h-3 bg-[#525464] rounded-full overflow-hidden shadow-inner">
-                        <div className="h-full bg-black rounded-full w-[36%]" />
-                      </div>
-                      {/* Node Dots on track */}
-                      <div className="absolute inset-0 flex justify-between items-center px-[16%]">
-                        <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white border-4 border-black -ml-2 shadow-xs" />
-                        <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white border-4 border-[#525464] shadow-xs" />
-                        <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white border-4 border-[#525464] -mr-2 shadow-xs" />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* 3-Column Unified Solution Card */}
-                  <div className="bg-[#f5f3ec] text-[#1a1a2e] rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-white/20">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-gray-300/80">
-                      {whatWeDoSteps.map((step, idx) => (
-                        <div
-                          key={step.title}
-                          className={`flex flex-col justify-start ${
-                            idx === 0
-                              ? "md:pr-8 lg:pr-10"
-                              : idx === 1
-                              ? "pt-6 md:pt-0 md:px-8 lg:px-10"
-                              : "pt-6 md:pt-0 md:pl-8 lg:pl-10"
-                          }`}
-                        >
-                          <div className="flex items-center gap-2 mb-2 md:mb-3">
-                            <span className="text-xs font-bold text-[#d4622b] uppercase tracking-wider md:hidden">
-                              Phase {step.step}
-                            </span>
-                          </div>
-                          <h4 className="text-xl sm:text-2xl font-black text-[#1a1a2e] tracking-tight mb-3">
-                            {step.title}
-                          </h4>
-                          <p className="text-sm sm:text-base text-gray-700 leading-relaxed font-normal">
-                            {step.desc}
-                          </p>
+                    <div>
+                      {/* Top Row: Icon + Large Step Number */}
+                      <div className="flex items-center justify-between gap-4 mb-6">
+                        <div className="w-13 h-13 rounded-2xl bg-[#d4622b]/10 text-[#d4622b] flex items-center justify-center group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 shadow-xs">
+                          {step.icon}
                         </div>
-                      ))}
+                        <span className="text-4xl sm:text-5xl font-black text-gray-200 group-hover:text-[#d4622b]/30 transition-colors">
+                          {step.step}
+                        </span>
+                      </div>
+
+                      {/* Step Tagline */}
+                      <span className="text-[11px] font-bold uppercase tracking-widest text-[#d4622b] block mb-1">
+                        Phase {step.step} &bull; {step.tagline}
+                      </span>
+
+                      {/* Step Title */}
+                      <h3 className="text-2xl sm:text-3xl font-black text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors mb-3">
+                        {step.title}
+                      </h3>
+
+                      {/* Main Description */}
+                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-6 font-normal">
+                        {step.desc}
+                      </p>
+
+                      {/* Key Value Points */}
+                      <ul className="space-y-2.5 pt-4 border-t border-gray-100 mb-6">
+                        {step.points.map((pt) => (
+                          <li key={pt} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-700 font-medium">
+                            <svg className="w-4 h-4 text-[#d4622b] shrink-0 mt-0.5" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Bottom Highlight Badge */}
+                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1a1a2e] bg-[#faf8f5] px-3.5 py-1.5 rounded-full border border-gray-200/80">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b]" />
+                        {step.badge}
+                      </span>
                     </div>
                   </div>
+                </ScrollReveal>
+              ))}
+            </div>
+
+            {/* Bottom Support Banner */}
+            <ScrollReveal delay={0.35} y={20} className="mt-12 sm:mt-14">
+              <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-gray-200/90 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div className="text-center sm:text-left">
+                  <h4 className="text-lg sm:text-xl font-bold text-[#1a1a2e]">
+                    Ready to build your bespoke enterprise workspace?
+                  </h4>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1">
+                    Talk to our workspace strategists to explore custom design and delivery in under 75 days.
+                  </p>
+                </div>
+                <div className="flex items-center gap-3 shrink-0">
+                  <MagneticButton
+                    href="/#contact"
+                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-6 py-3 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all"
+                  >
+                    <span>Schedule a Consultation</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </MagneticButton>
+                  <Link
+                    href="/locations/delhi"
+                    className="text-[#1a1a2e] font-bold text-xs sm:text-sm hover:text-[#d4622b] transition-colors py-2 px-3"
+                  >
+                    Explore Centers &rarr;
+                  </Link>
                 </div>
               </div>
             </ScrollReveal>
