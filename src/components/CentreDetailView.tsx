@@ -7,7 +7,6 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
 import AmenitiesTicker from "@/components/AmenitiesTicker";
-import AutoSlider from "@/components/AutoSlider";
 import type { CityData, AreaDetail } from "@/data/locations";
 import type { WorkspaceUnit } from "@/data/workspaces";
 
@@ -96,34 +95,7 @@ export default function CentreDetailView({
           </div>
         </section>
 
-        {/* 3. GALLERY */}
-        <section className="py-14 lg:py-18 bg-[#faf8f5] border-b border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <Reveal>
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Inside the Space</span>
-              <h2 className="mt-1 mb-8 text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight">
-                Gallery
-              </h2>
-            </Reveal>
 
-            <AutoSlider
-              interval={3000}
-              showArrows
-              slideClassName="w-[75%] sm:w-[45%] lg:w-[32%] flex-shrink-0 px-2"
-            >
-              {area.gallery.map((src, i) => (
-                <div key={`${src}-${i}`} className="relative aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden bg-gray-100">
-                  <Image
-                    src={src}
-                    alt={`${centre.title} gallery ${i + 1}`}
-                    fill
-                    className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
-                  />
-                </div>
-              ))}
-            </AutoSlider>
-          </div>
-        </section>
 
         {/* 4. LOCATION MAP */}
         {area.mapEmbed && (
