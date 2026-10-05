@@ -72,13 +72,13 @@ const teamMembers = [
 ];
 
 const welcomeRow1 = [
-  { src: "/images/redesigned/about-us/second-section/1.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
-  { src: "/images/redesigned/about-us/second-section/2.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "/images/redesigned/about-us/second-section/9.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/redesigned/about-us/second-section/1.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
+  { src: "/images/redesigned/about-us/second-section/2.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/redesigned/about-us/second-section/9.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
 ];
 const welcomeRow2 = [
-  { src: "/images/redesigned/about-us/second-section/10.png", aspect: "aspect-[3/4]", w: "w-[22%]" },
-  { src: "/images/redesigned/about-us/second-section/11.png", aspect: "aspect-[16/10]", w: "w-[30%]" },
+  { src: "/images/redesigned/about-us/second-section/10.webp", aspect: "aspect-[3/4]", w: "w-[22%]" },
+  { src: "/images/redesigned/about-us/second-section/11.webp", aspect: "aspect-[16/10]", w: "w-[30%]" },
 ];
 
 /* ━━━ WELCOME PHOTO ━━━ */

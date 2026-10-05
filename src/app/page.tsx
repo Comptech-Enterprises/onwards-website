@@ -80,18 +80,18 @@ const whyChoose = [
 ];
 
 const newsMediaItems = [
-  { name: "PTI News", img: "/images/redesigned/home-page/news-and-media/1.png", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
-  { name: "Realty Plus", img: "/images/redesigned/home-page/news-and-media/2.png", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
-  { name: "The Economic Times", img: "/images/redesigned/home-page/news-and-media/3.png", href: "https://economictimes.indiatimes.com/industry/services/property-/-cstruction/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/articleshow/129696672.cms?from=mdr" },
-  { name: "News18", img: "/images/redesigned/home-page/news-and-media/4.png", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
-  { name: "NDTV", img: "/images/redesigned/home-page/news-and-media/5.png", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
-  { name: "BW Businessworld", img: "/images/redesigned/home-page/news-and-media/6.png", href: "https://www.businessworld.in/article/real-estate-deals-slow-as-investors-reassess-risk-and-pricing-602182" },
-  { name: "Moneycontrol", img: "/images/redesigned/home-page/news-and-media/7.png", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
-  { name: "ABP Live", img: "/images/redesigned/home-page/news-and-media/8.png", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
-  { name: "Indian Retailer", img: "/images/redesigned/home-page/news-and-media/9.png", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
-  { name: "Times of India", img: "/images/redesigned/home-page/news-and-media/10.png", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
-  { name: "Sugermint", img: "/images/redesigned/home-page/news-and-media/11.png", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
-  { name: "Outlook India", img: "/images/redesigned/home-page/news-and-media/12.png", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
+  { name: "PTI News", img: "/images/redesigned/home-page/news-and-media/1.webp", href: "https://www.ptinews.com/story/business/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/3483678" },
+  { name: "Realty Plus", img: "/images/redesigned/home-page/news-and-media/2.webp", href: "https://www.rprealtyplus.com/news-views/why-indias-smartest-offices-are-now-built-to-be-shared-126088.html" },
+  { name: "The Economic Times", img: "/images/redesigned/home-page/news-and-media/3.webp", href: "https://economictimes.indiatimes.com/industry/services/property-/-cstruction/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida/articleshow/129696672.cms?from=mdr" },
+  { name: "News18", img: "/images/redesigned/home-page/news-and-media/4.webp", href: "https://www.news18.com/amp/agency-feeds/onward-workspaces-leases-1-65-lakh-sq-ft-to-accenture-in-noida-9988325.html" },
+  { name: "NDTV", img: "/images/redesigned/home-page/news-and-media/5.webp", href: "https://www.ndtv.com/india-news/urban-india-modern-housing-societies-integrated-townships-real-estate-luxury-city-life-11625443/amp/1" },
+  { name: "BW Businessworld", img: "/images/redesigned/home-page/news-and-media/6.webp", href: "https://www.businessworld.in/article/real-estate-deals-slow-as-investors-reassess-risk-and-pricing-602182" },
+  { name: "Moneycontrol", img: "/images/redesigned/home-page/news-and-media/7.webp", href: "https://www.moneycontrol.com/news/business/quick-recovery-lingering-doubts-noida-labour-unrest-tests-investor-trust-13889510.html" },
+  { name: "ABP Live", img: "/images/redesigned/home-page/news-and-media/8.webp", href: "https://news.abplive.com/business/india-premium-housing-market-nri-investment-slowdown-west-asia-tensions-anarock-q1-2026-report-1843884" },
+  { name: "Indian Retailer", img: "/images/redesigned/home-page/news-and-media/9.webp", href: "https://www.indianretailer.com/article/retail-business/retail-trends/5-coworking-brands-changing-way-india-works-connects-and" },
+  { name: "Times of India", img: "/images/redesigned/home-page/news-and-media/10.webp", href: "https://timesofindia.indiatimes.com/real-estate/news/why-flexible-workspaces-are-becoming-a-key-asset-class-in-indias-commercial-real-estate/articleshow/130857915.cms" },
+  { name: "Sugermint", img: "/images/redesigned/home-page/news-and-media/11.webp", href: "https://sugermint.com/interview-suvrat-jain-onward-workspaces/" },
+  { name: "Outlook India", img: "/images/redesigned/home-page/news-and-media/12.webp", href: "https://www.outlookindia.com/announcements/news-media-wire/from-capital-gains-to-cash-flow" },
 ];
 
 const heroWords = ["Ambition", "Brand", "People", "Vision"];
@@ -147,15 +147,15 @@ const stats: Array<{
 const cityCards = [
   {
     name: "Delhi",
-    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.png",
+    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.webp",
   },
   {
     name: "Noida",
-    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.png",
+    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.webp",
   },
   {
     name: "Gurugram",
-    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.png",
+    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.webp",
   },
 ];
 
@@ -165,42 +165,42 @@ const solutions = [
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
     features: ["Dedicated Entrance", "Custom Layout & IT", "24/7 Access"],
-    img: "/images/redesigned/home-page/office-space-solutions/managed-space.png",
+    img: "/images/redesigned/home-page/office-space-solutions/managed-space.webp",
   },
   {
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
     features: ["Ergonomic Seating", "Soundproof Cabins", "Meeting Credits"],
-    img: "/images/redesigned/home-page/office-space-solutions/private-suites.png",
+    img: "/images/redesigned/home-page/office-space-solutions/private-suites.webp",
   },
   {
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
     features: ["Executive Furniture", "Private Lounge", "Concierge Service"],
-    img: "/images/redesigned/home-page/office-space-solutions/private-cabins.png",
+    img: "/images/redesigned/home-page/office-space-solutions/private-cabins.webp",
   },
   {
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
     features: ["GST Registration", "Mail Forwarding", "Day Pass Access"],
-    img: "/images/redesigned/home-page/office-space-solutions/virtual-office.png",
+    img: "/images/redesigned/home-page/office-space-solutions/virtual-office.webp",
   },
   {
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
     features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage"],
-    img: "/images/redesigned/home-page/office-space-solutions/on-demand.png",
+    img: "/images/redesigned/home-page/office-space-solutions/on-demand.webp",
   },
   {
     title: "Custom Built",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
     tag: "BESPOKE",
     features: ["Architect-Led Design", "Brand Aesthetics", "Turnkey Build"],
-    img: "/images/redesigned/home-page/office-space-solutions/custom-built.png",
+    img: "/images/redesigned/home-page/office-space-solutions/custom-built.webp",
   },
 ];
 
@@ -286,16 +286,16 @@ const cities = [
 ];
 
 const gallerySlides = [
-  { img: "/images/redesigned/home-page/gallery/1.png" },
-  { img: "/images/redesigned/home-page/gallery/2.png" },
-  { img: "/images/redesigned/home-page/gallery/3.png" },
-  { img: "/images/redesigned/home-page/gallery/4.png" },
-  { img: "/images/redesigned/home-page/gallery/5.png" },
-  { img: "/images/redesigned/home-page/gallery/6.png" },
-  { img: "/images/redesigned/home-page/gallery/7.png" },
-  { img: "/images/redesigned/home-page/gallery/8.png" },
-  { img: "/images/redesigned/home-page/gallery/9.png" },
-  { img: "/images/redesigned/home-page/gallery/10.png" },
+  { img: "/images/redesigned/home-page/gallery/1.webp" },
+  { img: "/images/redesigned/home-page/gallery/2.webp" },
+  { img: "/images/redesigned/home-page/gallery/3.webp" },
+  { img: "/images/redesigned/home-page/gallery/4.webp" },
+  { img: "/images/redesigned/home-page/gallery/5.webp" },
+  { img: "/images/redesigned/home-page/gallery/6.webp" },
+  { img: "/images/redesigned/home-page/gallery/7.webp" },
+  { img: "/images/redesigned/home-page/gallery/8.webp" },
+  { img: "/images/redesigned/home-page/gallery/9.webp" },
+  { img: "/images/redesigned/home-page/gallery/10.webp" },
 ];
 
 const logos = [
@@ -684,23 +684,23 @@ function TrustedLeadersSection() {
 }
 
 const enterpriseLeaderLogos = [
-  { id: 1, src: "/images/redesigned/home-page/enterprise-leaders/1.png" },
-  { id: 2, src: "/images/redesigned/home-page/enterprise-leaders/2.png" },
-  { id: 3, src: "/images/redesigned/home-page/enterprise-leaders/3.png" },
-  { id: 4, src: "/images/redesigned/home-page/enterprise-leaders/4.png" },
-  { id: 5, src: "/images/redesigned/home-page/enterprise-leaders/5.png" },
-  { id: 6, src: "/images/redesigned/home-page/enterprise-leaders/6.png" },
-  { id: 7, src: "/images/redesigned/home-page/enterprise-leaders/7.png" },
-  { id: 8, src: "/images/redesigned/home-page/enterprise-leaders/8.png" },
-  { id: 9, src: "/images/redesigned/home-page/enterprise-leaders/9.png" },
-  { id: 10, src: "/images/redesigned/home-page/enterprise-leaders/10.png" },
-  { id: 11, src: "/images/redesigned/home-page/enterprise-leaders/11.png" },
-  { id: 12, src: "/images/redesigned/home-page/enterprise-leaders/12.png" },
-  { id: 13, src: "/images/redesigned/home-page/enterprise-leaders/13.png" },
-  { id: 14, src: "/images/redesigned/home-page/enterprise-leaders/14.png" },
-  { id: 15, src: "/images/redesigned/home-page/enterprise-leaders/15.png" },
-  { id: 16, src: "/images/redesigned/home-page/enterprise-leaders/16.png" },
-  { id: 17, src: "/images/redesigned/home-page/enterprise-leaders/17.png" },
+  { id: 1, src: "/images/redesigned/home-page/enterprise-leaders/1.webp" },
+  { id: 2, src: "/images/redesigned/home-page/enterprise-leaders/2.webp" },
+  { id: 3, src: "/images/redesigned/home-page/enterprise-leaders/3.webp" },
+  { id: 4, src: "/images/redesigned/home-page/enterprise-leaders/4.webp" },
+  { id: 5, src: "/images/redesigned/home-page/enterprise-leaders/5.webp" },
+  { id: 6, src: "/images/redesigned/home-page/enterprise-leaders/6.webp" },
+  { id: 7, src: "/images/redesigned/home-page/enterprise-leaders/7.webp" },
+  { id: 8, src: "/images/redesigned/home-page/enterprise-leaders/8.webp" },
+  { id: 9, src: "/images/redesigned/home-page/enterprise-leaders/9.webp" },
+  { id: 10, src: "/images/redesigned/home-page/enterprise-leaders/10.webp" },
+  { id: 11, src: "/images/redesigned/home-page/enterprise-leaders/11.webp" },
+  { id: 12, src: "/images/redesigned/home-page/enterprise-leaders/12.webp" },
+  { id: 13, src: "/images/redesigned/home-page/enterprise-leaders/13.webp" },
+  { id: 14, src: "/images/redesigned/home-page/enterprise-leaders/14.webp" },
+  { id: 15, src: "/images/redesigned/home-page/enterprise-leaders/15.webp" },
+  { id: 16, src: "/images/redesigned/home-page/enterprise-leaders/16.webp" },
+  { id: 17, src: "/images/redesigned/home-page/enterprise-leaders/17.webp" },
 ];
 
 function EnterprisesSection() {
@@ -1028,8 +1028,7 @@ export default function Home() {
             poster="/images/main-home-page/image-at-the-top.png"
             className="w-full h-full object-cover"
           >
-            <source src="/images/redesigned/home-page/hero-video-at-the-top.mov" type="video/mp4" />
-            <source src="/images/redesigned/home-page/hero-video-at-the-top.mov" type="video/quicktime" />
+            <source src="/images/redesigned/home-page/hero-video-at-the-top.mp4" type="video/mp4" />
           </video>
         </div>
 

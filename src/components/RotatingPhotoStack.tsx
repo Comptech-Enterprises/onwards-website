@@ -7,14 +7,14 @@ import Image from "next/image";
    Full-size on desktop, scales down progressively and smoothly
    on tablet, laptop, and mobile viewports. */
 const srcs = [
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/1.png",
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/2.png",
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/3.png",
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/4.png",
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/5.png",
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/6.png",
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/7.png",
-  "/images/redesigned/about-us/crafting-workspaces-1st-section/8.png",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/1.webp",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/2.webp",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/3.webp",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/4.webp",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/5.webp",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/6.webp",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/7.webp",
+  "/images/redesigned/about-us/crafting-workspaces-1st-section/8.webp",
 ];
 
 const R = 230;
