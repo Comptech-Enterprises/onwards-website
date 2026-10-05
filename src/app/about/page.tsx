@@ -198,17 +198,31 @@ export default function AboutPage() {
   const valuesHeadY = useTransform(valuesProgress, [0, 0.3], [60, 0]);
   const valuesHeadOp = useTransform(valuesProgress, [0, 0.25], [0, 1]);
 
-  /* What We Do parallax */
+  /* What We Do parallax & right-to-left stacked scroll animation */
   const whatWeDoRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: whatWeDoProgress } = useScroll({
     target: whatWeDoRef,
     offset: ["start end", "end start"],
   });
-  const whatWeDoHeadY = useTransform(whatWeDoProgress, [0, 0.3], [40, 0]);
-  const whatWeDoHeadOp = useTransform(whatWeDoProgress, [0, 0.25], [0, 1]);
-  const card1Y = useTransform(whatWeDoProgress, [0, 1], [50, -35]);
-  const card2Y = useTransform(whatWeDoProgress, [0, 1], [100, -80]);
-  const card3Y = useTransform(whatWeDoProgress, [0, 1], [40, -25]);
+  const whatWeDoHeadY = useTransform(whatWeDoProgress, [0, 0.25], [40, 0]);
+  const whatWeDoHeadOp = useTransform(whatWeDoProgress, [0, 0.2], [0, 1]);
+
+  /* Right-to-left stacked slide-in transforms */
+  const card1X = useTransform(whatWeDoProgress, [0.04, 0.32], [140, 0]);
+  const card2X = useTransform(whatWeDoProgress, [0.1, 0.38], [260, 0]);
+  const card3X = useTransform(whatWeDoProgress, [0.16, 0.44], [380, 0]);
+
+  const card1Rotate = useTransform(whatWeDoProgress, [0.04, 0.32], [4, 0]);
+  const card2Rotate = useTransform(whatWeDoProgress, [0.1, 0.38], [3, 0]);
+  const card3Rotate = useTransform(whatWeDoProgress, [0.16, 0.44], [1, 0]);
+
+  const card1Op = useTransform(whatWeDoProgress, [0.04, 0.22], [0.3, 1]);
+  const card2Op = useTransform(whatWeDoProgress, [0.1, 0.28], [0.3, 1]);
+  const card3Op = useTransform(whatWeDoProgress, [0.16, 0.34], [0.3, 1]);
+
+  const card1Y = useTransform(whatWeDoProgress, [0, 1], [40, -30]);
+  const card2Y = useTransform(whatWeDoProgress, [0, 1], [80, -60]);
+  const card3Y = useTransform(whatWeDoProgress, [0, 1], [30, -20]);
   const lineFill = useTransform(whatWeDoProgress, [0.15, 0.6], ["0%", "100%"]);
   const decorY = useTransform(whatWeDoProgress, [0, 1], [-80, 80]);
 
@@ -499,17 +513,21 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* 3 Process Cards with Multi-Plane Parallax Scroll */}
+            {/* 3 Process Cards with Right-to-Left Stacked Parallax Entrance */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
               {whatWeDoSteps.map((step, idx) => {
-                const cardParallax = idx === 0 ? card1Y : idx === 1 ? card2Y : card3Y;
+                const cardY = idx === 0 ? card1Y : idx === 1 ? card2Y : card3Y;
+                const cardX = idx === 0 ? card1X : idx === 1 ? card2X : card3X;
+                const cardRotate = idx === 0 ? card1Rotate : idx === 1 ? card2Rotate : card3Rotate;
+                const cardOp = idx === 0 ? card1Op : idx === 1 ? card2Op : card3Op;
+
                 return (
                   <motion.div
                     key={step.title}
-                    style={{ y: cardParallax }}
-                    whileHover={{ y: -8 }}
+                    style={{ x: cardX, y: cardY, rotate: cardRotate, opacity: cardOp }}
+                    whileHover={{ y: -8, scale: 1.01 }}
                     transition={{ duration: 0.3, ease: "easeOut" }}
-                    className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/90 shadow-sm hover:shadow-2xl hover:border-[#d4622b]/50 transition-all duration-300 flex flex-col justify-between group h-full relative overflow-hidden"
+                    className="bg-white rounded-3xl p-8 sm:p-10 border border-gray-200/90 shadow-sm hover:shadow-2xl hover:border-[#d4622b]/50 transition-all duration-300 flex flex-col justify-between group h-full relative overflow-hidden will-change-transform"
                   >
                     {/* Top gradient glow on hover */}
                     <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4622b] via-[#e5733f] to-[#f28e2b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
