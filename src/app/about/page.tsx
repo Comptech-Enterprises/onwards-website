@@ -61,23 +61,6 @@ const valuesList = [
   },
 ];
 
-const whatWeDoSteps = [
-  {
-    step: "01",
-    title: "Lease",
-    desc: "We identify and secure the right building for your business. Onward holds and manages the landlord lease, so you don't have to.",
-  },
-  {
-    step: "02",
-    title: "Design & Build",
-    desc: "Built to your brief, or delivered through our proven standards. Custom offices, designed and delivered in under 75 days.",
-  },
-  {
-    step: "03",
-    title: "Operations",
-    desc: "From day one to daily operations, we handle it all. Your team focuses on work — we take care of everything else.",
-  },
-];
 
 const teamMembers = [
   { name: "Suvrat Jain", role: "Founder & CEO", initials: "SJ" },
@@ -171,32 +154,6 @@ export default function AboutPage() {
   const valuesHeadY = useTransform(valuesProgress, [0, 0.3], [60, 0]);
   const valuesHeadOp = useTransform(valuesProgress, [0, 0.25], [0, 1]);
 
-  /* What We Do parallax & right-to-left stacked scroll animation */
-  const whatWeDoRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: whatWeDoProgress } = useScroll({
-    target: whatWeDoRef,
-    offset: ["start end", "end start"],
-  });
-  const whatWeDoHeadY = useTransform(whatWeDoProgress, [0, 0.25], [40, 0]);
-  const whatWeDoHeadOp = useTransform(whatWeDoProgress, [0, 0.2], [0, 1]);
-
-  /* Right-to-left stacked slide-in transforms */
-  const card1X = useTransform(whatWeDoProgress, [0.04, 0.32], [140, 0]);
-  const card2X = useTransform(whatWeDoProgress, [0.1, 0.38], [260, 0]);
-  const card3X = useTransform(whatWeDoProgress, [0.16, 0.44], [380, 0]);
-
-  const card1Rotate = useTransform(whatWeDoProgress, [0.04, 0.32], [4, 0]);
-  const card2Rotate = useTransform(whatWeDoProgress, [0.1, 0.38], [3, 0]);
-  const card3Rotate = useTransform(whatWeDoProgress, [0.16, 0.44], [1, 0]);
-
-  const card1Op = useTransform(whatWeDoProgress, [0.04, 0.22], [0.3, 1]);
-  const card2Op = useTransform(whatWeDoProgress, [0.1, 0.28], [0.3, 1]);
-  const card3Op = useTransform(whatWeDoProgress, [0.16, 0.34], [0.3, 1]);
-
-  const card1Y = useTransform(whatWeDoProgress, [0, 1], [40, -30]);
-  const card2Y = useTransform(whatWeDoProgress, [0, 1], [80, -60]);
-  const card3Y = useTransform(whatWeDoProgress, [0, 1], [30, -20]);
-  const decorY = useTransform(whatWeDoProgress, [0, 1], [-80, 80]);
 
   /* Team */
   const teamRef = useRef<HTMLDivElement>(null);
@@ -432,75 +389,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            4. WHAT WE DO — THE IDEAL WORKSPACE AS A SOLUTION
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section ref={whatWeDoRef} className="py-24 sm:py-32 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-b border-gray-200/80">
-          {/* Subtle Ambient Parallax Background Orbs */}
-          <motion.div
-            style={{ y: decorY }}
-            className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-[#d4622b]/5 blur-3xl pointer-events-none z-0"
-          />
-          <motion.div
-            style={{ y: decorY }}
-            className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#d4622b]/5 blur-3xl pointer-events-none z-0"
-          />
-
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            {/* Parallax Section Header */}
-            <motion.div style={{ y: whatWeDoHeadY, opacity: whatWeDoHeadOp }} className="max-w-3xl mb-14 sm:mb-20">
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">
-                What We Do
-              </span>
-              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight mt-1 leading-[1.08]">
-                The ideal workspace as a solution
-              </h2>
-              <p className="mt-4 text-base sm:text-lg text-gray-600 leading-relaxed max-w-2xl">
-                A seamless three-phase framework designed to eliminate the friction of enterprise real estate — from identifying the right building to custom architecture and daily managed operations.
-              </p>
-            </motion.div>
-
-            {/* 3 Clean Simple Process Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-              {whatWeDoSteps.map((step, idx) => {
-                const cardY = idx === 0 ? card1Y : idx === 1 ? card2Y : card3Y;
-
-                return (
-                  <motion.div
-                    key={step.title}
-                    style={{ y: cardY }}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.2 }}
-                    whileHover={{ y: -8, scale: 1.015 }}
-                    transition={{ duration: 0.6, delay: idx * 0.14, ease: [0.16, 1, 0.3, 1] }}
-                    className="bg-white rounded-3xl p-8 sm:p-10 lg:p-12 border border-gray-200/90 shadow-sm hover:shadow-2xl hover:border-[#d4622b]/50 transition-all duration-300 flex flex-col justify-between group h-full relative overflow-hidden"
-                  >
-                    {/* Top gradient glow on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#d4622b] via-[#e5733f] to-[#f28e2b] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                    <div>
-                      {/* Step Number */}
-                      <span className="text-5xl sm:text-6xl font-black text-gray-200 group-hover:text-[#d4622b] transition-colors duration-300 block mb-6">
-                        {step.step}
-                      </span>
-
-                      {/* Step Title */}
-                      <h3 className="text-2xl sm:text-3xl font-black text-[#1a1a2e] tracking-tight group-hover:text-[#d4622b] transition-colors duration-300 mb-4">
-                        {step.title}
-                      </h3>
-
-                      {/* Main Description */}
-                      <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-normal">
-                        {step.desc}
-                      </p>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </div>
-          </div>
-        </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             5. TEAM — staggered scroll reveals
