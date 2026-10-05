@@ -477,10 +477,6 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             {/* Parallax Section Header */}
             <motion.div style={{ y: whatWeDoHeadY, opacity: whatWeDoHeadOp }} className="max-w-3xl mb-14 sm:mb-20">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#d4622b]/10 text-[#d4622b] text-xs font-bold tracking-widest uppercase mb-4 shadow-xs">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#d4622b] animate-pulse" />
-                What We Do
-              </div>
               <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.08]">
                 The ideal workspace as a solution
               </h2>
