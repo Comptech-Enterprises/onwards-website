@@ -911,10 +911,12 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
     <SpotlightCard className="h-full min-h-[340px] sm:min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white transition-all duration-500 flex flex-col justify-between">
       {/* Top Image Container with zoom & gradient overlay */}
       <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-gray-100">
-        <div
-          aria-hidden
-          className="absolute inset-0 bg-cover bg-center scale-100 group-hover:scale-105 transition-transform duration-700 ease-out"
-          style={{ backgroundImage: `url(${sol.img})` }}
+        <Image
+          src={sol.img}
+          alt={sol.title}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          sizes="(max-width: 768px) 100vw, 360px"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
       </div>
