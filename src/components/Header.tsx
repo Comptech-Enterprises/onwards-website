@@ -141,6 +141,13 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
           </div>
 
           <Link
+            href="/enterprise"
+            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
+          >
+            Enterprise
+          </Link>
+
+          <Link
             href="/blog"
             className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
           >
@@ -251,6 +258,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   </div>
                 )}
               </div>
+
+              <Link
+                href="/enterprise"
+                onClick={() => setMobileMenu(false)}
+                className="block text-white font-medium text-base hover:text-[#d4622b]"
+              >
+                Enterprise
+              </Link>
 
               <Link
                 href="/blog"
