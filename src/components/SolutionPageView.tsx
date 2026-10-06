@@ -7,7 +7,7 @@ import { useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
-import type { Solution } from "@/data/solutions";
+import { solutions, type Solution } from "@/data/solutions";
 
 const ease = [0.22, 0.8, 0.2, 1] as const;
 
@@ -157,7 +157,71 @@ export default function SolutionPageView({
           </div>
         </section>
 
-        {/* ━━━ 3. CONTACT FORM ━━━ */}
+        {/* ━━━ 3. CTA + RELATED SOLUTION ━━━ */}
+        <section className="py-20 lg:py-28 bg-[#1a1a2e] text-white">
+          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              {/* Left — CTA text */}
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-80px" }}
+              >
+                <motion.h2
+                  variants={fadeUp}
+                  custom={0}
+                  className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight"
+                >
+                  Revolutionise Your Workspace.
+                </motion.h2>
+                <motion.p
+                  variants={fadeUp}
+                  custom={1}
+                  className="mt-5 text-base text-white/60 max-w-lg leading-relaxed"
+                >
+                  Whether you have questions about membership options, need assistance with technical aspects, or want to explore customisation possibilities for your workspace, our experts are here to provide you with personalised guidance and solutions.
+                </motion.p>
+                <motion.div variants={fadeUp} custom={2}>
+                  <Link
+                    href="/#contact"
+                    className="mt-7 inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white font-bold px-8 py-3.5 rounded-full transition-colors text-sm uppercase tracking-wider"
+                  >
+                    Let&apos;s Connect
+                  </Link>
+                </motion.div>
+              </motion.div>
+
+              {/* Right — related solution card */}
+              {(() => {
+                const idx = solutions.findIndex((s) => s.slug === sol.slug);
+                const other = solutions[(idx + 1) % solutions.length];
+                if (!other) return null;
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2, ease }}
+                  >
+                    <Link href={`/solutions/${other.slug}`} className="group block bg-white/5 border border-white/10 rounded-2xl p-7 sm:p-8 hover:bg-white/8 transition-colors">
+                      <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-[#d4622b] transition-colors">
+                        {other.title}
+                      </h3>
+                      <p className="mt-3 text-sm text-white/50 leading-relaxed line-clamp-3">
+                        {other.desc}
+                      </p>
+                      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[#d4622b] group-hover:gap-3 transition-all">
+                        Read More <span>&rarr;</span>
+                      </span>
+                    </Link>
+                  </motion.div>
+                );
+              })()}
+            </div>
+          </div>
+        </section>
+
+        {/* ━━━ 4. CONTACT FORM ━━━ */}
         <ContactSection
           title={`Get in touch about ${sol.title}`}
           highlight={sol.title}
