@@ -68,7 +68,7 @@ async function fetchPostData(slug: string) {
         <p>Whether you need private enterprise suites, on-demand meeting rooms, or dynamic coworking setups, Onward delivers the infrastructure your company needs to thrive.</p>
       `,
       titleShort: local.desc,
-      banner: local.img,
+      banner: (local as any).banner || local.img,
       createdAt: local.date,
       author: local.author,
       seo: "",
