@@ -10,6 +10,7 @@ import {
   useSpring,
 } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { IntroAnimation } from "@/components/IntroAnimation";
@@ -161,6 +162,7 @@ const cityCards = [
 
 const solutions = [
   {
+    slug: "managed-office",
     title: "Managed Office",
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
     tag: "ENTERPRISE",
@@ -168,6 +170,7 @@ const solutions = [
     img: "/images/redesigned/home-page/office-space-solutions/managed-space.webp",
   },
   {
+    slug: "private-suites",
     title: "Private Suites",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
     tag: "TEAMS",
@@ -175,6 +178,7 @@ const solutions = [
     img: "/images/redesigned/home-page/office-space-solutions/private-suites.webp",
   },
   {
+    slug: "private-cabins",
     title: "Private Cabins",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
     tag: "EXECUTIVE",
@@ -182,6 +186,7 @@ const solutions = [
     img: "/images/redesigned/home-page/office-space-solutions/private-cabins.webp",
   },
   {
+    slug: "virtual-office",
     title: "Virtual Office",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
     tag: "REMOTE",
@@ -189,6 +194,7 @@ const solutions = [
     img: "/images/redesigned/home-page/office-space-solutions/virtual-office.webp",
   },
   {
+    slug: "on-demand",
     title: "On-Demand",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",
@@ -196,6 +202,7 @@ const solutions = [
     img: "/images/redesigned/home-page/office-space-solutions/on-demand.webp",
   },
   {
+    slug: "custom-built",
     title: "Custom Built",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
     tag: "BESPOKE",
@@ -818,6 +825,7 @@ function NewsMediaSection() {
 
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
+    <Link href={`/solutions/${sol.slug}`} className="block h-full">
     <SpotlightCard className="h-full min-h-[340px] sm:min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white transition-all duration-500 flex flex-col justify-between">
       {/* Top Image Container with zoom & gradient overlay */}
       <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-gray-100">
@@ -875,6 +883,7 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
         </div>
       </div>
     </SpotlightCard>
+    </Link>
   );
 }
 

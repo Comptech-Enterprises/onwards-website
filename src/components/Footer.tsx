@@ -4,15 +4,32 @@ import Link from "next/link";
 const footerColumns = [
   {
     title: "Solutions",
-    links: ["Managed Office", "Private Suites", "Virtual Office", "On-Demand", "Custom Built"],
+    links: [
+      { label: "Managed Office", href: "/solutions/managed-office" },
+      { label: "Private Suites", href: "/solutions/private-suites" },
+      { label: "Virtual Office", href: "/solutions/virtual-office" },
+      { label: "On-Demand", href: "/solutions/on-demand" },
+      { label: "Custom Built", href: "/solutions/custom-built" },
+    ],
   },
   {
     title: "Locations",
-    links: ["Delhi", "Noida", "Gurgaon", "All Locations"],
+    links: [
+      { label: "Delhi", href: "/locations/delhi" },
+      { label: "Noida", href: "/locations/noida" },
+      { label: "Gurgaon", href: "/locations/gurgaon" },
+      { label: "All Locations", href: "/locations" },
+    ],
   },
   {
     title: "Company",
-    links: ["About Us", "Blog", "Careers", "Enterprise", "Contact"],
+    links: [
+      { label: "About Us", href: "/about" },
+      { label: "Blog", href: "/blog" },
+      { label: "Careers", href: "#" },
+      { label: "Enterprise", href: "/enterprise" },
+      { label: "Contact", href: "/#contact" },
+    ],
   },
 ];
 
@@ -56,13 +73,13 @@ export default function Footer() {
                 </h4>
                 <ul className="space-y-3 text-sm">
                   {col.links.map((l) => (
-                    <li key={l}>
-                      <a
-                        href={l === "Blog" ? "/blog" : "#"}
+                    <li key={l.label}>
+                      <Link
+                        href={l.href}
                         className="relative inline-block text-[#1a1a2e] hover:text-[#d4622b] transition-colors py-0.5 after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-[#d4622b] after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
                       >
-                        {l}
-                      </a>
+                        {l.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
