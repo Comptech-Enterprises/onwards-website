@@ -3,11 +3,48 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
+
+/* ━━━ ANIMATION HELPERS ━━━ */
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1, y: 0,
+    transition: { delay: i * 0.12, duration: 0.6, ease: [0.22, 0.8, 0.2, 1] },
+  }),
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: (i: number) => ({
+    opacity: 1, scale: 1,
+    transition: { delay: i * 0.1, duration: 0.5, ease: [0.22, 0.8, 0.2, 1] },
+  }),
+};
+
+function CountUp({ target, duration = 1.5, prefix = "", suffix = "" }: { target: number; duration?: number; prefix?: string; suffix?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    const start = performance.now();
+    const step = (now: number) => {
+      const progress = Math.min((now - start) / (duration * 1000), 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [isInView, target, duration]);
+
+  return <span ref={ref}>{prefix}{value}{suffix}</span>;
+}
 
 /* ━━━ DATA ━━━ */
 
@@ -367,70 +404,127 @@ function CompareSection() {
           </p>
         </Reveal>
 
-        <div className="inline-flex border-2 border-[#1a1a2e] rounded-full p-1 gap-1 mt-6">
-          <button
+        <motion.div
+          className="inline-flex border-2 border-[#1a1a2e] rounded-full p-1 gap-1 mt-6"
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <motion.button
             onClick={() => setMode("trad")}
             className={`px-5 py-3 rounded-full text-sm font-bold transition-all cursor-pointer ${
               !isOnward ? "bg-[#1a1a2e] text-white" : "text-[#1a1a2e]"
             }`}
+            whileTap={{ scale: 0.95 }}
           >
             Traditional lease
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => { setMode("onward"); setAutoSwitched(true); }}
             className={`px-5 py-3 rounded-full text-sm font-bold transition-all cursor-pointer ${
               isOnward ? "bg-[#d4622b] text-white" : "text-[#1a1a2e]"
             }`}
+            whileTap={{ scale: 0.95 }}
           >
             With Onward
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
         {/* KPI flip cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-          <div className="border-2 border-gray-200 rounded-2xl p-6 sm:p-8">
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.div variants={scaleIn} custom={0} className="border-2 border-gray-200 rounded-2xl p-6 sm:p-8">
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">Parties you coordinate</h3>
             <div className="relative h-[1.1em] overflow-hidden text-5xl sm:text-7xl font-bold mt-4">
-              <span className={`absolute left-0 transition-all duration-700 ${isOnward ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"} text-[#1a1a2e]`}>
+              <motion.span
+                className={`absolute left-0 text-[#1a1a2e]`}
+                animate={{ y: isOnward ? "-100%" : "0%", opacity: isOnward ? 0 : 1 }}
+                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
+              >
                 50-60
-              </span>
-              <span className={`absolute left-0 transition-all duration-700 ${isOnward ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"} text-[#d4622b]`}>
+              </motion.span>
+              <motion.span
+                className={`absolute left-0 text-[#d4622b]`}
+                animate={{ y: isOnward ? "0%" : "100%", opacity: isOnward ? 1 : 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
+              >
                 1
-              </span>
+              </motion.span>
             </div>
-            <p className="mt-3 text-sm text-gray-500 min-h-[3em]">
-              {isOnward
-                ? "Onward. One agreement and one point of contact."
-                : "Landlord, vendors and your own site staff, all reporting to you."}
-            </p>
-          </div>
-          <div className="border-2 border-gray-200 rounded-2xl p-6 sm:p-8">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={isOnward ? "onward-p" : "trad-p"}
+                className="mt-3 text-sm text-gray-500 min-h-[3em]"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isOnward
+                  ? "Onward. One agreement and one point of contact."
+                  : "Landlord, vendors and your own site staff, all reporting to you."}
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
+          <motion.div variants={scaleIn} custom={1} className="border-2 border-gray-200 rounded-2xl p-6 sm:p-8">
             <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">Cheques you write each month</h3>
             <div className="relative h-[1.1em] overflow-hidden text-5xl sm:text-7xl font-bold mt-4">
-              <span className={`absolute left-0 transition-all duration-700 ${isOnward ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"} text-[#1a1a2e]`}>
+              <motion.span
+                className={`absolute left-0 text-[#1a1a2e]`}
+                animate={{ y: isOnward ? "-100%" : "0%", opacity: isOnward ? 0 : 1 }}
+                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
+              >
                 5
-              </span>
-              <span className={`absolute left-0 transition-all duration-700 ${isOnward ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"} text-[#d4622b]`}>
+              </motion.span>
+              <motion.span
+                className={`absolute left-0 text-[#d4622b]`}
+                animate={{ y: isOnward ? "0%" : "100%", opacity: isOnward ? 1 : 0 }}
+                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
+              >
                 1
-              </span>
+              </motion.span>
             </div>
-            <p className="mt-3 text-sm text-gray-500 min-h-[3em]">
-              {isOnward
-                ? "One cheque covers everything, on a single all-inclusive monthly invoice."
-                : "Rent, CAM, insurance, operating costs and fit-out, each billed on its own."}
-            </p>
-          </div>
-        </div>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={isOnward ? "onward-c" : "trad-c"}
+                className="mt-3 text-sm text-gray-500 min-h-[3em]"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+              >
+                {isOnward
+                  ? "One cheque covers everything, on a single all-inclusive monthly invoice."
+                  : "Rent, CAM, insurance, operating costs and fit-out, each billed on its own."}
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
 
         {/* Comparison table */}
-        <div className="border-2 border-gray-200 rounded-2xl overflow-hidden mt-4">
+        <motion.div
+          className="border-2 border-gray-200 rounded-2xl overflow-hidden mt-4"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           <div className="hidden sm:grid grid-cols-[140px_1fr_1fr] bg-gray-50">
             <div className="p-4" />
             <div className="p-4 text-xs font-bold uppercase tracking-wider text-gray-400">Traditional lease</div>
             <div className="p-4 text-xs font-bold uppercase tracking-wider text-gray-400">With Onward</div>
           </div>
-          {compareRows.map((row) => (
-            <div key={row.label} className="grid grid-cols-1 sm:grid-cols-[140px_1fr_1fr] border-t border-gray-200">
+          {compareRows.map((row, i) => (
+            <motion.div
+              key={row.label}
+              variants={fadeUp}
+              custom={i}
+              className="grid grid-cols-1 sm:grid-cols-[140px_1fr_1fr] border-t border-gray-200"
+            >
               <div className="p-4 text-xs font-bold uppercase tracking-wider text-gray-400">{row.label}</div>
               <div className={`p-4 text-sm transition-all duration-400 ${!isOnward ? "bg-gray-50 font-bold" : "opacity-50"}`}>
                 <span className="sm:hidden font-bold text-gray-400 text-xs">Traditional: </span>{row.trad}
@@ -438,9 +532,9 @@ function CompareSection() {
               <div className={`p-4 text-sm transition-all duration-400 ${isOnward ? "bg-[#d4622b] text-white font-bold" : "opacity-50"}`}>
                 <span className="sm:hidden font-bold text-gray-400 text-xs">Onward: </span>{row.onward}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -466,40 +560,68 @@ export default function EnterprisePage() {
     setActiveTab(idx);
   }, []);
 
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const heroImgY = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
+  const heroImgScale = useTransform(heroScroll, [0, 1], [1, 1.1]);
+
   return (
     <>
       <Header alwaysSolid />
 
       <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20">
         {/* ━━━ HERO BANNER ━━━ */}
-        <section className="relative min-h-[400px] sm:min-h-[460px] lg:min-h-[520px] flex items-center py-14 sm:py-18 lg:py-22 overflow-hidden">
-          <Image
-            src="/images/redesigned/about-us/crafting-workspaces-1st-section/1.webp"
-            alt="Onward Enterprise workspace"
-            fill
-            priority
-            className="object-cover object-[center_30%]"
-          />
+        <section ref={heroRef} className="relative min-h-[400px] sm:min-h-[460px] lg:min-h-[520px] flex items-center py-14 sm:py-18 lg:py-22 overflow-hidden">
+          <motion.div className="absolute inset-0" style={{ y: heroImgY, scale: heroImgScale }}>
+            <Image
+              src="/images/redesigned/about-us/crafting-workspaces-1st-section/1.webp"
+              alt="Onward Enterprise workspace"
+              fill
+              priority
+              className="object-cover object-[center_30%]"
+            />
+          </motion.div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <nav aria-label="Breadcrumb" className="mb-3">
+            <motion.nav
+              aria-label="Breadcrumb"
+              className="mb-3"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
               <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider flex-wrap">
                 <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
                 <li>/</li>
                 <li className="text-white font-semibold">Enterprise</li>
               </ol>
-            </nav>
+            </motion.nav>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.05]">
+            <motion.h1
+              className="text-3xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.05]"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 0.8, 0.2, 1] }}
+            >
               Run your business.{" "}
               <span className="text-[#d4622b]">We run the office.</span>
-            </h1>
-            <p className="mt-4 text-white/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl">
+            </motion.h1>
+            <motion.p
+              className="mt-4 text-white/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Fully managed offices for growing companies across Delhi NCR. One agreement, one cheque, built around your team.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-wrap gap-3 mt-8">
+            <motion.div
+              className="flex flex-wrap gap-3 mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3.5 rounded-full transition-colors cursor-pointer shadow-md"
@@ -512,24 +634,31 @@ export default function EnterprisePage() {
               >
                 See how it compares
               </a>
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* ━━━ GLANCE STRIP ━━━ */}
         <section className="bg-white border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 sm:py-10">
-            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 sm:gap-8 items-center">
-              <div className="text-center sm:text-left">
-                <span className="text-5xl sm:text-6xl font-bold text-[#d4622b] tracking-tight leading-none">14</span>
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-4 gap-6 sm:gap-8 items-center"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <motion.div className="text-center sm:text-left" variants={fadeUp} custom={0}>
+                <span className="text-5xl sm:text-6xl font-bold text-[#d4622b] tracking-tight leading-none">
+                  <CountUp target={14} duration={1.2} />
+                </span>
                 <p className="mt-1 text-gray-500 text-sm">centres across Delhi NCR</p>
-              </div>
-              {["Tailor-made fit-outs, delivered by us", "Flexible terms that scale with your team", "One cheque, one all-inclusive invoice"].map((item) => (
-                <div key={item} className="relative pl-5 py-2 border-l-2 border-[#d4622b] text-sm font-bold text-[#1a1a2e]">
+              </motion.div>
+              {["Tailor-made fit-outs, delivered by us", "Flexible terms that scale with your team", "One cheque, one all-inclusive invoice"].map((item, i) => (
+                <motion.div key={item} variants={fadeUp} custom={i + 1} className="relative pl-5 py-2 border-l-2 border-[#d4622b] text-sm font-bold text-[#1a1a2e]">
                   {item}
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -606,25 +735,44 @@ export default function EnterprisePage() {
               </p>
             </Reveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 sm:mt-14">
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 sm:mt-14"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.15 }}
+            >
               {benefits.map((b, i) => (
-                <Reveal key={b.title} delay={i * 0.06}>
-                  <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 flex flex-col gap-3 hover:-translate-y-1.5 hover:border-[#d4622b]/40 transition-all duration-300 h-full group">
-                    <span className="text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">{b.icon}</span>
-                    <h3 className="text-xl font-bold text-[#1a1a2e] tracking-tight">{b.title}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed">{b.desc}</p>
-                  </div>
-                </Reveal>
+                <motion.div
+                  key={b.title}
+                  variants={scaleIn}
+                  custom={i}
+                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                  className="bg-white border-2 border-gray-200 rounded-2xl p-6 flex flex-col gap-3 hover:border-[#d4622b]/40 transition-colors duration-300 h-full group"
+                >
+                  <motion.span
+                    className="text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors"
+                    whileHover={{ rotate: [0, -10, 10, -5, 0], transition: { duration: 0.5 } }}
+                  >
+                    {b.icon}
+                  </motion.span>
+                  <h3 className="text-xl font-bold text-[#1a1a2e] tracking-tight">{b.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{b.desc}</p>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </section>
 
         {/* ━━━ CONTACT ━━━ */}
-        <section id="contact" className="relative py-16 sm:py-24 lg:py-28 bg-gradient-to-tl from-[#f5ddd0] via-[#fff7f2] to-white text-[#1a1a2e]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-10 lg:gap-16 items-end">
+        <section id="contact" className="relative py-16 sm:py-24 lg:py-28 bg-gradient-to-tl from-[#f5ddd0] via-[#fff7f2] to-white text-[#1a1a2e] overflow-hidden">
+          <motion.div
+            className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-10 lg:gap-16 items-end"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+          >
             <div>
-              <Reveal>
+              <motion.div variants={fadeUp} custom={0}>
                 <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">Enterprise enquiries</span>
                 <h2 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
                   Get in touch.
@@ -632,42 +780,48 @@ export default function EnterprisePage() {
                 <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl">
                   Tell us your team size and preferred location. We will match you to the right workspace within 24 hours.
                 </p>
-              </Reveal>
-              <Reveal delay={0.1}>
-                <div className="flex flex-wrap gap-3 mt-8">
-                  <a
-                    href="mailto:info@onwardworkspaces.com?subject=Enterprise%20enquiry"
-                    className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3.5 rounded-full transition-colors shadow-md"
-                  >
-                    Email us
-                  </a>
-                  <a
-                    href="tel:+919910668152"
-                    className="inline-flex items-center gap-2 border-2 border-[#1a1a2e] text-[#1a1a2e] hover:border-[#d4622b] hover:text-[#d4622b] text-sm font-bold px-6 py-3.5 rounded-full transition-colors"
-                  >
-                    Call us
-                  </a>
-                </div>
-              </Reveal>
+              </motion.div>
+              <motion.div variants={fadeUp} custom={1} className="flex flex-wrap gap-3 mt-8">
+                <motion.a
+                  href="mailto:info@onwardworkspaces.com?subject=Enterprise%20enquiry"
+                  className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3.5 rounded-full transition-colors shadow-md"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Email us
+                </motion.a>
+                <motion.a
+                  href="tel:+919910668152"
+                  className="inline-flex items-center gap-2 border-2 border-[#1a1a2e] text-[#1a1a2e] hover:border-[#d4622b] hover:text-[#d4622b] text-sm font-bold px-6 py-3.5 rounded-full transition-colors"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Call us
+                </motion.a>
+              </motion.div>
             </div>
 
-            <Reveal delay={0.15}>
-              <div className="space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-3 border border-gray-200 rounded-xl px-5 py-4 bg-white/60">
-                  <div>
-                    <span className="block text-xs font-bold uppercase tracking-wider text-gray-400">Email</span>
-                    <span className="block text-lg font-bold text-[#1a1a2e] break-all">info@onwardworkspaces.com</span>
-                  </div>
+            <motion.div variants={fadeUp} custom={2} className="space-y-3">
+              <motion.div
+                className="flex flex-wrap items-center justify-between gap-3 border border-gray-200 rounded-xl px-5 py-4 bg-white/60"
+                whileHover={{ x: 4, borderColor: "#d4622b", transition: { duration: 0.2 } }}
+              >
+                <div>
+                  <span className="block text-xs font-bold uppercase tracking-wider text-gray-400">Email</span>
+                  <span className="block text-lg font-bold text-[#1a1a2e] break-all">info@onwardworkspaces.com</span>
                 </div>
-                <div className="flex flex-wrap items-center justify-between gap-3 border border-gray-200 rounded-xl px-5 py-4 bg-white/60">
-                  <div>
-                    <span className="block text-xs font-bold uppercase tracking-wider text-gray-400">Phone</span>
-                    <span className="block text-lg font-bold text-[#1a1a2e]">+91 99106 68152</span>
-                  </div>
+              </motion.div>
+              <motion.div
+                className="flex flex-wrap items-center justify-between gap-3 border border-gray-200 rounded-xl px-5 py-4 bg-white/60"
+                whileHover={{ x: 4, borderColor: "#d4622b", transition: { duration: 0.2 } }}
+              >
+                <div>
+                  <span className="block text-xs font-bold uppercase tracking-wider text-gray-400">Phone</span>
+                  <span className="block text-lg font-bold text-[#1a1a2e]">+91 99106 68152</span>
                 </div>
-              </div>
-            </Reveal>
-          </div>
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </section>
       </main>
 
