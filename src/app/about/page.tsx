@@ -262,52 +262,62 @@ export default function AboutPage() {
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             2. WHAT WE DO — CITY SKYLINE BG + 3 STEP CARDS
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="relative py-20 sm:py-28 lg:py-32 overflow-hidden border-b border-gray-200/80">
-          <Image
-            src="/images/redesigned/about-us/second-section/1.webp"
-            alt="City skyline"
-            fill
-            className="object-cover object-[center_70%]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
-
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl mx-auto text-center mb-14 sm:mb-16">
+        <section className="py-16 sm:py-20 lg:py-24 bg-[#faf8f5] border-b border-gray-200/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 sm:mb-12">
               <ScrollReveal>
-                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.12]">
-                  The ideal workspace as a{" "}
-                  <span className="text-[#d4622b]">solution</span>
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight leading-[1.12]">
+                  The ideal workspace as a <span className="text-[#d4622b]">solution</span>
                 </h2>
               </ScrollReveal>
             </div>
 
-            {/* Numbered circles with connecting bar */}
-            <div className="hidden sm:flex items-center justify-center mb-12 max-w-2xl mx-auto">
+            {/* Numbered circles with animated connecting bar */}
+            <div className="hidden sm:flex items-center justify-center mb-10 max-w-2xl mx-auto">
               {workspaceSolutionSteps.map((step, idx) => (
                 <div key={step.step} className="flex items-center flex-1 last:flex-none">
-                  <div className="w-14 h-14 rounded-full bg-white text-[#1a1a2e] font-bold text-lg flex items-center justify-center shadow-lg shrink-0">
+                  <motion.div
+                    className="w-12 h-12 rounded-full bg-[#1a1a2e] text-white font-bold text-base flex items-center justify-center shadow-md shrink-0"
+                    initial={{ scale: 0, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.3, ease: [0.22, 0.8, 0.2, 1] }}
+                  >
                     {step.step}
-                  </div>
+                  </motion.div>
                   {idx < workspaceSolutionSteps.length - 1 && (
-                    <div className="flex-1 h-1 bg-white/40 mx-1" />
+                    <div className="flex-1 h-0.5 bg-gray-200 mx-1 overflow-hidden">
+                      <motion.div
+                        className="h-full bg-[#d4622b]"
+                        initial={{ width: 0 }}
+                        whileInView={{ width: "100%" }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2 + idx * 0.3, ease: [0.22, 0.8, 0.2, 1] }}
+                      />
+                    </div>
                   )}
                 </div>
               ))}
             </div>
 
             {/* 3 Step Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 rounded-2xl overflow-hidden border border-white/20 shadow-2xl">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-0 rounded-2xl overflow-hidden border border-gray-200 shadow-sm">
               {workspaceSolutionSteps.map((step, idx) => (
-                <ScrollReveal key={step.step} delay={idx * 0.1}>
-                  <div className={`bg-white/95 backdrop-blur-sm p-7 sm:p-8 h-full text-center ${idx < workspaceSolutionSteps.length - 1 ? "sm:border-r border-b sm:border-b-0 border-gray-200/60" : ""}`}>
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#1a1a2e] tracking-tight mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
-                      {step.desc}
-                    </p>
-                  </div>
-                </ScrollReveal>
+                <motion.div
+                  key={step.step}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.6 + idx * 0.15, ease: [0.22, 0.8, 0.2, 1] }}
+                  className={`bg-white p-6 sm:p-8 h-full text-center ${idx < workspaceSolutionSteps.length - 1 ? "sm:border-r border-b sm:border-b-0 border-gray-200" : ""}`}
+                >
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#1a1a2e] tracking-tight mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    {step.desc}
+                  </p>
+                </motion.div>
               ))}
             </div>
           </div>
