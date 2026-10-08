@@ -2,12 +2,12 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DATA DEFINITIONS
+   DATA DEFINITIONS (MATCHING ONWARD ENTERPRISE COPY)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
 const CAPABILITY_DETAILS = [
@@ -77,7 +77,7 @@ const BENEFITS_DATA = [
   {
     id: 1,
     title: "Flexibility and agility",
-    desc: "Terms that scale with your team. Add or release seats seamlessly as plans, headcount, and market demands evolve without long-term friction.",
+    desc: "Terms that scale with your team. Add or release seats as plans, markets and headcount change.",
     icon: (
       <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
         <path d="M8 16h32M8 32h32" />
@@ -89,7 +89,7 @@ const BENEFITS_DATA = [
   {
     id: 2,
     title: "Streamlined operations",
-    desc: "Maintenance, high-speed IT, housekeeping, and front-desk admin support are handled by our hospitality-trained on-site team. Your staff stays focused on business growth.",
+    desc: "Maintenance, housekeeping and admin support are run by our on-site team. Your people stay on the work, not the office.",
     icon: (
       <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
         <path d="M9 13l4 4 7-8M9 25l4 4 7-8M9 37l4 4 7-8M27 14h13M27 26h13M27 38h13" />
@@ -99,7 +99,7 @@ const BENEFITS_DATA = [
   {
     id: 3,
     title: "Cost-effectiveness",
-    desc: "One all-inclusive monthly invoice covers rent, CAM, utilities, and daily operations. Eliminate heavy upfront fit-out CapEx and hidden facility charges.",
+    desc: "One all-inclusive invoice covers rent, CAM, insurance and operating costs. No separate cheques, no fit-out capex.",
     icon: (
       <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
         <path d="M13 10h22M13 19h22M17 10h5c8 0 12 4 12 9.5S30 29 22 29h-5l15 12" />
@@ -109,7 +109,7 @@ const BENEFITS_DATA = [
   {
     id: 4,
     title: "Enhanced productivity",
-    desc: "Bespoke ergonomic layouts, soundproof acoustic phone booths, tech-enabled conference rooms, and ergonomic furniture built specifically for focused work.",
+    desc: "Tailor-made fit-outs and ready-to-use floors mean your team moves into a space built to work in.",
     icon: (
       <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
         <path d="M6 36l12-12 8 8 16-18" />
@@ -119,8 +119,8 @@ const BENEFITS_DATA = [
   },
   {
     id: 5,
-    title: "Prime brand image",
-    desc: "Host clients, board meetings, and partner presentations in Grade-A corporate towers and premium hubs across Delhi, Gurgaon, and Noida.",
+    title: "Brand image",
+    desc: "Meet clients, investors and partners in well-designed offices at business addresses across Delhi NCR.",
     icon: (
       <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
         <path d="M10 42V12l14-7 14 7v30M5 42h38M18 18h4M26 18h4M18 26h4M26 26h4M20 42v-8h8v8" />
@@ -129,8 +129,8 @@ const BENEFITS_DATA = [
   },
   {
     id: 6,
-    title: "Vibrant ecosystem",
-    desc: "Collaborate alongside high-growth tech firms, enterprise divisions, and industry leaders. Meaningful networking and strategic opportunities built into the address.",
+    title: "Networking",
+    desc: "Sit alongside other growing companies. Introductions, partnerships and referrals come with the address.",
     icon: (
       <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
         <circle cx="24" cy="11" r="5" />
@@ -163,9 +163,9 @@ const ROAD_STEPS = [
 const ROAD_CAPTIONS = [
   "Everything before day one is spend, with nothing to use yet.",
   "Approvals first: you pay security deposits and sign-off agreements.",
-  "Then contractors: tedious quotes, vendor coordination, and advance payments.",
-  "Then the build: weeks of site delays and massive upfront capital expenditure.",
-  "Only now can your team move in and finally start working.",
+  "Then contractors: quotes, timelines, and advance payments.",
+  "Then the build: weeks of fit-out work and upfront capex.",
+  "Only now can your team move in and start working.",
 ];
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -184,7 +184,7 @@ function TopicSeatGrid() {
     teamSize < LEASE_SEATS
       ? `${gapCount} desks sit empty, and you still pay for all 80.`
       : teamSize === LEASE_SEATS
-      ? "You lease 80 seats and have 80 people. It fits perfectly."
+      ? "You lease 80 seats and have 80 people. It fits."
       : `${gapCount} people have no desk. The traditional lease cannot stretch.`;
 
   return (
@@ -617,7 +617,7 @@ function TopicSeparateBills() {
       </div>
 
       <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
-        Five separate bills every month, and a financial commitment that locks you in until the lease ends.
+        Rent, maintenance, insurance and utilities arrive as separate payments. The liability stays with you for the full term.
       </p>
     </motion.div>
   );
@@ -1016,7 +1016,7 @@ export default function EnterprisePage() {
 
       <main className="bg-white text-[#0b0b0b] pt-20 overflow-hidden">
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            1. HERO SECTION WITH PARALLAX & ZOOM
+            1. HERO SECTION
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={heroRef}
@@ -1083,7 +1083,7 @@ export default function EnterprisePage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. THE PROBLEM (BEIGE / DARK THEME EXPLORER WITH PARALLAX)
+            2. THE PROBLEM: WHY TRADITIONAL OFFICES HOLD ENTERPRISES BACK
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={problemsRef}
@@ -1120,11 +1120,11 @@ export default function EnterprisePage() {
                 <i className="absolute right-0 bottom-0 w-3.5 h-3.5 border-b-[1.5px] border-r-[1.5px] border-[#9b917d]" />
                 <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1c1813] tracking-tight leading-tight">
                   <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#1c1813] mr-3 align-middle animate-pulse" />
-                  Weeks of setup. <em className="not-italic text-[#d4622b]">Years of lock-in.</em>
+                  Why traditional offices <em className="not-italic text-[#d4622b]">hold enterprises back</em>
                 </h2>
               </motion.div>
               <p className="mt-4 text-[#655d4e] text-base sm:text-xl max-w-2xl">
-                Here is what goes wrong when a company leases, builds, and runs its own office.
+                A conventional corporate lease asks four things of you.
               </p>
             </div>
 
@@ -1199,10 +1199,10 @@ export default function EnterprisePage() {
                     {activeTab === 0 && (
                       <>
                         <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                          You sign for years. Your team changes every few months.
+                          Lease cycles run for years. Your business moves faster.
                         </h3>
                         <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                          A lease fixes how many seats you pay for. Hire more people and you run out of room. Lose a few and you keep paying for empty desks.
+                          Headcount shifts, teams relocate and plans change, but the lease stays the same. You pay for 80 seats whether you need 50 or 105.
                         </p>
                         <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
                           <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
@@ -1213,10 +1213,10 @@ export default function EnterprisePage() {
                     {activeTab === 1 && (
                       <>
                         <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                          Your own team ends up running the office.
+                          Your team ends up running an office instead of the business.
                         </h3>
                         <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                          Someone has to chase vendors, fix repairs, order furniture and renew licences. That someone is usually your staff, who have real work to do.
+                          Fit-outs, vendors and facilities need constant management. Someone has to chase vendors, fix repairs, order furniture and renew licences.
                         </p>
                         <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
                           <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
@@ -1227,10 +1227,10 @@ export default function EnterprisePage() {
                     {activeTab === 2 && (
                       <>
                         <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                          You pay a lot before anyone sits down.
+                          Approvals, contractors and timelines come before day one, and so does the spend.
                         </h3>
                         <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                          You get approvals, hire contractors and build the interiors first. All of it costs money, and your team cannot work there until it is done.
+                          Setup is slow, complex and expensive. You pay a lot before anyone sits down, and your team cannot work there until it is done.
                         </p>
                         <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
                           <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
@@ -1241,10 +1241,10 @@ export default function EnterprisePage() {
                     {activeTab === 3 && (
                       <>
                         <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                          Many bills, and you owe all of them.
+                          Rent, maintenance, insurance and utilities arrive as separate payments.
                         </h3>
                         <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                          Rent, maintenance charges, insurance and running costs arrive separately, every month. If your plans change, the lease still binds you.
+                          The liability stays with you for the full term, even when your needs change. If your plans change, the lease still binds you.
                         </p>
                         <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
                           <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
@@ -1268,7 +1268,7 @@ export default function EnterprisePage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. COMPARE SECTION (TRADITIONAL VS ONWARD WITH PARALLAX)
+            3. THE ANSWER: ONE CHEQUE SOLUTION
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section ref={compareRef} id="compare" className="relative py-20 sm:py-28 lg:py-36 bg-white border-b border-[#e2e2e2] overflow-hidden">
           <motion.div style={{ y: compareY }} className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -1438,18 +1438,18 @@ export default function EnterprisePage() {
               {[
                 {
                   key: "Term",
-                  trad: "Multi-year lock-in with rigid penalties",
-                  onward: "Flexible terms that scale seamlessly with your team",
+                  trad: "Multi-year lock-in",
+                  onward: "Flexible terms that scale with your team",
                 },
                 {
                   key: "Operations",
-                  trad: "You manage vendors, housekeeping, IT & facilities",
-                  onward: "Our hospitality-trained on-site team runs operations",
+                  trad: "You manage vendors and facilities",
+                  onward: "Our on-site team runs operations",
                 },
                 {
                   key: "Setup",
-                  trad: "Your upfront capital, contractors & construction risk",
-                  onward: "Tailor-made fit-out delivered and managed by Onward",
+                  trad: "Your capital, your contractors",
+                  onward: "Tailor-made fit-out delivered by Onward",
                 },
                 {
                   key: "Billing",
@@ -1497,7 +1497,7 @@ export default function EnterprisePage() {
         <CapabilityWebSection />
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            5. BENEFITS GRID SECTION WITH ZOOMING HOVER
+            5. WHAT CHANGES FOR YOUR ENTERPRISE WITH ONWARD
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section
           ref={benefitsRef}
@@ -1519,7 +1519,7 @@ export default function EnterprisePage() {
                 What changes for your enterprise with Onward
               </h2>
               <p className="mt-4 text-[#585858] text-base sm:text-lg max-w-2xl leading-relaxed">
-                Six tangible advantages when your office becomes one agreement and one cheque.
+                Six things change when your office becomes one agreement and one cheque.
               </p>
             </motion.div>
 
@@ -1586,7 +1586,7 @@ export default function EnterprisePage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            6. ENTERPRISE ENQUIRIES / CONTACT SECTION WITH PARALLAX GLOW
+            6. ENTERPRISE ENQUIRIES: GET IN TOUCH
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <section id="contact" className="relative py-20 sm:py-28 lg:py-36 bg-[#0b0b0b] text-white overflow-hidden">
           {/* Subtle Parallax Background Glow */}
@@ -1607,7 +1607,7 @@ export default function EnterprisePage() {
                   Get in touch.
                 </h2>
                 <p className="mt-5 text-[#a9a9a9] text-base sm:text-lg leading-relaxed max-w-xl">
-                  Tell us your team size and preferred location. We will match you to the right managed enterprise workspace within 24 hours.
+                  Tell us your team size and preferred location. We will match you to the right workspace within 24 hours.
                 </p>
                 <div className="flex flex-wrap gap-3 mt-8">
                   <motion.a
