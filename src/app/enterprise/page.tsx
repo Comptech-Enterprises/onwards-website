@@ -1,973 +1,1402 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { motion, useScroll, useTransform, useInView, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
 
-/* ━━━ ANIMATION HELPERS ━━━ */
-const ease = [0.22, 0.8, 0.2, 1] as const;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DATA DEFINITIONS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { delay: i * 0.12, duration: 0.6, ease },
-  }),
-};
-
-const scaleIn = {
-  hidden: { opacity: 0, scale: 0.9 },
-  visible: (i: number) => ({
-    opacity: 1, scale: 1,
-    transition: { delay: i * 0.1, duration: 0.5, ease },
-  }),
-};
-
-function CountUp({ target, duration = 1.5, prefix = "", suffix = "" }: { target: number; duration?: number; prefix?: string; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    const start = performance.now();
-    const step = (now: number) => {
-      const progress = Math.min((now - start) / (duration * 1000), 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * target));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [isInView, target, duration]);
-
-  return <span ref={ref}>{prefix}{value}{suffix}</span>;
-}
-
-/* ━━━ DATA ━━━ */
-
-const problems = [
+const CAPABILITY_DETAILS = [
   {
-    id: "01",
-    step: "01 / 04",
-    title: "Rigid commitments",
-    headline: "Your lease doesn't move. Your business does.",
-    desc: "Lease cycles run for years. Headcount shifts, teams relocate and plans change — but the lease stays the same. You pay for 80 seats whether you need 50 or 105.",
+    id: 1,
+    num: "01",
+    title: "Space and address",
+    desc: "Offices at prime business addresses across Delhi NCR, on one agreement. No leasing agent and no separate dealings with property owners.",
+    replaces: ["Leasing agent", "Building / property"],
+    groups: ["v", "d"],
+    labelPos: { left: "0.00%", top: "80.15%" },
+    side: "l",
   },
   {
-    id: "02",
-    step: "02 / 04",
-    title: "Operational burden",
-    headline: "Eight side jobs. None of them is your business.",
-    desc: "Fit-outs, vendors and facilities need constant management. Your team ends up running an office instead of the business.",
+    id: 2,
+    num: "02",
+    title: "Fit-out and furniture",
+    desc: "Tailor-made fit-outs and ready-to-use floors, custom-built and fully furnished to match your brand and team workflow.",
+    replaces: ["Furniture retailer", "Labor contractor"],
+    groups: ["v"],
+    labelPos: { left: "0.00%", top: "47.06%" },
+    side: "l",
   },
   {
-    id: "03",
-    step: "03 / 04",
-    title: "Heavy upfront capital",
-    headline: "Before day one comes all the spend.",
-    desc: "Approvals, contractors and timelines come before day one, and so does the spend. Setup is slow, complex and expensive.",
+    id: 3,
+    num: "03",
+    title: "Site management",
+    desc: "Our dedicated on-site community and operations team runs the floor seamlessly, eliminating internal management overhead.",
+    replaces: ["Site manager", "Floor manager"],
+    groups: ["s"],
+    labelPos: { left: "0.00%", top: "14.71%" },
+    side: "l",
   },
   {
-    id: "04",
-    step: "04 / 04",
-    title: "Ongoing financial risk",
-    headline: "Five invoices. One liability that never ends.",
-    desc: "Rent, maintenance, insurance and utilities arrive as separate payments. The liability stays with you for the full term, even when your needs change.",
+    id: 4,
+    num: "04",
+    title: "Daily office services",
+    desc: "Housekeeping, high-speed enterprise IT, utilities, facility upkeep, and administrative concierge support are completely handled.",
+    replaces: ["Service staff", "Office managers"],
+    groups: ["s"],
+    labelPos: { left: "79.10%", top: "47.06%" },
+    side: "r",
+  },
+  {
+    id: 5,
+    num: "05",
+    title: "One point of contact",
+    desc: "Your leadership works with a single strategic partner instead of coordinating and negotiating with dozens of disparate vendors.",
+    replaces: ["Vendor coordinators", "Procurement overhead"],
+    groups: ["s"],
+    labelPos: { left: "79.10%", top: "14.71%" },
+    side: "r",
+  },
+  {
+    id: 6,
+    num: "06",
+    title: "One cheque",
+    desc: "Rent, CAM, electricity, internet, security, and facility operations arrive in a single unified, predictable monthly invoice.",
+    replaces: ["Separate bills from every party"],
+    groups: ["s", "v", "d"],
+    labelPos: { left: "79.10%", top: "80.15%" },
+    side: "r",
   },
 ];
 
-const compareRows = [
-  { label: "Term", trad: "Multi-year lock-in", onward: "Flexible terms that scale with your team" },
-  { label: "Operations", trad: "You manage vendors and facilities", onward: "Our on-site team runs operations" },
-  { label: "Setup", trad: "Your capital, your contractors", onward: "Tailor-made fit-out delivered by Onward" },
-  { label: "Billing", trad: "Rent, CAM, insurance and utilities billed separately", onward: "One cheque: one all-inclusive monthly invoice" },
-];
-
-const benefits = [
+const BENEFITS_DATA = [
   {
-    title: "Flexibility & agility",
-    desc: "Terms that scale with your team. Add or release seats as plans, markets and headcount change.",
+    id: 1,
+    title: "Flexibility and agility",
+    desc: "Terms that scale with your team. Add or release seats seamlessly as plans, headcount, and market demands evolve without long-term friction.",
     icon: (
-      <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 14h26M26 8l6 6-6 6M34 26H8M14 20l-6 6 6 6" />
+      <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
+        <path d="M8 16h32M8 32h32" />
+        <circle cx="18" cy="16" r="5" className="fill-current/20" />
+        <circle cx="32" cy="32" r="5" className="fill-current/20" />
       </svg>
     ),
   },
   {
+    id: 2,
     title: "Streamlined operations",
-    desc: "Maintenance, housekeeping and admin support are run by our on-site team. Your people stay on the work, not the office.",
+    desc: "Maintenance, high-speed IT, housekeeping, and front-desk admin support are handled by our hospitality-trained on-site team. Your staff stays focused on business growth.",
     icon: (
-      <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 10h6M8 20h6M8 30h6M20 10h12M20 20h12M20 30h12" />
+      <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
+        <path d="M9 13l4 4 7-8M9 25l4 4 7-8M9 37l4 4 7-8M27 14h13M27 26h13M27 38h13" />
       </svg>
     ),
   },
   {
+    id: 3,
     title: "Cost-effectiveness",
-    desc: "One all-inclusive invoice covers rent, CAM, insurance and operating costs. No separate cheques, no fit-out capex.",
+    desc: "One all-inclusive monthly invoice covers rent, CAM, utilities, and daily operations. Eliminate heavy upfront fit-out CapEx and hidden facility charges.",
     icon: (
-      <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="20" cy="20" r="14" /><path d="M14 13h12M14 18h12M16 13c6 0 7 7 0 7h-1l8 8" />
+      <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
+        <path d="M13 10h22M13 19h22M17 10h5c8 0 12 4 12 9.5S30 29 22 29h-5l15 12" />
       </svg>
     ),
   },
   {
+    id: 4,
     title: "Enhanced productivity",
-    desc: "Tailor-made fit-outs and ready-to-use floors mean your team moves into a space built to work in.",
+    desc: "Bespoke ergonomic layouts, soundproof acoustic phone booths, tech-enabled conference rooms, and ergonomic furniture built specifically for focused work.",
     icon: (
-      <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 4L9 22h10l-2 14 14-19H21z" />
+      <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
+        <path d="M6 36l12-12 8 8 16-18" />
+        <path d="M32 14h10v10" />
       </svg>
     ),
   },
   {
-    title: "Brand image",
-    desc: "Meet clients, investors and partners in well-designed offices at business addresses across Delhi NCR.",
+    id: 5,
+    title: "Prime brand image",
+    desc: "Host clients, board meetings, and partner presentations in Grade-A corporate towers and premium hubs across Delhi, Gurgaon, and Noida.",
     icon: (
-      <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M8 34V12l12-6 12 6v22M4 34h32M15 34V24h10v10M15 15h2M23 15h2" />
+      <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
+        <path d="M10 42V12l14-7 14 7v30M5 42h38M18 18h4M26 18h4M18 26h4M26 26h4M20 42v-8h8v8" />
       </svg>
     ),
   },
   {
-    title: "Networking",
-    desc: "Sit alongside other growing companies. Introductions, partnerships and referrals come with the address.",
+    id: 6,
+    title: "Vibrant ecosystem",
+    desc: "Collaborate alongside high-growth tech firms, enterprise divisions, and industry leaders. Meaningful networking and strategic opportunities built into the address.",
     icon: (
-      <svg className="w-10 h-10" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="20" cy="9" r="5" /><circle cx="9" cy="30" r="5" /><circle cx="31" cy="30" r="5" />
-        <path d="M17 13l-5 12M23 13l5 12M14 31h12" />
+      <svg viewBox="0 0 48 48" aria-hidden="true" className="w-full h-full stroke-current fill-none stroke-[2.2] stroke-linecap-round stroke-linejoin-round">
+        <circle cx="24" cy="11" r="5" />
+        <circle cx="10" cy="36" r="5" />
+        <circle cx="38" cy="36" r="5" />
+        <path d="M21 16l-7 15M27 16l7 15M15 37h18" />
       </svg>
     ),
   },
 ];
 
-const operationalTasks = [
-  "Vendor negotiations", "Contractor snagging", "Facility repairs", "Housekeeping",
-  "Visitor management", "Furniture sourcing", "Utility billing", "Compliance renewals",
+const TASKS_LIST = [
+  "Vendor negotiations",
+  "Contractor snagging",
+  "Facility repairs",
+  "Housekeeping",
+  "Visitor management",
+  "Furniture sourcing",
+  "Utility billing",
+  "Compliance renewals",
 ];
 
-const hubServices = [
-  { label: "Managed Offices", icon: "M4 6h16v12H4z M8 6V4h8v2", angle: 0 },
-  { label: "Coworking Spaces", icon: "M12 4v16 M4 12h16 M6 6l12 12 M18 6L6 18", angle: 60 },
-  { label: "Custom Fit-outs", icon: "M3 21h18 M5 21V7l7-4 7 4v14 M9 21v-6h6v6", angle: 120 },
-  { label: "Facility Management", icon: "M12 2L2 7v13h20V7L12 2z M8 12h8 M8 16h8", angle: 180 },
-  { label: "Flexible Terms", icon: "M6 14h26M26 8l6 6-6 6M34 26H8M14 20l-6 6 6 6", angle: 240 },
-  { label: "Single Billing", icon: "M9 5H2v14h20V5h-7 M9 5V3h6v2 M12 10v4 M10 12h4", angle: 300 },
+const ROAD_STEPS = [
+  { title: "Approvals", sub: "Sign-offs", cost: "Deposits" },
+  { title: "Contractors", sub: "Quotes, timelines", cost: "Contractor fees" },
+  { title: "Fit-out build", sub: "Weeks on site", cost: "Fit-out capex" },
+  { title: "Day one", sub: "Team moves in", cost: "" },
 ];
 
-/* ━━━ INTERACTIVE SEAT GRID ━━━ */
-function SeatGrid() {
-  const LEASE = 80;
-  const [team, setTeam] = useState(50);
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [animated, setAnimated] = useState(false);
+const ROAD_CAPTIONS = [
+  "Everything before day one is spend, with nothing to use yet.",
+  "Approvals first: you pay security deposits and sign-off agreements.",
+  "Then contractors: tedious quotes, vendor coordination, and advance payments.",
+  "Then the build: weeks of site delays and massive upfront capital expenditure.",
+  "Only now can your team move in and finally start working.",
+];
 
-  useEffect(() => {
-    if (isInView && !animated) {
-      setAnimated(true);
-      setTeam(80);
-      const timer = setTimeout(() => setTeam(50), 800);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, animated]);
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOPIC 1: INTERACTIVE SEAT GRID COMPONENT
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function TopicSeatGrid() {
+  const LEASE_SEATS = 80;
+  const MAX_OVER = 30;
+  const [teamSize, setTeamSize] = useState(50);
 
-  const gap = team <= LEASE ? LEASE - team : team - LEASE;
-  const gapLabel = team <= LEASE ? "empty seats, still paid for" : "seats short, need a second lease";
+  const diff = teamSize - LEASE_SEATS;
+  const isUnder = teamSize <= LEASE_SEATS;
+  const gapCount = Math.abs(diff);
+
+  const caption =
+    teamSize < LEASE_SEATS
+      ? `${gapCount} desks sit empty, and you still pay for all 80.`
+      : teamSize === LEASE_SEATS
+      ? "You lease 80 seats and have 80 people. It fits perfectly."
+      : `${gapCount} people have no desk. The traditional lease cannot stretch.`;
 
   return (
-    <div ref={ref}>
-      <div className="flex items-center justify-between gap-4 mb-3">
-        <label className="text-sm font-bold text-[#1a1a2e]">Your team</label>
-        <span className="text-lg font-bold text-[#d4622b] tabular-nums">{team} people</span>
-      </div>
-      <input
-        type="range" min={20} max={110} step={5} value={team}
-        onChange={(e) => setTeam(+e.target.value)}
-        className="w-full accent-[#d4622b] h-7 cursor-pointer"
-      />
-      <div className="flex flex-wrap gap-2 mt-3">
-        {[{ label: "Team shrinks to 50", val: 50 }, { label: "As planned, 80", val: 80 }, { label: "Team grows to 105", val: 105 }].map((p) => (
-          <button
-            key={p.val}
-            onClick={() => setTeam(p.val)}
-            className={`px-4 py-2 rounded-full text-xs font-bold border transition-all cursor-pointer ${
-              team === p.val
-                ? "bg-[#d4622b] border-[#d4622b] text-white"
-                : "border-gray-300 text-gray-500 hover:border-[#d4622b]"
-            }`}
-          >
-            {p.label}
-          </button>
-        ))}
+    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
+          Try it: change your team size
+        </span>
       </div>
 
-      <p className="text-xs text-gray-400 mt-5 mb-3">
-        <span className="font-bold text-[#1a1a2e]">Your lease:</span> 80 seats, fixed
-      </p>
-      <div className="grid grid-cols-16 gap-1">
-        {Array.from({ length: LEASE }).map((_, i) => (
-          <div
-            key={i}
-            className={`aspect-square rounded-[3px] transition-all duration-300 ${
-              i < team
-                ? "bg-[#d4622b] border border-[#d4622b]"
-                : "border border-dashed border-gray-300"
-            }`}
+      <div className="grid gap-2.5 mb-5">
+        <div className="flex justify-between items-baseline gap-3 flex-wrap">
+          <label htmlFor="team-slider" className="font-bold text-sm text-[#1c1813]">
+            Your team
+          </label>
+          <span className="font-bold text-[#d4622b] text-base sm:text-lg tabular-nums">
+            {teamSize} people
+          </span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setTeamSize((v) => Math.max(20, v - 5))}
+            aria-label="Remove 5 people"
+            className="w-10 h-10 rounded-full border-[1.5px] border-[#d8cdb7] bg-transparent text-[#1c1813] font-bold text-xl flex items-center justify-center cursor-pointer hover:bg-[#d4622b] hover:border-[#d4622b] hover:text-white transition-all active:scale-95 shrink-0"
+          >
+            &minus;
+          </button>
+          <input
+            id="team-slider"
+            type="range"
+            min={20}
+            max={110}
+            step={5}
+            value={teamSize}
+            onChange={(e) => setTeamSize(Number(e.target.value))}
+            className="w-full accent-[#d4622b] h-7 cursor-pointer"
           />
-        ))}
+          <button
+            type="button"
+            onClick={() => setTeamSize((v) => Math.min(110, v + 5))}
+            aria-label="Add 5 people"
+            className="w-10 h-10 rounded-full border-[1.5px] border-[#d8cdb7] bg-transparent text-[#1c1813] font-bold text-xl flex items-center justify-center cursor-pointer hover:bg-[#d4622b] hover:border-[#d4622b] hover:text-white transition-all active:scale-95 shrink-0"
+          >
+            +
+          </button>
+        </div>
       </div>
-      {team > LEASE && (
-        <div className="grid grid-cols-16 gap-1 mt-2">
-          {Array.from({ length: Math.min(30, team - LEASE) }).map((_, i) => (
-            <div key={i} className="aspect-square rounded-[3px] border border-dashed border-[#d4622b] animate-pulse" />
+
+      {/* Grid container */}
+      <div className="relative border-[1.5px] border-dashed border-[#d8cdb7] rounded-[14px] px-3 pt-6 pb-3 mt-1.5 bg-[#fbf8f1]">
+        <b className="absolute -top-2.5 left-3.5 px-2 bg-[#fbf8f1] text-[11px] tracking-[0.14em] uppercase text-[#655d4e]">
+          Your lease: 80 seats
+        </b>
+        <div className="grid grid-cols-16 gap-1 sm:gap-1.5">
+          {Array.from({ length: LEASE_SEATS }).map((_, i) => {
+            const inUse = i < teamSize;
+            return (
+              <span
+                key={i}
+                className={`aspect-square rounded-[3px] transition-all duration-300 ${
+                  inUse
+                    ? "bg-[#d4622b] border border-[#d4622b]"
+                    : "border-[1.5px] border-dashed border-[#a89d86] bg-transparent"
+                }`}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Overflow grid if team > 80 */}
+      {teamSize > LEASE_SEATS && (
+        <div className="grid grid-cols-16 gap-1 sm:gap-1.5 mt-2.5 animate-fadeIn">
+          {Array.from({ length: Math.min(MAX_OVER, teamSize - LEASE_SEATS) }).map((_, i) => (
+            <span
+              key={i}
+              className="aspect-square rounded-[3px] border-[1.5px] border-dashed border-[#d4622b] bg-transparent animate-pulse"
+            />
           ))}
         </div>
       )}
 
-      <div className="flex flex-wrap gap-4 mt-4 text-xs text-gray-400">
-        <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-sm bg-[#d4622b]" />In use</span>
-        <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-sm border border-dashed border-gray-300" />Empty, still paid</span>
-        <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-sm border border-dashed border-[#d4622b]" />Doesn&apos;t fit</span>
+      {/* Legend */}
+      <div className="flex flex-wrap gap-x-5 gap-y-2 mt-3.5 text-xs text-[#655d4e]">
+        <span className="inline-flex items-center gap-2">
+          <i className="w-3.5 h-3.5 rounded-[4px] bg-[#d4622b]" />
+          In use
+        </span>
+        <span className="inline-flex items-center gap-2">
+          <i className="w-3.5 h-3.5 rounded-[4px] border-[1.5px] border-dashed border-[#655d4e]" />
+          Empty, still paid for
+        </span>
+        {teamSize > LEASE_SEATS && (
+          <span className="inline-flex items-center gap-2">
+            <i className="w-3.5 h-3.5 rounded-[4px] border-[1.5px] border-dashed border-[#d4622b]" />
+            Over your lease
+          </span>
+        )}
       </div>
 
-      <div className="grid grid-cols-3 gap-3 mt-5">
-        <div className="border border-gray-200 rounded-xl p-4">
-          <span className="block text-3xl font-bold tabular-nums text-[#1a1a2e]">80</span>
-          <span className="text-xs text-gray-400 mt-1 block">seats on lease</span>
+      {/* Stats summary */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 my-4">
+        <div className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/40">
+          <b className="block text-2xl sm:text-3xl font-black text-[#1c1813] tabular-nums leading-none">
+            80
+          </b>
+          <span className="block mt-2 text-xs text-[#655d4e]">seats on a lease</span>
         </div>
-        <div className="border border-gray-200 rounded-xl p-4">
-          <span className="block text-3xl font-bold text-[#d4622b] tabular-nums">{gap}</span>
-          <span className="text-xs text-gray-400 mt-1 block">{gapLabel}</span>
+        <div className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/40">
+          <b className="block text-2xl sm:text-3xl font-black text-[#d4622b] tabular-nums leading-none">
+            {gapCount}
+          </b>
+          <span className="block mt-2 text-xs text-[#655d4e]">
+            {isUnder ? "empty, still paid for" : "seats short"}
+          </span>
         </div>
-        <div className="border border-gray-200 rounded-xl p-4">
-          <span className="block text-3xl font-bold tabular-nums text-[#1a1a2e]">{team}</span>
-          <span className="text-xs text-gray-400 mt-1 block">billed with Onward</span>
+        <div className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/40">
+          <b className="block text-2xl sm:text-3xl font-black text-[#1c1813] tabular-nums leading-none">
+            {teamSize}
+          </b>
+          <span className="block mt-2 text-xs text-[#655d4e]">seats billed with Onward</span>
         </div>
       </div>
+
+      <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
+        {caption}
+      </p>
     </div>
   );
 }
 
-/* ━━━ PROBLEM STEP VISUAL ━━━ */
-function ProblemVisual({ idx }: { idx: number }) {
-  if (idx === 0) return <SeatGrid />;
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOPIC 2: OPERATIONAL TASKS GAUGE COMPONENT
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function TopicTasksGauge() {
+  const [activeTasksCount, setActiveTasksCount] = useState(8);
 
-  if (idx === 1) {
-    return (
-      <div>
-        <p className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">Work that lands on your team</p>
-        <div className="grid grid-cols-2 gap-2.5">
-          {operationalTasks.map((task, i) => (
-            <motion.div
-              key={task}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.4 }}
-              className="flex items-center gap-3 px-4 py-3 border border-gray-200 rounded-xl font-bold text-sm text-[#1a1a2e] hover:border-[#d4622b] transition-colors"
-            >
-              <span className="w-4 h-4 rounded-full border-2 border-[#d4622b] shrink-0" />
-              {task}
-            </motion.div>
-          ))}
+  const focusPct = Math.round(100 - activeTasksCount * 7.5);
+  const strokeOffset = activeTasksCount * 7.5;
+
+  const caption =
+    activeTasksCount < 3
+      ? "The jobs start landing on your team, one by one."
+      : activeTasksCount < 8
+      ? "More piles up: facility repairs, vendor billing, and compliance renewals."
+      : "Eight side jobs, and none of them is your core business.";
+
+  return (
+    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
+          Extra work for your team (illustrative)
+        </span>
+      </div>
+
+      <div className="flex items-center gap-4 sm:gap-6 mb-4">
+        <div className="relative shrink-0 w-24 h-24 sm:w-28 sm:h-28">
+          <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#d8cdb7" strokeWidth="9" />
+            <circle
+              cx="60"
+              cy="60"
+              r="50"
+              fill="none"
+              stroke="#d4622b"
+              strokeWidth="9"
+              strokeLinecap="round"
+              strokeDasharray="100"
+              strokeDashoffset={strokeOffset}
+              style={{ transition: "stroke-dashoffset 0.7s cubic-bezier(0.34, 1.3, 0.64, 1)" }}
+            />
+          </svg>
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+            <b className="text-xl sm:text-2xl font-black text-[#1c1813] leading-none tabular-nums">
+              {focusPct}%
+            </b>
+            <span className="text-[10px] tracking-[0.1em] uppercase text-[#655d4e] mt-0.5">
+              Focus
+            </span>
+          </div>
         </div>
-        <div className="flex items-baseline gap-4 mt-5 flex-wrap">
-          <span className="text-5xl sm:text-6xl font-bold text-[#d4622b]">8</span>
-          <span className="text-gray-500">side jobs, none of them your business.</span>
+
+        <div>
+          <b className="block text-3xl sm:text-5xl font-black text-[#d4622b] tabular-nums leading-none">
+            {activeTasksCount}
+          </b>
+          <span className="block mt-1.5 text-xs sm:text-sm text-[#655d4e] max-w-[28ch]">
+            side jobs added to your team&apos;s daily agenda
+          </span>
         </div>
       </div>
-    );
-  }
 
-  if (idx === 2) {
-    const steps = [
-      { label: "Approvals", sub: "Landlord sign-offs", cost: "Deposits" },
-      { label: "Contractors", sub: "Quotes, timelines", cost: "Payments" },
-      { label: "Fit-out", sub: "Weeks on site", cost: "Capex" },
-      { label: "Day one", sub: "Team moves in", highlight: true },
-    ];
-    return (
-      <div>
-        <p className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-6">The road to day one</p>
-        <div className="relative">
-          <div className="hidden sm:block absolute left-[12.5%] right-[12.5%] top-2 h-1 bg-gray-200 rounded-full">
-            <motion.div
-              className="h-full bg-[#d4622b] rounded-full"
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 2.5, ease: [0.22, 0.8, 0.2, 1] }}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+        {TASKS_LIST.map((task, idx) => {
+          const isOff = idx >= activeTasksCount;
+          return (
+            <button
+              key={task}
+              type="button"
+              onClick={() => setActiveTasksCount(idx + 1)}
+              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-[12px] border font-bold text-xs sm:text-sm text-left transition-all duration-300 cursor-pointer ${
+                isOff
+                  ? "opacity-20 border-[#d8cdb7] text-[#655d4e] translate-x-2"
+                  : "border-[#d8cdb7] bg-white text-[#1c1813] hover:border-[#d4622b]"
+              }`}
+            >
+              <i className="w-3.5 h-3.5 rounded-full border-2 border-[#d4622b] shrink-0" />
+              <span>{task}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
+        {caption}
+      </p>
+    </div>
+  );
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOPIC 3: ROAD TO DAY ONE STEPPER COMPONENT
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function TopicRoadToDayOne() {
+  const [activeStep, setActiveStep] = useState(3);
+
+  const fillFrac = activeStep < 0 ? 0 : activeStep / 3;
+  const spendWidth = `${fillFrac * 100}%`;
+  const workWidth = activeStep === 3 ? "25%" : "0%";
+
+  return (
+    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
+          The road to day one &middot; tap any step
+        </span>
+      </div>
+
+      <div className="relative grid grid-rows-4 gap-2.5 pl-9 my-1">
+        <div className="absolute left-2 top-7 bottom-7 w-1 bg-[#d8cdb7] rounded-full overflow-hidden">
+          <div
+            className="w-full bg-[#d4622b] transition-all duration-500 origin-top"
+            style={{ height: `${fillFrac * 100}%` }}
+          />
+        </div>
+
+        {ROAD_STEPS.map((step, idx) => {
+          const isOff = idx > activeStep;
+          const isGo = idx === 3 && activeStep === 3;
+          return (
+            <button
+              key={step.title}
+              type="button"
+              onClick={() => setActiveStep(idx)}
+              className={`relative grid grid-cols-[1fr_auto] items-center px-3.5 py-2.5 rounded-[12px] border text-left font-bold text-xs sm:text-sm transition-all duration-300 cursor-pointer ${
+                isGo
+                  ? "bg-[#d4622b] border-[#d4622b] text-white"
+                  : isOff
+                  ? "opacity-35 border-[#d8cdb7] text-[#655d4e] bg-transparent"
+                  : "border-[#d4622b] bg-white text-[#1c1813]"
+              }`}
+            >
+              <div
+                className={`absolute -left-[35px] top-1/2 -mt-2 w-4 h-4 rounded-full transition-colors duration-300 ${
+                  isOff
+                    ? "bg-[#f8f4ea] border-2 border-[#d8cdb7]"
+                    : "bg-[#d4622b] border-2 border-[#d4622b]"
+                }`}
+              />
+              <div>
+                <span>{step.title}</span>
+                <small
+                  className={`block text-[11px] font-normal mt-0.5 ${
+                    isGo ? "text-white/80" : "text-[#655d4e]"
+                  }`}
+                >
+                  {step.sub}
+                </small>
+              </div>
+              {step.cost && (
+                <span
+                  className={`text-[11px] font-bold self-center whitespace-nowrap transition-opacity duration-300 ${
+                    isOff ? "opacity-0" : "text-[#d4622b]"
+                  }`}
+                >
+                  {step.cost}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="grid gap-2.5 my-4">
+        <div className="grid grid-cols-[90px_1fr] sm:grid-cols-[104px_1fr] gap-3 items-center text-xs text-[#655d4e]">
+          <span>Money spent</span>
+          <div className="h-2.5 rounded-full bg-[#d8cdb7] overflow-hidden">
+            <i
+              className="block h-full bg-[#d4622b] rounded-full transition-all duration-500"
+              style={{ width: spendWidth }}
             />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-8">
-            {steps.map((s, i) => (
-              <motion.div
-                key={s.label}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 + i * 0.3, duration: 0.5 }}
-                className={`relative border rounded-xl p-4 text-sm font-bold ${
-                  s.highlight
-                    ? "bg-[#d4622b] border-[#d4622b] text-white"
-                    : "border-gray-200 text-[#1a1a2e]"
-                }`}
-              >
-                <div className="hidden sm:block absolute left-1/2 -top-7 w-4 h-4 -ml-2 rounded-full bg-[#d4622b]" />
-                {s.label}
-                <span className="block font-normal text-xs mt-1 opacity-60">{s.sub}</span>
-                {s.cost && <span className="block text-xs text-[#d4622b] font-bold mt-2">{s.cost}</span>}
-              </motion.div>
-            ))}
+        </div>
+        <div className="grid grid-cols-[90px_1fr] sm:grid-cols-[104px_1fr] gap-3 items-center text-xs text-[#655d4e]">
+          <span>Team working</span>
+          <div className="h-2.5 rounded-full bg-[#d8cdb7] overflow-hidden">
+            <i
+              className="block h-full bg-[#d4622b] rounded-full transition-all duration-500"
+              style={{ width: workWidth, marginLeft: activeStep === 3 ? "75%" : "0%" }}
+            />
           </div>
         </div>
-        <p className="mt-4 text-xs text-gray-400">Everything before day one is spend with nothing to show.</p>
       </div>
-    );
-  }
 
-  const bills = ["Rent", "CAM", "Insurance", "Operating costs", "Maintenance"];
-  return (
-    <div>
-      <p className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-4">What arrives separately</p>
-      <div className="flex flex-wrap gap-2.5">
-        {bills.map((b, i) => (
-          <motion.div
-            key={b}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1, duration: 0.4 }}
-            className="border border-dashed border-gray-300 rounded-xl px-4 py-3 font-bold text-sm text-[#1a1a2e]"
-          >
-            {b}
-            <span className="block font-normal text-xs text-gray-400 mt-0.5">{i < 3 ? "Fixed" : "Variable"}</span>
-          </motion.div>
-        ))}
-      </div>
-      <div className="mt-6">
-        <div className="flex h-4 rounded-full overflow-hidden border border-gray-200">
-          <motion.div
-            className="bg-[#d4622b]"
-            initial={{ width: 0 }}
-            whileInView={{ width: "40%" }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 0.8, 0.2, 1] }}
-          />
-          <div className="flex-1 border-l-2 border-dashed border-gray-300" />
-        </div>
-        <div className="flex mt-2 text-xs text-gray-400 gap-3">
-          <span className="w-[40%] text-[#d4622b]">Needs change here</span>
-          <span>Liability stays until lease ends</span>
-        </div>
-      </div>
+      <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
+        {ROAD_CAPTIONS[activeStep + 1] || ROAD_CAPTIONS[0]}
+      </p>
     </div>
   );
 }
 
-/* ━━━ HUB SECTION ━━━ */
-function ServicesHub() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOPIC 4: SEPARATE BILLS LEDGER COMPONENT
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function TopicSeparateBills() {
+  const [stage, setStage] = useState<"initial" | "change" | "extended">("extended");
+
+  const ledgerRows = [
+    { name: "Rent", variable: false },
+    { name: "CAM", variable: false },
+    { name: "Insurance", variable: false },
+    { name: "Operating costs", variable: true },
+    { name: "Maintenance", variable: true },
+  ];
+
+  const months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
   return (
-    <section className="py-20 sm:py-28 lg:py-36 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <Reveal>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">Everything under one roof</span>
-            <h2 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
-              One partner. Six capabilities.
-            </h2>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
-              Everything a traditional office requires from dozens of vendors, Onward delivers as one.
-            </p>
-          </div>
-        </Reveal>
+    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+      <div className="flex justify-between items-center gap-2 mb-4">
+        <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
+          What arrives separately every month
+        </span>
+      </div>
 
-        <div ref={ref} className="relative mt-16 sm:mt-24">
-          {/* Desktop: radial layout */}
-          <div className="hidden lg:block relative mx-auto" style={{ width: 700, height: 700 }}>
-            {/* Center logo */}
-            <motion.div
-              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 rounded-full bg-[#faf8f5] border-2 border-gray-200 flex items-center justify-center z-10 shadow-lg"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={isInView ? { scale: 1, opacity: 1 } : {}}
-              transition={{ duration: 0.6, ease }}
-            >
-              <Image
-                src="/onward-logo-dark.webp"
-                alt="Onward"
-                width={120}
-                height={30}
-                className="w-22 h-auto object-contain"
-              />
-            </motion.div>
-
-            {/* Connecting lines */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 700 700">
-              {hubServices.map((s, i) => {
-                const rad = (s.angle - 90) * (Math.PI / 180);
-                const x = 350 + 230 * Math.cos(rad);
-                const y = 350 + 230 * Math.sin(rad);
+      <div className="grid gap-2.5 my-1">
+        {ledgerRows.map((row, ri) => (
+          <div
+            key={row.name}
+            className="grid grid-cols-[80px_1fr] sm:grid-cols-[104px_1fr] gap-3 items-center text-xs sm:text-sm font-bold"
+          >
+            <span className="text-[#1c1813]">{row.name}</span>
+            <div className="grid grid-cols-12 justify-items-center items-center min-h-[18px]">
+              {Array.from({ length: 12 }).map((_, c) => {
+                const size = row.variable ? 8 + ((c * 5 + ri * 3) % 7) * 1.3 : 11;
                 return (
-                  <motion.path
-                    key={i}
-                    d={`M350,350 L${x},${y}`}
-                    stroke="#e5e7eb"
-                    strokeWidth="1.5"
-                    strokeDasharray="6 4"
-                    fill="none"
-                    initial={{ pathLength: 0, opacity: 0 }}
-                    animate={isInView ? { pathLength: 1, opacity: 1 } : {}}
-                    transition={{ duration: 0.8, delay: 0.3 + i * 0.1 }}
+                  <i
+                    key={c}
+                    className="rounded-full bg-[#d4622b] block transition-transform duration-300"
+                    style={{ width: `${size}px`, height: `${size}px` }}
                   />
                 );
               })}
-            </svg>
-
-            {/* Service nodes */}
-            {hubServices.map((s, i) => {
-              const rad = (s.angle - 90) * (Math.PI / 180);
-              const x = 350 + 230 * Math.cos(rad);
-              const y = 350 + 230 * Math.sin(rad);
-              return (
-                <motion.div
-                  key={s.label}
-                  className="absolute flex flex-col items-center gap-2 -translate-x-1/2 -translate-y-1/2 group cursor-default"
-                  style={{ left: x, top: y }}
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={isInView ? { scale: 1, opacity: 1 } : {}}
-                  transition={{ duration: 0.5, delay: 0.5 + i * 0.12, ease }}
-                  whileHover={{ scale: 1.1 }}
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-[#faf8f5] border-2 border-gray-200 flex items-center justify-center group-hover:border-[#d4622b] group-hover:bg-white transition-all shadow-sm">
-                    <svg className="w-7 h-7 text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={s.icon} />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-bold text-[#1a1a2e] text-center whitespace-nowrap">{s.label}</span>
-                </motion.div>
-              );
-            })}
+            </div>
           </div>
+        ))}
+        {/* Months labels */}
+        <div className="grid grid-cols-[80px_1fr] sm:grid-cols-[104px_1fr] gap-3 items-center text-xs">
+          <span />
+          <div className="grid grid-cols-12 justify-items-center items-center">
+            {months.map((m, mi) => (
+              <i key={mi} className="not-italic text-[10px] text-[#8a8070] font-normal">
+                {m}
+              </i>
+            ))}
+          </div>
+        </div>
+      </div>
 
-          {/* Mobile/tablet: grid layout */}
-          <div className="lg:hidden">
-            <motion.div
-              className="flex items-center justify-center mb-10"
-              initial={{ scale: 0, opacity: 0 }}
-              animate={isInView ? { scale: 1, opacity: 1 } : {}}
-              transition={{ duration: 0.6, ease }}
-            >
-              <div className="w-28 h-28 rounded-full bg-[#faf8f5] border-2 border-gray-200 flex items-center justify-center shadow-lg">
-                <Image
-                  src="/onward-logo-dark.webp"
-                  alt="Onward"
-                  width={100}
-                  height={25}
-                  className="w-20 h-auto object-contain"
-                />
-              </div>
-            </motion.div>
-            <motion.div
-              className="grid grid-cols-2 sm:grid-cols-3 gap-4"
-              initial="hidden"
-              animate={isInView ? "visible" : "hidden"}
-            >
-              {hubServices.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  variants={scaleIn}
-                  custom={i}
-                  className="flex flex-col items-center gap-3 p-5 rounded-2xl border border-gray-200 bg-[#faf8f5] hover:border-[#d4622b] transition-colors"
+      {/* Term timeline bar */}
+      <div className="mt-5 mb-4">
+        <div className="flex h-4 rounded-full overflow-hidden border border-[#d8cdb7]">
+          <div className="w-[40%] bg-[#d4622b]" />
+          <div
+            className="w-[60%] border-l-2 border-dashed border-[#1c1813]"
+            style={{
+              background:
+                "repeating-linear-gradient(135deg, rgba(212,98,43,0.35) 0 6px, transparent 6px 12px)",
+            }}
+          />
+        </div>
+        <div className="flex justify-between text-xs text-[#655d4e] mt-2 gap-3">
+          <span className="w-[40%] text-[#d4622b] font-bold">Your needs change here</span>
+          <span className="w-[60%] text-right">You still owe the rest of the term</span>
+        </div>
+      </div>
+
+      <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
+        Five separate bills every month, and a financial commitment that locks you in until the lease ends.
+      </p>
+    </div>
+  );
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CAPABILITY WEB SECTION (INTERACTIVE SVG NODE MAP)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+function CapabilityWebSection() {
+  const [activeCap, setActiveCap] = useState(1);
+  const [isLocked, setIsLocked] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Auto advance capability unless user is hovering/interacting
+  useEffect(() => {
+    if (isLocked) return;
+    const interval = setInterval(() => {
+      setActiveCap((prev) => (prev % 6) + 1);
+    }, 3200);
+    return () => clearInterval(interval);
+  }, [isLocked]);
+
+  const currentDetail = CAPABILITY_DETAILS[activeCap - 1] || CAPABILITY_DETAILS[0];
+
+  return (
+    <section
+      id="partner"
+      className="py-20 sm:py-28 lg:py-36 bg-white border-y border-[#e2e2e2]"
+      style={{
+        backgroundImage: "radial-gradient(#e2e2e2 1.2px, transparent 1.2px)",
+        backgroundSize: "22px 22px",
+      }}
+    >
+      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-left mb-10 sm:mb-14">
+          <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-3">
+            One partner
+          </p>
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0b0b0b] tracking-tight leading-none">
+            One partner. Six capabilities.
+          </h2>
+          <p className="mt-4 text-[#585858] text-base sm:text-lg max-w-2xl">
+            Everything a traditional office requires from dozens of separate vendors, Onward delivers as one cohesive solution.
+          </p>
+        </div>
+
+        {/* Desktop Interactive Diagram */}
+        <div
+          ref={containerRef}
+          onMouseEnter={() => setIsLocked(true)}
+          onMouseLeave={() => setIsLocked(false)}
+          className="hidden md:block relative aspect-[1100/680] max-w-[1100px] mx-auto border border-[#e2e2e2] rounded-[24px] bg-white/90 backdrop-blur-sm p-4 shadow-sm overflow-hidden"
+        >
+          <svg
+            viewBox="0 0 1100 680"
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            {/* 3 Overlapping Venn circles */}
+            <circle
+              cx="550"
+              cy="215"
+              r="172"
+              fill={currentDetail.groups.includes("s") ? "rgba(212,98,43,0.06)" : "none"}
+              stroke={currentDetail.groups.includes("s") ? "#d4622b" : "#585858"}
+              strokeOpacity={currentDetail.groups.includes("s") ? 1 : 0.4}
+              strokeWidth={currentDetail.groups.includes("s") ? 2 : 1.4}
+              strokeDasharray={currentDetail.groups.includes("s") ? undefined : "4 4"}
+              className="transition-all duration-500"
+            />
+            <circle
+              cx="435"
+              cy="410"
+              r="172"
+              fill={currentDetail.groups.includes("v") ? "rgba(212,98,43,0.06)" : "none"}
+              stroke={currentDetail.groups.includes("v") ? "#d4622b" : "#585858"}
+              strokeOpacity={currentDetail.groups.includes("v") ? 1 : 0.4}
+              strokeWidth={currentDetail.groups.includes("v") ? 2 : 1.4}
+              strokeDasharray={currentDetail.groups.includes("v") ? undefined : "4 4"}
+              className="transition-all duration-500"
+            />
+            <circle
+              cx="665"
+              cy="410"
+              r="172"
+              fill={currentDetail.groups.includes("d") ? "rgba(212,98,43,0.06)" : "none"}
+              stroke={currentDetail.groups.includes("d") ? "#d4622b" : "#585858"}
+              strokeOpacity={currentDetail.groups.includes("d") ? 1 : 0.4}
+              strokeWidth={currentDetail.groups.includes("d") ? 2 : 1.4}
+              strokeDasharray={currentDetail.groups.includes("d") ? undefined : "4 4"}
+              className="transition-all duration-500"
+            />
+
+            {/* Connecting dashed lead lines to buttons */}
+            <g className="transition-all duration-400">
+              {/* 03 Site management (Top Left) */}
+              <path
+                d="M232,100 H268 L496,138"
+                fill="none"
+                stroke={activeCap === 3 ? "#d4622b" : "#585858"}
+                strokeWidth={activeCap === 3 ? 2 : 1.2}
+                strokeDasharray={activeCap === 3 ? undefined : "4 5"}
+                strokeOpacity={activeCap === 3 ? 1 : 0.35}
+              />
+              <circle cx="496" cy="138" r={activeCap === 3 ? 4.5 : 3.5} fill={activeCap === 3 ? "#d4622b" : "#585858"} />
+
+              {/* 02 Fit-out & furniture (Mid Left) */}
+              <path
+                d="M232,320 H268 L298,478"
+                fill="none"
+                stroke={activeCap === 2 ? "#d4622b" : "#585858"}
+                strokeWidth={activeCap === 2 ? 2 : 1.2}
+                strokeDasharray={activeCap === 2 ? undefined : "4 5"}
+                strokeOpacity={activeCap === 2 ? 1 : 0.35}
+              />
+              <circle cx="298" cy="478" r={activeCap === 2 ? 4.5 : 3.5} fill={activeCap === 2 ? "#d4622b" : "#585858"} />
+
+              {/* 01 Space and address (Bottom Left) */}
+              <path
+                d="M232,545 H268 L298,507"
+                fill="none"
+                stroke={activeCap === 1 ? "#d4622b" : "#585858"}
+                strokeWidth={activeCap === 1 ? 2 : 1.2}
+                strokeDasharray={activeCap === 1 ? undefined : "4 5"}
+                strokeOpacity={activeCap === 1 ? 1 : 0.35}
+              />
+              <circle cx="298" cy="507" r={activeCap === 1 ? 4.5 : 3.5} fill={activeCap === 1 ? "#d4622b" : "#585858"} />
+
+              {/* 05 One point of contact (Top Right) */}
+              <path
+                d="M868,100 H832 L622,108"
+                fill="none"
+                stroke={activeCap === 5 ? "#d4622b" : "#585858"}
+                strokeWidth={activeCap === 5 ? 2 : 1.2}
+                strokeDasharray={activeCap === 5 ? undefined : "4 5"}
+                strokeOpacity={activeCap === 5 ? 1 : 0.35}
+              />
+              <circle cx="622" cy="108" r={activeCap === 5 ? 4.5 : 3.5} fill={activeCap === 5 ? "#d4622b" : "#585858"} />
+
+              {/* 04 Daily office services (Mid Right) */}
+              <path
+                d="M868,320 H832 L603,175"
+                fill="none"
+                stroke={activeCap === 4 ? "#d4622b" : "#585858"}
+                strokeWidth={activeCap === 4 ? 2 : 1.2}
+                strokeDasharray={activeCap === 4 ? undefined : "4 5"}
+                strokeOpacity={activeCap === 4 ? 1 : 0.35}
+              />
+              <circle cx="603" cy="175" r={activeCap === 4 ? 4.5 : 3.5} fill={activeCap === 4 ? "#d4622b" : "#585858"} />
+
+              {/* 06 One cheque (Bottom Right) */}
+              <path
+                d="M868,545 H832 L590,334"
+                fill="none"
+                stroke={activeCap === 6 ? "#d4622b" : "#585858"}
+                strokeWidth={activeCap === 6 ? 2 : 1.2}
+                strokeDasharray={activeCap === 6 ? undefined : "4 5"}
+                strokeOpacity={activeCap === 6 ? 1 : 0.35}
+              />
+              <circle cx="590" cy="334" r={activeCap === 6 ? 4.5 : 3.5} fill={activeCap === 6 ? "#d4622b" : "#585858"} />
+            </g>
+
+            {/* Group Header Labels */}
+            <text x="550" y="84" textAnchor="middle" className="font-bold text-[12px] tracking-[0.18em] fill-[#585858]">
+              STAFF
+            </text>
+            <text x="360" y="442" textAnchor="middle" className="font-bold text-[12px] tracking-[0.18em] fill-[#585858]">
+              VENDORS
+            </text>
+            <text x="740" y="442" textAnchor="middle" className="font-bold text-[12px] tracking-[0.18em] fill-[#585858]">
+              DEVELOPER
+            </text>
+
+            {/* Staff Roles */}
+            <text x="550" y="108" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 5 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Corporate leadership</text>
+            <text x="550" y="127" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 3 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Site manager</text>
+            <text x="550" y="146" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 3 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Floor manager</text>
+            <text x="550" y="165" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 4 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Service staff</text>
+            <text x="550" y="184" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 4 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Office managers</text>
+
+            {/* Vendor Roles */}
+            <text x="360" y="468" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 2 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Furniture retailer</text>
+            <text x="360" y="487" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 2 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Labor contractor</text>
+            <text x="360" y="506" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 1 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Leasing agent</text>
+
+            {/* Developer Roles */}
+            <text x="740" y="468" textAnchor="middle" className={`text-[13px] transition-all duration-300 ${activeCap === 1 ? "fill-[#d4622b] font-bold" : "fill-[#0b0b0b] opacity-40"}`}>Building / property</text>
+
+            {/* Center ONWARD Logo Emblem */}
+            <g transform="translate(530 314) scale(0.156)" fill="#d4622b">
+              <path d="M38 0H220A36 36 0 0 1 256 36V218A37.5 37.5 0 0 1 181 218V112A36 36 0 0 0 145 76H38A38 38 0 0 1 38 0Z" />
+              <circle cx="77" cy="189" r="50" />
+            </g>
+          </svg>
+
+          {/* 6 Capability Interactive Buttons */}
+          {CAPABILITY_DETAILS.map((cap) => {
+            const isActive = activeCap === cap.id;
+            return (
+              <button
+                key={cap.id}
+                type="button"
+                onClick={() => setActiveCap(cap.id)}
+                onMouseEnter={() => setActiveCap(cap.id)}
+                style={{ left: cap.labelPos.left, top: cap.labelPos.top }}
+                className={`absolute w-[20.5%] -translate-y-1/2 flex items-center gap-3 p-3.5 rounded-[12px] text-left transition-all duration-300 cursor-pointer ${
+                  isActive
+                    ? "border-2 border-[#d4622b] bg-[#d4622b]/10 scale-105 shadow-[0_14px_30px_-20px_rgba(212,98,43,0.7)]"
+                    : "border-[1.5px] border-dashed border-[#585858] bg-white hover:border-[#d4622b]"
+                }`}
+              >
+                <i className={`text-xs font-bold tracking-wider not-italic ${isActive ? "text-[#d4622b]" : "text-[#585858]"}`}>
+                  {cap.num}
+                </i>
+                <b className="text-xs lg:text-sm font-bold text-[#0b0b0b] leading-tight">
+                  {cap.title}
+                </b>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Desktop Detail Card */}
+        <div className="hidden md:grid grid-cols-[auto_1fr_auto] gap-5 items-center max-w-[900px] mx-auto mt-4 p-6 border-[1.5px] border-[#e2e2e2] rounded-[20px] bg-white shadow-sm transition-all">
+          <i className="text-4xl font-black text-[#d4622b] not-italic leading-none">
+            {currentDetail.num}
+          </i>
+          <div>
+            <h3 className="text-xl font-bold text-[#0b0b0b] tracking-tight">
+              {currentDetail.title}
+            </h3>
+            <p className="mt-1 text-[#585858] text-sm leading-relaxed max-w-[54ch]">
+              {currentDetail.desc}
+            </p>
+          </div>
+          <div className="flex flex-col gap-1.5 max-w-[240px]">
+            <em className="not-italic text-[10px] font-bold tracking-[0.12em] uppercase text-[#585858]">
+              Replaces
+            </em>
+            <div className="flex flex-wrap gap-1.5">
+              {currentDetail.replaces.map((r) => (
+                <span
+                  key={r}
+                  className="text-xs px-2.5 py-1 rounded-full border border-[#e2e2e2] text-[#585858] line-through decoration-[#d4622b] bg-[#f4f4f4]"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-white border border-gray-200 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#d4622b]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={s.icon} />
-                    </svg>
-                  </div>
-                  <span className="text-xs font-bold text-[#1a1a2e] text-center">{s.label}</span>
-                </motion.div>
+                  {r}
+                </span>
               ))}
-            </motion.div>
+            </div>
           </div>
+        </div>
+
+        {/* Mobile / Tablet Card Fallback */}
+        <div className="md:hidden grid grid-cols-1 gap-3.5 mt-6">
+          {CAPABILITY_DETAILS.map((cap) => (
+            <article
+              key={cap.id}
+              className="p-5 border border-[#e2e2e2] rounded-[16px] bg-white shadow-sm"
+            >
+              <i className="not-italic text-xs font-bold tracking-wider text-[#d4622b] block mb-1">
+                {cap.num}
+              </i>
+              <h3 className="text-lg font-bold text-[#0b0b0b]">{cap.title}</h3>
+              <p className="mt-1.5 text-sm text-[#585858] leading-relaxed">{cap.desc}</p>
+              <div className="mt-3 pt-3 border-t border-[#e2e2e2]">
+                <em className="not-italic text-[10px] font-bold tracking-wider uppercase text-[#585858] block mb-1.5">
+                  Replaces
+                </em>
+                <div className="flex flex-wrap gap-1.5">
+                  {cap.replaces.map((r) => (
+                    <span
+                      key={r}
+                      className="text-xs px-2.5 py-0.5 rounded-full border border-[#e2e2e2] text-[#585858] line-through decoration-[#d4622b] bg-[#f4f4f4]"
+                    >
+                      {r}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-/* ━━━ COMPARE SECTION ━━━ */
-function CompareSection() {
-  const [mode, setMode] = useState<"trad" | "onward">("trad");
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.4 });
-  const [autoSwitched, setAutoSwitched] = useState(false);
-
-  useEffect(() => {
-    if (isInView && !autoSwitched) {
-      const timer = setTimeout(() => {
-        setMode("onward");
-        setAutoSwitched(true);
-      }, 1800);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, autoSwitched]);
-
-  const isOnward = mode === "onward";
-
-  return (
-    <section id="compare" className="py-20 sm:py-28 lg:py-36 bg-[#faf8f5]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8" ref={ref}>
-        <Reveal>
-          <div className="text-center max-w-3xl mx-auto">
-            <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">The answer</span>
-            <h2 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
-              One cheque solution.
-            </h2>
-            <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
-              A traditional office means coordinating dozens of parties. Onward brings all of it under one agreement.
-            </p>
-          </div>
-        </Reveal>
-
-        <motion.div
-          className="flex justify-center mt-10"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="inline-flex border-2 border-[#1a1a2e] rounded-full p-1 gap-1">
-            <motion.button
-              onClick={() => setMode("trad")}
-              className={`px-5 py-3 rounded-full text-sm font-bold transition-all cursor-pointer ${
-                !isOnward ? "bg-[#1a1a2e] text-white" : "text-[#1a1a2e]"
-              }`}
-              whileTap={{ scale: 0.95 }}
-            >
-              Traditional lease
-            </motion.button>
-            <motion.button
-              onClick={() => { setMode("onward"); setAutoSwitched(true); }}
-              className={`px-5 py-3 rounded-full text-sm font-bold transition-all cursor-pointer ${
-                isOnward ? "bg-[#d4622b] text-white" : "text-[#1a1a2e]"
-              }`}
-              whileTap={{ scale: 0.95 }}
-            >
-              With Onward
-            </motion.button>
-          </div>
-        </motion.div>
-
-        {/* KPI flip cards */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-10"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          <motion.div variants={scaleIn} custom={0} className="border-2 border-gray-200 rounded-3xl p-8 sm:p-10 bg-white">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">Parties you coordinate</h3>
-            <div className="relative h-[1.1em] overflow-hidden text-6xl sm:text-8xl font-black mt-4">
-              <motion.span
-                className="absolute left-0 text-[#1a1a2e]"
-                animate={{ y: isOnward ? "-100%" : "0%", opacity: isOnward ? 0 : 1 }}
-                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
-              >
-                50-60
-              </motion.span>
-              <motion.span
-                className="absolute left-0 text-[#d4622b]"
-                animate={{ y: isOnward ? "0%" : "100%", opacity: isOnward ? 1 : 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
-              >
-                1
-              </motion.span>
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={isOnward ? "onward-p" : "trad-p"}
-                className="mt-4 text-sm text-gray-500 min-h-[3em] leading-relaxed"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3 }}
-              >
-                {isOnward
-                  ? "Onward. One agreement and one point of contact."
-                  : "Landlord, vendors and your own site staff, all reporting to you."}
-              </motion.p>
-            </AnimatePresence>
-          </motion.div>
-          <motion.div variants={scaleIn} custom={1} className="border-2 border-gray-200 rounded-3xl p-8 sm:p-10 bg-white">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400">Cheques each month</h3>
-            <div className="relative h-[1.1em] overflow-hidden text-6xl sm:text-8xl font-black mt-4">
-              <motion.span
-                className="absolute left-0 text-[#1a1a2e]"
-                animate={{ y: isOnward ? "-100%" : "0%", opacity: isOnward ? 0 : 1 }}
-                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
-              >
-                5
-              </motion.span>
-              <motion.span
-                className="absolute left-0 text-[#d4622b]"
-                animate={{ y: isOnward ? "0%" : "100%", opacity: isOnward ? 1 : 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 0.8, 0.2, 1] }}
-              >
-                1
-              </motion.span>
-            </div>
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={isOnward ? "onward-c" : "trad-c"}
-                className="mt-4 text-sm text-gray-500 min-h-[3em] leading-relaxed"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.3 }}
-              >
-                {isOnward
-                  ? "One cheque covers everything, on a single all-inclusive monthly invoice."
-                  : "Rent, CAM, insurance, operating costs and fit-out, each billed on its own."}
-              </motion.p>
-            </AnimatePresence>
-          </motion.div>
-        </motion.div>
-
-        {/* Comparison table */}
-        <motion.div
-          className="border-2 border-gray-200 rounded-3xl overflow-hidden mt-5 bg-white"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-        >
-          <div className="hidden sm:grid grid-cols-[140px_1fr_1fr] bg-gray-50/80">
-            <div className="p-5" />
-            <div className="p-5 text-xs font-bold uppercase tracking-wider text-gray-400">Traditional lease</div>
-            <div className="p-5 text-xs font-bold uppercase tracking-wider text-gray-400">With Onward</div>
-          </div>
-          {compareRows.map((row, i) => (
-            <motion.div
-              key={row.label}
-              variants={fadeUp}
-              custom={i}
-              className="grid grid-cols-1 sm:grid-cols-[140px_1fr_1fr] border-t border-gray-200"
-            >
-              <div className="p-5 text-xs font-bold uppercase tracking-wider text-gray-400">{row.label}</div>
-              <div className={`p-5 text-sm transition-all duration-400 ${!isOnward ? "bg-gray-50 font-bold" : "opacity-50"}`}>
-                <span className="sm:hidden font-bold text-gray-400 text-xs">Traditional: </span>{row.trad}
-              </div>
-              <div className={`p-5 text-sm transition-all duration-400 ${isOnward ? "bg-[#d4622b] text-white font-bold" : "opacity-50"}`}>
-                <span className="sm:hidden font-bold text-gray-400 text-xs">Onward: </span>{row.onward}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ━━━ BIG STATS ━━━ */
-function StatsStrip() {
-  return (
-    <section className="py-16 sm:py-20 bg-[#1a1a2e] text-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div
-          className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-        >
-          {[
-            { value: 14, suffix: "+", label: "Centres across Delhi NCR" },
-            { value: 5000, suffix: "+", label: "Seats under management" },
-            { value: 200, suffix: "+", label: "Enterprise clients served" },
-            { value: 98, suffix: "%", label: "Client retention rate" },
-          ].map((stat, i) => (
-            <motion.div key={stat.label} variants={fadeUp} custom={i} className="text-center">
-              <span className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#d4622b]">
-                <CountUp target={stat.value} suffix={stat.suffix} duration={1.5} />
-              </span>
-              <p className="mt-2 text-sm text-white/60 font-medium">{stat.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ━━━ PAGE ━━━ */
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MAIN ENTERPRISE PAGE COMPONENT
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 export default function EnterprisePage() {
-  const heroRef = useRef<HTMLElement>(null);
-  const { scrollYProgress: heroScroll } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const heroImgY = useTransform(heroScroll, [0, 1], ["0%", "20%"]);
-  const heroImgScale = useTransform(heroScroll, [0, 1], [1, 1.1]);
+  const [activeTab, setActiveTab] = useState<number>(0);
+  const [compareMode, setCompareMode] = useState<"trad" | "onward">("trad");
+  const [hoveredBenefit, setHoveredBenefit] = useState<number | null>(null);
+
+  // Copy helper with feedback
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const handleCopy = useCallback((text: string, key: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey(null), 1800);
+    });
+  }, []);
+
+  const selectedBenefit = hoveredBenefit
+    ? BENEFITS_DATA.find((b) => b.id === hoveredBenefit)
+    : null;
 
   return (
     <>
       <Header alwaysSolid />
 
-      <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e] pt-20">
-        {/* ━━━ HERO BANNER ━━━ */}
-        <section ref={heroRef} className="relative min-h-[420px] sm:min-h-[480px] lg:min-h-[560px] flex items-center py-16 sm:py-20 lg:py-24 overflow-hidden">
-          <motion.div className="absolute inset-0" style={{ y: heroImgY, scale: heroImgScale }}>
-            <Image
-              src="/images/redesigned/about-us/crafting-workspaces-1st-section/1.webp"
-              alt="Onward Enterprise workspace"
-              fill
-              priority
-              className="object-cover object-[center_30%]"
-            />
-          </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
-
-          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
-            <motion.nav
-              aria-label="Breadcrumb"
-              className="mb-4"
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider flex-wrap">
-                <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
-                <li>/</li>
-                <li className="text-white font-semibold">Enterprise</li>
-              </ol>
-            </motion.nav>
-
-            <motion.h1
-              className="text-3xl sm:text-5xl lg:text-7xl font-black text-white tracking-tight leading-[1.05] max-w-4xl"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 0.8, 0.2, 1] }}
-            >
+      <main className="bg-white text-[#0b0b0b] pt-20">
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            1. HERO SECTION
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section className="py-16 sm:py-24 lg:py-28 bg-white border-b border-[#e2e2e2]">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-4">
+              Onward for Enterprise
+            </p>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0b0b0b] tracking-tight leading-[1.05] max-w-[18ch]">
               Run your business.{" "}
-              <span className="text-[#d4622b]">We run the office.</span>
-            </motion.h1>
-            <motion.p
-              className="mt-5 text-white/80 text-base sm:text-lg lg:text-xl leading-relaxed max-w-2xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
+              <em className="not-italic text-[#d4622b]">We run the office.</em>
+            </h1>
+            <p className="mt-6 text-[#585858] text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-2xl">
               Fully managed offices for growing companies across Delhi NCR. One agreement, one cheque, built around your team.
-            </motion.p>
-
-            <motion.div
-              className="flex flex-wrap gap-3 mt-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <button
-                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-7 py-4 rounded-full transition-colors cursor-pointer shadow-md"
+            </p>
+            <div className="flex flex-wrap gap-3 mt-8">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-[#d4622b] text-white hover:bg-[#b8531f] transition-all shadow-md cursor-pointer hover:-translate-y-0.5"
               >
-                Get in touch <span>&rarr;</span>
-              </button>
+                Get in touch
+              </a>
               <a
                 href="#compare"
-                className="inline-flex items-center gap-2 border-2 border-white/40 text-white hover:border-white text-sm font-bold px-7 py-4 rounded-full transition-colors"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm border-[1.5px] border-[#0b0b0b] text-[#0b0b0b] hover:border-[#d4622b] hover:text-[#d4622b] transition-all cursor-pointer hover:-translate-y-0.5"
               >
                 See how it compares
               </a>
-            </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* ━━━ GLANCE STRIP ━━━ */}
-        <section className="bg-white border-b border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10 sm:py-12">
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-4 gap-6 sm:gap-8 items-center"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <motion.div className="text-center sm:text-left" variants={fadeUp} custom={0}>
-                <span className="text-5xl sm:text-6xl font-black text-[#d4622b] tracking-tight leading-none">
-                  <CountUp target={14} duration={1.2} />
-                </span>
-                <p className="mt-1 text-gray-500 text-sm">centres across Delhi NCR</p>
-              </motion.div>
-              {["Tailor-made fit-outs, delivered by us", "Flexible terms that scale with your team", "One cheque, one all-inclusive invoice"].map((item, i) => (
-                <motion.div key={item} variants={fadeUp} custom={i + 1} className="relative pl-5 py-2 border-l-2 border-[#d4622b] text-sm font-bold text-[#1a1a2e]">
-                  {item}
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-
-        {/* ━━━ THE PROBLEM — Numbered vertical steps ━━━ */}
-        <section id="problems" className="py-20 sm:py-28 lg:py-36 bg-gradient-to-b from-white via-[#fff9f5] to-[#faf8f5]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <Reveal>
-              <div className="text-center max-w-3xl mx-auto mb-16 sm:mb-24">
-                <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">The problem</span>
-                <h2 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
-                  Why traditional offices hold enterprises back
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            2. THE PROBLEM (BEIGE / DARK THEME EXPLORER)
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section id="problems" className="py-20 sm:py-28 lg:py-36 bg-[#efe8da] text-[#1c1813] border-b border-[#d8cdb7]">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 sm:mb-16">
+              <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#c93a10] mb-3">
+                The problem
+              </p>
+              {/* Corner bracket framed headline */}
+              <div className="relative inline-block py-6 pr-6 sm:py-8 sm:pr-10">
+                <i className="absolute left-0 top-0 w-3.5 h-3.5 border-t-[1.5px] border-l-[1.5px] border-[#9b917d]" />
+                <i className="absolute right-0 top-0 w-3.5 h-3.5 border-t-[1.5px] border-r-[1.5px] border-[#9b917d]" />
+                <i className="absolute left-0 bottom-0 w-3.5 h-3.5 border-b-[1.5px] border-l-[1.5px] border-[#9b917d]" />
+                <i className="absolute right-0 bottom-0 w-3.5 h-3.5 border-b-[1.5px] border-r-[1.5px] border-[#9b917d]" />
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#1c1813] tracking-tight leading-tight">
+                  <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#1c1813] mr-3 align-middle animate-pulse" />
+                  Weeks of setup. <em className="not-italic text-[#d4622b]">Years of lock-in.</em>
                 </h2>
-                <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
-                  Four things a conventional corporate lease asks of you.
+              </div>
+              <p className="mt-4 text-[#655d4e] text-base sm:text-xl max-w-2xl">
+                Here is what goes wrong when a company leases, builds, and runs its own office.
+              </p>
+            </div>
+
+            {/* Two column interactive pin rail */}
+            <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-8 lg:gap-14 items-start">
+              {/* Sticky Rail Navigator */}
+              <nav aria-label="Problems navigation" className="sticky top-24 hidden lg:grid pl-4 border-l-[1.5px] border-dashed border-[#d8cdb7]">
+                {[
+                  { id: 0, num: "01", label: "Rigid commitments" },
+                  { id: 1, num: "02", label: "Operational burden" },
+                  { id: 2, num: "03", label: "Heavy upfront capital" },
+                  { id: 3, num: "04", label: "Ongoing financial risk" },
+                ].map((item) => {
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setActiveTab(item.id)}
+                      className={`relative text-left py-4 border-b border-[#d8cdb7] font-bold text-base transition-colors duration-300 cursor-pointer ${
+                        isActive ? "text-[#c93a10]" : "text-[#655d4e] hover:text-[#1c1813]"
+                      }`}
+                    >
+                      <small className="block text-[11px] tracking-[0.14em] uppercase text-[#655d4e] mb-0.5">
+                        {item.num}
+                      </small>
+                      {item.label}
+                      {isActive && (
+                        <span className="absolute left-0 bottom-[-1px] w-full h-[2px] bg-[#d4622b]" />
+                      )}
+                    </button>
+                  );
+                })}
+              </nav>
+
+              {/* Mobile Tabs */}
+              <div className="flex lg:hidden overflow-x-auto gap-2 pb-2">
+                {["01 Commitments", "02 Burden", "03 Capital", "04 Risk"].map((label, idx) => (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => setActiveTab(idx)}
+                    className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+                      activeTab === idx
+                        ? "bg-[#d4622b] text-white"
+                        : "bg-white/60 text-[#1c1813] border border-[#d8cdb7]"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Topic Visual & Details */}
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_1.35fr] gap-8 items-center">
+                {/* Text explanation */}
+                <div>
+                  <span className="inline-block px-3 py-1 rounded-full bg-[#c93a10]/10 text-[#c93a10] text-xs font-bold tracking-wider mb-4">
+                    {`0${activeTab + 1}`}
+                  </span>
+                  {activeTab === 0 && (
+                    <>
+                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                        You sign for years. Your team changes every few months.
+                      </h3>
+                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                        A lease fixes how many seats you pay for. Hire more people and you run out of room. Lose a few and you keep paying for empty desks.
+                      </p>
+                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                        The traditional lease cannot shrink or grow with you.
+                      </p>
+                    </>
+                  )}
+                  {activeTab === 1 && (
+                    <>
+                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                        Your own team ends up running the office.
+                      </h3>
+                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                        Someone has to chase vendors, fix repairs, order furniture and renew licences. That someone is usually your staff, who have real work to do.
+                      </p>
+                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                        Time spent on the office is time not spent on the business.
+                      </p>
+                    </>
+                  )}
+                  {activeTab === 2 && (
+                    <>
+                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                        You pay a lot before anyone sits down.
+                      </h3>
+                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                        You get approvals, hire contractors and build the interiors first. All of it costs money, and your team cannot work there until it is done.
+                      </p>
+                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                        Big spend now, nothing to use until day one.
+                      </p>
+                    </>
+                  )}
+                  {activeTab === 3 && (
+                    <>
+                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                        Many bills, and you owe all of them.
+                      </h3>
+                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                        Rent, maintenance charges, insurance and running costs arrive separately, every month. If your plans change, the lease still binds you.
+                      </p>
+                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                        You carry the entire financial risk until the lease ends.
+                      </p>
+                    </>
+                  )}
+                </div>
+
+                {/* Interactive Visual Cards */}
+                <div>
+                  {activeTab === 0 && <TopicSeatGrid />}
+                  {activeTab === 1 && <TopicTasksGauge />}
+                  {activeTab === 2 && <TopicRoadToDayOne />}
+                  {activeTab === 3 && <TopicSeparateBills />}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            3. COMPARE SECTION (TRADITIONAL VS ONWARD)
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section id="compare" className="py-20 sm:py-28 lg:py-36 bg-white border-b border-[#e2e2e2]">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-left mb-10">
+              <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-3">
+                The answer
+              </p>
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0b0b0b] tracking-tight leading-tight">
+                One cheque solution.
+              </h2>
+              <p className="mt-4 text-[#585858] text-base sm:text-lg max-w-3xl leading-relaxed">
+                One contract. One invoice. A traditional office means coordinating the landlord, a leasing agent, contractors, furniture suppliers and facility teams. Onward brings all of it under one agreement.
+              </p>
+
+              {/* Mode Toggle Switch */}
+              <div className="inline-flex border-[1.5px] border-[#0b0b0b] rounded-full p-1 gap-1 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setCompareMode("trad")}
+                  className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                    compareMode === "trad" ? "bg-[#0b0b0b] text-white" : "text-[#0b0b0b]"
+                  }`}
+                >
+                  Traditional lease
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCompareMode("onward")}
+                  className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                    compareMode === "onward" ? "bg-[#d4622b] text-white" : "text-[#0b0b0b]"
+                  }`}
+                >
+                  With Onward
+                </button>
+              </div>
+            </div>
+
+            {/* KPI Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+              <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] p-6 sm:p-8 bg-[#faf9f5]">
+                <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[#585858]">
+                  Parties you coordinate
+                </h3>
+                <div className="text-5xl sm:text-7xl font-black text-[#0b0b0b] my-3 leading-none">
+                  {compareMode === "trad" ? (
+                    <span className="text-[#0b0b0b] animate-fadeIn">50-60</span>
+                  ) : (
+                    <span className="text-[#d4622b] animate-fadeIn">1</span>
+                  )}
+                </div>
+                <p className="text-sm text-[#585858] min-h-[2.8em]">
+                  {compareMode === "trad"
+                    ? "Landlord, vendors, maintenance contractors and your own site staff, all reporting to you."
+                    : "Onward. One agreement, one dedicated team, and one single point of contact."}
                 </p>
               </div>
-            </Reveal>
 
-            <div className="space-y-20 sm:space-y-32">
-              {problems.map((p, idx) => (
-                <motion.div
-                  key={p.id}
-                  className={`grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start ${
-                    idx % 2 === 1 ? "lg:direction-rtl" : ""
+              <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] p-6 sm:p-8 bg-[#faf9f5]">
+                <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[#585858]">
+                  Cheques you write each month
+                </h3>
+                <div className="text-5xl sm:text-7xl font-black text-[#0b0b0b] my-3 leading-none">
+                  {compareMode === "trad" ? (
+                    <span className="text-[#0b0b0b] animate-fadeIn">5</span>
+                  ) : (
+                    <span className="text-[#d4622b] animate-fadeIn">1</span>
+                  )}
+                </div>
+                <p className="text-sm text-[#585858] min-h-[2.8em]">
+                  {compareMode === "trad"
+                    ? "Rent, CAM, insurance, operating costs and fit-out, each billed on its own schedule."
+                    : "One cheque covers everything, delivered on a single all-inclusive monthly invoice."}
+                </p>
+              </div>
+            </div>
+
+            {/* Bills Consolidation Visual Strip */}
+            <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] p-6 sm:p-8 mt-4 bg-white">
+              <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[#585858] mb-4">
+                Bills each month
+              </h3>
+              <div className="relative min-h-[84px] flex items-center justify-center">
+                {compareMode === "trad" ? (
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 w-full animate-fadeIn">
+                    {["Rent", "CAM", "Insurance", "Operating costs", "Fit-out"].map((item) => (
+                      <div
+                        key={item}
+                        className="border-[1.5px] border-dashed border-[#585858] rounded-[12px] p-3 text-center"
+                      >
+                        <b className="block text-sm font-bold text-[#0b0b0b]">{item}</b>
+                        <small className="block text-[11px] text-[#585858] mt-0.5">separate bill</small>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-[#d4622b] text-white rounded-[14px] px-8 py-4 font-bold text-center animate-scaleIn shadow-lg">
+                    <b className="text-lg block">One cheque</b>
+                    <small className="block text-xs font-normal text-white/90 mt-0.5">
+                      rent, CAM, insurance, operating costs & fit-out included
+                    </small>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Comparison Table */}
+            <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] overflow-hidden mt-4">
+              <div className="hidden sm:grid grid-cols-[140px_1fr_1fr] bg-[#f4f4f4] border-b border-[#e2e2e2]">
+                <div className="p-4" />
+                <div className="p-4 text-xs font-bold uppercase tracking-wider text-[#585858]">
+                  Traditional lease
+                </div>
+                <div className="p-4 text-xs font-bold uppercase tracking-wider text-[#585858]">
+                  With Onward
+                </div>
+              </div>
+
+              {[
+                {
+                  key: "Term",
+                  trad: "Multi-year lock-in with rigid penalties",
+                  onward: "Flexible terms that scale seamlessly with your team",
+                },
+                {
+                  key: "Operations",
+                  trad: "You manage vendors, housekeeping, IT & facilities",
+                  onward: "Our hospitality-trained on-site team runs operations",
+                },
+                {
+                  key: "Setup",
+                  trad: "Your upfront capital, contractors & construction risk",
+                  onward: "Tailor-made fit-out delivered and managed by Onward",
+                },
+                {
+                  key: "Billing",
+                  trad: "Rent, CAM, insurance and utilities billed separately",
+                  onward: "One cheque: one all-inclusive monthly invoice",
+                },
+              ].map((row, i) => (
+                <div
+                  key={row.key}
+                  className={`grid grid-cols-1 sm:grid-cols-[140px_1fr_1fr] border-t border-[#e2e2e2] ${
+                    i === 0 ? "border-t-0" : ""
                   }`}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.7, ease }}
                 >
-                  {/* Text side */}
-                  <div className={idx % 2 === 1 ? "lg:order-2" : ""}>
-                    <span className="text-[#d4622b] text-xs font-bold tracking-widest uppercase">{p.step}</span>
-                    <h3 className="mt-3 text-2xl sm:text-4xl lg:text-5xl font-black text-[#1a1a2e] tracking-tight leading-tight">
-                      {p.headline}
-                    </h3>
-                    <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed max-w-lg">
-                      {p.desc}
-                    </p>
+                  <div className="p-4 font-bold text-xs uppercase tracking-wider text-[#585858] bg-[#faf9f5] sm:bg-transparent">
+                    {row.key}
                   </div>
-
-                  {/* Visual side */}
-                  <div className={`bg-white border border-gray-200 rounded-3xl p-6 sm:p-8 ${idx % 2 === 1 ? "lg:order-1" : ""}`}>
-                    <ProblemVisual idx={idx} />
+                  <div
+                    className={`p-4 text-sm transition-all duration-300 ${
+                      compareMode === "trad" ? "bg-[#f4f4f4] font-bold text-[#0b0b0b]" : "opacity-40 text-[#585858]"
+                    }`}
+                  >
+                    <span className="sm:hidden font-bold text-[#585858] text-xs">Traditional: </span>
+                    {row.trad}
                   </div>
-                </motion.div>
+                  <div
+                    className={`p-4 text-sm transition-all duration-300 ${
+                      compareMode === "onward"
+                        ? "bg-[#d4622b] text-white font-bold"
+                        : "opacity-40 text-[#585858]"
+                    }`}
+                  >
+                    <span className="sm:hidden font-bold text-[#585858] text-xs">Onward: </span>
+                    {row.onward}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ━━━ HUB — Onward logo centre, services radial ━━━ */}
-        <ServicesHub />
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            4. CAPABILITY WEB SECTION
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <CapabilityWebSection />
 
-        {/* ━━━ BIG STATS ━━━ */}
-        <StatsStrip />
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            5. BENEFITS GRID SECTION
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section id="benefits" className="py-20 sm:py-28 lg:py-36 bg-[#f4f4f4] border-b border-[#e2e2e2]">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-left mb-10">
+              <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-3">
+                The payoff
+              </p>
+              <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-[#0b0b0b] tracking-tight leading-tight">
+                What changes for your enterprise with Onward
+              </h2>
+              <p className="mt-4 text-[#585858] text-base sm:text-lg max-w-2xl leading-relaxed">
+                Six tangible advantages when your office becomes one agreement and one cheque.
+              </p>
+            </div>
 
-        {/* ━━━ COMPARE ━━━ */}
-        <CompareSection />
-
-        {/* ━━━ BENEFITS ━━━ */}
-        <section id="benefits" className="py-20 sm:py-28 lg:py-36 bg-white">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
-            <Reveal>
-              <div className="text-center max-w-3xl mx-auto">
-                <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">The payoff</span>
-                <h2 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
-                  What changes with Onward
-                </h2>
-                <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
-                  Six things that change when your office becomes one agreement and one cheque.
-                </p>
-              </div>
-            </Reveal>
-
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-14 sm:mt-20"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.15 }}
-            >
-              {benefits.map((b, i) => (
-                <motion.div
-                  key={b.title}
-                  variants={scaleIn}
-                  custom={i}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className="bg-[#faf8f5] border border-gray-200 rounded-3xl p-7 flex flex-col gap-4 hover:border-[#d4622b]/40 transition-colors duration-300 h-full group"
-                >
-                  <motion.span
-                    className="text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors"
-                    whileHover={{ rotate: [0, -10, 10, -5, 0], transition: { duration: 0.5 } }}
+            {/* 6 Icons Grid */}
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3.5">
+              {BENEFITS_DATA.map((ben) => {
+                const isSelected = hoveredBenefit === ben.id;
+                return (
+                  <button
+                    key={ben.id}
+                    type="button"
+                    onMouseEnter={() => setHoveredBenefit(ben.id)}
+                    onFocus={() => setHoveredBenefit(ben.id)}
+                    onClick={() => setHoveredBenefit(ben.id)}
+                    className={`aspect-square flex items-center justify-center p-3 rounded-[20px] border-[1.5px] transition-all duration-300 cursor-pointer ${
+                      isSelected
+                        ? "border-[#d4622b] bg-[#d4622b] text-white -translate-y-1.5 shadow-lg"
+                        : "border-[#e2e2e2] bg-white text-[#0b0b0b] hover:border-[#d4622b]"
+                    }`}
                   >
-                    {b.icon}
-                  </motion.span>
-                  <h3 className="text-xl font-bold text-[#1a1a2e] tracking-tight">{b.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{b.desc}</p>
-                </motion.div>
-              ))}
-            </motion.div>
+                    <span className="w-10 h-10 sm:w-12 sm:h-12 block">
+                      {ben.icon}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Detail Dynamic Panel */}
+            <div className="mt-6 min-h-[118px] flex items-center p-6 sm:p-8 border-[1.5px] border-[#e2e2e2] rounded-[20px] bg-white shadow-sm transition-all">
+              {selectedBenefit ? (
+                <div className="animate-fadeIn">
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#0b0b0b] tracking-tight">
+                    {selectedBenefit.title}
+                  </h3>
+                  <p className="mt-1.5 text-[#585858] text-sm sm:text-base leading-relaxed max-w-3xl">
+                    {selectedBenefit.desc}
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-[#585858] text-sm sm:text-base">
+                    Hover or tap any icon above to see what changes for your organization.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </section>
 
-        {/* ━━━ CONTACT ━━━ */}
-        <section id="contact" className="relative py-20 sm:py-28 lg:py-36 bg-gradient-to-tl from-[#f5ddd0] via-[#fff7f2] to-white text-[#1a1a2e] overflow-hidden">
-          <motion.div
-            className="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[1.1fr_.9fr] gap-10 lg:gap-16 items-end"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <div>
-              <motion.div variants={fadeUp} custom={0}>
-                <span className="text-[#d4622b] text-xs sm:text-sm font-bold tracking-widest uppercase">Enterprise enquiries</span>
-                <h2 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-black text-[#1a1a2e] tracking-tight">
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            6. ENTERPRISE ENQUIRIES / CONTACT SECTION
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <section id="contact" className="py-20 sm:py-28 lg:py-36 bg-[#0b0b0b] text-white">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-end">
+              <div>
+                <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-4">
+                  Enterprise enquiries
+                </p>
+                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
                   Get in touch.
                 </h2>
-                <p className="mt-4 text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl">
-                  Tell us your team size and preferred location. We will match you to the right workspace within 24 hours.
+                <p className="mt-5 text-[#a9a9a9] text-base sm:text-lg leading-relaxed max-w-xl">
+                  Tell us your team size and preferred location. We will match you to the right managed enterprise workspace within 24 hours.
                 </p>
-              </motion.div>
-              <motion.div variants={fadeUp} custom={1} className="flex flex-wrap gap-3 mt-8">
-                <motion.a
-                  href="mailto:info@onwardworkspaces.com?subject=Enterprise%20enquiry"
-                  className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-7 py-4 rounded-full transition-colors shadow-md"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  Email us
-                </motion.a>
-                <motion.a
-                  href="tel:+919910668152"
-                  className="inline-flex items-center gap-2 border-2 border-[#1a1a2e] text-[#1a1a2e] hover:border-[#d4622b] hover:text-[#d4622b] text-sm font-bold px-7 py-4 rounded-full transition-colors"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  Call us
-                </motion.a>
-              </motion.div>
-            </div>
+                <div className="flex flex-wrap gap-3 mt-8">
+                  <a
+                    href="mailto:info@onwardworkspaces.com?subject=Enterprise%20enquiry"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-[#d4622b] text-white hover:bg-[#b8531f] transition-all shadow-md cursor-pointer hover:-translate-y-0.5"
+                  >
+                    Email us
+                  </a>
+                  <a
+                    href="tel:+919910668152"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm border-[1.5px] border-[#2c2c2c] text-white hover:border-[#d4622b] hover:text-[#d4622b] transition-all cursor-pointer hover:-translate-y-0.5"
+                  >
+                    Call us
+                  </a>
+                </div>
+              </div>
 
-            <motion.div variants={fadeUp} custom={2} className="space-y-3">
-              <motion.div
-                className="flex flex-wrap items-center justify-between gap-3 border border-gray-200 rounded-2xl px-6 py-5 bg-white/60"
-                whileHover={{ x: 4, borderColor: "#d4622b", transition: { duration: 0.2 } }}
-              >
-                <div>
-                  <span className="block text-xs font-bold uppercase tracking-wider text-gray-400">Email</span>
-                  <span className="block text-lg font-bold text-[#1a1a2e] break-all">info@onwardworkspaces.com</span>
+              {/* Reach quick contact copy cards */}
+              <div className="grid gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[14px] p-4 sm:p-5 bg-[#171717]">
+                  <div>
+                    <small className="block text-[#a9a9a9] text-[11px] tracking-[0.12em] uppercase font-bold">
+                      Email
+                    </small>
+                    <b className="text-base sm:text-lg text-white font-bold break-all">
+                      info@onwardworkspaces.com
+                    </b>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy("info@onwardworkspaces.com", "email")}
+                    className="px-4 py-2 rounded-full border-[1.5px] border-[#2c2c2c] text-white text-xs font-bold hover:border-[#d4622b] transition-colors cursor-pointer shrink-0"
+                  >
+                    {copiedKey === "email" ? "Copied" : "Copy"}
+                  </button>
                 </div>
-              </motion.div>
-              <motion.div
-                className="flex flex-wrap items-center justify-between gap-3 border border-gray-200 rounded-2xl px-6 py-5 bg-white/60"
-                whileHover={{ x: 4, borderColor: "#d4622b", transition: { duration: 0.2 } }}
-              >
-                <div>
-                  <span className="block text-xs font-bold uppercase tracking-wider text-gray-400">Phone</span>
-                  <span className="block text-lg font-bold text-[#1a1a2e]">+91 99106 68152</span>
+
+                <div className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[14px] p-4 sm:p-5 bg-[#171717]">
+                  <div>
+                    <small className="block text-[#a9a9a9] text-[11px] tracking-[0.12em] uppercase font-bold">
+                      Phone
+                    </small>
+                    <b className="text-base sm:text-lg text-white font-bold">
+                      +91 99106 68152
+                    </b>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy("+91 99106 68152", "phone")}
+                    className="px-4 py-2 rounded-full border-[1.5px] border-[#2c2c2c] text-white text-xs font-bold hover:border-[#d4622b] transition-colors cursor-pointer shrink-0"
+                  >
+                    {copiedKey === "phone" ? "Copied" : "Copy"}
+                  </button>
                 </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+              </div>
+            </div>
+          </div>
         </section>
       </main>
 
