@@ -18,7 +18,7 @@ const CAPABILITY_DETAILS = [
     desc: "Offices at prime business addresses across Delhi NCR, on one agreement. No leasing agent and no separate dealings with property owners.",
     replaces: ["Leasing agent", "Building / property"],
     groups: ["v", "d"],
-    labelPos: { left: "0.00%", top: "80.15%" },
+    labelPos: { left: "2.2%", top: "80.15%" },
     side: "l",
   },
   {
@@ -28,7 +28,7 @@ const CAPABILITY_DETAILS = [
     desc: "Tailor-made fit-outs and ready-to-use floors, custom-built and fully furnished to match your brand and team workflow.",
     replaces: ["Furniture retailer", "Labor contractor"],
     groups: ["v"],
-    labelPos: { left: "0.00%", top: "47.06%" },
+    labelPos: { left: "2.2%", top: "47.06%" },
     side: "l",
   },
   {
@@ -38,7 +38,7 @@ const CAPABILITY_DETAILS = [
     desc: "Our dedicated on-site community and operations team runs the floor seamlessly, eliminating internal management overhead.",
     replaces: ["Site manager", "Floor manager"],
     groups: ["s"],
-    labelPos: { left: "0.00%", top: "14.71%" },
+    labelPos: { left: "2.2%", top: "14.71%" },
     side: "l",
   },
   {
@@ -48,7 +48,7 @@ const CAPABILITY_DETAILS = [
     desc: "Housekeeping, high-speed enterprise IT, utilities, facility upkeep, and administrative concierge support are completely handled.",
     replaces: ["Service staff", "Office managers"],
     groups: ["s"],
-    labelPos: { left: "79.10%", top: "47.06%" },
+    labelPos: { left: "78.8%", top: "47.06%" },
     side: "r",
   },
   {
@@ -58,7 +58,7 @@ const CAPABILITY_DETAILS = [
     desc: "Your leadership works with a single strategic partner instead of coordinating and negotiating with dozens of disparate vendors.",
     replaces: ["Vendor coordinators", "Procurement overhead"],
     groups: ["s"],
-    labelPos: { left: "79.10%", top: "14.71%" },
+    labelPos: { left: "78.8%", top: "14.71%" },
     side: "r",
   },
   {
@@ -68,7 +68,7 @@ const CAPABILITY_DETAILS = [
     desc: "Rent, CAM, electricity, internet, security, and facility operations arrive in a single unified, predictable monthly invoice.",
     replaces: ["Separate bills from every party"],
     groups: ["s", "v", "d"],
-    labelPos: { left: "79.10%", top: "80.15%" },
+    labelPos: { left: "78.8%", top: "80.15%" },
     side: "r",
   },
 ];
@@ -690,7 +690,7 @@ function CapabilityWebSection() {
           style={{ scale: webScale }}
           onMouseEnter={() => setIsLocked(true)}
           onMouseLeave={() => setIsLocked(false)}
-          className="hidden md:block relative aspect-[1100/680] max-w-[1100px] mx-auto border border-[#e2e2e2] rounded-[28px] bg-white/95 backdrop-blur-md p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.08)] overflow-hidden"
+          className="hidden md:block relative aspect-[1100/680] max-w-[1100px] mx-auto border border-[#e2e2e2] rounded-[28px] bg-white/95 backdrop-blur-md p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.08)]"
         >
           <svg
             viewBox="0 0 1100 680"
@@ -853,19 +853,19 @@ function CapabilityWebSection() {
             return (
               <motion.button
                 key={cap.id}
-                whileHover={{ scale: 1.08 }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.96 }}
                 type="button"
                 onClick={() => setActiveCap(cap.id)}
                 onMouseEnter={() => setActiveCap(cap.id)}
                 style={{ left: cap.labelPos.left, top: cap.labelPos.top }}
-                className={`absolute w-[20.5%] -translate-y-1/2 flex items-center gap-3 p-3.5 rounded-[16px] text-left transition-all duration-300 cursor-pointer ${
+                className={`absolute w-[19%] -translate-y-1/2 flex items-center gap-2.5 sm:gap-3 p-3 sm:p-3.5 rounded-[16px] text-left transition-all duration-300 cursor-pointer ${
                   isActive
                     ? "border-2 border-[#d4622b] bg-[#d4622b]/10 scale-105 shadow-[0_14px_30px_-15px_rgba(212,98,43,0.7)]"
                     : "border-[1.5px] border-dashed border-[#585858] bg-white hover:border-[#d4622b]"
                 }`}
               >
-                <i className={`text-xs font-bold tracking-wider not-italic ${isActive ? "text-[#d4622b]" : "text-[#585858]"}`}>
+                <i className={`text-xs font-bold tracking-wider not-italic shrink-0 ${isActive ? "text-[#d4622b]" : "text-[#585858]"}`}>
                   {cap.num}
                 </i>
                 <b className="text-xs lg:text-sm font-bold text-[#0b0b0b] leading-tight">
