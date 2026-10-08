@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ContactSection from "@/components/ContactSection";
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    DATA DEFINITIONS (MATCHING ONWARD ENTERPRISE COPY)
@@ -1586,100 +1587,13 @@ export default function EnterprisePage() {
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            6. ENTERPRISE ENQUIRIES: GET IN TOUCH
+            6. ENTERPRISE ENQUIRIES: GET IN TOUCH (STANDARD FORM)
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section id="contact" className="relative py-20 sm:py-28 lg:py-36 bg-[#0b0b0b] text-white overflow-hidden">
-          {/* Subtle Parallax Background Glow */}
-          <div className="absolute inset-0 bg-radial from-[#d4622b]/10 via-transparent to-transparent pointer-events-none blur-3xl" />
-
-          <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-end">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-4">
-                  Enterprise enquiries
-                </p>
-                <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-                  Get in touch.
-                </h2>
-                <p className="mt-5 text-[#a9a9a9] text-base sm:text-lg leading-relaxed max-w-xl">
-                  Tell us your team size and preferred location. We will match you to the right workspace within 24 hours.
-                </p>
-                <div className="flex flex-wrap gap-3 mt-8">
-                  <motion.a
-                    whileHover={{ scale: 1.06, y: -2 }}
-                    whileTap={{ scale: 0.96 }}
-                    href="mailto:info@onwardworkspaces.com?subject=Enterprise%20enquiry"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-[#d4622b] text-white hover:bg-[#b8531f] transition-colors shadow-lg cursor-pointer"
-                  >
-                    Email us
-                  </motion.a>
-                  <motion.a
-                    whileHover={{ scale: 1.06, y: -2 }}
-                    whileTap={{ scale: 0.96 }}
-                    href="tel:+919910668152"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm border-[1.5px] border-[#2c2c2c] text-white hover:border-[#d4622b] hover:text-[#d4622b] transition-colors cursor-pointer"
-                  >
-                    Call us
-                  </motion.a>
-                </div>
-              </motion.div>
-
-              {/* Reach quick contact copy cards with Zoom Hover */}
-              <div className="grid gap-3">
-                <motion.div
-                  whileHover={{ scale: 1.03, x: 4, borderColor: "#d4622b" }}
-                  transition={{ duration: 0.2 }}
-                  className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[18px] p-4 sm:p-5 bg-[#171717] shadow-sm"
-                >
-                  <div>
-                    <small className="block text-[#a9a9a9] text-[11px] tracking-[0.12em] uppercase font-bold">
-                      Email
-                    </small>
-                    <b className="text-base sm:text-lg text-white font-bold break-all">
-                      info@onwardworkspaces.com
-                    </b>
-                  </div>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    type="button"
-                    onClick={() => handleCopy("info@onwardworkspaces.com", "email")}
-                    className="px-4 py-2 rounded-full border-[1.5px] border-[#2c2c2c] text-white text-xs font-bold hover:border-[#d4622b] transition-colors cursor-pointer shrink-0"
-                  >
-                    {copiedKey === "email" ? "Copied" : "Copy"}
-                  </motion.button>
-                </motion.div>
-
-                <motion.div
-                  whileHover={{ scale: 1.03, x: 4, borderColor: "#d4622b" }}
-                  transition={{ duration: 0.2 }}
-                  className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[18px] p-4 sm:p-5 bg-[#171717] shadow-sm"
-                >
-                  <div>
-                    <small className="block text-[#a9a9a9] text-[11px] tracking-[0.12em] uppercase font-bold">
-                      Phone
-                    </small>
-                    <b className="text-base sm:text-lg text-white font-bold">
-                      +91 99106 68152
-                    </b>
-                  </div>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    type="button"
-                    onClick={() => handleCopy("+91 99106 68152", "phone")}
-                    className="px-4 py-2 rounded-full border-[1.5px] border-[#2c2c2c] text-white text-xs font-bold hover:border-[#d4622b] transition-colors cursor-pointer shrink-0"
-                  >
-                    {copiedKey === "phone" ? "Copied" : "Copy"}
-                  </motion.button>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ContactSection
+          title="Enterprise enquiries: Get in touch."
+          highlight="Get in touch."
+          description="Tell us your team size and preferred location. We will match you to the right workspace within 24 hours."
+        />
       </main>
 
       <Footer />
