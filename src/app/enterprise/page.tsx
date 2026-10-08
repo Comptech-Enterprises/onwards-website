@@ -916,39 +916,75 @@ function CapabilityWebSection() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Mobile / Tablet Card Fallback with Stagger Zoom */}
-        <div className="md:hidden grid grid-cols-1 gap-3.5 mt-6">
-          {CAPABILITY_DETAILS.map((cap, i) => (
-            <motion.article
-              key={cap.id}
-              initial={{ opacity: 0, scale: 0.94 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className="p-5 border border-[#e2e2e2] rounded-[18px] bg-white shadow-sm"
-            >
-              <i className="not-italic text-xs font-bold tracking-wider text-[#d4622b] block mb-1">
-                {cap.num}
-              </i>
-              <h3 className="text-lg font-bold text-[#0b0b0b]">{cap.title}</h3>
-              <p className="mt-1.5 text-sm text-[#585858] leading-relaxed">{cap.desc}</p>
-              <div className="mt-3 pt-3 border-t border-[#e2e2e2]">
-                <em className="not-italic text-[10px] font-bold tracking-wider uppercase text-[#585858] block mb-1.5">
-                  Replaces
-                </em>
-                <div className="flex flex-wrap gap-1.5">
-                  {cap.replaces.map((r) => (
-                    <span
-                      key={r}
-                      className="text-xs px-2.5 py-0.5 rounded-full border border-[#e2e2e2] text-[#585858] line-through decoration-[#d4622b] bg-[#f4f4f4]"
-                    >
-                      {r}
+        {/* Mobile / Tablet Interactive Horizontal Slider */}
+        <div className="md:hidden mt-6">
+          {/* Slider Container */}
+          <div
+            id="cap-mobile-slider"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 pt-1 -mx-4 px-4 sm:-mx-6 sm:px-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {CAPABILITY_DETAILS.map((cap) => (
+              <article
+                key={cap.id}
+                className="w-[85vw] max-w-[360px] shrink-0 snap-center p-6 border border-[#e2e2e2] rounded-[22px] bg-white shadow-md flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-bold tracking-widest text-[#d4622b] uppercase">
+                      Capability {cap.num}
                     </span>
-                  ))}
+                    <span className="text-[11px] font-bold text-[#585858] bg-[#f4f4f4] px-2 py-0.5 rounded-full">
+                      {cap.num}/06
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-[#0b0b0b] tracking-tight mt-1">{cap.title}</h3>
+                  <p className="mt-2 text-sm text-[#585858] leading-relaxed">{cap.desc}</p>
                 </div>
-              </div>
-            </motion.article>
-          ))}
+
+                <div className="mt-5 pt-3.5 border-t border-[#e2e2e2]">
+                  <em className="not-italic text-[10px] font-bold tracking-wider uppercase text-[#585858] block mb-2">
+                    Replaces
+                  </em>
+                  <div className="flex flex-wrap gap-1.5">
+                    {cap.replaces.map((r) => (
+                      <span
+                        key={r}
+                        className="text-xs px-2.5 py-1 rounded-full border border-[#e2e2e2] text-[#585858] line-through decoration-[#d4622b] bg-[#f4f4f4]"
+                      >
+                        {r}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          {/* Swipe indicator hint & dots */}
+          <div className="flex items-center justify-between mt-3 px-1">
+            <span className="text-xs text-[#585858] font-medium flex items-center gap-1">
+              <span>&larr;</span> Swipe to explore <span>&rarr;</span>
+            </span>
+            <div className="flex gap-1.5">
+              {CAPABILITY_DETAILS.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => {
+                    const el = document.getElementById("cap-mobile-slider");
+                    if (el) {
+                      const card = el.children[i] as HTMLElement;
+                      if (card) {
+                        el.scrollTo({ left: card.offsetLeft - 16, behavior: "smooth" });
+                      }
+                    }
+                  }}
+                  className="w-2.5 h-2.5 rounded-full bg-[#d8cdb7] hover:bg-[#d4622b] transition-colors cursor-pointer"
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
