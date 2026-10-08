@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -187,7 +188,12 @@ function TopicSeatGrid() {
       : `${gapCount} people have no desk. The traditional lease cannot stretch.`;
 
   return (
-    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 0.8, 0.2, 1] }}
+      className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[24px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] hover:shadow-[0_32px_60px_-24px_rgba(212,98,43,0.25)] transition-shadow"
+    >
       <div className="flex justify-between items-center gap-2 mb-4">
         <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
           Try it: change your team size
@@ -205,14 +211,16 @@ function TopicSeatGrid() {
         </div>
 
         <div className="flex items-center gap-3">
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             type="button"
             onClick={() => setTeamSize((v) => Math.max(20, v - 5))}
             aria-label="Remove 5 people"
-            className="w-10 h-10 rounded-full border-[1.5px] border-[#d8cdb7] bg-transparent text-[#1c1813] font-bold text-xl flex items-center justify-center cursor-pointer hover:bg-[#d4622b] hover:border-[#d4622b] hover:text-white transition-all active:scale-95 shrink-0"
+            className="w-10 h-10 rounded-full border-[1.5px] border-[#d8cdb7] bg-transparent text-[#1c1813] font-bold text-xl flex items-center justify-center cursor-pointer hover:bg-[#d4622b] hover:border-[#d4622b] hover:text-white transition-all shrink-0"
           >
             &minus;
-          </button>
+          </motion.button>
           <input
             id="team-slider"
             type="range"
@@ -223,14 +231,16 @@ function TopicSeatGrid() {
             onChange={(e) => setTeamSize(Number(e.target.value))}
             className="w-full accent-[#d4622b] h-7 cursor-pointer"
           />
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             type="button"
             onClick={() => setTeamSize((v) => Math.min(110, v + 5))}
             aria-label="Add 5 people"
-            className="w-10 h-10 rounded-full border-[1.5px] border-[#d8cdb7] bg-transparent text-[#1c1813] font-bold text-xl flex items-center justify-center cursor-pointer hover:bg-[#d4622b] hover:border-[#d4622b] hover:text-white transition-all active:scale-95 shrink-0"
+            className="w-10 h-10 rounded-full border-[1.5px] border-[#d8cdb7] bg-transparent text-[#1c1813] font-bold text-xl flex items-center justify-center cursor-pointer hover:bg-[#d4622b] hover:border-[#d4622b] hover:text-white transition-all shrink-0"
           >
             +
-          </button>
+          </motion.button>
         </div>
       </div>
 
@@ -243,8 +253,11 @@ function TopicSeatGrid() {
           {Array.from({ length: LEASE_SEATS }).map((_, i) => {
             const inUse = i < teamSize;
             return (
-              <span
+              <motion.span
                 key={i}
+                initial={false}
+                animate={{ scale: inUse ? [0.8, 1] : 1 }}
+                transition={{ duration: 0.2 }}
                 className={`aspect-square rounded-[3px] transition-all duration-300 ${
                   inUse
                     ? "bg-[#d4622b] border border-[#d4622b]"
@@ -260,9 +273,11 @@ function TopicSeatGrid() {
       {teamSize > LEASE_SEATS && (
         <div className="grid grid-cols-16 gap-1 sm:gap-1.5 mt-2.5 animate-fadeIn">
           {Array.from({ length: Math.min(MAX_OVER, teamSize - LEASE_SEATS) }).map((_, i) => (
-            <span
+            <motion.span
               key={i}
-              className="aspect-square rounded-[3px] border-[1.5px] border-dashed border-[#d4622b] bg-transparent animate-pulse"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              className="aspect-square rounded-[3px] border-[1.5px] border-dashed border-[#d4622b] bg-transparent"
             />
           ))}
         </div>
@@ -288,32 +303,32 @@ function TopicSeatGrid() {
 
       {/* Stats summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 my-4">
-        <div className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/40">
+        <motion.div whileHover={{ y: -3, scale: 1.02 }} className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/50 backdrop-blur-sm">
           <b className="block text-2xl sm:text-3xl font-black text-[#1c1813] tabular-nums leading-none">
             80
           </b>
           <span className="block mt-2 text-xs text-[#655d4e]">seats on a lease</span>
-        </div>
-        <div className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/40">
+        </motion.div>
+        <motion.div whileHover={{ y: -3, scale: 1.02 }} className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/50 backdrop-blur-sm">
           <b className="block text-2xl sm:text-3xl font-black text-[#d4622b] tabular-nums leading-none">
             {gapCount}
           </b>
           <span className="block mt-2 text-xs text-[#655d4e]">
             {isUnder ? "empty, still paid for" : "seats short"}
           </span>
-        </div>
-        <div className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/40">
+        </motion.div>
+        <motion.div whileHover={{ y: -3, scale: 1.02 }} className="border border-[#d8cdb7] rounded-[14px] p-3.5 bg-white/50 backdrop-blur-sm">
           <b className="block text-2xl sm:text-3xl font-black text-[#1c1813] tabular-nums leading-none">
             {teamSize}
           </b>
           <span className="block mt-2 text-xs text-[#655d4e]">seats billed with Onward</span>
-        </div>
+        </motion.div>
       </div>
 
       <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
         {caption}
       </p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -334,7 +349,12 @@ function TopicTasksGauge() {
       : "Eight side jobs, and none of them is your core business.";
 
   return (
-    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 0.8, 0.2, 1] }}
+      className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[24px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] hover:shadow-[0_32px_60px_-24px_rgba(212,98,43,0.25)] transition-shadow"
+    >
       <div className="flex justify-between items-center gap-2 mb-4">
         <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
           Extra work for your team (illustrative)
@@ -342,7 +362,7 @@ function TopicTasksGauge() {
       </div>
 
       <div className="flex items-center gap-4 sm:gap-6 mb-4">
-        <div className="relative shrink-0 w-24 h-24 sm:w-28 sm:h-28">
+        <motion.div whileHover={{ scale: 1.08 }} className="relative shrink-0 w-24 h-24 sm:w-28 sm:h-28">
           <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
             <circle cx="60" cy="60" r="50" fill="none" stroke="#d8cdb7" strokeWidth="9" />
             <circle
@@ -366,7 +386,7 @@ function TopicTasksGauge() {
               Focus
             </span>
           </div>
-        </div>
+        </motion.div>
 
         <div>
           <b className="block text-3xl sm:text-5xl font-black text-[#d4622b] tabular-nums leading-none">
@@ -382,19 +402,21 @@ function TopicTasksGauge() {
         {TASKS_LIST.map((task, idx) => {
           const isOff = idx >= activeTasksCount;
           return (
-            <button
+            <motion.button
               key={task}
+              whileHover={{ scale: isOff ? 1 : 1.03, x: isOff ? 0 : 2 }}
+              whileTap={{ scale: 0.98 }}
               type="button"
               onClick={() => setActiveTasksCount(idx + 1)}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-[12px] border font-bold text-xs sm:text-sm text-left transition-all duration-300 cursor-pointer ${
                 isOff
                   ? "opacity-20 border-[#d8cdb7] text-[#655d4e] translate-x-2"
-                  : "border-[#d8cdb7] bg-white text-[#1c1813] hover:border-[#d4622b]"
+                  : "border-[#d8cdb7] bg-white text-[#1c1813] hover:border-[#d4622b] shadow-sm"
               }`}
             >
               <i className="w-3.5 h-3.5 rounded-full border-2 border-[#d4622b] shrink-0" />
               <span>{task}</span>
-            </button>
+            </motion.button>
           );
         })}
       </div>
@@ -402,7 +424,7 @@ function TopicTasksGauge() {
       <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
         {caption}
       </p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -417,7 +439,12 @@ function TopicRoadToDayOne() {
   const workWidth = activeStep === 3 ? "25%" : "0%";
 
   return (
-    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 0.8, 0.2, 1] }}
+      className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[24px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] hover:shadow-[0_32px_60px_-24px_rgba(212,98,43,0.25)] transition-shadow"
+    >
       <div className="flex justify-between items-center gap-2 mb-4">
         <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
           The road to day one &middot; tap any step
@@ -436,16 +463,18 @@ function TopicRoadToDayOne() {
           const isOff = idx > activeStep;
           const isGo = idx === 3 && activeStep === 3;
           return (
-            <button
+            <motion.button
               key={step.title}
+              whileHover={{ scale: 1.02, x: 2 }}
+              whileTap={{ scale: 0.98 }}
               type="button"
               onClick={() => setActiveStep(idx)}
               className={`relative grid grid-cols-[1fr_auto] items-center px-3.5 py-2.5 rounded-[12px] border text-left font-bold text-xs sm:text-sm transition-all duration-300 cursor-pointer ${
                 isGo
-                  ? "bg-[#d4622b] border-[#d4622b] text-white"
+                  ? "bg-[#d4622b] border-[#d4622b] text-white shadow-md"
                   : isOff
                   ? "opacity-35 border-[#d8cdb7] text-[#655d4e] bg-transparent"
-                  : "border-[#d4622b] bg-white text-[#1c1813]"
+                  : "border-[#d4622b] bg-white text-[#1c1813] shadow-sm"
               }`}
             >
               <div
@@ -474,7 +503,7 @@ function TopicRoadToDayOne() {
                   {step.cost}
                 </span>
               )}
-            </button>
+            </motion.button>
           );
         })}
       </div>
@@ -503,7 +532,7 @@ function TopicRoadToDayOne() {
       <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
         {ROAD_CAPTIONS[activeStep + 1] || ROAD_CAPTIONS[0]}
       </p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -511,8 +540,6 @@ function TopicRoadToDayOne() {
    TOPIC 4: SEPARATE BILLS LEDGER COMPONENT
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 function TopicSeparateBills() {
-  const [stage, setStage] = useState<"initial" | "change" | "extended">("extended");
-
   const ledgerRows = [
     { name: "Rent", variable: false },
     { name: "CAM", variable: false },
@@ -524,7 +551,12 @@ function TopicSeparateBills() {
   const months = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
 
   return (
-    <div className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[20px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] transition-all">
+    <motion.div
+      initial={{ opacity: 0, scale: 0.94 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: [0.22, 0.8, 0.2, 1] }}
+      className="flex flex-col min-h-[480px] bg-[#fbf8f1] border border-[#d8cdb7] rounded-[24px] p-4 sm:p-6 shadow-[0_24px_50px_-34px_rgba(60,40,10,0.35)] hover:shadow-[0_32px_60px_-24px_rgba(212,98,43,0.25)] transition-shadow"
+    >
       <div className="flex justify-between items-center gap-2 mb-4">
         <span className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#655d4e] font-bold">
           What arrives separately every month
@@ -542,9 +574,10 @@ function TopicSeparateBills() {
               {Array.from({ length: 12 }).map((_, c) => {
                 const size = row.variable ? 8 + ((c * 5 + ri * 3) % 7) * 1.3 : 11;
                 return (
-                  <i
+                  <motion.i
                     key={c}
-                    className="rounded-full bg-[#d4622b] block transition-transform duration-300"
+                    whileHover={{ scale: 1.5 }}
+                    className="rounded-full bg-[#d4622b] block transition-transform duration-300 cursor-pointer"
                     style={{ width: `${size}px`, height: `${size}px` }}
                   />
                 );
@@ -586,7 +619,7 @@ function TopicSeparateBills() {
       <p className="mt-auto px-3.5 py-3 rounded-[12px] bg-[#d4622b]/10 text-[#1c1813] text-xs sm:text-sm font-bold min-h-[3.2em] flex items-center">
         Five separate bills every month, and a financial commitment that locks you in until the lease ends.
       </p>
-    </div>
+    </motion.div>
   );
 }
 
@@ -596,7 +629,15 @@ function TopicSeparateBills() {
 function CapabilityWebSection() {
   const [activeCap, setActiveCap] = useState(1);
   const [isLocked, setIsLocked] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
+  const sectionY = useTransform(scrollYProgress, [0, 1], [40, -40]);
+  const webScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.98]);
 
   // Auto advance capability unless user is hovering/interacting
   useEffect(() => {
@@ -611,15 +652,28 @@ function CapabilityWebSection() {
 
   return (
     <section
+      ref={sectionRef}
       id="partner"
-      className="py-20 sm:py-28 lg:py-36 bg-white border-y border-[#e2e2e2]"
+      className="relative py-20 sm:py-28 lg:py-36 bg-white border-y border-[#e2e2e2] overflow-hidden"
       style={{
         backgroundImage: "radial-gradient(#e2e2e2 1.2px, transparent 1.2px)",
         backgroundSize: "22px 22px",
       }}
     >
-      <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-left mb-10 sm:mb-14">
+      {/* Parallax ambient background glow orb */}
+      <motion.div
+        style={{ y: sectionY, scale: webScale }}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-gradient-to-tr from-[#d4622b]/5 via-transparent to-[#ff9a73]/5 pointer-events-none blur-3xl"
+      />
+
+      <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="text-left mb-10 sm:mb-14"
+        >
           <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-3">
             One partner
           </p>
@@ -629,29 +683,42 @@ function CapabilityWebSection() {
           <p className="mt-4 text-[#585858] text-base sm:text-lg max-w-2xl">
             Everything a traditional office requires from dozens of separate vendors, Onward delivers as one cohesive solution.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Desktop Interactive Diagram */}
-        <div
-          ref={containerRef}
+        {/* Desktop Interactive Diagram with Parallax Zoom */}
+        <motion.div
+          style={{ scale: webScale }}
           onMouseEnter={() => setIsLocked(true)}
           onMouseLeave={() => setIsLocked(false)}
-          className="hidden md:block relative aspect-[1100/680] max-w-[1100px] mx-auto border border-[#e2e2e2] rounded-[24px] bg-white/90 backdrop-blur-sm p-4 shadow-sm overflow-hidden"
+          className="hidden md:block relative aspect-[1100/680] max-w-[1100px] mx-auto border border-[#e2e2e2] rounded-[28px] bg-white/95 backdrop-blur-md p-4 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.08)] overflow-hidden"
         >
           <svg
             viewBox="0 0 1100 680"
             className="absolute inset-0 w-full h-full pointer-events-none"
             preserveAspectRatio="xMidYMid meet"
           >
+            {/* Pulsing Concentric Radar Rings in Center */}
+            <circle
+              cx="550"
+              cy="340"
+              r="240"
+              fill="none"
+              stroke="#d4622b"
+              strokeOpacity="0.08"
+              strokeWidth="1.5"
+              className="animate-ping origin-[550px_340px]"
+              style={{ animationDuration: "6s" }}
+            />
+
             {/* 3 Overlapping Venn circles */}
             <circle
               cx="550"
               cy="215"
               r="172"
-              fill={currentDetail.groups.includes("s") ? "rgba(212,98,43,0.06)" : "none"}
+              fill={currentDetail.groups.includes("s") ? "rgba(212,98,43,0.08)" : "none"}
               stroke={currentDetail.groups.includes("s") ? "#d4622b" : "#585858"}
-              strokeOpacity={currentDetail.groups.includes("s") ? 1 : 0.4}
-              strokeWidth={currentDetail.groups.includes("s") ? 2 : 1.4}
+              strokeOpacity={currentDetail.groups.includes("s") ? 1 : 0.35}
+              strokeWidth={currentDetail.groups.includes("s") ? 2.2 : 1.4}
               strokeDasharray={currentDetail.groups.includes("s") ? undefined : "4 4"}
               className="transition-all duration-500"
             />
@@ -659,10 +726,10 @@ function CapabilityWebSection() {
               cx="435"
               cy="410"
               r="172"
-              fill={currentDetail.groups.includes("v") ? "rgba(212,98,43,0.06)" : "none"}
+              fill={currentDetail.groups.includes("v") ? "rgba(212,98,43,0.08)" : "none"}
               stroke={currentDetail.groups.includes("v") ? "#d4622b" : "#585858"}
-              strokeOpacity={currentDetail.groups.includes("v") ? 1 : 0.4}
-              strokeWidth={currentDetail.groups.includes("v") ? 2 : 1.4}
+              strokeOpacity={currentDetail.groups.includes("v") ? 1 : 0.35}
+              strokeWidth={currentDetail.groups.includes("v") ? 2.2 : 1.4}
               strokeDasharray={currentDetail.groups.includes("v") ? undefined : "4 4"}
               className="transition-all duration-500"
             />
@@ -670,10 +737,10 @@ function CapabilityWebSection() {
               cx="665"
               cy="410"
               r="172"
-              fill={currentDetail.groups.includes("d") ? "rgba(212,98,43,0.06)" : "none"}
+              fill={currentDetail.groups.includes("d") ? "rgba(212,98,43,0.08)" : "none"}
               stroke={currentDetail.groups.includes("d") ? "#d4622b" : "#585858"}
-              strokeOpacity={currentDetail.groups.includes("d") ? 1 : 0.4}
-              strokeWidth={currentDetail.groups.includes("d") ? 2 : 1.4}
+              strokeOpacity={currentDetail.groups.includes("d") ? 1 : 0.35}
+              strokeWidth={currentDetail.groups.includes("d") ? 2.2 : 1.4}
               strokeDasharray={currentDetail.groups.includes("d") ? undefined : "4 4"}
               className="transition-all duration-500"
             />
@@ -685,66 +752,66 @@ function CapabilityWebSection() {
                 d="M232,100 H268 L496,138"
                 fill="none"
                 stroke={activeCap === 3 ? "#d4622b" : "#585858"}
-                strokeWidth={activeCap === 3 ? 2 : 1.2}
+                strokeWidth={activeCap === 3 ? 2.2 : 1.2}
                 strokeDasharray={activeCap === 3 ? undefined : "4 5"}
                 strokeOpacity={activeCap === 3 ? 1 : 0.35}
               />
-              <circle cx="496" cy="138" r={activeCap === 3 ? 4.5 : 3.5} fill={activeCap === 3 ? "#d4622b" : "#585858"} />
+              <circle cx="496" cy="138" r={activeCap === 3 ? 5 : 3.5} fill={activeCap === 3 ? "#d4622b" : "#585858"} />
 
               {/* 02 Fit-out & furniture (Mid Left) */}
               <path
                 d="M232,320 H268 L298,478"
                 fill="none"
                 stroke={activeCap === 2 ? "#d4622b" : "#585858"}
-                strokeWidth={activeCap === 2 ? 2 : 1.2}
+                strokeWidth={activeCap === 2 ? 2.2 : 1.2}
                 strokeDasharray={activeCap === 2 ? undefined : "4 5"}
                 strokeOpacity={activeCap === 2 ? 1 : 0.35}
               />
-              <circle cx="298" cy="478" r={activeCap === 2 ? 4.5 : 3.5} fill={activeCap === 2 ? "#d4622b" : "#585858"} />
+              <circle cx="298" cy="478" r={activeCap === 2 ? 5 : 3.5} fill={activeCap === 2 ? "#d4622b" : "#585858"} />
 
               {/* 01 Space and address (Bottom Left) */}
               <path
                 d="M232,545 H268 L298,507"
                 fill="none"
                 stroke={activeCap === 1 ? "#d4622b" : "#585858"}
-                strokeWidth={activeCap === 1 ? 2 : 1.2}
+                strokeWidth={activeCap === 1 ? 2.2 : 1.2}
                 strokeDasharray={activeCap === 1 ? undefined : "4 5"}
                 strokeOpacity={activeCap === 1 ? 1 : 0.35}
               />
-              <circle cx="298" cy="507" r={activeCap === 1 ? 4.5 : 3.5} fill={activeCap === 1 ? "#d4622b" : "#585858"} />
+              <circle cx="298" cy="507" r={activeCap === 1 ? 5 : 3.5} fill={activeCap === 1 ? "#d4622b" : "#585858"} />
 
               {/* 05 One point of contact (Top Right) */}
               <path
                 d="M868,100 H832 L622,108"
                 fill="none"
                 stroke={activeCap === 5 ? "#d4622b" : "#585858"}
-                strokeWidth={activeCap === 5 ? 2 : 1.2}
+                strokeWidth={activeCap === 5 ? 2.2 : 1.2}
                 strokeDasharray={activeCap === 5 ? undefined : "4 5"}
                 strokeOpacity={activeCap === 5 ? 1 : 0.35}
               />
-              <circle cx="622" cy="108" r={activeCap === 5 ? 4.5 : 3.5} fill={activeCap === 5 ? "#d4622b" : "#585858"} />
+              <circle cx="622" cy="108" r={activeCap === 5 ? 5 : 3.5} fill={activeCap === 5 ? "#d4622b" : "#585858"} />
 
               {/* 04 Daily office services (Mid Right) */}
               <path
                 d="M868,320 H832 L603,175"
                 fill="none"
                 stroke={activeCap === 4 ? "#d4622b" : "#585858"}
-                strokeWidth={activeCap === 4 ? 2 : 1.2}
+                strokeWidth={activeCap === 4 ? 2.2 : 1.2}
                 strokeDasharray={activeCap === 4 ? undefined : "4 5"}
                 strokeOpacity={activeCap === 4 ? 1 : 0.35}
               />
-              <circle cx="603" cy="175" r={activeCap === 4 ? 4.5 : 3.5} fill={activeCap === 4 ? "#d4622b" : "#585858"} />
+              <circle cx="603" cy="175" r={activeCap === 4 ? 5 : 3.5} fill={activeCap === 4 ? "#d4622b" : "#585858"} />
 
               {/* 06 One cheque (Bottom Right) */}
               <path
                 d="M868,545 H832 L590,334"
                 fill="none"
                 stroke={activeCap === 6 ? "#d4622b" : "#585858"}
-                strokeWidth={activeCap === 6 ? 2 : 1.2}
+                strokeWidth={activeCap === 6 ? 2.2 : 1.2}
                 strokeDasharray={activeCap === 6 ? undefined : "4 5"}
                 strokeOpacity={activeCap === 6 ? 1 : 0.35}
               />
-              <circle cx="590" cy="334" r={activeCap === 6 ? 4.5 : 3.5} fill={activeCap === 6 ? "#d4622b" : "#585858"} />
+              <circle cx="590" cy="334" r={activeCap === 6 ? 5 : 3.5} fill={activeCap === 6 ? "#d4622b" : "#585858"} />
             </g>
 
             {/* Group Header Labels */}
@@ -780,19 +847,21 @@ function CapabilityWebSection() {
             </g>
           </svg>
 
-          {/* 6 Capability Interactive Buttons */}
+          {/* 6 Capability Interactive Buttons with Zoom Hover */}
           {CAPABILITY_DETAILS.map((cap) => {
             const isActive = activeCap === cap.id;
             return (
-              <button
+              <motion.button
                 key={cap.id}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.96 }}
                 type="button"
                 onClick={() => setActiveCap(cap.id)}
                 onMouseEnter={() => setActiveCap(cap.id)}
                 style={{ left: cap.labelPos.left, top: cap.labelPos.top }}
-                className={`absolute w-[20.5%] -translate-y-1/2 flex items-center gap-3 p-3.5 rounded-[12px] text-left transition-all duration-300 cursor-pointer ${
+                className={`absolute w-[20.5%] -translate-y-1/2 flex items-center gap-3 p-3.5 rounded-[16px] text-left transition-all duration-300 cursor-pointer ${
                   isActive
-                    ? "border-2 border-[#d4622b] bg-[#d4622b]/10 scale-105 shadow-[0_14px_30px_-20px_rgba(212,98,43,0.7)]"
+                    ? "border-2 border-[#d4622b] bg-[#d4622b]/10 scale-105 shadow-[0_14px_30px_-15px_rgba(212,98,43,0.7)]"
                     : "border-[1.5px] border-dashed border-[#585858] bg-white hover:border-[#d4622b]"
                 }`}
               >
@@ -802,47 +871,60 @@ function CapabilityWebSection() {
                 <b className="text-xs lg:text-sm font-bold text-[#0b0b0b] leading-tight">
                   {cap.title}
                 </b>
-              </button>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* Desktop Detail Card */}
-        <div className="hidden md:grid grid-cols-[auto_1fr_auto] gap-5 items-center max-w-[900px] mx-auto mt-4 p-6 border-[1.5px] border-[#e2e2e2] rounded-[20px] bg-white shadow-sm transition-all">
-          <i className="text-4xl font-black text-[#d4622b] not-italic leading-none">
-            {currentDetail.num}
-          </i>
-          <div>
-            <h3 className="text-xl font-bold text-[#0b0b0b] tracking-tight">
-              {currentDetail.title}
-            </h3>
-            <p className="mt-1 text-[#585858] text-sm leading-relaxed max-w-[54ch]">
-              {currentDetail.desc}
-            </p>
-          </div>
-          <div className="flex flex-col gap-1.5 max-w-[240px]">
-            <em className="not-italic text-[10px] font-bold tracking-[0.12em] uppercase text-[#585858]">
-              Replaces
-            </em>
-            <div className="flex flex-wrap gap-1.5">
-              {currentDetail.replaces.map((r) => (
-                <span
-                  key={r}
-                  className="text-xs px-2.5 py-1 rounded-full border border-[#e2e2e2] text-[#585858] line-through decoration-[#d4622b] bg-[#f4f4f4]"
-                >
-                  {r}
-                </span>
-              ))}
+        {/* Desktop Detail Card with Scale Animation */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentDetail.id}
+            initial={{ opacity: 0, y: 15, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.97 }}
+            transition={{ duration: 0.3 }}
+            className="hidden md:grid grid-cols-[auto_1fr_auto] gap-5 items-center max-w-[900px] mx-auto mt-6 p-6 border-[1.5px] border-[#e2e2e2] rounded-[24px] bg-white shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)]"
+          >
+            <i className="text-4xl font-black text-[#d4622b] not-italic leading-none">
+              {currentDetail.num}
+            </i>
+            <div>
+              <h3 className="text-xl font-bold text-[#0b0b0b] tracking-tight">
+                {currentDetail.title}
+              </h3>
+              <p className="mt-1 text-[#585858] text-sm leading-relaxed max-w-[54ch]">
+                {currentDetail.desc}
+              </p>
             </div>
-          </div>
-        </div>
+            <div className="flex flex-col gap-1.5 max-w-[240px]">
+              <em className="not-italic text-[10px] font-bold tracking-[0.12em] uppercase text-[#585858]">
+                Replaces
+              </em>
+              <div className="flex flex-wrap gap-1.5">
+                {currentDetail.replaces.map((r) => (
+                  <span
+                    key={r}
+                    className="text-xs px-2.5 py-1 rounded-full border border-[#e2e2e2] text-[#585858] line-through decoration-[#d4622b] bg-[#f4f4f4]"
+                  >
+                    {r}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
 
-        {/* Mobile / Tablet Card Fallback */}
+        {/* Mobile / Tablet Card Fallback with Stagger Zoom */}
         <div className="md:hidden grid grid-cols-1 gap-3.5 mt-6">
-          {CAPABILITY_DETAILS.map((cap) => (
-            <article
+          {CAPABILITY_DETAILS.map((cap, i) => (
+            <motion.article
               key={cap.id}
-              className="p-5 border border-[#e2e2e2] rounded-[16px] bg-white shadow-sm"
+              initial={{ opacity: 0, scale: 0.94 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className="p-5 border border-[#e2e2e2] rounded-[18px] bg-white shadow-sm"
             >
               <i className="not-italic text-xs font-bold tracking-wider text-[#d4622b] block mb-1">
                 {cap.num}
@@ -864,7 +946,7 @@ function CapabilityWebSection() {
                   ))}
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
@@ -879,6 +961,41 @@ export default function EnterprisePage() {
   const [activeTab, setActiveTab] = useState<number>(0);
   const [compareMode, setCompareMode] = useState<"trad" | "onward">("trad");
   const [hoveredBenefit, setHoveredBenefit] = useState<number | null>(null);
+
+  // Parallax Scroll Hooks for Hero & Sections
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroTextY = useTransform(heroScroll, [0, 1], [0, 80]);
+  const heroOrbScale = useTransform(heroScroll, [0, 1], [1, 1.4]);
+  const heroOrbY = useTransform(heroScroll, [0, 1], [0, 120]);
+
+  // Problems Section Parallax
+  const problemsRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: problemsScroll } = useScroll({
+    target: problemsRef,
+    offset: ["start end", "end start"],
+  });
+  const problemsGlowY = useTransform(problemsScroll, [0, 1], [-60, 60]);
+  const problemsScale = useTransform(problemsScroll, [0, 0.5, 1], [0.96, 1, 0.98]);
+
+  // Compare Section Parallax
+  const compareRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: compareScroll } = useScroll({
+    target: compareRef,
+    offset: ["start end", "end start"],
+  });
+  const compareY = useTransform(compareScroll, [0, 1], [40, -40]);
+
+  // Benefits Section Parallax
+  const benefitsRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: benefitsScroll } = useScroll({
+    target: benefitsRef,
+    offset: ["start end", "end start"],
+  });
+  const benefitsScale = useTransform(benefitsScroll, [0, 0.4, 1], [0.94, 1, 0.98]);
 
   // Copy helper with feedback
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
@@ -897,50 +1014,106 @@ export default function EnterprisePage() {
     <>
       <Header alwaysSolid />
 
-      <main className="bg-white text-[#0b0b0b] pt-20">
+      <main className="bg-white text-[#0b0b0b] pt-20 overflow-hidden">
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            1. HERO SECTION
+            1. HERO SECTION WITH PARALLAX & ZOOM
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section className="py-16 sm:py-24 lg:py-28 bg-white border-b border-[#e2e2e2]">
-          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-            <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-4">
-              Onward for Enterprise
-            </p>
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0b0b0b] tracking-tight leading-[1.05] max-w-[18ch]">
-              Run your business.{" "}
-              <em className="not-italic text-[#d4622b]">We run the office.</em>
-            </h1>
-            <p className="mt-6 text-[#585858] text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-2xl">
-              Fully managed offices for growing companies across Delhi NCR. One agreement, one cheque, built around your team.
-            </p>
-            <div className="flex flex-wrap gap-3 mt-8">
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-[#d4622b] text-white hover:bg-[#b8531f] transition-all shadow-md cursor-pointer hover:-translate-y-0.5"
+        <section
+          ref={heroRef}
+          className="relative py-20 sm:py-28 lg:py-36 bg-gradient-to-b from-[#faf8f5] via-white to-white border-b border-[#e2e2e2] overflow-hidden"
+        >
+          {/* Animated Background Parallax Light Orb */}
+          <motion.div
+            style={{ y: heroOrbY, scale: heroOrbScale }}
+            className="absolute right-[-10%] top-[-10%] w-[600px] h-[600px] rounded-full bg-radial from-[#d4622b]/15 via-[#ff9a73]/5 to-transparent blur-3xl pointer-events-none"
+          />
+
+          <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div style={{ y: heroTextY }}>
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-4"
               >
-                Get in touch
-              </a>
-              <a
-                href="#compare"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm border-[1.5px] border-[#0b0b0b] text-[#0b0b0b] hover:border-[#d4622b] hover:text-[#d4622b] transition-all cursor-pointer hover:-translate-y-0.5"
+                Onward for Enterprise
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, y: 25, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 0.8, 0.2, 1] }}
+                className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#0b0b0b] tracking-tight leading-[1.05] max-w-[18ch]"
               >
-                See how it compares
-              </a>
-            </div>
+                Run your business.{" "}
+                <em className="not-italic text-[#d4622b]">We run the office.</em>
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.25 }}
+                className="mt-6 text-[#585858] text-lg sm:text-xl lg:text-2xl leading-relaxed max-w-2xl"
+              >
+                Fully managed offices for growing companies across Delhi NCR. One agreement, one cheque, built around your team.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="flex flex-wrap gap-3 mt-8"
+              >
+                <motion.a
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  href="#contact"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-[#d4622b] text-white hover:bg-[#b8531f] transition-colors shadow-lg cursor-pointer"
+                >
+                  Get in touch
+                </motion.a>
+                <motion.a
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  href="#compare"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm border-[1.5px] border-[#0b0b0b] text-[#0b0b0b] hover:border-[#d4622b] hover:text-[#d4622b] transition-colors cursor-pointer"
+                >
+                  See how it compares
+                </motion.a>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            2. THE PROBLEM (BEIGE / DARK THEME EXPLORER)
+            2. THE PROBLEM (BEIGE / DARK THEME EXPLORER WITH PARALLAX)
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section id="problems" className="py-20 sm:py-28 lg:py-36 bg-[#efe8da] text-[#1c1813] border-b border-[#d8cdb7]">
-          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        <section
+          ref={problemsRef}
+          id="problems"
+          className="relative py-20 sm:py-28 lg:py-36 bg-[#efe8da] text-[#1c1813] border-b border-[#d8cdb7] overflow-hidden"
+        >
+          {/* Parallax ambient glow */}
+          <motion.div
+            style={{ y: problemsGlowY, scale: problemsScale }}
+            className="absolute -right-20 top-1/4 w-[600px] h-[600px] rounded-full bg-radial from-[#d4622b]/20 to-transparent blur-3xl pointer-events-none"
+          />
+
+          <motion.div style={{ scale: problemsScale }} className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12 sm:mb-16">
-              <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#c93a10] mb-3">
+              <motion.p
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-xs tracking-[0.16em] uppercase font-bold text-[#c93a10] mb-3"
+              >
                 The problem
-              </p>
-              {/* Corner bracket framed headline */}
-              <div className="relative inline-block py-6 pr-6 sm:py-8 sm:pr-10">
+              </motion.p>
+              {/* Corner bracket framed headline with zoom effect */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="relative inline-block py-6 pr-6 sm:py-8 sm:pr-10"
+              >
                 <i className="absolute left-0 top-0 w-3.5 h-3.5 border-t-[1.5px] border-l-[1.5px] border-[#9b917d]" />
                 <i className="absolute right-0 top-0 w-3.5 h-3.5 border-t-[1.5px] border-r-[1.5px] border-[#9b917d]" />
                 <i className="absolute left-0 bottom-0 w-3.5 h-3.5 border-b-[1.5px] border-l-[1.5px] border-[#9b917d]" />
@@ -949,7 +1122,7 @@ export default function EnterprisePage() {
                   <span className="inline-block w-2.5 h-2.5 rounded-full bg-[#1c1813] mr-3 align-middle animate-pulse" />
                   Weeks of setup. <em className="not-italic text-[#d4622b]">Years of lock-in.</em>
                 </h2>
-              </div>
+              </motion.div>
               <p className="mt-4 text-[#655d4e] text-base sm:text-xl max-w-2xl">
                 Here is what goes wrong when a company leases, builds, and runs its own office.
               </p>
@@ -958,7 +1131,7 @@ export default function EnterprisePage() {
             {/* Two column interactive pin rail */}
             <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-8 lg:gap-14 items-start">
               {/* Sticky Rail Navigator */}
-              <nav aria-label="Problems navigation" className="sticky top-24 hidden lg:grid pl-4 border-l-[1.5px] border-dashed border-[#d8cdb7]">
+              <nav aria-label="Problems navigation" className="sticky top-28 hidden lg:grid pl-4 border-l-[1.5px] border-dashed border-[#d8cdb7]">
                 {[
                   { id: 0, num: "01", label: "Rigid commitments" },
                   { id: 1, num: "02", label: "Operational burden" },
@@ -967,8 +1140,9 @@ export default function EnterprisePage() {
                 ].map((item) => {
                   const isActive = activeTab === item.id;
                   return (
-                    <button
+                    <motion.button
                       key={item.id}
+                      whileHover={{ x: 4 }}
                       type="button"
                       onClick={() => setActiveTab(item.id)}
                       className={`relative text-left py-4 border-b border-[#d8cdb7] font-bold text-base transition-colors duration-300 cursor-pointer ${
@@ -980,9 +1154,12 @@ export default function EnterprisePage() {
                       </small>
                       {item.label}
                       {isActive && (
-                        <span className="absolute left-0 bottom-[-1px] w-full h-[2px] bg-[#d4622b]" />
+                        <motion.span
+                          layoutId="activeRailBorder"
+                          className="absolute left-0 bottom-[-1px] w-full h-[2px] bg-[#d4622b]"
+                        />
                       )}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </nav>
@@ -996,7 +1173,7 @@ export default function EnterprisePage() {
                     onClick={() => setActiveTab(idx)}
                     className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
                       activeTab === idx
-                        ? "bg-[#d4622b] text-white"
+                        ? "bg-[#d4622b] text-white shadow-md"
                         : "bg-white/60 text-[#1c1813] border border-[#d8cdb7]"
                     }`}
                   >
@@ -1008,69 +1185,77 @@ export default function EnterprisePage() {
               {/* Topic Visual & Details */}
               <div className="grid grid-cols-1 md:grid-cols-[1fr_1.35fr] gap-8 items-center">
                 {/* Text explanation */}
-                <div>
-                  <span className="inline-block px-3 py-1 rounded-full bg-[#c93a10]/10 text-[#c93a10] text-xs font-bold tracking-wider mb-4">
-                    {`0${activeTab + 1}`}
-                  </span>
-                  {activeTab === 0 && (
-                    <>
-                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                        You sign for years. Your team changes every few months.
-                      </h3>
-                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                        A lease fixes how many seats you pay for. Hire more people and you run out of room. Lose a few and you keep paying for empty desks.
-                      </p>
-                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
-                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
-                        The traditional lease cannot shrink or grow with you.
-                      </p>
-                    </>
-                  )}
-                  {activeTab === 1 && (
-                    <>
-                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                        Your own team ends up running the office.
-                      </h3>
-                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                        Someone has to chase vendors, fix repairs, order furniture and renew licences. That someone is usually your staff, who have real work to do.
-                      </p>
-                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
-                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
-                        Time spent on the office is time not spent on the business.
-                      </p>
-                    </>
-                  )}
-                  {activeTab === 2 && (
-                    <>
-                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                        You pay a lot before anyone sits down.
-                      </h3>
-                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                        You get approvals, hire contractors and build the interiors first. All of it costs money, and your team cannot work there until it is done.
-                      </p>
-                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
-                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
-                        Big spend now, nothing to use until day one.
-                      </p>
-                    </>
-                  )}
-                  {activeTab === 3 && (
-                    <>
-                      <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
-                        Many bills, and you owe all of them.
-                      </h3>
-                      <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
-                        Rent, maintenance charges, insurance and running costs arrive separately, every month. If your plans change, the lease still binds you.
-                      </p>
-                      <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
-                        <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
-                        You carry the entire financial risk until the lease ends.
-                      </p>
-                    </>
-                  )}
-                </div>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTab}
+                    initial={{ opacity: 0, x: -20, scale: 0.98 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: 20, scale: 0.98 }}
+                    transition={{ duration: 0.4, ease: [0.22, 0.8, 0.2, 1] }}
+                  >
+                    <span className="inline-block px-3 py-1 rounded-full bg-[#c93a10]/10 text-[#c93a10] text-xs font-bold tracking-wider mb-4">
+                      {`0${activeTab + 1}`}
+                    </span>
+                    {activeTab === 0 && (
+                      <>
+                        <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                          You sign for years. Your team changes every few months.
+                        </h3>
+                        <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                          A lease fixes how many seats you pay for. Hire more people and you run out of room. Lose a few and you keep paying for empty desks.
+                        </p>
+                        <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                          <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                          The traditional lease cannot shrink or grow with you.
+                        </p>
+                      </>
+                    )}
+                    {activeTab === 1 && (
+                      <>
+                        <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                          Your own team ends up running the office.
+                        </h3>
+                        <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                          Someone has to chase vendors, fix repairs, order furniture and renew licences. That someone is usually your staff, who have real work to do.
+                        </p>
+                        <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                          <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                          Time spent on the office is time not spent on the business.
+                        </p>
+                      </>
+                    )}
+                    {activeTab === 2 && (
+                      <>
+                        <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                          You pay a lot before anyone sits down.
+                        </h3>
+                        <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                          You get approvals, hire contractors and build the interiors first. All of it costs money, and your team cannot work there until it is done.
+                        </p>
+                        <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                          <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                          Big spend now, nothing to use until day one.
+                        </p>
+                      </>
+                    )}
+                    {activeTab === 3 && (
+                      <>
+                        <h3 className="text-2xl sm:text-4xl font-black text-[#1c1813] tracking-tight leading-tight">
+                          Many bills, and you owe all of them.
+                        </h3>
+                        <p className="mt-4 text-[#655d4e] text-base leading-relaxed">
+                          Rent, maintenance charges, insurance and running costs arrive separately, every month. If your plans change, the lease still binds you.
+                        </p>
+                        <p className="mt-5 text-[#1c1813] font-bold text-sm sm:text-base flex items-center gap-3">
+                          <span className="w-5 h-[2px] bg-[#d4622b] shrink-0" />
+                          You carry the entire financial risk until the lease ends.
+                        </p>
+                      </>
+                    )}
+                  </motion.div>
+                </AnimatePresence>
 
-                {/* Interactive Visual Cards */}
+                {/* Interactive Visual Cards with Zoom transitions */}
                 <div>
                   {activeTab === 0 && <TopicSeatGrid />}
                   {activeTab === 1 && <TopicTasksGauge />}
@@ -1079,15 +1264,21 @@ export default function EnterprisePage() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            3. COMPARE SECTION (TRADITIONAL VS ONWARD)
+            3. COMPARE SECTION (TRADITIONAL VS ONWARD WITH PARALLAX)
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section id="compare" className="py-20 sm:py-28 lg:py-36 bg-white border-b border-[#e2e2e2]">
-          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-left mb-10">
+        <section ref={compareRef} id="compare" className="relative py-20 sm:py-28 lg:py-36 bg-white border-b border-[#e2e2e2] overflow-hidden">
+          <motion.div style={{ y: compareY }} className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6 }}
+              className="text-left mb-10"
+            >
               <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-3">
                 The answer
               </p>
@@ -1100,97 +1291,140 @@ export default function EnterprisePage() {
 
               {/* Mode Toggle Switch */}
               <div className="inline-flex border-[1.5px] border-[#0b0b0b] rounded-full p-1 gap-1 mt-6">
-                <button
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
                   type="button"
                   onClick={() => setCompareMode("trad")}
                   className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                    compareMode === "trad" ? "bg-[#0b0b0b] text-white" : "text-[#0b0b0b]"
+                    compareMode === "trad" ? "bg-[#0b0b0b] text-white shadow-md" : "text-[#0b0b0b]"
                   }`}
                 >
                   Traditional lease
-                </button>
-                <button
+                </motion.button>
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
                   type="button"
                   onClick={() => setCompareMode("onward")}
                   className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                    compareMode === "onward" ? "bg-[#d4622b] text-white" : "text-[#0b0b0b]"
+                    compareMode === "onward" ? "bg-[#d4622b] text-white shadow-md" : "text-[#0b0b0b]"
                   }`}
                 >
                   With Onward
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
 
-            {/* KPI Cards */}
+            {/* KPI Cards with Parallax Zoom Entrance */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-              <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] p-6 sm:p-8 bg-[#faf9f5]">
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className="border-[1.5px] border-[#e2e2e2] rounded-[24px] p-6 sm:p-8 bg-[#faf9f5] shadow-sm"
+              >
                 <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[#585858]">
                   Parties you coordinate
                 </h3>
-                <div className="text-5xl sm:text-7xl font-black text-[#0b0b0b] my-3 leading-none">
-                  {compareMode === "trad" ? (
-                    <span className="text-[#0b0b0b] animate-fadeIn">50-60</span>
-                  ) : (
-                    <span className="text-[#d4622b] animate-fadeIn">1</span>
-                  )}
+                <div className="text-5xl sm:text-7xl font-black text-[#0b0b0b] my-3 leading-none overflow-hidden h-[1.1em] relative">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={compareMode}
+                      initial={{ y: 50, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -50, opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className={`block absolute ${compareMode === "trad" ? "text-[#0b0b0b]" : "text-[#d4622b]"}`}
+                    >
+                      {compareMode === "trad" ? "50-60" : "1"}
+                    </motion.span>
+                  </AnimatePresence>
                 </div>
                 <p className="text-sm text-[#585858] min-h-[2.8em]">
                   {compareMode === "trad"
                     ? "Landlord, vendors, maintenance contractors and your own site staff, all reporting to you."
                     : "Onward. One agreement, one dedicated team, and one single point of contact."}
                 </p>
-              </div>
+              </motion.div>
 
-              <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] p-6 sm:p-8 bg-[#faf9f5]">
+              <motion.div
+                whileHover={{ y: -6, scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                className="border-[1.5px] border-[#e2e2e2] rounded-[24px] p-6 sm:p-8 bg-[#faf9f5] shadow-sm"
+              >
                 <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[#585858]">
                   Cheques you write each month
                 </h3>
-                <div className="text-5xl sm:text-7xl font-black text-[#0b0b0b] my-3 leading-none">
-                  {compareMode === "trad" ? (
-                    <span className="text-[#0b0b0b] animate-fadeIn">5</span>
-                  ) : (
-                    <span className="text-[#d4622b] animate-fadeIn">1</span>
-                  )}
+                <div className="text-5xl sm:text-7xl font-black text-[#0b0b0b] my-3 leading-none overflow-hidden h-[1.1em] relative">
+                  <AnimatePresence mode="wait">
+                    <motion.span
+                      key={compareMode}
+                      initial={{ y: 50, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -50, opacity: 0 }}
+                      transition={{ duration: 0.4 }}
+                      className={`block absolute ${compareMode === "trad" ? "text-[#0b0b0b]" : "text-[#d4622b]"}`}
+                    >
+                      {compareMode === "trad" ? "5" : "1"}
+                    </motion.span>
+                  </AnimatePresence>
                 </div>
                 <p className="text-sm text-[#585858] min-h-[2.8em]">
                   {compareMode === "trad"
                     ? "Rent, CAM, insurance, operating costs and fit-out, each billed on its own schedule."
                     : "One cheque covers everything, delivered on a single all-inclusive monthly invoice."}
                 </p>
-              </div>
+              </motion.div>
             </div>
 
             {/* Bills Consolidation Visual Strip */}
-            <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] p-6 sm:p-8 mt-4 bg-white">
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              className="border-[1.5px] border-[#e2e2e2] rounded-[24px] p-6 sm:p-8 mt-4 bg-white shadow-sm"
+            >
               <h3 className="text-xs font-bold uppercase tracking-[0.14em] text-[#585858] mb-4">
                 Bills each month
               </h3>
               <div className="relative min-h-[84px] flex items-center justify-center">
-                {compareMode === "trad" ? (
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 w-full animate-fadeIn">
-                    {["Rent", "CAM", "Insurance", "Operating costs", "Fit-out"].map((item) => (
-                      <div
-                        key={item}
-                        className="border-[1.5px] border-dashed border-[#585858] rounded-[12px] p-3 text-center"
-                      >
-                        <b className="block text-sm font-bold text-[#0b0b0b]">{item}</b>
-                        <small className="block text-[11px] text-[#585858] mt-0.5">separate bill</small>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="bg-[#d4622b] text-white rounded-[14px] px-8 py-4 font-bold text-center animate-scaleIn shadow-lg">
-                    <b className="text-lg block">One cheque</b>
-                    <small className="block text-xs font-normal text-white/90 mt-0.5">
-                      rent, CAM, insurance, operating costs & fit-out included
-                    </small>
-                  </div>
-                )}
+                <AnimatePresence mode="wait">
+                  {compareMode === "trad" ? (
+                    <motion.div
+                      key="trad-bills"
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.4 }}
+                      className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 w-full"
+                    >
+                      {["Rent", "CAM", "Insurance", "Operating costs", "Fit-out"].map((item) => (
+                        <div
+                          key={item}
+                          className="border-[1.5px] border-dashed border-[#585858] rounded-[14px] p-3 text-center bg-[#faf9f5]"
+                        >
+                          <b className="block text-sm font-bold text-[#0b0b0b]">{item}</b>
+                          <small className="block text-[11px] text-[#585858] mt-0.5">separate bill</small>
+                        </div>
+                      ))}
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="onward-bill"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      transition={{ duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
+                      className="bg-[#d4622b] text-white rounded-[16px] px-8 py-4 font-bold text-center shadow-xl"
+                    >
+                      <b className="text-lg block">One cheque</b>
+                      <small className="block text-xs font-normal text-white/90 mt-0.5">
+                        rent, CAM, insurance, operating costs & fit-out included
+                      </small>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
+            </motion.div>
 
             {/* Comparison Table */}
-            <div className="border-[1.5px] border-[#e2e2e2] rounded-[20px] overflow-hidden mt-4">
+            <div className="border-[1.5px] border-[#e2e2e2] rounded-[24px] overflow-hidden mt-4 shadow-sm">
               <div className="hidden sm:grid grid-cols-[140px_1fr_1fr] bg-[#f4f4f4] border-b border-[#e2e2e2]">
                 <div className="p-4" />
                 <div className="p-4 text-xs font-bold uppercase tracking-wider text-[#585858]">
@@ -1223,8 +1457,9 @@ export default function EnterprisePage() {
                   onward: "One cheque: one all-inclusive monthly invoice",
                 },
               ].map((row, i) => (
-                <div
+                <motion.div
                   key={row.key}
+                  whileHover={{ backgroundColor: "rgba(212, 98, 43, 0.02)" }}
                   className={`grid grid-cols-1 sm:grid-cols-[140px_1fr_1fr] border-t border-[#e2e2e2] ${
                     i === 0 ? "border-t-0" : ""
                   }`}
@@ -1250,10 +1485,10 @@ export default function EnterprisePage() {
                     <span className="sm:hidden font-bold text-[#585858] text-xs">Onward: </span>
                     {row.onward}
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1262,11 +1497,21 @@ export default function EnterprisePage() {
         <CapabilityWebSection />
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            5. BENEFITS GRID SECTION
+            5. BENEFITS GRID SECTION WITH ZOOMING HOVER
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section id="benefits" className="py-20 sm:py-28 lg:py-36 bg-[#f4f4f4] border-b border-[#e2e2e2]">
-          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-left mb-10">
+        <section
+          ref={benefitsRef}
+          id="benefits"
+          className="relative py-20 sm:py-28 lg:py-36 bg-[#f4f4f4] border-b border-[#e2e2e2] overflow-hidden"
+        >
+          <motion.div style={{ scale: benefitsScale }} className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-left mb-10"
+            >
               <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-3">
                 The payoff
               </p>
@@ -1276,62 +1521,85 @@ export default function EnterprisePage() {
               <p className="mt-4 text-[#585858] text-base sm:text-lg max-w-2xl leading-relaxed">
                 Six tangible advantages when your office becomes one agreement and one cheque.
               </p>
-            </div>
+            </motion.div>
 
-            {/* 6 Icons Grid */}
+            {/* 6 Icons Grid with Zoom & Rotate Physics */}
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-3.5">
-              {BENEFITS_DATA.map((ben) => {
+              {BENEFITS_DATA.map((ben, i) => {
                 const isSelected = hoveredBenefit === ben.id;
                 return (
-                  <button
+                  <motion.button
                     key={ben.id}
+                    initial={{ opacity: 0, scale: 0.88, y: 20 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    whileHover={{ scale: 1.12, rotate: -3 }}
+                    whileTap={{ scale: 0.95 }}
                     type="button"
                     onMouseEnter={() => setHoveredBenefit(ben.id)}
                     onFocus={() => setHoveredBenefit(ben.id)}
                     onClick={() => setHoveredBenefit(ben.id)}
-                    className={`aspect-square flex items-center justify-center p-3 rounded-[20px] border-[1.5px] transition-all duration-300 cursor-pointer ${
+                    className={`aspect-square flex items-center justify-center p-3 rounded-[24px] border-[1.5px] transition-all duration-300 cursor-pointer ${
                       isSelected
-                        ? "border-[#d4622b] bg-[#d4622b] text-white -translate-y-1.5 shadow-lg"
-                        : "border-[#e2e2e2] bg-white text-[#0b0b0b] hover:border-[#d4622b]"
+                        ? "border-[#d4622b] bg-[#d4622b] text-white -translate-y-2 shadow-[0_20px_40px_-15px_rgba(212,98,43,0.5)]"
+                        : "border-[#e2e2e2] bg-white text-[#0b0b0b] hover:border-[#d4622b] shadow-sm"
                     }`}
                   >
                     <span className="w-10 h-10 sm:w-12 sm:h-12 block">
                       {ben.icon}
                     </span>
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
 
-            {/* Detail Dynamic Panel */}
-            <div className="mt-6 min-h-[118px] flex items-center p-6 sm:p-8 border-[1.5px] border-[#e2e2e2] rounded-[20px] bg-white shadow-sm transition-all">
-              {selectedBenefit ? (
-                <div className="animate-fadeIn">
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#0b0b0b] tracking-tight">
-                    {selectedBenefit.title}
-                  </h3>
-                  <p className="mt-1.5 text-[#585858] text-sm sm:text-base leading-relaxed max-w-3xl">
-                    {selectedBenefit.desc}
-                  </p>
-                </div>
-              ) : (
-                <div>
-                  <p className="text-[#585858] text-sm sm:text-base">
-                    Hover or tap any icon above to see what changes for your organization.
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+            {/* Detail Dynamic Panel with Zoom Reveal */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedBenefit?.id || "empty"}
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                transition={{ duration: 0.3 }}
+                className="mt-6 min-h-[118px] flex items-center p-6 sm:p-8 border-[1.5px] border-[#e2e2e2] rounded-[24px] bg-white shadow-sm"
+              >
+                {selectedBenefit ? (
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#0b0b0b] tracking-tight">
+                      {selectedBenefit.title}
+                    </h3>
+                    <p className="mt-1.5 text-[#585858] text-sm sm:text-base leading-relaxed max-w-3xl">
+                      {selectedBenefit.desc}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-[#585858] text-sm sm:text-base">
+                      Hover or tap any icon above to see what changes for your organization.
+                    </p>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
         </section>
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            6. ENTERPRISE ENQUIRIES / CONTACT SECTION
+            6. ENTERPRISE ENQUIRIES / CONTACT SECTION WITH PARALLAX GLOW
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section id="contact" className="py-20 sm:py-28 lg:py-36 bg-[#0b0b0b] text-white">
-          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="contact" className="relative py-20 sm:py-28 lg:py-36 bg-[#0b0b0b] text-white overflow-hidden">
+          {/* Subtle Parallax Background Glow */}
+          <div className="absolute inset-0 bg-radial from-[#d4622b]/10 via-transparent to-transparent pointer-events-none blur-3xl" />
+
+          <div className="relative z-10 max-w-[1180px] mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-16 items-end">
-              <div>
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+              >
                 <p className="text-xs tracking-[0.16em] uppercase font-bold text-[#d4622b] mb-4">
                   Enterprise enquiries
                 </p>
@@ -1342,24 +1610,32 @@ export default function EnterprisePage() {
                   Tell us your team size and preferred location. We will match you to the right managed enterprise workspace within 24 hours.
                 </p>
                 <div className="flex flex-wrap gap-3 mt-8">
-                  <a
+                  <motion.a
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    whileTap={{ scale: 0.96 }}
                     href="mailto:info@onwardworkspaces.com?subject=Enterprise%20enquiry"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-[#d4622b] text-white hover:bg-[#b8531f] transition-all shadow-md cursor-pointer hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm bg-[#d4622b] text-white hover:bg-[#b8531f] transition-colors shadow-lg cursor-pointer"
                   >
                     Email us
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
+                    whileHover={{ scale: 1.06, y: -2 }}
+                    whileTap={{ scale: 0.96 }}
                     href="tel:+919910668152"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm border-[1.5px] border-[#2c2c2c] text-white hover:border-[#d4622b] hover:text-[#d4622b] transition-all cursor-pointer hover:-translate-y-0.5"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-sm border-[1.5px] border-[#2c2c2c] text-white hover:border-[#d4622b] hover:text-[#d4622b] transition-colors cursor-pointer"
                   >
                     Call us
-                  </a>
+                  </motion.a>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Reach quick contact copy cards */}
+              {/* Reach quick contact copy cards with Zoom Hover */}
               <div className="grid gap-3">
-                <div className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[14px] p-4 sm:p-5 bg-[#171717]">
+                <motion.div
+                  whileHover={{ scale: 1.03, x: 4, borderColor: "#d4622b" }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[18px] p-4 sm:p-5 bg-[#171717] shadow-sm"
+                >
                   <div>
                     <small className="block text-[#a9a9a9] text-[11px] tracking-[0.12em] uppercase font-bold">
                       Email
@@ -1368,16 +1644,21 @@ export default function EnterprisePage() {
                       info@onwardworkspaces.com
                     </b>
                   </div>
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
                     type="button"
                     onClick={() => handleCopy("info@onwardworkspaces.com", "email")}
                     className="px-4 py-2 rounded-full border-[1.5px] border-[#2c2c2c] text-white text-xs font-bold hover:border-[#d4622b] transition-colors cursor-pointer shrink-0"
                   >
                     {copiedKey === "email" ? "Copied" : "Copy"}
-                  </button>
-                </div>
+                  </motion.button>
+                </motion.div>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[14px] p-4 sm:p-5 bg-[#171717]">
+                <motion.div
+                  whileHover={{ scale: 1.03, x: 4, borderColor: "#d4622b" }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-wrap items-center justify-between gap-3 border border-[#2c2c2c] rounded-[18px] p-4 sm:p-5 bg-[#171717] shadow-sm"
+                >
                   <div>
                     <small className="block text-[#a9a9a9] text-[11px] tracking-[0.12em] uppercase font-bold">
                       Phone
@@ -1386,14 +1667,15 @@ export default function EnterprisePage() {
                       +91 99106 68152
                     </b>
                   </div>
-                  <button
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
                     type="button"
                     onClick={() => handleCopy("+91 99106 68152", "phone")}
                     className="px-4 py-2 rounded-full border-[1.5px] border-[#2c2c2c] text-white text-xs font-bold hover:border-[#d4622b] transition-colors cursor-pointer shrink-0"
                   >
                     {copiedKey === "phone" ? "Copied" : "Copy"}
-                  </button>
-                </div>
+                  </motion.button>
+                </motion.div>
               </div>
             </div>
           </div>
