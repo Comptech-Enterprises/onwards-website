@@ -408,8 +408,8 @@ function ProblemsSection() {
       if (scrub) {
         const total = Math.max(1, story.offsetHeight - pin.offsetHeight);
         const p = clamp((STK - sr.top) / total, 0, 1);
-        const pos = clamp((p - 0.06) / 0.88, 0, 1) * (N - 1);
-        const enter = clamp((vh * 0.92 - sr.top) / (vh * 0.4), 0, 1);
+        const pos = clamp((p - 0.02) / 0.94, 0, 1) * (N - 1);
+        const enter = clamp((vh - sr.top) / (vh * 0.25), 0, 1);
         rail.style.setProperty("--prog", (pos / (N - 1)).toFixed(3));
         pick = Math.round(pos);
 
@@ -417,7 +417,10 @@ function ProblemsSection() {
           let d = pos - i;
           if ((i === 0 && d < 0) || (i === N - 1 && d > 0)) d = 0;
           const ad = Math.abs(d);
-          const o = clamp((0.5 - ad) / 0.2, 0, 1) * enter;
+          let o = clamp((0.5 - ad) / 0.2, 0, 1) * enter;
+          if (i === 0 && pos < 0.25 && enter > 0.3) {
+            o = Math.max(o, enter);
+          }
           const dd = clamp(d, -1, 1);
 
           const tx = txtRefs.current[i];
@@ -439,7 +442,7 @@ function ProblemsSection() {
 
           if (ad >= 0.5 || enter < 0.3 || sr.bottom < vh * 0.1) {
             toAway(i);
-          } else if (ad < 0.3 && enter > 0.85 && sr.top < vh * 0.45) {
+          } else if (ad < 0.3 && enter > 0.6 && sr.top < vh * 0.5) {
             toPlay(i);
           }
         }
@@ -522,7 +525,7 @@ function ProblemsSection() {
     <section id="problems" ref={sectionRef} className="inv sec">
       <style>{`
         #problems {
-          overflow: clip;
+          overflow: visible;
           --inv-bg: #efe8da;
           --inv-fg: #1c1813;
           --inv-muted: #655d4e;
@@ -533,11 +536,11 @@ function ProblemsSection() {
           --ease: cubic-bezier(0.16, 1, 0.3, 1);
           background: var(--inv-bg);
           color: var(--inv-fg);
-          padding-block: clamp(60px, 8vw, 120px);
+          padding-block: clamp(40px, 6vw, 80px);
           border-bottom: 1px solid var(--inv-line);
         }
         #problems .wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); }
-        #problems .sec-head { margin-bottom: clamp(32px, 5vw, 48px); }
+        #problems .sec-head { margin-bottom: clamp(24px, 4vw, 40px); }
         #problems .eyebrow { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; color: var(--ot); margin-bottom: 8px; }
         #problems .sec-head h2 { font-size: clamp(28px, 3.8vw, 52px); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; color: var(--inv-fg); }
         #problems .sec-head h2 em { font-style: normal; color: var(--orange); }
@@ -578,7 +581,7 @@ function ProblemsSection() {
         #problems .topic { scroll-margin-top: 100px; }
         #problems .tin { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(24px, 3.4vw, 52px); align-items: center; }
 
-        #problems .story.scrub { height: calc(100vh + 250vh); }
+        #problems .story.scrub { height: calc(100vh + 150vh); }
         #problems .story.scrub .pin { position: sticky; top: 84px; height: calc(100vh - 104px); min-height: 580px; align-items: center; }
         #problems .story.scrub .rail { position: relative; top: auto; }
         #problems .story.scrub .topics { display: grid; gap: 0; height: 100%; align-items: center; }
@@ -1489,7 +1492,7 @@ export default function EnterprisePage() {
     <>
       <Header alwaysSolid />
 
-      <main className="bg-white text-[#0b0b0b] pt-20 overflow-hidden">
+      <main className="bg-white text-[#0b0b0b] pt-20">
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             1. HERO SECTION
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
