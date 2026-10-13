@@ -148,14 +148,17 @@ const stats: Array<{
 const cityCards = [
   {
     name: "Delhi",
+    href: "/locations/delhi",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.webp",
   },
   {
     name: "Noida",
+    href: "/locations/noida",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.webp",
   },
   {
     name: "Gurugram",
+    href: "/locations/gurgaon",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.webp",
   },
 ];
@@ -1074,7 +1077,7 @@ export default function Home() {
             <motion.p
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
+              transition={{ delay: 0, duration: 0.4 }}
               className="mt-3 sm:mt-6 text-xs sm:text-base md:text-lg lg:text-xl text-white max-w-3xl mx-auto text-center leading-relaxed px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
             >
               Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
@@ -1083,7 +1086,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
+              transition={{ delay: 0, duration: 0.4 }}
               className="mt-6 sm:mt-10 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full sm:w-auto px-4"
             >
               <MagneticButton
@@ -1264,8 +1267,9 @@ export default function Home() {
           {/* Desktop — 3 City Cards (Delhi, Noida, Gurugram) */}
           <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8">
             {cityCards.map((city) => (
-              <div
+              <Link
                 key={city.name}
+                href={city.href}
                 className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
@@ -1280,7 +1284,7 @@ export default function Home() {
                     {city.name}
                   </h3>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -1288,8 +1292,9 @@ export default function Home() {
           <div className="md:hidden">
             <AutoSlider interval={3500}>
               {cityCards.map((city) => (
-                <div
+                <Link
                   key={city.name}
+                  href={city.href}
                   className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm flex flex-col"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
@@ -1304,7 +1309,7 @@ export default function Home() {
                       {city.name}
                     </h3>
                   </div>
-                </div>
+                </Link>
               ))}
             </AutoSlider>
           </div>
