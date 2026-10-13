@@ -11,6 +11,9 @@ export interface WorkspaceUnit {
   img: string;
   bannerImg?: string;
   slug: string;
+  copy?: import("@/data/locations").CentreCopy;
+  cardTitle?: string;
+  cardSubline?: string;
 }
 
 const areaWorkspaceAssetMap: Record<
@@ -101,6 +104,14 @@ const areaWorkspaceAssetMap: Record<
 };
 
 export function getWorkspacesForArea(area: AreaDetail): WorkspaceUnit[] {
+  return getBaseWorkspaces(area).map((w) => {
+    const card = area.cardCopy?.[w.category];
+    const copy = area.centreCopy?.[w.category];
+    return { ...w, ...(card ? { cardTitle: card.title, cardSubline: card.subline } : {}), ...(copy ? { copy } : {}) };
+  });
+}
+
+function getBaseWorkspaces(area: AreaDetail): WorkspaceUnit[] {
   const isBoth =
     area.type.toLowerCase().includes("managed") &&
     area.type.toLowerCase().includes("coworking");

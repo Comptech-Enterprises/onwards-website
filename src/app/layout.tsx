@@ -14,9 +14,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Onward Workspaces | Premium Coworking Spaces",
+  title: "Coworking Space in Delhi | Office Space | Onward",
   description:
-    "Premium coworking spaces built around your brand. Managed offices, private suites, virtual offices and more across Delhi NCR.",
+    "Explore coworking space and office space in Delhi with Onward Workspaces. Compare workspace options, request pricing and book a site visit.",
+  alternates: {
+    canonical: "https://onwardworkspaces.com",
+  },
+  openGraph: {
+    title: "Coworking Space in Delhi | Office Space | Onward",
+    description:
+      "Explore coworking space and office space in Delhi with Onward Workspaces. Compare workspace options, request pricing and book a site visit.",
+    url: "https://onwardworkspaces.com",
+    siteName: "Onward Workspaces",
+    type: "website",
+  },
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",

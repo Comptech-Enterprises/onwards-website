@@ -49,13 +49,19 @@ export default function Footer() {
                 className="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity"
               />
             </Link>
-            <p className="text-sm leading-relaxed text-gray-500 max-w-sm">
-              Premium coworking spaces built around your brand, ambition, and people across Delhi NCR.
+            <p className="text-sm leading-relaxed text-gray-500 max-w-md">
+              Established and launched in 2019, Onward Workspaces is a Delhi-based co-working space that strives to nurture innovative startups by providing them with the required support. We aim to design &amp; develop offices that change the way people feel about coming to work, foster a culture of sharing and exchange, and bring the best out of every individual.
+            </p>
+            <p className="mt-5 text-xs text-gray-500 max-w-md">
+              <span className="font-semibold text-[#1a1a2e] block">Location:</span>
+              Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, South Delhi, Delhi, 110020
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-4 sm:gap-6 text-xs text-gray-500">
               <div>
-                <span className="font-semibold text-[#1a1a2e] block">Direct Phone:</span>
-                <a href="tel:9910668152" className="hover:text-[#d4622b] transition-colors">+91 9910668152</a>
+                <span className="font-semibold text-[#1a1a2e] block">Sales:</span>
+                <a href="tel:+919217304534" className="hover:text-[#d4622b] transition-colors">+91 92173 04534</a>
+                {" | "}
+                <a href="tel:+919910668152" className="hover:text-[#d4622b] transition-colors">+91 99106 68152</a>
               </div>
               <div>
                 <span className="font-semibold text-[#1a1a2e] block">Email:</span>

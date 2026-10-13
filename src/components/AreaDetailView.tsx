@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
+import FaqSection from "@/components/FaqSection";
 import AreaWorkspacesSelector from "@/components/AreaWorkspacesSelector";
 import type { CityData, AreaDetail } from "@/data/locations";
 
@@ -38,8 +39,14 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
             </nav>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-              <span className="text-white">Onward in</span>{" "}
-              <span className="text-[#d4622b]">{area.name}</span>
+              {area.h1 ? (
+                <span className="text-white">{area.h1}</span>
+              ) : (
+                <>
+                  <span className="text-white">Onward in</span>{" "}
+                  <span className="text-[#d4622b]">{area.name}</span>
+                </>
+              )}
             </h1>
             <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
               {area.description}
@@ -115,12 +122,18 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
         {/* ━━━ 5. CONTACT FORM ━━━ */}
         <ContactSection
           bgImage={area.img}
-          title={`Find your space in ${city.name}`}
-          highlight={city.name}
-          description={`Book a tour of Onward Workspaces ${area.name} and see the ${area.highlight.toLowerCase()} for yourself.`}
           hideDirectContacts
           simpleForm
+          {...(area.contactBody
+            ? {
+                title: "Book a Workspace Tour or Request Pricing",
+                highlight: "Request Pricing",
+                description: area.contactBody,
+              }
+            : {})}
         />
+
+        {area.faqs && <FaqSection faqs={area.faqs} />}
       </main>
 
       <Footer />

@@ -223,9 +223,6 @@ export default function SolutionPageView({
 
         {/* ━━━ 4. CONTACT FORM ━━━ */}
         <ContactSection
-          title={`Get in touch about ${sol.title}`}
-          highlight={sol.title}
-          description="Whether you have questions about membership options, need assistance with technical aspects, or want to explore customisation possibilities for your workspace, our experts are here to help."
           hideDirectContacts
         />
       </main>

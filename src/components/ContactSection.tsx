@@ -23,8 +23,8 @@ const directContacts = [
       />
     ),
     label: "Direct Phone",
-    value: "+91 9910668152",
-    href: "tel:9910668152",
+    value: "+91 92173 04534",
+    href: "tel:+919217304534",
   },
   {
     icon: (
@@ -46,8 +46,8 @@ const directContacts = [
         d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
       />
     ),
-    label: "Headquarters",
-    value: "Delhi NCR, India",
+    label: "Location",
+    value: "Ground Floor, E-44/3, Okhla Industrial Area Phase II, New Delhi, South Delhi, Delhi, 110020",
     href: "#locations",
   },
 ];
@@ -55,9 +55,9 @@ const directContacts = [
 export default function ContactSection({
   bgImage,
   formOnly = false,
-  title = "Ready to move forward with Onward?",
-  highlight = "forward with Onward?",
-  description = "Whether you need a bespoke enterprise floor for 500+ or a private cabin for your executive team, our workspace specialists will curate the perfect solution within 24 hours.",
+  title = "Get in Touch With Us",
+  highlight = "Touch With Us",
+  description = "Our workspace specialists will assess your requirements, from large enterprise floors to private executive cabins, and present a tailored proposal within one business day.",
   hideDirectContacts = false,
   simpleForm = false,
 }: {
@@ -325,10 +325,10 @@ export default function ContactSection({
                       className="w-full bg-gradient-to-r from-[#d4622b] to-[#ea580c] text-white py-4 rounded-xl font-bold text-base hover:shadow-[0_10px_30px_rgba(212,98,43,0.3)] transition-all flex items-center justify-center gap-2 disabled:opacity-70 cursor-pointer"
                     >
                       {status === "submitting" ? (
-                        <span>Processing Tour Request...</span>
+                        <span>Processing...</span>
                       ) : (
                         <>
-                          <span>Schedule a Tour &amp; Get Pricing</span>
+                          <span>Book a Site Visit</span>
                           <span>&rarr;</span>
                         </>
                       )}

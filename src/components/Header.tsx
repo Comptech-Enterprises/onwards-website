@@ -240,7 +240,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             href="/#contact"
             className="hidden lg:inline-flex items-center gap-2 bg-[#d4622b] text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-all shadow-md group"
           >
-            <span>Get Started</span>
+            <span>Enquire Now</span>
             <svg
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"
@@ -394,7 +394,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   onClick={() => setMobileMenu(false)}
                   className="block bg-[#d4622b] text-white text-center py-2.5 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
                 >
-                  Get Started
+                  Enquire Now
                 </Link>
               </div>
             </div>

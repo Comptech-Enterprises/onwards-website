@@ -24,10 +24,10 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
         />
       </div>
       <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#d4622b] transition-colors">
-        {ws.title}
+        {ws.cardTitle ?? ws.title}
       </h3>
       <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
-        {ws.badge} &middot; {ws.seats}
+        {ws.cardSubline ?? `${ws.badge} · ${ws.seats}`}
       </p>
       <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#d4622b] group-hover:text-black transition-colors">
         View Centre &rarr;

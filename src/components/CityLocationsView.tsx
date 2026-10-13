@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -38,9 +38,24 @@ const whyChoose = [
 export default function CityLocationsView({ city }: { city: CityData }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openWhy, setOpenWhy] = useState<number | null>(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const [sliderPaused, setSliderPaused] = useState(false);
+
+  useEffect(() => {
+    if (sliderPaused) return;
+    const timer = setInterval(() => {
+      const el = sliderRef.current;
+      if (!el || el.scrollWidth <= el.clientWidth + 4) return;
+      const card = el.firstElementChild as HTMLElement | null;
+      const step = card ? card.offsetWidth + 24 : el.clientWidth / 3;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
+      el.scrollTo({ left: atEnd ? 0 : el.scrollLeft + step, behavior: "smooth" });
+    }, 1800);
+    return () => clearInterval(timer);
+  }, [sliderPaused]);
   const { name: cityName, heroImage, heroDescription, contactDescription, areas, basePath } = city;
 
-  const faqs = [
+  const defaultFaqs = [
     {
       q: `What sets Onward Workspaces apart as a coworking space in ${cityName}?`,
       a: `Onward Workspaces isn't just a space; it's your dynamic hub for innovation in the heart of ${cityName}. Our coworking ecosystem blends style and substance, ensuring every workday is a step toward success.`,
@@ -58,6 +73,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
       a: "We frequently offer special deals to make your Onward Workspaces experience even more rewarding. Connect with us to know more — your success deserves the best, at the best value.",
     },
   ];
+  const faqs = city.faqs ?? defaultFaqs;
 
   return (
     <>
@@ -95,8 +111,14 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             </nav>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-              <span className="text-white">Managed Office Space</span>{" "}
-              <span className="text-[#d4622b]">in {cityName}</span>
+              {city.h1 ? (
+                <span className="text-white">{city.h1}</span>
+              ) : (
+                <>
+                  <span className="text-white">Managed Office Space</span>{" "}
+                  <span className="text-[#d4622b]">in {cityName}</span>
+                </>
+              )}
             </h1>
             <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
               {heroDescription}
@@ -111,21 +133,32 @@ export default function CityLocationsView({ city }: { city: CityData }) {
         <section className="py-10 sm:py-12 lg:py-14 bg-white border-t border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="max-w-2xl mb-6 sm:mb-8">
-              <Reveal>
-                <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
-                  {cityName} &middot; {areas.length} Centres
-                </span>
-              </Reveal>
+              {!city.centresHeading && (
+                <Reveal>
+                  <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
+                    {cityName} &middot; {areas.length} Centres
+                  </span>
+                </Reveal>
+              )}
               <h2 className="mt-1.5 text-xl sm:text-3xl font-bold text-black tracking-tight">
-                Centres in {cityName}
+                {city.centresHeading ?? `Centres in ${cityName}`}
               </h2>
             </div>
 
-            {/* Desktop Grid */}
-            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-              {areas.map((area, idx) => (
-                <Reveal key={area.slug} delay={idx * 0.06}>
-                  <Link href={`${basePath}/${area.slug}`} className="group block">
+            {/* Desktop Slider */}
+            <div className="hidden sm:block relative">
+              <div
+                ref={sliderRef}
+                onMouseEnter={() => setSliderPaused(true)}
+                onMouseLeave={() => setSliderPaused(false)}
+                className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              >
+                {areas.map((area) => (
+                  <Link
+                    key={area.slug}
+                    href={`${basePath}/${area.slug}`}
+                    className="group block snap-start shrink-0 sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
+                  >
                     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
                       <Image
                         src={area.img}
@@ -138,14 +171,14 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                       {area.name}
                     </h3>
                     <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
-                      {area.type} &middot; {area.seats}
+                      {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
                     </p>
                     <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#d4622b] group-hover:text-black transition-colors">
-                      View Centre &rarr;
+                      {area.centres ? "View Micro Market" : "View Centre"} &rarr;
                     </span>
                   </Link>
-                </Reveal>
-              ))}
+                ))}
+              </div>
             </div>
 
             {/* Mobile AutoSlider */}
@@ -166,10 +199,10 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                         {area.name}
                       </h3>
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mt-0.5">
-                        {area.type} &middot; {area.seats}
+                        {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
                       </p>
                       <span className="inline-flex items-center gap-1 mt-1 text-xs font-semibold text-[#d4622b]">
-                        View Centre &rarr;
+                        {area.centres ? "View Micro Market" : "View Centre"} &rarr;
                       </span>
                     </div>
                   </Link>
@@ -183,8 +216,14 @@ export default function CityLocationsView({ city }: { city: CityData }) {
         <section className="py-12 sm:py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight max-w-4xl">
-              Why Choose Onward for Your Workspace in{" "}
-              <span className="text-[#d4622b]">{cityName}</span>?
+              {city.expect ? (
+                city.expect.heading
+              ) : (
+                <>
+                  Why Choose Onward for Your Workspace in{" "}
+                  <span className="text-[#d4622b]">{cityName}</span>?
+                </>
+              )}
             </h2>
 
             <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-start">
@@ -198,7 +237,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
               </div>
 
               <div className="divide-y divide-gray-200 border-t border-gray-200">
-                {whyChoose.map((item, i) => {
+                {(city.expect?.items ?? whyChoose).map((item, i) => {
                   const isOpen = openWhy === i;
                   return (
                     <div key={item.title}>
@@ -222,7 +261,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                             transition={{ duration: 0.3 }}
                             className="overflow-hidden"
                           >
-                            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed pb-5 max-w-lg">
+                            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed pb-5 max-w-xl">
                               {item.desc}
                             </p>
                           </motion.div>
@@ -240,17 +279,21 @@ export default function CityLocationsView({ city }: { city: CityData }) {
         <section className="py-12 sm:py-16 lg:py-20 bg-white border-t border-gray-200/80">
           <div className="max-w-5xl mx-auto px-6 lg:px-8">
             <div className="text-center mb-8 sm:mb-12">
+              {!city.faqs && (
               <Reveal>
                 <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
                   Got Questions?
                 </span>
               </Reveal>
+              )}
               <h2 className="mt-1.5 text-2xl sm:text-3xl lg:text-4xl font-bold text-black tracking-tight">
                 Frequently Asked Questions
               </h2>
+              {!city.faqs && (
               <p className="mt-2 text-gray-600 text-xs sm:text-sm md:text-base">
                 Everything you need to know about us.
               </p>
+              )}
             </div>
 
             <div className="divide-y divide-gray-200 border-t border-gray-200">
@@ -302,11 +345,11 @@ export default function CityLocationsView({ city }: { city: CityData }) {
         {/* ━━━ BOTTOM CTA (SHARED CONTACT FORM) ━━━ */}
         <ContactSection
           bgImage={heroImage}
-          title={`Find your Onward space in ${cityName}`}
-          highlight={`space in ${cityName}`}
-          description={contactDescription}
           hideDirectContacts
           simpleForm
+          {...(city.contactTitle
+            ? { title: city.contactTitle, highlight: city.contactHighlight, description: city.contactBody }
+            : {})}
         />
       </main>
 

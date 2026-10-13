@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import ContactSection from "@/components/ContactSection";
+import FaqSection from "@/components/FaqSection";
 import AmenitiesTicker from "@/components/AmenitiesTicker";
 import type { CityData, AreaDetail } from "@/data/locations";
 import type { WorkspaceUnit } from "@/data/workspaces";
@@ -51,10 +52,10 @@ export default function CentreDetailView({
             </nav>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white">
-              {centre.title}
+              {centre.copy?.h1 ?? centre.title}
             </h1>
             <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
-              {centre.tagline}
+              {centre.copy?.body ?? centre.tagline}
             </p>
 
           </div>
@@ -66,20 +67,20 @@ export default function CentreDetailView({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
               <div>
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Address</span>
-                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{area.address}</p>
+                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.address ?? area.address}</p>
               </div>
               <div>
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Connectivity</span>
-                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.transit}</p>
+                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.connectivity ?? centre.transit}</p>
               </div>
               <div>
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Capacity</span>
-                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.seats}</p>
+                <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.capacity ?? centre.seats}</p>
               </div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5 mt-6 pt-6 border-t border-gray-200/80">
-              {area.features.map((feature) => (
+              {(centre.copy?.features ?? area.features).map((feature) => (
                 <span key={feature} className="px-4 py-2 rounded-full text-xs font-semibold text-gray-700 bg-white border border-gray-200">
                   {feature}
                 </span>
@@ -90,7 +91,7 @@ export default function CentreDetailView({
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               className="mt-6 inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
             >
-              Get Started <span>&rarr;</span>
+              Schedule a Site Visit <span>&rarr;</span>
             </button>
           </div>
         </section>
@@ -129,12 +130,18 @@ export default function CentreDetailView({
         {/* 6. CONTACT FORM */}
         <ContactSection
           bgImage={centre.img}
-          title={`Book a tour at ${area.name}`}
-          highlight={area.name}
-          description={`Visit ${centre.title} and experience the ${area.highlight.toLowerCase()} for yourself.`}
           hideDirectContacts
           simpleForm
+          {...(centre.copy && area.contactBody
+            ? {
+                title: "Book a Workspace Tour or Request Pricing",
+                highlight: "Request Pricing",
+                description: area.contactBody,
+              }
+            : {})}
         />
+
+        {centre.copy && area.faqs && <FaqSection faqs={area.faqs} />}
       </main>
 
       <Footer />

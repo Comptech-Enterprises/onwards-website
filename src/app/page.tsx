@@ -75,9 +75,9 @@ function Marquee({
    ═══════════════════════════════════════════ */
 
 const whyChoose = [
-  { title: "Strategically Positioned", desc: "Our locations are strategically positioned in vibrant business centers, guaranteeing that you are constantly at the heart of opportunities.", icon: "M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11zm0-8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" },
-  { title: "Culture of Triumph", desc: "Step into a space where every element is meticulously designed to elevate you to new heights, crafted to empower you on your journey to greatness.", icon: "M8 21h8m-4-4v4m-5-18h10v5a5 5 0 01-10 0V3zm10 2h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3" },
-  { title: "Amenities Beyond Ordinary", desc: "Immerse yourself in a world of cutting-edge facilities, from futuristic tech to tailor-made workspaces, all designed to amplify your workflow.", icon: "M13 2L4 14h7l-1 8 9-12h-7l1-8z" },
+  { title: "Strategically Positioned", desc: "Prime locations across Delhi NCR's established business districts, with strong metro access and connectivity. Your team and clients reach you easily, and your business stays close to opportunity.", icon: "M12 21s-7-6.2-7-11a7 7 0 1114 0c0 4.8-7 11-7 11zm0-8.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z" },
+  { title: "Amenities Beyond Ordinary", desc: "Thoughtfully designed workspaces with high-speed connectivity, ergonomic furniture, meeting rooms and dependable day-to-day support. Every detail is planned to keep your team productive.", icon: "M13 2L4 14h7l-1 8 9-12h-7l1-8z" },
+  { title: "Culture of Triumph", desc: "Spaces designed to inspire focus and collaboration, within a community of ambitious businesses. We look after the workspace, so your team can concentrate on growth.", icon: "M8 21h8m-4-4v4m-5-18h10v5a5 5 0 01-10 0V3zm10 2h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3" },
 ];
 
 const newsMediaItems = [
@@ -139,10 +139,10 @@ const stats: Array<{
   decimals: number;
   footnote?: string;
 }> = [
-  { value: 9, suffix: "", label: "CITIES", decimals: 0 },
-  { value: 11.46, suffix: "", label: "MN SQ FT", decimals: 2 },
-  { value: 425, suffix: "+", label: "ENTERPRISE CLIENTS", decimals: 0 },
-  { value: 80, suffix: "+", label: "CENTRES", decimals: 0 },
+  { value: 3, suffix: "+", label: "CITIES", decimals: 0 },
+  { value: 1, suffix: "", label: "MILLION SQ FT", decimals: 0 },
+  { value: 250, suffix: "+", label: "CLIENTS", decimals: 0 },
+  { value: 15, suffix: "+", label: "CENTRES", decimals: 0 },
 ];
 
 const cityCards = [
@@ -167,49 +167,55 @@ const solutions = [
   {
     slug: "managed-office",
     title: "Managed Office",
-    desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
+    desc: "Customised workspaces for enterprises, MNCs and fast-scaling companies, with dedicated access and your own branding.",
     tag: "ENTERPRISE",
     features: ["Dedicated Entrance", "Custom Layout & IT", "24/7 Access"],
+    cta: "Explore Managed Offices",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/office-space-solutions/managed-space.webp",
   },
   {
     slug: "private-suites",
     title: "Private Suites",
-    desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
+    desc: "Fully managed private cabins for high-growth teams of 10 to 100+ members.",
     tag: "TEAMS",
     features: ["Ergonomic Seating", "Soundproof Cabins", "Meeting Credits"],
+    cta: "Explore Private Suites",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/office-space-solutions/private-suites.webp",
   },
   {
     slug: "private-cabins",
     title: "Private Cabins",
-    desc: "Fully-equipped executive space crafted specifically for partners and directors.",
+    desc: "Fully equipped executive offices for partners, directors and senior leadership.",
     tag: "EXECUTIVE",
-    features: ["Executive Furniture", "Private Lounge", "Concierge Service"],
+    features: ["Executive Furniture", "Private Lounge"],
+    cta: "Explore Private Cabins",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/office-space-solutions/private-cabins.webp",
   },
   {
     slug: "virtual-office",
     title: "Virtual Office",
-    desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
+    desc: "A prestigious business address with mail handling and GST registration support, without the cost of a physical office.",
     tag: "REMOTE",
-    features: ["GST Registration", "Mail Forwarding", "Day Pass Access"],
+    features: ["GST Registration", "Mail Forwarding"],
+    cta: "Explore Virtual Offices",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/office-space-solutions/virtual-office.webp",
   },
   {
     slug: "on-demand",
     title: "On-Demand",
-    desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
+    desc: "Boardrooms, meeting suites and flexible day passes, available when you need them across Delhi NCR.",
     tag: "FLEXIBLE",
-    features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage"],
+    features: ["Instant Booking", "Video Conferencing", "Complimentary Beverages"],
+    cta: "Book On-Demand Space",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/office-space-solutions/on-demand.webp",
   },
   {
     slug: "custom-built",
     title: "Custom Built",
-    desc: "End-to-end bespoke interior architecture tailored to your company identity.",
+    desc: "End-to-end bespoke interiors, designed and delivered to reflect your company identity.",
     tag: "BESPOKE",
     features: ["Architect-Led Design", "Brand Aesthetics", "Turnkey Build"],
+    cta: "Plan Your Workspace",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/office-space-solutions/custom-built.webp",
   },
 ];
@@ -223,21 +229,35 @@ const cities = [
         tag: "CBD Prime",
         seats: "450+ Desks",
         transit: "2 min to CP Metro",
-        highlight: "Private Suites & Enterprise Floors",
+        highlight: "A landmark address in the heart of Delhi for forward-thinking teams.",
       },
       {
-        spot: "Nehru Place",
-        tag: "Financial District",
+        spot: "Okhla Phase 2",
+        tag: "South Delhi",
         seats: "320+ Desks",
-        transit: "1 min to Metro",
-        highlight: "Dedicated Cabins & High-Speed Labs",
+        transit: "Okhla NSIC Metro",
+        highlight: "A well-connected business hub in South Delhi.",
       },
       {
-        spot: "Saket",
-        tag: "South Delhi Hub",
+        spot: "Okhla Phase 3",
+        tag: "Commercial District",
         seats: "280+ Desks",
-        transit: "Walking to Select Citywalk",
-        highlight: "Executive Suites & Boardrooms",
+        transit: "Okhla NSIC Metro",
+        highlight: "An established commercial district with easy access to Okhla NSIC metro.",
+      },
+      {
+        spot: "Mohan Cooperative",
+        tag: "Mathura Road",
+        seats: "300+ Desks",
+        transit: "Mohan Estate Metro",
+        highlight: "A practical, well-connected address on Mathura Road.",
+      },
+      {
+        spot: "Janakpuri",
+        tag: "West Delhi",
+        seats: "250+ Desks",
+        transit: "Janakpuri West Metro",
+        highlight: "A growing business district in West Delhi with strong metro connectivity.",
       },
     ],
   },
@@ -245,25 +265,25 @@ const cities = [
     name: "Noida" as const,
     hubs: [
       {
-        spot: "Sector 62",
-        tag: "Tech Zone",
-        seats: "500+ Desks",
-        transit: "Sector 62 Metro Station",
-        highlight: "IT Campuses & Collaborative Zones",
+        spot: "Sector 4",
+        tag: "Central Noida",
+        seats: "400+ Desks",
+        transit: "Noida Sector 15 Metro",
+        highlight: "An established commercial address in the heart of Noida.",
       },
       {
-        spot: "Sector 16",
-        tag: "Corporate Tower",
+        spot: "Sector 126",
+        tag: "Expressway",
         seats: "380+ Desks",
-        transit: "Direct DND Flyway Access",
-        highlight: "Metro Linked High-Rise Offices",
+        transit: "Noida Expressway",
+        highlight: "A modern business address close to the Noida Expressway.",
       },
       {
         spot: "Sector 132",
         tag: "Expressway Campus",
         seats: "420+ Desks",
         transit: "Noida-Gr. Noida Expressway",
-        highlight: "Green Certified Custom Workspaces",
+        highlight: "An expressway-facing location for growing teams.",
       },
     ],
   },
@@ -271,25 +291,25 @@ const cities = [
     name: "Gurgaon" as const,
     hubs: [
       {
-        spot: "Cyber City",
-        tag: "DLF CyberHub",
+        spot: "Udyog Vihar",
+        tag: "Corporate Corridor",
         seats: "600+ Desks",
-        transit: "Rapid Metro Station",
-        highlight: "Unicorn & MNC Custom HQs",
-      },
-      {
-        spot: "Golf Course Rd",
-        tag: "Ultra Luxury",
-        seats: "400+ Desks",
-        transit: "Sector 54 Rapid Metro",
-        highlight: "High-End Executive Suites",
+        transit: "IFFCO Chowk Metro",
+        highlight: "Gurugram’s established corporate corridor.",
       },
       {
         spot: "Sohna Road",
         tag: "Growth Corridor",
         seats: "350+ Desks",
         transit: "Subhash Chowk Junction",
-        highlight: "Scalable Team Suites & Lounges",
+        highlight: "A fast-growing business corridor in Gurugram for scaling teams.",
+      },
+      {
+        spot: "MG Road",
+        tag: "Prime Gurugram",
+        seats: "400+ Desks",
+        transit: "MG Road Metro",
+        highlight: "A prime Gurugram address with strong metro connectivity.",
       },
     ],
   },
@@ -786,9 +806,7 @@ function NewsMediaSection() {
           />
           <Reveal delay={0.1}>
             <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed max-w-4xl mx-auto text-center">
-              We understand that selecting the right co-working space is a crucial decision.{" "}
-              <br className="hidden md:inline" />
-              We&apos;re here to help you make an informed choice and tailor our offerings to meet your specific needs.
+              Read about our latest announcements, press coverage and perspectives on the future of flexible and managed workspaces.
             </p>
           </Reveal>
         </div>
@@ -872,7 +890,7 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
         {/* Silversquare "Know more →" bottom CTA row */}
         <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-100 flex items-center justify-between">
           <span className="text-xs sm:text-sm font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
-            Know more
+            {sol.cta}
           </span>
           <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gray-100 text-gray-700 group-hover:bg-[#d4622b] group-hover:text-white transition-all duration-300 flex items-center justify-center">
             <svg
@@ -963,7 +981,7 @@ function LocationCard({
         <p className="mt-1.5 text-xs text-gray-400 leading-relaxed">{hub.highlight}</p>
 
         <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-xs font-semibold text-[#d4622b]">Book a Tour</span>
+          <span className="text-xs font-semibold text-[#d4622b]">Schedule a Site Visit</span>
           <motion.div
             whileHover={{ rotate: 45 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
@@ -1080,7 +1098,7 @@ export default function Home() {
               transition={{ delay: 0, duration: 0.4 }}
               className="mt-3 sm:mt-6 text-xs sm:text-base md:text-lg lg:text-xl text-white max-w-3xl mx-auto text-center leading-relaxed px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
             >
-              Premium coworking spaces across Delhi NCR. Designed for teams that refuse to settle for ordinary.
+              Enterprise-grade workspaces across Delhi NCR, delivered with speed, transparency and operational reliability.
             </motion.p>
 
             <motion.div
@@ -1093,16 +1111,9 @@ export default function Home() {
                 href="#contact"
                 className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d4622b] text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full text-xs sm:text-base md:text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]"
               >
-                Book a Tour
+                Schedule a Site Visit
                 <svg className="ml-2 w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </MagneticButton>
-              <a
-                href="tel:9910668152"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 sm:gap-3 text-white hover:text-[#d4622b] px-5 py-3 sm:px-8 sm:py-4 rounded-full border border-white/30 hover:border-[#d4622b]/60 bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all shadow-sm text-xs sm:text-base md:text-lg font-semibold"
-              >
-                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
-                +91 9910668152
-              </a>
             </motion.div>
           </div>
         </motion.div>
@@ -1156,14 +1167,13 @@ export default function Home() {
               </span>
             </Reveal>
             <AnimatedHeading
-              text="Office Space Solutions"
-              highlight="Solutions"
+              text="Office Space Solution"
+              highlight="Solution"
               className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
             />
             <Reveal delay={0.2}>
               <p className="mt-2 sm:mt-3 text-gray-700 text-xs sm:text-base lg:text-lg leading-relaxed">
-                Flexible office solutions aligned with your business needs and
-                growth trajectory.
+                Select office space solutions aligned with your business needs, operational flexibility, and growth objectives.
               </p>
             </Reveal>
           </div>
@@ -1200,13 +1210,13 @@ export default function Home() {
               </span>
             </Reveal>
             <AnimatedHeading
-              text="Revolutionise Your Workspace."
-              highlight="Workspace."
-              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight"
+              text="Revolutionalise Your Workspace"
+              highlight="Workspace"
+              className="text-xl min-[400px]:text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2 leading-tight whitespace-nowrap"
             />
             <Reveal delay={0.2}>
               <p className="mt-2 sm:mt-3 text-gray-700 text-xs sm:text-base lg:text-lg leading-relaxed">
-                Whether you have questions about membership options, need assistance with technical aspects, or want to explore customization possibilities for your workspace, our experts are here to provide you with personalized guidance and solutions.
+                From prime locations to thoughtfully designed spaces and dependable service, every Onward workspace is built to help your business operate at its best.
               </p>
             </Reveal>
           </div>
@@ -1255,11 +1265,12 @@ export default function Home() {
             <AnimatedHeading
               text="Our Top Cities in Delhi NCR"
               highlight="Delhi NCR"
+
               className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
             />
             <Reveal delay={0.1}>
               <p className="mt-2 sm:mt-3 text-xs sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                Begin your path to success with Onward Workspaces across Delhi, Noida, and Gurugram.
+                Discover premium workspace solutions tailored to your organisation, across Delhi, Noida and Gurugram.
               </p>
             </Reveal>
           </div>
@@ -1342,6 +1353,11 @@ export default function Home() {
             highlight="Workspace Gallery"
             className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2"
           />
+          <Reveal delay={0.1}>
+            <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto">
+              Step inside Onward Workspaces and experience the design, community and quality of service that define our centres.
+            </p>
+          </Reveal>
         </div>
         <GallerySlider />
       </section>

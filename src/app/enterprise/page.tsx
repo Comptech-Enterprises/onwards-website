@@ -1887,9 +1887,6 @@ export default function EnterprisePage() {
             6. ENTERPRISE ENQUIRIES: GET IN TOUCH (STANDARD FORM)
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <ContactSection
-          title="Enterprise enquiries: Get in touch."
-          highlight="Get in touch."
-          description="Tell us your team size and preferred location. We will match you to the right workspace within 24 hours."
         />
       </main>
 

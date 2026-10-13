@@ -15,7 +15,7 @@ const valuesList = [
   {
     id: "excellence",
     title: "A commitment to excellence",
-    desc: "We love building and we are all rather obsessed with making things better. This is what every client, big or small, can expect from us—from enterprise to Web3 innovators.",
+    desc: "Every decision at Onward is guided by intentional design, transparent operations and dependable service. This is the standard every client can expect from us, from start-ups to global enterprises.",
     icon: (
       <svg className="w-10 h-10 text-[#d4622b]" viewBox="0 0 40 40" fill="none">
         <circle cx="20" cy="14" r="6" stroke="currentColor" strokeWidth="2.2" />
@@ -236,24 +236,19 @@ export default function AboutPage() {
               className="border-t border-gray-100 pt-8 sm:pt-10 max-w-4xl"
             >
               <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
-                Established in 2019, Onward Workspaces is a Delhi-based coworking company built to eliminate the rigidities of conventional commercial leases. We recognized that thriving enterprises and fast-growing teams require more than just square footage — they need intelligent environments that nurture company culture, elevate team productivity, and accommodate hyper-fast scaling.
-              </p>
+                Established in 2019, Onward Workspaces is a Delhi-based workspace company created to move businesses beyond the limitations of conventional commercial leases. We recognised that growing organisations need more than square footage. They need well-designed environments that strengthen company culture, support team productivity and allow the business to scale with confidence.</p>
               <p className="mt-4 text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
-                Today, Onward manages premium workspace hubs across Delhi, Noida, and Gurugram, hosting hundreds of thriving businesses ranging from venture-backed startups and unicorns to established multinational corporations.
-              </p>
+                Today, Onward Workspaces operates premium coworking and managed office centres across Delhi, Noida and Gurugram. Our clients range from venture-backed start-ups to established multinational corporations, including Fortune 500 companies, and each is supported by a single accountable team, from setup through daily operations.</p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <MagneticButton
                   href="/#contact"
                   className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8501f] text-white px-7 py-3.5 rounded-full font-bold text-sm shadow-md transition-all"
                 >
-                  <span>Schedule a Visit</span>
+                  <span>Schedule a visit</span>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                   </svg>
                 </MagneticButton>
-                <Link href="/locations/delhi" className="text-[#1a1a2e] font-bold text-sm hover:text-[#d4622b] transition-colors inline-flex items-center gap-1.5 py-2">
-                  Explore Locations &rarr;
-                </Link>
               </div>
             </motion.div>
           </div>
@@ -412,8 +407,8 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div style={{ y: teamHeadY, opacity: teamHeadOp }} className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
               <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">The Minds Behind Onward</span>
-              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">Our Present and Future</h2>
-              <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-xl mx-auto">Meet the passionate real estate strategists, architects, and community leaders driving our mission every day.</p>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">The Team Behind Onward</h2>
+              <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-xl mx-auto">Meet the people behind our workspaces, our service and our clients.</p>
             </motion.div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -446,8 +441,8 @@ export default function AboutPage() {
           <motion.div style={{ scale: ctaScale, opacity: ctaOp }} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <ScrollReveal>
               <span className="text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">Join the Network</span>
-              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight">Ready to elevate your workspace?</h2>
-              <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">Book a walkthrough of our centres across Delhi, Noida, or Gurugram and let our team curate your ideal office layout.</p>
+              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight">Ready to Find Your Workspace?</h2>
+              <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">Schedule a visit to any of our centres across Delhi, Noida and Gurugram, and our team will recommend the workspace that suits your organisation.</p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <MagneticButton href="/#contact" className="w-full sm:w-auto bg-[#d4622b] hover:bg-[#b8501f] text-white px-8 py-4 rounded-full font-bold text-sm sm:text-base shadow-xl transition-all">
                   Book a Free Tour & Day Pass

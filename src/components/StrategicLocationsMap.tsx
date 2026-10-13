@@ -21,7 +21,7 @@ export const ncrHubs: LocationHub[] = [
     y: 167.0,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-cp.webp",
-    description: "A landmark address for forward-thinking teams.",
+    description: "A landmark address in the heart of Delhi for forward-thinking teams.",
   },
   {
     id: "noida132",
@@ -30,7 +30,7 @@ export const ncrHubs: LocationHub[] = [
     y: 468.2,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.webp",
-    description: "Modern enterprise campus along the Noida Expressway.",
+    description: "An expressway-facing location for growing teams.",
   },
   {
     id: "noida126",
@@ -39,16 +39,16 @@ export const ncrHubs: LocationHub[] = [
     y: 385.3,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/img-0331-1.webp",
-    description: "High-growth tech & corporate district with seamless transit.",
+    description: "A modern business address close to the Noida Expressway.",
   },
   {
     id: "okhla",
-    name: "Okhla",
+    name: "Okhla Phase 2",
     x: 546.4,
     y: 401.1,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/okhla-phase-2-delhi.webp",
-    description: "Central South Delhi connectivity for innovation leaders.",
+    description: "A well-connected business hub in South Delhi.",
   },
   {
     id: "mohan",
@@ -57,7 +57,7 @@ export const ncrHubs: LocationHub[] = [
     y: 453.6,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-mohan-estate.webp",
-    description: "Prime arterial hub with direct highway & metro access.",
+    description: "A practical, well-connected address on Mathura Road.",
   },
   {
     id: "udyog",
@@ -66,7 +66,52 @@ export const ncrHubs: LocationHub[] = [
     y: 475.5,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
-    description: "Gurugram's bustling business core adjacent to Cyber City.",
+    description: "Gurugram's established corporate corridor.",
+  },
+  {
+    id: "okhla3",
+    name: "Okhla Phase 3",
+    x: 560.0,
+    y: 420.0,
+    labelPos: "right",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/okhla-phase-2-delhi.webp",
+    description: "An established commercial district with easy access to Okhla NSIC metro.",
+  },
+  {
+    id: "janakpuri",
+    name: "Janakpuri",
+    x: 280.0,
+    y: 200.0,
+    labelPos: "left",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-cp.webp",
+    description: "A growing business district in West Delhi with strong metro connectivity.",
+  },
+  {
+    id: "noida4",
+    name: "Noida Sector 4",
+    x: 650.0,
+    y: 320.0,
+    labelPos: "right",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/img-0331-1.webp",
+    description: "An established commercial address in the heart of Noida.",
+  },
+  {
+    id: "sohna",
+    name: "Sohna Road",
+    x: 160.0,
+    y: 550.0,
+    labelPos: "right",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
+    description: "A fast-growing business corridor in Gurugram for scaling teams.",
+  },
+  {
+    id: "mgroad",
+    name: "MG Road",
+    x: 200.0,
+    y: 430.0,
+    labelPos: "left",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
+    description: "A prime Gurugram address with strong metro connectivity.",
   },
 ];
 
@@ -102,10 +147,10 @@ export default function StrategicLocationsMap() {
 
           {/* Subtitle description */}
           <p className="text-gray-700 text-sm sm:text-base leading-relaxed max-w-xl">
-            Our workspaces are located across Delhi NCR&apos;s key business hubs — keeping you close to opportunity.
+            Premium workspaces in Delhi NCR&apos;s established business districts, placing your team close to clients, talent and opportunity.
           </p>
 
-          {/* View All Locations Button */}
+          {/* Explore All Locations Button */}
           <div className="pt-6 sm:pt-8">
             <a
               href="#contact"
@@ -127,7 +172,7 @@ export default function StrategicLocationsMap() {
                 </svg>
               </span>
               <span className="text-sm font-semibold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                View All Locations
+                Explore All Locations
               </span>
             </a>
           </div>
