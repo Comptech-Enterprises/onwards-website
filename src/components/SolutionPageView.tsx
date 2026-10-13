@@ -31,17 +31,17 @@ const cityCards = [
   {
     name: "Delhi",
     href: "/locations/delhi",
-    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.webp",
   },
   {
     name: "Noida",
     href: "/locations/noida",
-    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.webp",
   },
   {
     name: "Gurugram",
     href: "/locations/gurgaon",
-    img: "/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.webp",
   },
 ];
 

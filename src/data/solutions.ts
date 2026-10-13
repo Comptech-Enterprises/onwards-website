@@ -23,7 +23,7 @@ export const solutions: Solution[] = [
       { title: "Scalable Floors", desc: "Expand or contract your footprint with flexible terms — no lock-in periods or hidden costs." },
       { title: "Enterprise-Grade Security", desc: "Biometric access, CCTV surveillance, dedicated server rooms, and 24/7 on-site security." },
     ],
-    img: "/images/solutions/managed-office.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/managed-office.webp",
   },
   {
     slug: "private-suites",
@@ -38,7 +38,7 @@ export const solutions: Solution[] = [
       { title: "Flexible Terms", desc: "Lock in suites from 6 months — scale up as your team grows across our network." },
       { title: "Community Access", desc: "Your team gets access to shared lounges, events, and networking across all Onward centres." },
     ],
-    img: "/images/solutions/private-suites.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/private-suites.webp",
   },
   {
     slug: "private-cabins",
@@ -53,7 +53,7 @@ export const solutions: Solution[] = [
       { title: "Complete Privacy", desc: "Fully enclosed cabins with soundproofing and independent climate control." },
       { title: "Flexible Commitment", desc: "Short-term availability for visiting executives or long-term seats for resident leadership." },
     ],
-    img: "/images/solutions/private-cabins.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/private-cabins.webp",
   },
   {
     slug: "virtual-office",
@@ -68,7 +68,7 @@ export const solutions: Solution[] = [
       { title: "Mail & Call Handling", desc: "Professional reception handles your mail, packages, and calls — forwarded as you need." },
       { title: "On-Demand Access", desc: "Day passes and meeting room credits let you use physical space when you need it." },
     ],
-    img: "/images/solutions/virtual-office.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/virtual-office.webp",
   },
   {
     slug: "on-demand",
@@ -83,7 +83,7 @@ export const solutions: Solution[] = [
       { title: "Instant Availability", desc: "Real-time booking with immediate confirmation — walk in and start working." },
       { title: "Enterprise-Ready AV", desc: "4K video conferencing, wireless presentation, and premium audio in every meeting room." },
     ],
-    img: "/images/solutions/on-demand.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/on-demand.webp",
   },
   {
     slug: "custom-built",
@@ -98,7 +98,7 @@ export const solutions: Solution[] = [
       { title: "Full-Stack Build", desc: "Civil, MEP, furniture, IT, and AV — a single vendor for your entire workspace buildout." },
       { title: "Ongoing Management", desc: "Post-handover, Onward can manage your custom space with the same operational rigour as our centres." },
     ],
-    img: "/images/solutions/custom-built.webp",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/custom-built.webp",
   },
 ];
 

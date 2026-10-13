@@ -20,7 +20,7 @@ export const ncrHubs: LocationHub[] = [
     x: 421.5,
     y: 167.0,
     labelPos: "right",
-    img: "/images/delhi/delhi-cp.png",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-cp.webp",
     description: "A landmark address for forward-thinking teams.",
   },
   {
@@ -29,7 +29,7 @@ export const ncrHubs: LocationHub[] = [
     x: 754.3,
     y: 468.2,
     labelPos: "right",
-    img: "/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.png",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.webp",
     description: "Modern enterprise campus along the Noida Expressway.",
   },
   {
@@ -38,7 +38,7 @@ export const ncrHubs: LocationHub[] = [
     x: 677.1,
     y: 385.3,
     labelPos: "right",
-    img: "/images/noida/img-0331-1.jpg",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/img-0331-1.webp",
     description: "High-growth tech & corporate district with seamless transit.",
   },
   {
@@ -47,7 +47,7 @@ export const ncrHubs: LocationHub[] = [
     x: 546.4,
     y: 401.1,
     labelPos: "right",
-    img: "/images/delhi/okhla-phase-2-delhi.png",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/okhla-phase-2-delhi.webp",
     description: "Central South Delhi connectivity for innovation leaders.",
   },
   {
@@ -56,7 +56,7 @@ export const ncrHubs: LocationHub[] = [
     x: 600.0,
     y: 453.6,
     labelPos: "right",
-    img: "/images/delhi/delhi-mohan-estate.png",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-mohan-estate.webp",
     description: "Prime arterial hub with direct highway & metro access.",
   },
   {
@@ -65,7 +65,7 @@ export const ncrHubs: LocationHub[] = [
     x: 139.3,
     y: 475.5,
     labelPos: "right",
-    img: "/images/udyog-vihar/img-0504.jpg",
+    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
     description: "Gurugram's bustling business core adjacent to Cyber City.",
   },
 ];

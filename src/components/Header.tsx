@@ -52,7 +52,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         {/* Brand Logo */}
         <Link href="/" id="header-logo" className="flex items-center group py-1">
           <Image
-            src="/onward-logo-white.webp"
+            src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/onward-logo-white.webp"
             alt="Onward Workspaces"
             width={160}
             height={36}
@@ -83,25 +83,31 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <Link
-              href="/locations"
-              className={`relative inline-flex items-center gap-1.5 text-sm font-medium py-2 transition-colors ${
+            <span
+              className={`relative inline-flex items-center gap-1.5 text-sm font-medium py-2 transition-colors cursor-default ${
                 locationsOpen ? "text-[#d4622b]" : "text-white/90 hover:text-white"
               }`}
             >
               <span>Locations</span>
-              <svg
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                  locationsOpen ? "rotate-180 text-[#d4622b]" : "text-white/70"
-                }`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2.5"
+              <button
+                type="button"
+                onClick={() => setLocationsOpen((v) => !v)}
+                className="cursor-pointer"
+                aria-label="Toggle locations menu"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </Link>
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                    locationsOpen ? "rotate-180 text-[#d4622b]" : "text-white/70"
+                  }`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </span>
 
             <AnimatePresence>
               {locationsOpen && (

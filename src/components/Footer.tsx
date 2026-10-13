@@ -42,7 +42,7 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <Link href="/" className="flex items-center mb-5 group">
               <Image
-                src="/onward-logo.webp"
+                src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/onward-logo.webp"
                 alt="Onward Workspaces"
                 width={160}
                 height={36}

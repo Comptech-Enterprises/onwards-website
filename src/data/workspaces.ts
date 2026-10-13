@@ -22,80 +22,80 @@ const areaWorkspaceAssetMap: Record<
 > = {
   "okhla-phase-2": {
     managed: {
-      img: "/images/redesigned/locations/delhi/okhla-phase-2-page/managed-space.webp",
-      banner: "/images/redesigned/locations/delhi/okhla-phase-2-page/managed-space-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-2-page/managed-space.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-2-page/managed-space-banner-centre-page.webp",
     },
     coworking: {
-      img: "/images/redesigned/locations/delhi/okhla-phase-2-page/coworking.webp",
-      banner: "/images/redesigned/locations/delhi/okhla-phase-2-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-2-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-2-page/coworking-banner-centre-page.webp",
     },
   },
   "okhla-phase-3": {
     managed: {
-      img: "/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-1.webp",
-      banner: "/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-1-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-1.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-1-banner-centre-page.webp",
     },
     coworking: {
-      img: "/images/redesigned/locations/delhi/okhla-phase-3-page/coworking.webp",
-      banner: "/images/redesigned/locations/delhi/okhla-phase-3-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/coworking-banner-centre-page.webp",
     },
   },
   "mohan-cooperative": {
     coworking: {
-      img: "/images/redesigned/locations/delhi/mohan-cooperative-page/coworking.webp",
-      banner: "/images/redesigned/locations/delhi/mohan-cooperative-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/mohan-cooperative-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/mohan-cooperative-page/coworking-banner-centre-page.webp",
     },
   },
   "connaught-place": {
     managed: {
-      img: "/images/redesigned/locations/delhi/connaught-place-page/managed-space.webp",
-      banner: "/images/redesigned/locations/delhi/connaught-place-page/managed-space-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/connaught-place-page/managed-space.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/connaught-place-page/managed-space-banner-centre-page.webp",
     },
     coworking: {
-      img: "/images/redesigned/locations/delhi/connaught-place-page/coworking.webp",
-      banner: "/images/redesigned/locations/delhi/connaught-place-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/connaught-place-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/connaught-place-page/coworking-banner-centre-page.webp",
     },
   },
   "janakpuri": {
     coworking: {
-      img: "/images/redesigned/locations/delhi/janakpuri-page/coworking.webp",
-      banner: "/images/redesigned/locations/delhi/janakpuri-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/janakpuri-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/janakpuri-page/coworking-banner-centre-page.webp",
     },
   },
   "sector-4": {
     managed: {
-      img: "/images/redesigned/locations/noida/sector-4-page/managed-space.webp",
-      banner: "/images/redesigned/locations/noida/sector-4-page/managed-space-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-4-page/managed-space.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-4-page/managed-space-banner-centre-page.webp",
     },
   },
   "sector-126": {
     coworking: {
-      img: "/images/redesigned/locations/noida/sector-126-page/coworking.webp",
-      banner: "/images/redesigned/locations/noida/sector-126-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-126-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-126-page/coworking-banner-centre-page.webp",
     },
   },
   "sector-132": {
     managed: {
-      img: "/images/redesigned/locations/noida/sector-132-page/managed-space.webp",
-      banner: "/images/redesigned/locations/noida/sector-132-page/managed-space-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-132-page/managed-space.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-132-page/managed-space-banner-centre-page.webp",
     },
   },
   "mg-road": {
     managed: {
-      img: "/images/redesigned/locations/gurgaon/mg-road-page/managed-space.webp",
-      banner: "/images/redesigned/locations/gurgaon/mg-road-page/managed-space-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/mg-road-page/managed-space.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/mg-road-page/managed-space-banner-centre-page.webp",
     },
   },
   "udyog-vihar": {
     coworking: {
-      img: "/images/redesigned/locations/gurgaon/udyog-vihar-phase-4-page/coworking.webp",
-      banner: "/images/redesigned/locations/gurgaon/udyog-vihar-phase-4-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/udyog-vihar-phase-4-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/udyog-vihar-phase-4-page/coworking-banner-centre-page.webp",
     },
   },
   "sohna-road": {
     coworking: {
-      img: "/images/redesigned/locations/gurgaon/sohna-road-page/coworking.webp",
-      banner: "/images/redesigned/locations/gurgaon/sohna-road-page/coworking-banner-centre-page.webp",
+      img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/sohna-road-page/coworking.webp",
+      banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/sohna-road-page/coworking-banner-centre-page.webp",
     },
   },
 };
