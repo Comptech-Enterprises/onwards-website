@@ -383,6 +383,19 @@ export const delhiCity: CityData = {
         { q: "Can I visit the workspace before booking?", a: "Yes. Submit a tour request and confirm a suitable visit time with the Onward Workspaces team." },
         { q: "What should I check before signing?", a: "Review the complete inclusions list, deposit, lock-in, notice period, access hours, connectivity and meeting room policy." },
       ],
+      centreCopy: {
+        coworking: {
+          metaTitle: "Onward Workspaces Janakpuri | Office Space in Janakpuri, Delhi",
+          metaDescription:
+            "Explore Onward Workspaces in Janakpuri, Delhi. View workspace options, amenities and location details, and request a tailored quote or office tour.",
+          h1: "Coworking Space in Janakpuri",
+          body: "Explore Onward Workspaces' coworking centre in Janakpuri, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
+          address: "ECE House, Plot No. 28, Kasturba Gandhi Marg, Janakpuri, New Delhi, 110001",
+          connectivity: "Close to Rajiv Chowk Metro Station",
+          capacity: "250+ Seats",
+          features: ["Central Delhi Address", "Meeting Rooms", "Power Backup", "Pantry and Café Area"],
+        },
+      },
       h1: "Office space in Janakpuri",
       cardCopy: {
         coworking: { title: "Coworking Centre", subline: "600+ Seats" },
