@@ -7,6 +7,12 @@ export interface Solution {
   features: string[];
   benefits: { title: string; desc: string }[];
   img: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  h1?: string;
+  heroBody?: string;
+  contactBody?: string;
+  faqs?: { q: string; a: string }[];
 }
 
 export const solutions: Solution[] = [
@@ -24,6 +30,20 @@ export const solutions: Solution[] = [
       { title: "Enterprise-Grade Security", desc: "Biometric access, CCTV surveillance, dedicated server rooms, and 24/7 on-site security." },
     ],
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/managed-office.webp",
+    metaTitle: "Managed Office Space in Delhi | Onward Workspaces",
+    metaDescription:
+      "Discover managed office space in delhi with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    h1: "Managed Office Space in Delhi NCR",
+    heroBody:
+      "Bring your team into a workspace planned around your operations. Explore managed office space in Delhi with configurable layouts, service support and a commercial proposal matched to your headcount and timeline.",
+    contactBody:
+      "Ready to explore managed office space in delhi? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
+    faqs: [
+      { q: "How do I enquire about managed office space in delhi ncr?", a: "Share your requirements using the enquiry form and request a proposal from the Onward Workspaces team." },
+      { q: "Can I compare locations before deciding?", a: "Yes. Ask for a shortlist based on city, team size, preferred budget and availability." },
+      { q: "Are prices and terms the same everywhere?", a: "No. Fees, inclusions, deposits and contract conditions should be confirmed for each location or solution." },
+      { q: "Can I arrange a visit or consultation?", a: "Request a site visit or consultation with the sales team to discuss the next steps." },
+    ],
   },
   {
     slug: "private-suites",
@@ -39,6 +59,20 @@ export const solutions: Solution[] = [
       { title: "Community Access", desc: "Your team gets access to shared lounges, events, and networking across all Onward centres." },
     ],
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/private-suites.webp",
+    metaTitle: "Private Suites in Delhi NCR | Onward Workspaces",
+    metaDescription:
+      "Discover Private Suites in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    h1: "Private Suites in Delhi NCR",
+    heroBody:
+      "Bring your team into a workspace planned around your operations. Explore Private Suites in Delhi NCR with configurable layouts, service support and a commercial proposal matched to your headcount and timeline.",
+    contactBody:
+      "Ready to explore Private Suites in Delhi NCR? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
+    faqs: [
+      { q: "How do I enquire about Private Suites in Delhi NCR?", a: "Share your requirements using the enquiry form and request a proposal from the Onward Workspaces team." },
+      { q: "Can I compare locations before deciding?", a: "Yes. Ask for a shortlist based on city, team size, preferred budget and availability." },
+      { q: "Are prices and terms the same everywhere?", a: "No. Fees, inclusions, deposits and contract conditions should be confirmed for each location or solution." },
+      { q: "Can I arrange a visit or consultation?", a: "Request a site visit or consultation with the sales team to discuss the next steps." },
+    ],
   },
   {
     slug: "private-cabins",
@@ -54,6 +88,20 @@ export const solutions: Solution[] = [
       { title: "Flexible Commitment", desc: "Short-term availability for visiting executives or long-term seats for resident leadership." },
     ],
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/private-cabins.webp",
+    metaTitle: "Private cabins in Delhi NCR | Onward Workspaces",
+    metaDescription:
+      "Discover Private cabins in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    h1: "Private cabins in Delhi NCR",
+    heroBody:
+      "Bring your team into a workspace planned around your operations. Explore Private cabins in Delhi NCR with configurable layouts, service support and a commercial proposal matched to your headcount and timeline.",
+    contactBody:
+      "Ready to explore Private cabins in Delhi NCR? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
+    faqs: [
+      { q: "How do I enquire about Private cabins in Delhi NCR?", a: "Share your requirements using the enquiry form and request a proposal from the Onward Workspaces team." },
+      { q: "Can I compare locations before deciding?", a: "Yes. Ask for a shortlist based on city, team size, preferred budget and availability." },
+      { q: "Are prices and terms the same everywhere?", a: "No. Fees, inclusions, deposits and contract conditions should be confirmed for each location or solution." },
+      { q: "Can I arrange a visit or consultation?", a: "Request a site visit or consultation with the sales team to discuss the next steps." },
+    ],
   },
   {
     slug: "virtual-office",
@@ -69,6 +117,20 @@ export const solutions: Solution[] = [
       { title: "On-Demand Access", desc: "Day passes and meeting room credits let you use physical space when you need it." },
     ],
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/virtual-office.webp",
+    metaTitle: "Virtual Office in Delhi NCR | Onward Workspaces",
+    metaDescription:
+      "Discover virtual office in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    h1: "Virtual Office in Delhi NCR",
+    heroBody:
+      "Build a professional business presence in Delhi NCR without taking a full-time physical office. Ask which virtual office plans, address services and documentation options are available and suitable for your intended use.",
+    contactBody:
+      "Ready to explore virtual office in Delhi NCR? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
+    faqs: [
+      { q: "How do I enquire about virtual office in Delhi NCR?", a: "Share your requirements using the enquiry form and request a proposal from the Onward Workspaces team." },
+      { q: "Can I compare locations before deciding?", a: "Yes. Ask for a shortlist based on city, team size, preferred budget and availability." },
+      { q: "Are prices and terms the same everywhere?", a: "No. Fees, inclusions, deposits and contract conditions should be confirmed for each location or solution." },
+      { q: "Can I arrange a visit or consultation?", a: "Request a site visit or consultation with the sales team to discuss the next steps." },
+    ],
   },
   {
     slug: "on-demand",
@@ -84,6 +146,20 @@ export const solutions: Solution[] = [
       { title: "Enterprise-Ready AV", desc: "4K video conferencing, wireless presentation, and premium audio in every meeting room." },
     ],
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/on-demand.webp",
+    metaTitle: "Meeting Rooms | Day Passes | Onward Workspaces",
+    metaDescription:
+      "Discover meeting rooms & day passes with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    h1: "Meeting Rooms",
+    heroBody:
+      "Meet clients, interview candidates or bring your team together in a professional meeting environment. Share your preferred location, date, group size and equipment needs to receive suitable meeting room options.",
+    contactBody:
+      "Ready to explore meeting rooms & day passes? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
+    faqs: [
+      { q: "How do I enquire about meeting rooms & Day passes?", a: "Share your requirements using the enquiry form and request a proposal from the Onward Workspaces team." },
+      { q: "Can I compare locations before deciding?", a: "Yes. Ask for a shortlist based on city, team size, preferred budget and availability." },
+      { q: "Are prices and terms the same everywhere?", a: "No. Fees, inclusions, deposits and contract conditions should be confirmed for each location or solution." },
+      { q: "Can I arrange a visit or consultation?", a: "Request a site visit or consultation with the sales team to discuss the next steps." },
+    ],
   },
   {
     slug: "custom-built",
@@ -99,6 +175,20 @@ export const solutions: Solution[] = [
       { title: "Ongoing Management", desc: "Post-handover, Onward can manage your custom space with the same operational rigour as our centres." },
     ],
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/custom-built.webp",
+    metaTitle: "Custom Built in Delhi NCR | Onward Workspaces",
+    metaDescription:
+      "Discover Custom Built in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    h1: "Custom Built in Delhi NCR",
+    heroBody:
+      "Bring your team into a workspace planned around your operations. Explore Custom Built in Delhi NCR with configurable layouts, service support and a commercial proposal matched to your headcount and timeline.",
+    contactBody:
+      "Ready to explore Custom Built in Delhi NCR? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
+    faqs: [
+      { q: "How do I enquire about Custom Built in Delhi NCR?", a: "Share your requirements using the enquiry form and request a proposal from the Onward Workspaces team." },
+      { q: "Can I compare locations before deciding?", a: "Yes. Ask for a shortlist based on city, team size, preferred budget and availability." },
+      { q: "Are prices and terms the same everywhere?", a: "No. Fees, inclusions, deposits and contract conditions should be confirmed for each location or solution." },
+      { q: "Can I arrange a visit or consultation?", a: "Request a site visit or consultation with the sales team to discuss the next steps." },
+    ],
   },
 ];
 

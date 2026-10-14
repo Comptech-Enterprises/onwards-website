@@ -10,9 +10,18 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const sol = getSolutionBySlug(slug);
   if (!sol) return {};
+  const url = `https://onwardworkspaces.com/solutions/${sol.slug}`;
+  const title = sol.metaTitle ?? `${sol.title} — Office Space Solutions | Onward Workspaces`;
+  const description = sol.metaDescription ?? sol.tagline;
   return {
-    title: `${sol.title} — Office Space Solutions | Onward Workspaces`,
-    description: sol.tagline,
+    title,
+    description,
+    ...(sol.metaTitle
+      ? {
+          alternates: { canonical: url },
+          openGraph: { title, description, url, siteName: "Onward Workspaces", type: "website" as const },
+        }
+      : {}),
   };
 }
 

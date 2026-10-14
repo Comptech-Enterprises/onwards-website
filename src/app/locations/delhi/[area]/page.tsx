@@ -13,8 +13,20 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const areaData = delhiCity.areas.find((a) => a.slug === area);
   if (!areaData) return {};
   return {
-    title: `${areaData.name} Coworking & Managed Office Space, Delhi | Onward Workspaces`,
-    description: areaData.description,
+    title: areaData.metaTitle ?? `${areaData.name} Coworking & Managed Office Space, Delhi | Onward Workspaces`,
+    description: areaData.metaDescription ?? areaData.description,
+    ...(areaData.metaTitle
+      ? {
+          alternates: { canonical: `https://onwardworkspaces.com/locations/delhi/${areaData.slug}` },
+          openGraph: {
+            title: areaData.metaTitle,
+            description: areaData.metaDescription ?? areaData.description,
+            url: `https://onwardworkspaces.com/locations/delhi/${areaData.slug}`,
+            siteName: "Onward Workspaces",
+            type: "website" as const,
+          },
+        }
+      : {}),
   };
 }
 

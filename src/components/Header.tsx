@@ -18,6 +18,7 @@ const solutionsData = [
   { name: "Private Cabins", href: "/solutions/private-cabins" },
   { name: "Virtual Office", href: "/solutions/virtual-office" },
   { name: "On-Demand", href: "/solutions/on-demand" },
+  { name: "Custom Built", href: "/solutions/custom-built" },
 ];
 
 export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean }) {

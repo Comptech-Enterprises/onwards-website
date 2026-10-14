@@ -91,7 +91,7 @@ export default function CentreDetailView({
               onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
               className="mt-6 inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
             >
-              Schedule a Site Visit <span>&rarr;</span>
+              {centre.copy?.cta ?? "Schedule a Site Visit"} <span>&rarr;</span>
             </button>
           </div>
         </section>
@@ -136,12 +136,12 @@ export default function CentreDetailView({
             ? {
                 title: "Book a Workspace Tour or Request Pricing",
                 highlight: "Request Pricing",
-                description: area.contactBody,
+                description: centre.copy.contactBody ?? area.contactBody,
               }
             : {})}
         />
 
-        {centre.copy && area.faqs && <FaqSection faqs={area.faqs} />}
+        {centre.copy && (centre.copy.faqs ?? area.faqs) && <FaqSection faqs={(centre.copy.faqs ?? area.faqs)!} />}
       </main>
 
       <Footer />

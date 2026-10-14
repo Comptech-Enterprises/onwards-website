@@ -7,6 +7,7 @@ import { useRef } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
+import FaqSection from "@/components/FaqSection";
 import { solutions, type Solution } from "@/data/solutions";
 
 const ease = [0.22, 0.8, 0.2, 1] as const;
@@ -91,7 +92,7 @@ export default function SolutionPageView({
               transition={{ duration: 0.7, ease }}
               className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-white max-w-3xl"
             >
-              {sol.title}
+              {sol.h1 ?? sol.title}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 25 }}
@@ -99,7 +100,7 @@ export default function SolutionPageView({
               transition={{ duration: 0.6, delay: 0.15, ease }}
               className="mt-5 text-base sm:text-lg text-white/80 max-w-xl leading-relaxed"
             >
-              {sol.tagline}
+              {sol.heroBody ?? sol.tagline}
             </motion.p>
           </div>
         </section>
@@ -224,7 +225,16 @@ export default function SolutionPageView({
         {/* ━━━ 4. CONTACT FORM ━━━ */}
         <ContactSection
           hideDirectContacts
+          {...(sol.contactBody
+            ? {
+                title: "Book a Workspace Tour or Request Pricing",
+                highlight: "Request Pricing",
+                description: sol.contactBody,
+              }
+            : {})}
         />
+
+        {sol.faqs && <FaqSection faqs={sol.faqs} />}
       </main>
 
       <Footer />

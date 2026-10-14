@@ -11,6 +11,7 @@ export interface WorkspaceUnit {
   img: string;
   bannerImg?: string;
   slug: string;
+  centreKey: string;
   copy?: import("@/data/locations").CentreCopy;
   cardTitle?: string;
   cardSubline?: string;
@@ -104,14 +105,24 @@ const areaWorkspaceAssetMap: Record<
 };
 
 export function getWorkspacesForArea(area: AreaDetail): WorkspaceUnit[] {
-  return getBaseWorkspaces(area).map((w) => {
+  const base = getBaseWorkspaces(area).map((w) => ({ ...w, centreKey: w.category as string }));
+  const first = base.find((w) => w.category === "managed");
+  if (area.secondManaged && first) {
+    base.splice(base.indexOf(first) + 1, 0, {
+      ...first,
+      id: `${area.slug}-managed-2`,
+      centreKey: "managed-2",
+    });
+  }
+  return base.map((w) => {
     const card = area.cardCopy?.[w.category];
-    const copy = area.centreCopy?.[w.category];
+    const baseCopy = area.centreCopy?.[w.category];
+    const copy = baseCopy && w.centreKey === "managed-2" ? { ...baseCopy, ...area.secondManaged } : baseCopy;
     return { ...w, ...(card ? { cardTitle: card.title, cardSubline: card.subline } : {}), ...(copy ? { copy } : {}) };
   });
 }
 
-function getBaseWorkspaces(area: AreaDetail): WorkspaceUnit[] {
+function getBaseWorkspaces(area: AreaDetail): Omit<WorkspaceUnit, "centreKey">[] {
   const isBoth =
     area.type.toLowerCase().includes("managed") &&
     area.type.toLowerCase().includes("coworking");

@@ -168,7 +168,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                       />
                     </div>
                     <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#d4622b] transition-colors">
-                      {area.name}
+                      {area.cardHeading ?? area.name}
                     </h3>
                     <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
                       {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
@@ -196,7 +196,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                     </div>
                     <div className="pt-3">
                       <h3 className="text-base font-bold text-black group-hover:text-[#d4622b] transition-colors">
-                        {area.name}
+                        {area.cardHeading ?? area.name}
                       </h3>
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mt-0.5">
                         {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}

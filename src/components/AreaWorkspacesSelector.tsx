@@ -11,7 +11,7 @@ export type { WorkspaceUnit } from "@/data/workspaces";
 export { getWorkspacesForArea } from "@/data/workspaces";
 
 function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: AreaDetail; cityBasePath?: string }) {
-  const centreHref = cityBasePath ? `${cityBasePath}/${area.slug}/${ws.category}` : undefined;
+  const centreHref = cityBasePath ? `${cityBasePath}/${area.slug}/${ws.centreKey}` : undefined;
 
   const inner = (
     <>
@@ -152,7 +152,7 @@ export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: A
         </div>
 
         {/* Cards: static grid if <=2 on desktop, auto-scroll if more */}
-        {filteredWorkspaces.length <= 2 ? (
+        {filteredWorkspaces.length <= 3 ? (
           <>
             <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
               {filteredWorkspaces.map((ws) => (
