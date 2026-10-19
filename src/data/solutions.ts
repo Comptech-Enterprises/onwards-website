@@ -141,7 +141,7 @@ export const solutions: Solution[] = [
     features: ["Instant Booking", "4K Video Conference", "Unlimited Beverage", "Whiteboard & AV", "High-Speed WiFi", "Receptionist Support"],
     benefits: [
       { title: "Pay Per Use", desc: "Book boardrooms, meeting suites, or day passes by the hour — no subscription required." },
-      { title: "Pan-NCR Network", desc: "Access 80+ centres across Delhi, Noida, and Gurugram from a single account." },
+      { title: "Pan-NCR Network", desc: "Access 80+ centres across Delhi, Noida, and Gurgaon from a single account." },
       { title: "Instant Availability", desc: "Real-time booking with immediate confirmation — walk in and start working." },
       { title: "Enterprise-Ready AV", desc: "4K video conferencing, wireless presentation, and premium audio in every meeting room." },
     ],

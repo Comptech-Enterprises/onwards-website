@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import CentreDetailView from "@/components/CentreDetailView";
 import { noidaCity } from "@/data/locations";
 import { getWorkspacesForArea } from "@/data/workspaces";
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const ws = workspaces.find((w) => w.centreKey === centre);
   if (!ws) return {};
   if (ws.copy?.metaTitle) {
-    const url = `https://onwardworkspaces.com/locations/noida/${areaData.slug}/${ws.centreKey}`;
+    const url = `https://onwardworkspaces.com/noida/${areaData.slug}/${ws.centreKey}`;
     const description = ws.copy.metaDescription ?? areaData.description;
     return {
       title: ws.copy.metaTitle,
@@ -44,7 +44,11 @@ export default async function NoidaCentrePage({ params }: { params: Promise<{ ar
 
   const workspaces = getWorkspacesForArea(areaData);
   const ws = workspaces.find((w) => w.centreKey === centre);
-  if (!ws) notFound();
+  if (!ws) {
+    const legacy = workspaces.find((w) => w.category === centre);
+    if (legacy) permanentRedirect(`${noidaCity.basePath}/${areaData.slug}/${legacy.centreKey}`);
+    notFound();
+  }
 
   return <CentreDetailView city={noidaCity} area={areaData} centre={ws} />;
 }

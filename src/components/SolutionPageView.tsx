@@ -31,17 +31,17 @@ const scaleIn = {
 const cityCards = [
   {
     name: "Delhi",
-    href: "/locations/delhi",
+    href: "/delhi",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.webp",
   },
   {
     name: "Noida",
-    href: "/locations/noida",
+    href: "/noida",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.webp",
   },
   {
-    name: "Gurugram",
-    href: "/locations/gurgaon",
+    name: "Gurgaon",
+    href: "/gurgaon",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.webp",
   },
 ];
@@ -123,7 +123,7 @@ export default function SolutionPageView({
                 Top Cities in Delhi NCR
               </h2>
               <p className="mt-2 sm:mt-3 text-sm sm:text-base text-gray-500 max-w-xl mx-auto leading-relaxed">
-                Begin your path to success with Onward Workspaces across Delhi, Noida, and Gurugram.
+                Begin your path to success with Onward Workspaces across Delhi, Noida, and Gurgaon.
               </p>
             </motion.div>
 

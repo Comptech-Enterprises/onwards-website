@@ -87,7 +87,7 @@ const cityMapConfigs: Record<string, CityMapConfig> = {
       "mg-road": { x: 230.0, y: 535.0, labelPos: "right", subtext: "CBD Retail & Tech" },
       "sohna-road": { x: 295.0, y: 645.0, labelPos: "right", subtext: "Southern Peripheral Core" },
     },
-    watermark: "GURUGRAM",
+    watermark: "GURGAON",
     tagline: "CYBER CITY & ARTERIALS",
     watermarkPos: { x: 400, y: 640 },
     scale: {

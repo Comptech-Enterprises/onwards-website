@@ -66,7 +66,7 @@ export const ncrHubs: LocationHub[] = [
     y: 475.5,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
-    description: "Gurugram's established corporate corridor.",
+    description: "Gurgaon's established corporate corridor.",
   },
   {
     id: "okhla3",
@@ -102,7 +102,7 @@ export const ncrHubs: LocationHub[] = [
     y: 550.0,
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
-    description: "A fast-growing business corridor in Gurugram for scaling teams.",
+    description: "A fast-growing business corridor in Gurgaon for scaling teams.",
   },
   {
     id: "mgroad",
@@ -111,7 +111,7 @@ export const ncrHubs: LocationHub[] = [
     y: 430.0,
     labelPos: "left",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
-    description: "A prime Gurugram address with strong metro connectivity.",
+    description: "A prime Gurgaon address with strong metro connectivity.",
   },
 ];
 

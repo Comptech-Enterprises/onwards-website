@@ -15,9 +15,9 @@ const footerColumns = [
   {
     title: "Locations",
     links: [
-      { label: "Delhi", href: "/locations/delhi" },
-      { label: "Noida", href: "/locations/noida" },
-      { label: "Gurgaon", href: "/locations/gurgaon" },
+      { label: "Delhi", href: "/delhi" },
+      { label: "Noida", href: "/noida" },
+      { label: "Gurgaon", href: "/gurgaon" },
       { label: "All Locations", href: "/locations" },
     ],
   },

@@ -29,6 +29,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return ["delhi", "noida", "gurgaon"].flatMap((city) => [
+      { source: `/locations/${city}`, destination: `/${city}`, permanent: true },
+      { source: `/locations/${city}/:path*`, destination: `/${city}/:path*`, permanent: true },
+    ]);
+  },
 };
 
 export default nextConfig;

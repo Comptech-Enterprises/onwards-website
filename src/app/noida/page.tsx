@@ -4,11 +4,11 @@ import { noidaCity } from "@/data/locations";
 export const metadata = {
   title: noidaCity.metaTitle,
   description: noidaCity.metaDescription,
-  alternates: { canonical: "https://onwardworkspaces.com/locations/noida" },
+  alternates: { canonical: "https://onwardworkspaces.com/noida" },
   openGraph: {
     title: noidaCity.metaTitle,
     description: noidaCity.metaDescription,
-    url: "https://onwardworkspaces.com/locations/noida",
+    url: "https://onwardworkspaces.com/noida",
     siteName: "Onward Workspaces",
     type: "website" as const,
   },

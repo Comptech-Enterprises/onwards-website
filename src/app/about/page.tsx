@@ -8,6 +8,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import MagneticButton from "@/components/MagneticButton";
 import RotatingPhotoStack from "@/components/RotatingPhotoStack";
+import ContactSection from "@/components/ContactSection";
+import FaqSection from "@/components/FaqSection";
 
 /* ━━━ DATA ━━━ */
 
@@ -151,18 +153,6 @@ export default function AboutPage() {
   const valuesHeadOp = useTransform(valuesProgress, [0, 0.25], [0, 1]);
 
 
-  /* Team */
-  const teamRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: teamProgress } = useScroll({ target: teamRef, offset: ["start end", "end start"] });
-  const teamHeadY = useTransform(teamProgress, [0, 0.3], [50, 0]);
-  const teamHeadOp = useTransform(teamProgress, [0, 0.25], [0, 1]);
-
-  /* CTA */
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: ctaProgress } = useScroll({ target: ctaRef, offset: ["start end", "end start"] });
-  const ctaScale = useTransform(ctaProgress, [0, 0.4], [0.92, 1]);
-  const ctaOp = useTransform(ctaProgress, [0, 0.35], [0, 1]);
-
   return (
     <>
       <Header alwaysSolid />
@@ -189,7 +179,7 @@ export default function AboutPage() {
               {/* Left Column: Line-by-Line Masked Slide-Up Headline */}
               <div className="lg:col-span-7 xl:col-span-8">
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#1a1a2e] tracking-tight leading-[1.06]">
-                  <span className="block overflow-hidden">
+                  <span className="block overflow-hidden pb-[0.14em] -mb-[0.14em]">
                     <motion.span
                       initial={{ y: "100%" }}
                       animate={{ y: "0%" }}
@@ -199,7 +189,7 @@ export default function AboutPage() {
                       Crafting Workspaces.
                     </motion.span>
                   </span>
-                  <span className="block overflow-hidden">
+                  <span className="block overflow-hidden pb-[0.14em] -mb-[0.14em]">
                     <motion.span
                       initial={{ y: "100%" }}
                       animate={{ y: "0%" }}
@@ -209,7 +199,7 @@ export default function AboutPage() {
                       Built Around Ambition.
                     </motion.span>
                   </span>
-                  <span className="block overflow-hidden">
+                  <span className="block overflow-hidden pb-[0.14em] -mb-[0.14em]">
                     <motion.span
                       initial={{ y: "100%" }}
                       animate={{ y: "0%" }}
@@ -238,7 +228,7 @@ export default function AboutPage() {
               <p className="text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
                 Established in 2019, Onward Workspaces is a Delhi-based workspace company created to move businesses beyond the limitations of conventional commercial leases. We recognised that growing organisations need more than square footage. They need well-designed environments that strengthen company culture, support team productivity and allow the business to scale with confidence.</p>
               <p className="mt-4 text-gray-600 text-base sm:text-lg lg:text-xl leading-relaxed text-justify">
-                Today, Onward Workspaces operates premium coworking and managed office centres across Delhi, Noida and Gurugram. Our clients range from venture-backed start-ups to established multinational corporations, including Fortune 500 companies, and each is supported by a single accountable team, from setup through daily operations.</p>
+                Today, Onward Workspaces operates premium coworking and managed office centres across Delhi, Noida and Gurgaon. Our clients range from venture-backed start-ups to established multinational corporations, including Fortune 500 companies, and each is supported by a single accountable team, from setup through daily operations.</p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <MagneticButton
                   href="/#contact"
@@ -400,60 +390,18 @@ export default function AboutPage() {
         </section>
 
 
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            5. TEAM — staggered scroll reveals
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section ref={teamRef} className="py-20 sm:py-28 bg-[#faf8f5] border-b border-gray-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div style={{ y: teamHeadY, opacity: teamHeadOp }} className="max-w-3xl mx-auto text-center mb-12 sm:mb-16">
-              <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">The Minds Behind Onward</span>
-              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight mt-1">The Team Behind Onward</h2>
-              <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-xl mx-auto">Meet the people behind our workspaces, our service and our clients.</p>
-            </motion.div>
+        {/* 5. CONTACT FORM (same as home) */}
+        <ContactSection bgImage="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.webp" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-              {teamMembers.map((member, idx) => (
-                <ScrollReveal key={member.name} delay={idx * 0.1} y={50}>
-                  <div className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1">
-                    <div>
-                      <div className="relative aspect-[4/3] w-full bg-[#f5efe6] border-b border-gray-200/60 flex flex-col items-center justify-center overflow-hidden">
-                        <div className="w-20 h-20 rounded-2xl bg-white border border-[#e5dcd0] shadow-xs flex items-center justify-center text-[#d4622b] font-bold text-2xl tracking-wider group-hover:scale-110 transition-transform duration-500">{member.initials}</div>
-                        <div className="absolute bottom-3 left-4 right-4 z-10 flex justify-center">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a2e] bg-white/95 backdrop-blur-xs px-3 py-1 rounded-full border border-gray-200/80 shadow-xs">{member.role}</span>
-                        </div>
-                      </div>
-                      <div className="p-6">
-                        <h3 className="text-xl font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">{member.name}</h3>
-                        <p className="text-xs font-semibold text-gray-500 mt-1">{member.role}</p>
-                      </div>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            6. BOTTOM CTA — scale-up reveal
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <section ref={ctaRef} className="py-20 sm:py-24 bg-white text-center border-t border-gray-200">
-          <motion.div style={{ scale: ctaScale, opacity: ctaOp }} className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <ScrollReveal>
-              <span className="text-xs font-bold uppercase tracking-widest text-[#d4622b] block mb-2">Join the Network</span>
-              <h2 className="text-3xl sm:text-5xl font-black text-[#1a1a2e] tracking-tight">Ready to Find Your Workspace?</h2>
-              <p className="mt-4 text-base sm:text-lg text-gray-600 max-w-xl mx-auto leading-relaxed">Schedule a visit to any of our centres across Delhi, Noida and Gurugram, and our team will recommend the workspace that suits your organisation.</p>
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <MagneticButton href="/#contact" className="w-full sm:w-auto bg-[#d4622b] hover:bg-[#b8501f] text-white px-8 py-4 rounded-full font-bold text-sm sm:text-base shadow-xl transition-all">
-                  Book a Free Tour & Day Pass
-                </MagneticButton>
-                <Link href="/locations" className="w-full sm:w-auto px-8 py-4 rounded-full font-bold text-sm sm:text-base border border-gray-300 hover:border-[#1a1a2e] text-[#1a1a2e] bg-white transition-all shadow-xs">
-                  View All Micro-Markets
-                </Link>
-              </div>
-            </ScrollReveal>
-          </motion.div>
-        </section>
+        {/* 6. FAQ */}
+        <FaqSection
+          faqs={[
+            { q: "How do I enquire about Onward Workspaces?", a: "Share your requirements using the enquiry form and request a proposal from the Onward Workspaces team." },
+            { q: "Can I compare locations before deciding?", a: "Yes. Ask for a shortlist based on city, team size, preferred budget and availability." },
+            { q: "Are prices and terms the same everywhere?", a: "No. Fees, inclusions, deposits and contract conditions should be confirmed for each location or solution." },
+            { q: "Can I arrange a visit or consultation?", a: "Request a site visit or consultation with the sales team to discuss the next steps." },
+          ]}
+        />
       </main>
 
       <Footer />

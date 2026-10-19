@@ -42,7 +42,7 @@ const CARDS_DATA: CardData[] = [
     type: "brand",
     tag: "NCR Network",
     title: "11+ Prime Hubs",
-    subtitle: "Delhi · Noida · Gurugram",
+    subtitle: "Delhi · Noida · Gurgaon",
     bgColor: "#d4622b",
     textColor: "#ffffff",
     tagBg: "#ffffff",

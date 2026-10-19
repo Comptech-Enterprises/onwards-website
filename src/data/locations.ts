@@ -1,4 +1,5 @@
 export interface CentreCopy {
+  slug?: string;
   contactBody?: string;
   faqs?: { q: string; a: string }[];
   metaTitle?: string;
@@ -66,7 +67,7 @@ export interface CityData {
 export const delhiCity: CityData = {
   slug: "delhi",
   name: "Delhi",
-  basePath: "/locations/delhi",
+  basePath: "/delhi",
   heroImage: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.webp",
   whyChooseImage: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/why-choose-onward-for-your-workspace-in-delhi.webp",
   h1: "Coworking space in Delhi",
@@ -153,6 +154,7 @@ export const delhiCity: CityData = {
           features: ["Dedicated Entrance", "Custom Layout and IT", "Power Backup", "Branded Workspace"],
         },
         coworking: {
+          slug: "onward-workspaces-44",
           h1: "Coworking Space in Okhla Phase 2",
           body: "Explore Onward Workspaces' coworking centre in Okhla Phase 2, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
           address: "E-44/3, Pocket D, Okhla Industrial Estate, Phase II, New Delhi, 110020",
@@ -410,7 +412,7 @@ export const delhiCity: CityData = {
 export const noidaCity: CityData = {
   slug: "noida",
   name: "Noida",
-  basePath: "/locations/noida",
+  basePath: "/noida",
   heroImage: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/top-section-hero-image-managed-office-space-in-noida.webp",
   whyChooseImage: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/why-choose-onward-for-your-workspace-in-noida.webp",
   metaTitle: "Coworking Space in Noida | Office Space | Onward",
@@ -604,8 +606,8 @@ export const noidaCity: CityData = {
 
 export const gurgaonCity: CityData = {
   slug: "gurgaon",
-  name: "Gurugram",
-  basePath: "/locations/gurgaon",
+  name: "Gurgaon",
+  basePath: "/gurgaon",
   heroImage: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/top-section-hero-image-managed-office-space-in-gurgaon.webp",
   whyChooseImage: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/why-choose-onward-for-your-workspace-in-gurgaon.webp",
   metaTitle: "Coworking Space in Gurgaon | Office Space | Onward",
@@ -628,7 +630,7 @@ export const gurgaonCity: CityData = {
   heroDescription:
     "Your next office should work for the people using it, not just look good in photographs. Find a workspace that fits the way your team works in Gurgaon. Onward Workspaces helps businesses explore coworking space in Gurgaon, furnished private offices and managed office solutions without the complexity of starting an office from scratch. Compare neighbourhoods, shortlist the right setting and arrange a tour before making a decision.",
   contactDescription:
-    "From MG Road's commercial core to the corporate energy of Udyog Vihar and the growth corridor of Sohna Road, our Gurugram centres put your team where the Millennium City actually does business.",
+    "From MG Road's commercial core to the corporate energy of Udyog Vihar and the growth corridor of Sohna Road, our Gurgaon centres put your team where the Millennium City actually does business.",
   areas: [
     {
       slug: "mg-road",
@@ -636,10 +638,10 @@ export const gurgaonCity: CityData = {
       cardHeading: "M.G. Road",
       name: "MG Road",
       type: "Managed Space",
-      address: "MG Road, Sector 28, Gurugram",
+      address: "MG Road, Sector 28, Gurgaon",
       seats: "450+ Desks",
       transit: "Direct Access from MG Road Rapid Metro Station",
-      highlight: "Managed Enterprise Suites on Gurugram's Original Commercial Spine",
+      highlight: "Managed Enterprise Suites on Gurgaon's Original Commercial Spine",
       features: ["Rapid Metro Access", "Premium Reception", "24/7 Power Backup", "Cafeteria"],
       img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/centres-in-gurgaon/mg-road.webp",
       heroBanner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/mg-road-page/top-banner-onward-in-mg-road.webp",
@@ -672,7 +674,7 @@ export const gurgaonCity: CityData = {
           cta: "Schedule a Visit",
           h1: "Office space in MG road",
           body: "Explore Onward Workspaces' Custom built space in MG road, Gurgaon. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
-          address: "10th Floor, CT2, Emaar MGF Capital Tower 1, Unit 10-003, Sikanderpur, Sector 26, Gurugram, Haryana, 122002",
+          address: "10th Floor, CT2, Emaar MGF Capital Tower 1, Unit 10-003, Sikanderpur, Sector 26, Gurgaon, Haryana, 122002",
           connectivity: "Close to Sikanderpur Metro Station",
           capacity: "350+ Seats",
           features: ["Custom Layout and IT", "Branded Workspace", "Premium Tower Address", "Power Backup"],
@@ -701,7 +703,7 @@ export const gurgaonCity: CityData = {
       cardHeading: "Udyog Vihar Phase 4",
       name: "Udyog Vihar",
       type: "Coworking",
-      address: "Udyog Vihar Phase IV, Adjacent to Cyber City & NH-48, Gurugram",
+      address: "Udyog Vihar Phase IV, Adjacent to Cyber City & NH-48, Gurgaon",
       seats: "500+ Desks",
       transit: "5 min to IndusInd Bank Cyber City Metro & NH-48",
       highlight: "Independent Enterprise Buildings & Tailored Layouts",
@@ -739,7 +741,7 @@ export const gurgaonCity: CityData = {
             "Explore Onward Workspaces Udyog Vihar Gurgaon in Udyog Vihar, Gurgaon. View workspace options, amenities and location details, and request a tailored quote or office",
           h1: "Office space in Udyog Vihar",
           body: "Explore Onward Workspaces' Coworking space in Udyog Vihar, Gurgaon. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
-          address: "Plot No. 27-28, Udyog Vihar Phase IV, Sector 18, Gurugram, Haryana, 122015",
+          address: "Plot No. 27-28, Udyog Vihar Phase IV, Sector 18, Gurgaon, Haryana, 122015",
           connectivity: "Near Sector 18 and DLF Phase IV, Udyog Vihar",
           capacity: "900+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
@@ -759,7 +761,7 @@ export const gurgaonCity: CityData = {
       cardHeading: "Sohna Road",
       name: "Sohna Road",
       type: "Coworking",
-      address: "Subhash Chowk, Sohna Road, Gurugram",
+      address: "Subhash Chowk, Sohna Road, Gurgaon",
       seats: "380+ Desks",
       transit: "Subhash Chowk Junction & Direct Elevated Corridor",
       highlight: "Flexible Team Suites with Collaborative Open Commons",
@@ -793,8 +795,8 @@ export const gurgaonCity: CityData = {
             "Explore Onward Workspaces Sohna Road Gurgaon in Sohna Road, Gurgaon. View workspace options, amenities and location details, and request a tailored quote or office",
           h1: "Office space in Sohna Road",
           body: "Explore Onward Workspaces' Coworking space in Sohna Road, Gurgaon. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
-          address: "Capital Business Park, Badshahpur, Sohna Road, Sector 48, Gurugram, Haryana, 122018",
-          connectivity: "On the Sohna Road corridor, Gurugram",
+          address: "Capital Business Park, Badshahpur, Sohna Road, Sector 48, Gurgaon, Haryana, 122018",
+          connectivity: "On the Sohna Road corridor, Gurgaon",
           capacity: "700+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
         },

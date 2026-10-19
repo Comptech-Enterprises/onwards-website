@@ -1,11 +1,11 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import CentreDetailView from "@/components/CentreDetailView";
-import { gurgaonCity } from "@/data/locations";
+import { delhiCity } from "@/data/locations";
 import { getWorkspacesForArea } from "@/data/workspaces";
 
 export function generateStaticParams() {
   const params: { area: string; centre: string }[] = [];
-  for (const area of gurgaonCity.areas) {
+  for (const area of delhiCity.areas) {
     const workspaces = getWorkspacesForArea(area);
     for (const ws of workspaces) {
       params.push({ area: area.slug, centre: ws.centreKey });
@@ -16,13 +16,13 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ area: string; centre: string }> }) {
   const { area, centre } = await params;
-  const areaData = gurgaonCity.areas.find((a) => a.slug === area);
+  const areaData = delhiCity.areas.find((a) => a.slug === area);
   if (!areaData) return {};
   const workspaces = getWorkspacesForArea(areaData);
   const ws = workspaces.find((w) => w.centreKey === centre);
   if (!ws) return {};
   if (ws.copy?.metaTitle) {
-    const url = `https://onwardworkspaces.com/locations/gurgaon/${areaData.slug}/${ws.centreKey}`;
+    const url = `https://onwardworkspaces.com/delhi/${areaData.slug}/${ws.centreKey}`;
     const description = ws.copy.metaDescription ?? areaData.description;
     return {
       title: ws.copy.metaTitle,
@@ -37,14 +37,18 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   };
 }
 
-export default async function GurgaonCentrePage({ params }: { params: Promise<{ area: string; centre: string }> }) {
+export default async function DelhiCentrePage({ params }: { params: Promise<{ area: string; centre: string }> }) {
   const { area, centre } = await params;
-  const areaData = gurgaonCity.areas.find((a) => a.slug === area);
+  const areaData = delhiCity.areas.find((a) => a.slug === area);
   if (!areaData) notFound();
 
   const workspaces = getWorkspacesForArea(areaData);
   const ws = workspaces.find((w) => w.centreKey === centre);
-  if (!ws) notFound();
+  if (!ws) {
+    const legacy = workspaces.find((w) => w.category === centre);
+    if (legacy) permanentRedirect(`${delhiCity.basePath}/${areaData.slug}/${legacy.centreKey}`);
+    notFound();
+  }
 
-  return <CentreDetailView city={gurgaonCity} area={areaData} centre={ws} />;
+  return <CentreDetailView city={delhiCity} area={areaData} centre={ws} />;
 }

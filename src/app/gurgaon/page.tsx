@@ -4,11 +4,11 @@ import { gurgaonCity } from "@/data/locations";
 export const metadata = {
   title: gurgaonCity.metaTitle,
   description: gurgaonCity.metaDescription,
-  alternates: { canonical: "https://onwardworkspaces.com/locations/gurgaon" },
+  alternates: { canonical: "https://onwardworkspaces.com/gurgaon" },
   openGraph: {
     title: gurgaonCity.metaTitle,
     description: gurgaonCity.metaDescription,
-    url: "https://onwardworkspaces.com/locations/gurgaon",
+    url: "https://onwardworkspaces.com/gurgaon",
     siteName: "Onward Workspaces",
     type: "website" as const,
   },

@@ -55,7 +55,7 @@ const directContacts = [
 export default function ContactSection({
   bgImage,
   formOnly = false,
-  title = "Get in Touch With Us",
+  title = "Get in\nTouch With Us",
   highlight = "Touch With Us",
   description = "Our workspace specialists will assess your requirements, from large enterprise floors to private executive cabins, and present a tailored proposal within one business day.",
   hideDirectContacts = false,
@@ -290,18 +290,17 @@ export default function ContactSection({
                           className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
                         />
                       </div>
-                      {!simpleForm && (
                       <div>
                         <label className="text-xs font-medium text-gray-500 block mb-1.5">
-                          Team Size (Optional)
+                          Team Size *
                         </label>
                         <input
                           type="text"
+                          required
                           placeholder="e.g. 15-50 Desks"
                           className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
                         />
                       </div>
-                      )}
                     </div>
 
                     {!simpleForm && (

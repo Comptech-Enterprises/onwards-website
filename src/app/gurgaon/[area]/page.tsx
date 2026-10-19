@@ -12,7 +12,7 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   if (!area) return {};
   const title = area.metaTitle ?? `${area.name} Coworking & Managed Office Space, Gurgaon | Onward Workspaces`;
   const description = area.metaDescription ?? area.description;
-  const url = `https://onwardworkspaces.com/locations/gurgaon/${area.slug}`;
+  const url = `https://onwardworkspaces.com/gurgaon/${area.slug}`;
   return {
     title,
     description,

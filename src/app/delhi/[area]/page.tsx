@@ -17,11 +17,11 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
     description: areaData.metaDescription ?? areaData.description,
     ...(areaData.metaTitle
       ? {
-          alternates: { canonical: `https://onwardworkspaces.com/locations/delhi/${areaData.slug}` },
+          alternates: { canonical: `https://onwardworkspaces.com/delhi/${areaData.slug}` },
           openGraph: {
             title: areaData.metaTitle,
             description: areaData.metaDescription ?? areaData.description,
-            url: `https://onwardworkspaces.com/locations/delhi/${areaData.slug}`,
+            url: `https://onwardworkspaces.com/delhi/${areaData.slug}`,
             siteName: "Onward Workspaces",
             type: "website" as const,
           },

@@ -11,5 +11,5 @@ export default async function LegacyDelhiAreaPage({
   params: Promise<{ area: string }>;
 }) {
   const { area: areaSlug } = await params;
-  redirect(`/locations/delhi/${areaSlug}`);
+  redirect(`/delhi/${areaSlug}`);
 }

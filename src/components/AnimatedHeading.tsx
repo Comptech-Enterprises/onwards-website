@@ -38,7 +38,7 @@ export default function AnimatedHeading({
   as = "h2",
   textClassName = "text-black",
 }: Props) {
-  const words = text.split(" ");
+  const words = text.match(/\S+|\n/g) ?? [];
   const hi = new Set(
     highlight
       .split(" ")
@@ -57,7 +57,10 @@ export default function AnimatedHeading({
       viewport={{ once: true, amount: 0.3 }}
       transition={{ delayChildren: delay }}
     >
-      {words.map((w, i) => (
+      {words.map((w, i) =>
+        w === "\n" ? (
+          <br key={`br-${i}`} />
+        ) : (
         <span
           key={`${w}-${i}`}
           className="me-[0.28em] inline-flex overflow-hidden pb-[0.15em] align-bottom last:me-0"
@@ -71,7 +74,8 @@ export default function AnimatedHeading({
             {w}
           </motion.span>
         </span>
-      ))}
+        ),
+      )}
     </Component>
   );
 }

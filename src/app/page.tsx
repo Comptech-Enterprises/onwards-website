@@ -18,7 +18,6 @@ import Reveal from "@/components/Reveal";
 import AnimatedHeading from "@/components/AnimatedHeading";
 import MagneticButton from "@/components/MagneticButton";
 import SpotlightCard from "@/components/SpotlightCard";
-import SpringCounter from "@/components/SpringCounter";
 import FeatureTimeline from "@/components/FeatureTimeline";
 import ContactSection from "@/components/ContactSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -148,17 +147,17 @@ const stats: Array<{
 const cityCards = [
   {
     name: "Delhi",
-    href: "/locations/delhi",
+    href: "/delhi",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/delhi.webp",
   },
   {
     name: "Noida",
-    href: "/locations/noida",
+    href: "/noida",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/noida.webp",
   },
   {
-    name: "Gurugram",
-    href: "/locations/gurgaon",
+    name: "Gurgaon",
+    href: "/gurgaon",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/top-cities-in-delhi-ncr/gurgaon.webp",
   },
 ];
@@ -295,21 +294,21 @@ const cities = [
         tag: "Corporate Corridor",
         seats: "600+ Desks",
         transit: "IFFCO Chowk Metro",
-        highlight: "Gurugram’s established corporate corridor.",
+        highlight: "Gurgaon’s established corporate corridor.",
       },
       {
         spot: "Sohna Road",
         tag: "Growth Corridor",
         seats: "350+ Desks",
         transit: "Subhash Chowk Junction",
-        highlight: "A fast-growing business corridor in Gurugram for scaling teams.",
+        highlight: "A fast-growing business corridor in Gurgaon for scaling teams.",
       },
       {
         spot: "MG Road",
-        tag: "Prime Gurugram",
+        tag: "Prime Gurgaon",
         seats: "400+ Desks",
         transit: "MG Road Metro",
-        highlight: "A prime Gurugram address with strong metro connectivity.",
+        highlight: "A prime Gurgaon address with strong metro connectivity.",
       },
     ],
   },
@@ -1120,9 +1119,7 @@ export default function Home() {
 
         {/* ━━━ TABULAR STATS STRIP PINNED AT THE BOTTOM OF HERO ━━━ */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.85, duration: 0.6 }}
+          initial={false}
           className="relative z-20 w-full border-t border-white/15 bg-black/25 backdrop-blur-md"
         >
           <div className="max-w-5xl mx-auto px-6 py-6 sm:py-8">
@@ -1135,12 +1132,10 @@ export default function Home() {
                   }`}
                 >
                   <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none text-center">
-                    <SpringCounter
-                      target={s.value}
-                      suffix={s.suffix}
-                      decimals={s.decimals}
-                      className="tabular-nums font-light sm:font-normal"
-                    />
+                    <span className="tabular-nums font-light sm:font-normal">
+                      {s.value}
+                      {s.suffix}
+                    </span>
                   </div>
                   <div className="text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-white/80 uppercase mt-2 text-center">
                     {s.label}
@@ -1270,12 +1265,12 @@ export default function Home() {
             />
             <Reveal delay={0.1}>
               <p className="mt-2 sm:mt-3 text-xs sm:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                Discover premium workspace solutions tailored to your organisation, across Delhi, Noida and Gurugram.
+                Discover premium workspace solutions tailored to your organisation, across Delhi, Noida and Gurgaon.
               </p>
             </Reveal>
           </div>
 
-          {/* Desktop — 3 City Cards (Delhi, Noida, Gurugram) */}
+          {/* Desktop — 3 City Cards (Delhi, Noida, Gurgaon) */}
           <div className="hidden md:grid md:grid-cols-3 gap-6 lg:gap-8">
             {cityCards.map((city) => (
               <Link

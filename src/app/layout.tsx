@@ -14,17 +14,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://onwardworkspaces.com"),
   title: "Coworking Space in Delhi | Office Space | Onward",
   description:
     "Explore coworking space and office space in Delhi with Onward Workspaces. Compare workspace options, request pricing and book a site visit.",
   alternates: {
-    canonical: "https://onwardworkspaces.com",
+    canonical: "./",
   },
   openGraph: {
     title: "Coworking Space in Delhi | Office Space | Onward",
     description:
       "Explore coworking space and office space in Delhi with Onward Workspaces. Compare workspace options, request pricing and book a site visit.",
-    url: "https://onwardworkspaces.com",
+    url: "./",
     siteName: "Onward Workspaces",
     type: "website",
   },
