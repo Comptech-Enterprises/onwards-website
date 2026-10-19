@@ -391,7 +391,10 @@ export default function AboutPage() {
 
 
         {/* 5. CONTACT FORM (same as home) */}
-        <ContactSection bgImage="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.webp" />
+        <ContactSection
+          bgImage="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.webp"
+          description="Schedule a visit to any of our centres across Delhi, Noida and Gurgaon, and our team will recommend the workspace that suits your organisation."
+        />
 
         {/* 6. FAQ */}
         <FaqSection

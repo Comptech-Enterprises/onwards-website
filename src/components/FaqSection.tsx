@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function FaqSection({ faqs }: { faqs: { q: string; a: string }[] }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -30,19 +30,15 @@ export default function FaqSection({ faqs }: { faqs: { q: string; a: string }[] 
                     </svg>
                   </span>
                 </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
+                <motion.div
+ initial={false}
+ animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+ transition={{ duration: 0.3 }}
+ aria-hidden={!isOpen}
+ className="overflow-hidden"
+ >
                       <p className="text-gray-600 text-base leading-relaxed pb-6">{f.a}</p>
                     </motion.div>
-                  )}
-                </AnimatePresence>
               </div>
             );
           })}

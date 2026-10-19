@@ -157,7 +157,7 @@ export const solutions: Solution[] = [
       "Discover meeting rooms & day passes with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     h1: "Meeting Rooms",
     heroBody:
-      "Meet clients, interview candidates or bring your team together in a professional meeting environment. Share your preferred location, date, group size and equipment needs to receive suitable meeting room options.",
+      "Meet clients, interview candidates or bring your team together in a professional meeting environment. Share your preferred location, date, group size and equipment needs to receive suitable meeting room & day pass options.",
     contactBody:
       "Ready to explore meeting rooms & day passes? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
     faqs: [
