@@ -11,6 +11,7 @@ import ContactSection from "@/components/ContactSection";
 import AutoSlider from "@/components/AutoSlider";
 import CityMicroMarketsMap from "@/components/CityMicroMarketsMap";
 import type { CityData } from "@/data/locations";
+import { getSeo } from "@/data/seo";
 
 const whyChoose = [
   {
@@ -53,6 +54,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
     }, 1800);
     return () => clearInterval(timer);
   }, [sliderPaused]);
+  const cityH1 = getSeo(`/${city.slug}`)?.h1 ?? city.h1;
   const { name: cityName, heroImage, heroDescription, contactDescription, areas, basePath } = city;
 
   const defaultFaqs = [
@@ -111,8 +113,8 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             </nav>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-              {city.h1 ? (
-                <span className="text-white">{city.h1}</span>
+              {cityH1 ? (
+                <span className="text-white">{cityH1}</span>
               ) : (
                 <>
                   <span className="text-white">Managed Office Space</span>{" "}

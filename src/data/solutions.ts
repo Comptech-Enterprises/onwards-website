@@ -1,5 +1,6 @@
 export interface Solution {
   slug: string;
+  path: string;
   title: string;
   tagline: string;
   desc: string;
@@ -18,6 +19,7 @@ export interface Solution {
 export const solutions: Solution[] = [
   {
     slug: "managed-office",
+    path: "managed-office-space-in-delhi",
     title: "Managed Office",
     tagline: "Your office, our operations — fully customised enterprise workspaces managed end-to-end by Onward.",
     desc: "Customised workspace for Enterprise, MNCs & Unicorns with dedicated access & branding.",
@@ -47,6 +49,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "private-suites",
+    path: "private-suites-in-delhi-ncr",
     title: "Private Suites",
     tagline: "Fully-managed private office suites for high-velocity teams of 10 to 100+ members.",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
@@ -76,6 +79,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "private-cabins",
+    path: "private-cabins-in-delhi-ncr",
     title: "Private Cabins",
     tagline: "Fully-equipped executive cabins crafted specifically for partners, directors, and CXOs.",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
@@ -105,6 +109,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "virtual-office",
+    path: "virtual-office-in-delhi-ncr",
     title: "Virtual Office",
     tagline: "A prestigious CBD business address with mail handling, GST registration & zero overhead costs.",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
@@ -134,6 +139,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "on-demand",
+    path: "meeting-rooms/day-passes",
     title: "On-Demand",
     tagline: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
@@ -163,6 +169,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "custom-built",
+    path: "custom-built-in-delhi-ncr",
     title: "Custom Built",
     tagline: "End-to-end bespoke interior architecture tailored to your company identity and culture.",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
@@ -194,4 +201,13 @@ export const solutions: Solution[] = [
 
 export function getSolutionBySlug(slug: string): Solution | undefined {
   return solutions.find((s) => s.slug === slug);
+}
+
+export function getSolutionByPath(path: string): Solution | undefined {
+  return solutions.find((s) => s.path === path);
+}
+
+export function solutionHref(slug: string): string {
+  const sol = getSolutionBySlug(slug);
+  return `/offices/${sol ? sol.path : slug}`;
 }

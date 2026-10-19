@@ -5,11 +5,11 @@ const footerColumns = [
   {
     title: "Solutions",
     links: [
-      { label: "Managed Office", href: "/solutions/managed-office" },
-      { label: "Private Suites", href: "/solutions/private-suites" },
-      { label: "Virtual Office", href: "/solutions/virtual-office" },
-      { label: "On-Demand", href: "/solutions/on-demand" },
-      { label: "Custom Built", href: "/solutions/custom-built" },
+      { label: "Managed Office", href: "/offices/managed-office-space-in-delhi" },
+      { label: "Private Suites", href: "/offices/private-suites-in-delhi-ncr" },
+      { label: "Virtual Office", href: "/offices/virtual-office-in-delhi-ncr" },
+      { label: "On-Demand", href: "/offices/meeting-rooms/day-passes" },
+      { label: "Custom Built", href: "/offices/custom-built-in-delhi-ncr" },
     ],
   },
   {

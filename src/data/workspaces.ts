@@ -15,6 +15,7 @@ export interface WorkspaceUnit {
   copy?: import("@/data/locations").CentreCopy;
   cardTitle?: string;
   cardSubline?: string;
+  cardTag?: "h2" | "h3";
 }
 
 const areaWorkspaceAssetMap: Record<
@@ -44,7 +45,7 @@ const areaWorkspaceAssetMap: Record<
       banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/coworking-banner-centre-page.webp",
     },
   },
-  "mohan-cooperative": {
+  "mohan-estate": {
     coworking: {
       img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/mohan-cooperative-page/coworking.webp",
       banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/mohan-cooperative-page/coworking-banner-centre-page.webp",
@@ -66,19 +67,19 @@ const areaWorkspaceAssetMap: Record<
       banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/janakpuri-page/coworking-banner-centre-page.webp",
     },
   },
-  "sector-4": {
+  "noida-sector-4": {
     managed: {
       img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-4-page/managed-space.webp",
       banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-4-page/managed-space-banner-centre-page.webp",
     },
   },
-  "sector-126": {
+  "noida-sector-126": {
     coworking: {
       img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-126-page/coworking.webp",
       banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-126-page/coworking-banner-centre-page.webp",
     },
   },
-  "sector-132": {
+  "noida-sector-132": {
     managed: {
       img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-132-page/managed-space.webp",
       banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/sector-132-page/managed-space-banner-centre-page.webp",
@@ -118,7 +119,7 @@ export function getWorkspacesForArea(area: AreaDetail): WorkspaceUnit[] {
     const card = area.cardCopy?.[w.category];
     const baseCopy = area.centreCopy?.[w.category];
     const copy = baseCopy && w.centreKey === "managed-2" ? { ...baseCopy, ...area.secondManaged } : baseCopy;
-    return { ...w, centreKey: copy?.slug ?? w.centreKey, ...(card ? { cardTitle: card.title, cardSubline: card.subline } : {}), ...(copy ? { copy } : {}) };
+    return { ...w, centreKey: copy?.slug ?? w.centreKey, ...(card ? { cardTitle: card.title, cardSubline: card.subline, cardTag: card.tag } : {}), ...(copy ? { copy } : {}) };
   });
 }
 

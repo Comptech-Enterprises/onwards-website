@@ -39,7 +39,10 @@ export interface AreaDetail {
   faqs?: { q: string; a: string }[];
   cardHeading?: string;
   h1?: string;
-  cardCopy?: { managed?: { title: string; subline: string }; coworking?: { title: string; subline: string } };
+  cardCopy?: {
+    managed?: { title: string; subline: string; tag?: "h2" | "h3" };
+    coworking?: { title: string; subline: string; tag?: "h2" | "h3" };
+  };
   description: string;
   mapEmbed?: string;
 }
@@ -146,6 +149,7 @@ export const delhiCity: CityData = {
       ],
       centreCopy: {
         managed: {
+          slug: "onward-workspaces-40",
           h1: "Custom-Built Space in Okhla Phase 2",
           body: "Explore Onward Workspaces' Custom-built space in Okhla Phase 2, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
           address: "E 40/7, Okhla Industrial Estate, Phase II, New Delhi, 110020",
@@ -216,9 +220,10 @@ export const delhiCity: CityData = {
         { q: "Can I visit the workspace before booking?", a: "Yes. Submit a tour request and confirm a suitable visit time with the Onward Workspaces team." },
         { q: "What should I check before signing?", a: "Review the complete inclusions list, deposit, lock-in, notice period, access hours, connectivity and meeting room policy." },
       ],
-      secondManaged: { address: "Plot No. 151, Okhla Industrial Estate, Phase III, New Delhi, 110020" },
+      secondManaged: { slug: "onward-workspaces-151", address: "Plot No. 151, Okhla Industrial Estate, Phase III, New Delhi, 110020" },
       centreCopy: {
         managed: {
+          slug: "onward-workspaces-41",
           h1: "Custom-Built Space in Okhla Phase 3",
           body: "Explore Onward Workspaces' Custom-built space in Okhla Phase 3, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
           address: "Plot No. 41, Okhla Industrial Estate, Phase III, New Delhi, 110020",
@@ -227,6 +232,7 @@ export const delhiCity: CityData = {
           features: ["Dedicated Entrance", "Custom Layout and IT", "Power Backup", "Branded Workspace"],
         },
         coworking: {
+          slug: "onward-workspaces-20",
           h1: "Coworking Space in Okhla Phase 3",
           body: "Explore Onward Workspaces' coworking centre in Okhla Phase 3, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
           address: "Plot No. 20, Okhla Industrial Estate, Phase III, New Delhi, 110020",
@@ -245,7 +251,7 @@ export const delhiCity: CityData = {
       mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505.2!2d77.2750!3d28.5250!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3e1a4b0b0b1%3A0x1234567891!2sOkhla+Phase+3%2C+New+Delhi!5e0!3m2!1sen!2sin!4v1",
     },
     {
-      slug: "mohan-cooperative",
+      slug: "mohan-estate",
       centres: 1,
       name: "Mohan Cooperative",
       type: "Coworking",
@@ -279,6 +285,7 @@ export const delhiCity: CityData = {
       ],
       centreCopy: {
         coworking: {
+          slug: "onward-workspaces-mohan-estate",
           h1: "Coworking Centre in Mohan Estate",
           body: "Explore Onward Workspaces Mohan Estate, an Onward Workspaces location associated with Mohan Estate, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
           address: "B1/A5, Block E, Mohan Cooperative Industrial Estate, Badarpur, New Delhi, 110044",
@@ -327,6 +334,7 @@ export const delhiCity: CityData = {
       ],
       centreCopy: {
         managed: {
+          slug: "onward-workspaces-l-block",
           h1: "Custom-Built Space in Connaught Place",
           body: "Explore Onward Workspaces' Custom-built space in Connaught Place, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
           address: "Second Floor, L-51 to 54, Connaught Circus, Connaught Place, New Delhi, 110001",
@@ -335,6 +343,7 @@ export const delhiCity: CityData = {
           features: ["Custom Layout and IT", "Branded Workspace", "Dedicated Entrance", "24/7 Access", "Power Backup"],
         },
         coworking: {
+          slug: "onward-workspaces-ece-house",
           h1: "Coworking Space in Connaught Place",
           body: "Explore Onward Workspaces' coworking centre in Connaught Place, Delhi. If you need an office that supports focused work, team collaboration and professional client meetings, start by sharing your headcount, preferred move-in date and desired layout. Our team can confirm available inventory, exact address, amenities and current commercial terms.",
           address: "ECE House, Plot No. 28, Kasturba Gandhi Marg, Connaught Place, New Delhi, 110001",
@@ -387,6 +396,7 @@ export const delhiCity: CityData = {
       ],
       centreCopy: {
         coworking: {
+          slug: "onward-workspaces-janakpuri",
           metaTitle: "Onward Workspaces Janakpuri | Office Space in Janakpuri, Delhi",
           metaDescription:
             "Explore Onward Workspaces in Janakpuri, Delhi. View workspace options, amenities and location details, and request a tailored quote or office tour.",
@@ -438,7 +448,7 @@ export const noidaCity: CityData = {
     "From the institutional calm of Sector 4 to the expressway energy of Sector 126 and 132, our Noida centres put your team close to the city's biggest tech parks and best connected to Delhi NCR.",
   areas: [
     {
-      slug: "sector-4",
+      slug: "noida-sector-4",
       centres: 1,
       name: "Sector 4",
       type: "Managed Space",
@@ -472,6 +482,7 @@ export const noidaCity: CityData = {
       ],
       centreCopy: {
         managed: {
+          slug: "onward-workspaces-sector-4-noida",
           metaTitle: "Onward Workspaces Sector 4 Noida | Office Space in Sector 4, Noida",
           metaDescription:
             "Explore Onward Workspaces Sector 4 Noida in Sector 4, Noida. View workspace options, amenities and location details, and request a tailored quote or office",
@@ -493,7 +504,7 @@ export const noidaCity: CityData = {
       mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503.5!2d77.3150!3d28.5850!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce45f95d0f0f1%3A0x1234567894!2sSector+4%2C+Noida!5e0!3m2!1sen!2sin!4v1",
     },
     {
-      slug: "sector-126",
+      slug: "noida-sector-126",
       centres: 1,
       name: "Sector 126",
       type: "Coworking",
@@ -527,6 +538,7 @@ export const noidaCity: CityData = {
         "Ready to explore Sector 126, Noida? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
       centreCopy: {
         coworking: {
+          slug: "onward-workspaces-sector-126-noida",
           metaTitle: "Onward Workspaces Sector 126 Noida | Office Space in Sector 126, Noida",
           metaDescription:
             "Explore Onward Workspaces Sector 126 Noida in Sector 126, Noida. View workspace options, amenities and location details, and request a tailored quote or office",
@@ -547,7 +559,7 @@ export const noidaCity: CityData = {
       mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.0!2d77.3650!3d28.5050!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce45f95d0f0f1%3A0x1234567895!2sSector+126%2C+Noida!5e0!3m2!1sen!2sin!4v1",
     },
     {
-      slug: "sector-132",
+      slug: "noida-sector-132",
       centres: 1,
       name: "Sector 132",
       type: "Managed Space",
@@ -581,6 +593,7 @@ export const noidaCity: CityData = {
       ],
       centreCopy: {
         managed: {
+          slug: "onward-workspaces-sector-132-noida",
           metaTitle: "Onward Workspaces Sector 132 Noida | Office Space in Sector 132, Noida",
           metaDescription:
             "Explore Onward Workspaces Sector 132 Noida in Sector 132, Noida. View workspace options, amenities and location details, and request a tailored quote or office",
@@ -668,6 +681,7 @@ export const gurgaonCity: CityData = {
       ],
       centreCopy: {
         managed: {
+          slug: "onward-workspaces-mg-road",
           metaTitle: "Onward Workspaces MG road Gurgaon | Office Space in MG road, Gurgaon",
           metaDescription:
             "Explore Onward Workspaces MG road Gurgaon in MG road, Gurgaon. View workspace options, amenities and location details, and request a tailored quote or office",
@@ -736,6 +750,7 @@ export const gurgaonCity: CityData = {
       ],
       centreCopy: {
         coworking: {
+          slug: "onward-workspaces-udyog-vihar",
           metaTitle: "Onward Workspaces Udyog Vihar Gurgaon | Office Space in Udyog Vihar Phase 4, Gurgaon",
           metaDescription:
             "Explore Onward Workspaces Udyog Vihar Gurgaon in Udyog Vihar, Gurgaon. View workspace options, amenities and location details, and request a tailored quote or office",
@@ -749,7 +764,7 @@ export const gurgaonCity: CityData = {
       },
       h1: "Office space in Udyog Vihar",
       cardCopy: {
-        coworking: { title: "Coworking Space", subline: "900+ Seats" },
+        coworking: { title: "Coworking Space", subline: "900+ Seats", tag: "h2" },
       },
       description:
         "Looking for coworking space in Udyog Vihar or a private office in Udyog Vihar, Gurgaon? Onward Workspaces helps growing teams assess practical workspace options in this business district. Review how many seats you need, the level of privacy you prefer and the facilities required for your day-to-day operations, then request a location-specific proposal.",
@@ -790,6 +805,7 @@ export const gurgaonCity: CityData = {
       ],
       centreCopy: {
         coworking: {
+          slug: "onward-workspaces-sohna-road",
           metaTitle: "Onward Workspaces Sohna Road Gurgaon | Office Space in Sohna Road, Gurgaon",
           metaDescription:
             "Explore Onward Workspaces Sohna Road Gurgaon in Sohna Road, Gurgaon. View workspace options, amenities and location details, and request a tailored quote or office",

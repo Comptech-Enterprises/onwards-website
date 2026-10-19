@@ -11,6 +11,7 @@ export type { WorkspaceUnit } from "@/data/workspaces";
 export { getWorkspacesForArea } from "@/data/workspaces";
 
 function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: AreaDetail; cityBasePath?: string }) {
+  const Heading = ws.cardTag ?? "h3";
   const centreHref = cityBasePath ? `${cityBasePath}/${area.slug}/${ws.centreKey}` : undefined;
 
   const inner = (
@@ -23,9 +24,9 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
       </div>
-      <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#d4622b] transition-colors">
+      <Heading className="mt-4 text-lg font-bold text-black group-hover:text-[#d4622b] transition-colors">
         {ws.cardTitle ?? ws.title}
-      </h3>
+      </Heading>
       <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
         {ws.cardSubline ?? `${ws.badge} · ${ws.seats}`}
       </p>

@@ -1,3 +1,4 @@
+import { seoMetadata } from "@/data/seo";
 import { notFound } from "next/navigation";
 import AreaDetailView from "@/components/AreaDetailView";
 import { delhiCity } from "@/data/locations";
@@ -12,22 +13,10 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const { area } = await params;
   const areaData = delhiCity.areas.find((a) => a.slug === area);
   if (!areaData) return {};
-  return {
-    title: areaData.metaTitle ?? `${areaData.name} Coworking & Managed Office Space, Delhi | Onward Workspaces`,
+  return seoMetadata(`/delhi/${areaData.slug}`, {
+    title: areaData.metaTitle ?? `${areaData.name} Coworking & Managed Office Space | Onward Workspaces`,
     description: areaData.metaDescription ?? areaData.description,
-    ...(areaData.metaTitle
-      ? {
-          alternates: { canonical: `https://onwardworkspaces.com/delhi/${areaData.slug}` },
-          openGraph: {
-            title: areaData.metaTitle,
-            description: areaData.metaDescription ?? areaData.description,
-            url: `https://onwardworkspaces.com/delhi/${areaData.slug}`,
-            siteName: "Onward Workspaces",
-            type: "website" as const,
-          },
-        }
-      : {}),
-  };
+  });
 }
 
 export default async function DelhiAreaPage({ params }: { params: Promise<{ area: string }> }) {

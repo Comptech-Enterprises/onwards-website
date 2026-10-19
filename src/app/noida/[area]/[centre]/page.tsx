@@ -1,3 +1,4 @@
+import { seoMetadata } from "@/data/seo";
 import { notFound, permanentRedirect } from "next/navigation";
 import CentreDetailView from "@/components/CentreDetailView";
 import { noidaCity } from "@/data/locations";
@@ -21,20 +22,10 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const workspaces = getWorkspacesForArea(areaData);
   const ws = workspaces.find((w) => w.centreKey === centre);
   if (!ws) return {};
-  if (ws.copy?.metaTitle) {
-    const url = `https://onwardworkspaces.com/noida/${areaData.slug}/${ws.centreKey}`;
-    const description = ws.copy.metaDescription ?? areaData.description;
-    return {
-      title: ws.copy.metaTitle,
-      description,
-      alternates: { canonical: url },
-      openGraph: { title: ws.copy.metaTitle, description, url, siteName: "Onward Workspaces", type: "website" as const },
-    };
-  }
-  return {
-    title: `${ws.title} | Onward Workspaces`,
-    description: `${ws.tagline} ${areaData.description}`,
-  };
+  return seoMetadata(`/noida/${areaData.slug}/${ws.centreKey}`, {
+    title: ws.copy?.metaTitle ?? `${ws.title} | Onward Workspaces`,
+    description: ws.copy?.metaDescription ?? `${ws.tagline} ${areaData.description}`,
+  });
 }
 
 export default async function NoidaCentrePage({ params }: { params: Promise<{ area: string; centre: string }> }) {
@@ -45,7 +36,7 @@ export default async function NoidaCentrePage({ params }: { params: Promise<{ ar
   const workspaces = getWorkspacesForArea(areaData);
   const ws = workspaces.find((w) => w.centreKey === centre);
   if (!ws) {
-    const legacy = workspaces.find((w) => w.category === centre);
+    const legacy = workspaces.find((w) => w.category === centre || w.centreKey === centre.toLowerCase());
     if (legacy) permanentRedirect(`${noidaCity.basePath}/${areaData.slug}/${legacy.centreKey}`);
     notFound();
   }

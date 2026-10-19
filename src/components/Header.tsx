@@ -13,12 +13,12 @@ const locationsData = [
 ];
 
 const solutionsData = [
-  { name: "Managed Office", href: "/solutions/managed-office" },
-  { name: "Private Suites", href: "/solutions/private-suites" },
-  { name: "Private Cabins", href: "/solutions/private-cabins" },
-  { name: "Virtual Office", href: "/solutions/virtual-office" },
-  { name: "On-Demand", href: "/solutions/on-demand" },
-  { name: "Custom Built", href: "/solutions/custom-built" },
+  { name: "Managed Office", href: "/offices/managed-office-space-in-delhi" },
+  { name: "Private Suites", href: "/offices/private-suites-in-delhi-ncr" },
+  { name: "Private Cabins", href: "/offices/private-cabins-in-delhi-ncr" },
+  { name: "Virtual Office", href: "/offices/virtual-office-in-delhi-ncr" },
+  { name: "On-Demand", href: "/offices/meeting-rooms/day-passes" },
+  { name: "Custom Built", href: "/offices/custom-built-in-delhi-ncr" },
 ];
 
 export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean }) {

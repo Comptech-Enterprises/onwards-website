@@ -45,7 +45,7 @@ const cityMapConfigs: Record<string, CityMapConfig> = {
       "janakpuri": { x: 80.0, y: 310.0, labelPos: "right", subtext: "West Delhi Commercial" },
       "okhla-phase-2": { x: 535.0, y: 410.0, labelPos: "left", subtext: "South Delhi Tech Hub" },
       "okhla-phase-3": { x: 558.0, y: 388.0, labelPos: "right", subtext: "Enterprise District" },
-      "mohan-cooperative": { x: 600.0, y: 453.6, labelPos: "right", subtext: "Industrial Corridor" },
+      "mohan-estate": { x: 600.0, y: 453.6, labelPos: "right", subtext: "Industrial Corridor" },
     },
     watermark: "DELHI",
     tagline: "METRO ARTERIAL MATRIX",
@@ -63,9 +63,9 @@ const cityMapConfigs: Record<string, CityMapConfig> = {
   noida: {
     viewBox: "520 260 380 235",
     pins: {
-      "sector-4": { x: 605.0, y: 320.0, labelPos: "right", subtext: "Institutional Core" },
-      "sector-126": { x: 677.1, y: 385.3, labelPos: "right", subtext: "Tech & Corporate Dist." },
-      "sector-132": { x: 754.3, y: 468.2, labelPos: "right", subtext: "Expressway Campus" },
+      "noida-sector-4": { x: 605.0, y: 320.0, labelPos: "right", subtext: "Institutional Core" },
+      "noida-sector-126": { x: 677.1, y: 385.3, labelPos: "right", subtext: "Tech & Corporate Dist." },
+      "noida-sector-132": { x: 754.3, y: 468.2, labelPos: "right", subtext: "Expressway Campus" },
     },
     watermark: "NOIDA",
     tagline: "EXPRESSWAY TECH CORRIDOR",

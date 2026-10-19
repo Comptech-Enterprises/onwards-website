@@ -1,18 +1,11 @@
 import CityLocationsView from "@/components/CityLocationsView";
 import { gurgaonCity } from "@/data/locations";
+import { seoMetadata } from "@/data/seo";
 
-export const metadata = {
+export const metadata = seoMetadata("/gurgaon", {
   title: gurgaonCity.metaTitle,
   description: gurgaonCity.metaDescription,
-  alternates: { canonical: "https://onwardworkspaces.com/gurgaon" },
-  openGraph: {
-    title: gurgaonCity.metaTitle,
-    description: gurgaonCity.metaDescription,
-    url: "https://onwardworkspaces.com/gurgaon",
-    siteName: "Onward Workspaces",
-    type: "website" as const,
-  },
-};
+});
 
 export default function GurgaonLocationsPage() {
   return <CityLocationsView city={gurgaonCity} />;

@@ -10,6 +10,7 @@ import FaqSection from "@/components/FaqSection";
 import AmenitiesTicker from "@/components/AmenitiesTicker";
 import type { CityData, AreaDetail } from "@/data/locations";
 import type { WorkspaceUnit } from "@/data/workspaces";
+import { getSeo } from "@/data/seo";
 
 export default function CentreDetailView({
   city,
@@ -52,7 +53,7 @@ export default function CentreDetailView({
             </nav>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight text-white">
-              {centre.copy?.h1 ?? centre.title}
+              {getSeo(`${city.basePath}/${area.slug}/${centre.centreKey}`)?.h1 ?? centre.copy?.h1 ?? centre.title}
             </h1>
             <p className="mt-3 text-xs sm:text-sm lg:text-base text-white/90 max-w-2xl leading-relaxed font-normal">
               {centre.copy?.body ?? centre.tagline}

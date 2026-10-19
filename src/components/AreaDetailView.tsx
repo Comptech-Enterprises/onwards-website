@@ -7,8 +7,10 @@ import ContactSection from "@/components/ContactSection";
 import FaqSection from "@/components/FaqSection";
 import AreaWorkspacesSelector from "@/components/AreaWorkspacesSelector";
 import type { CityData, AreaDetail } from "@/data/locations";
+import { getSeo } from "@/data/seo";
 
 export default function AreaDetailView({ city, area }: { city: CityData; area: AreaDetail }) {
+  const h1 = getSeo(`${city.basePath}/${area.slug}`)?.h1 ?? area.h1;
   return (
     <>
       <Header alwaysSolid />
@@ -39,8 +41,8 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
             </nav>
 
             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight">
-              {area.h1 ? (
-                <span className="text-white">{area.h1}</span>
+              {h1 ? (
+                <span className="text-white">{h1}</span>
               ) : (
                 <>
                   <span className="text-white">Onward in</span>{" "}

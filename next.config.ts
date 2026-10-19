@@ -30,10 +30,28 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    return ["delhi", "noida", "gurgaon"].flatMap((city) => [
-      { source: `/locations/${city}`, destination: `/${city}`, permanent: true },
-      { source: `/locations/${city}/:path*`, destination: `/${city}/:path*`, permanent: true },
+    const city = ["delhi", "noida", "gurgaon"].flatMap((c) => [
+      { source: `/locations/${c}`, destination: `/${c}`, permanent: true },
+      { source: `/locations/${c}/:path*`, destination: `/${c}/:path*`, permanent: true },
     ]);
+    const areas = [
+      ["delhi", "mohan-cooperative", "mohan-estate"],
+      ["noida", "sector-4", "noida-sector-4"],
+      ["noida", "sector-126", "noida-sector-126"],
+      ["noida", "sector-132", "noida-sector-132"],
+    ].flatMap(([c, from, to]) => [
+      { source: `/${c}/${from}`, destination: `/${c}/${to}`, permanent: true },
+      { source: `/${c}/${from}/:path*`, destination: `/${c}/${to}/:path*`, permanent: true },
+    ]);
+    const solutions = [
+      ["managed-office", "managed-office-space-in-delhi"],
+      ["private-suites", "private-suites-in-delhi-ncr"],
+      ["private-cabins", "private-cabins-in-delhi-ncr"],
+      ["virtual-office", "virtual-office-in-delhi-ncr"],
+      ["on-demand", "meeting-rooms/day-passes"],
+      ["custom-built", "custom-built-in-delhi-ncr"],
+    ].map(([from, to]) => ({ source: `/solutions/${from}`, destination: `/offices/${to}`, permanent: true }));
+    return [...city, ...areas, ...solutions];
   },
 };
 

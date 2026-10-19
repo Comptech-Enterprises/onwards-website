@@ -1,3 +1,4 @@
+import { seoMetadata } from "@/data/seo";
 import { notFound } from "next/navigation";
 import AreaDetailView from "@/components/AreaDetailView";
 import { gurgaonCity } from "@/data/locations";
@@ -10,19 +11,10 @@ export async function generateMetadata({ params }: { params: Promise<{ area: str
   const { area: areaSlug } = await params;
   const area = gurgaonCity.areas.find((a) => a.slug === areaSlug);
   if (!area) return {};
-  const title = area.metaTitle ?? `${area.name} Coworking & Managed Office Space, Gurgaon | Onward Workspaces`;
-  const description = area.metaDescription ?? area.description;
-  const url = `https://onwardworkspaces.com/gurgaon/${area.slug}`;
-  return {
-    title,
-    description,
-    ...(area.metaTitle
-      ? {
-          alternates: { canonical: url },
-          openGraph: { title, description, url, siteName: "Onward Workspaces", type: "website" as const },
-        }
-      : {}),
-  };
+  return seoMetadata(`/gurgaon/${area.slug}`, {
+    title: area.metaTitle ?? `${area.name} Coworking & Managed Office Space | Onward Workspaces`,
+    description: area.metaDescription ?? area.description,
+  });
 }
 
 export default async function GurgaonAreaPage({

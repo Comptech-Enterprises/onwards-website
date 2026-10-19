@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import ContactSection from "@/components/ContactSection";
 import FaqSection from "@/components/FaqSection";
 import { solutions, type Solution } from "@/data/solutions";
+import { getSeo } from "@/data/seo";
 
 const ease = [0.22, 0.8, 0.2, 1] as const;
 
@@ -92,7 +93,7 @@ export default function SolutionPageView({
               transition={{ duration: 0.7, ease }}
               className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-white max-w-3xl"
             >
-              {sol.h1 ?? sol.title}
+              {getSeo(`/offices/${sol.path}`)?.h1 ?? sol.h1 ?? sol.title}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 25 }}
@@ -204,7 +205,7 @@ export default function SolutionPageView({
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2, ease }}
                   >
-                    <Link href={`/solutions/${other.slug}`} className="group block bg-white/5 border border-white/10 rounded-2xl p-7 sm:p-8 hover:bg-white/8 transition-colors">
+                    <Link href={`/offices/${other.path}`} className="group block bg-white/5 border border-white/10 rounded-2xl p-7 sm:p-8 hover:bg-white/8 transition-colors">
                       <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-[#d4622b] transition-colors">
                         {other.title}
                       </h3>

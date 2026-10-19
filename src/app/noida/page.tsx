@@ -1,18 +1,11 @@
 import CityLocationsView from "@/components/CityLocationsView";
 import { noidaCity } from "@/data/locations";
+import { seoMetadata } from "@/data/seo";
 
-export const metadata = {
+export const metadata = seoMetadata("/noida", {
   title: noidaCity.metaTitle,
   description: noidaCity.metaDescription,
-  alternates: { canonical: "https://onwardworkspaces.com/noida" },
-  openGraph: {
-    title: noidaCity.metaTitle,
-    description: noidaCity.metaDescription,
-    url: "https://onwardworkspaces.com/noida",
-    siteName: "Onward Workspaces",
-    type: "website" as const,
-  },
-};
+});
 
 export default function NoidaLocationsPage() {
   return <CityLocationsView city={noidaCity} />;
