@@ -73,6 +73,8 @@ export default function ContactSection({
   const [status, setStatus] = useState<"idle" | "submitting" | "success">(
     "idle",
   );
+  const [heardFrom, setHeardFrom] = useState("");
+  const [socialPlatform, setSocialPlatform] = useState("");
 
   // Multi-plane scrolling parallax
   const { scrollYProgress } = useScroll({
@@ -301,6 +303,57 @@ export default function ContactSection({
                           className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
                         />
                       </div>
+                    </div>
+
+                    <div>
+                      <label className="text-xs font-medium text-gray-500 block mb-1.5">
+                        How did you hear about us? *
+                      </label>
+                      <select
+                        name="heardFrom"
+                        required
+                        value={heardFrom}
+                        onChange={(e) => setHeardFrom(e.target.value)}
+                        className={`w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm cursor-pointer ${
+                          heardFrom ? "text-[#1a1a2e]" : "text-gray-400"
+                        }`}
+                      >
+                        <option value="" disabled>
+                          Select an option
+                        </option>
+                        <option value="Google">Google</option>
+                        <option value="Social">Social</option>
+                        <option value="Referred by someone">Referred by someone</option>
+                        <option value="Saw your hoarding or poster">Saw your hoarding or poster</option>
+                        <option value="Other">Other (please specify)</option>
+                      </select>
+                      {heardFrom === "Social" && (
+                        <select
+                          name="socialPlatform"
+                          required
+                          value={socialPlatform}
+                          onChange={(e) => setSocialPlatform(e.target.value)}
+                          className={`mt-3 w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm cursor-pointer ${
+                            socialPlatform ? "text-[#1a1a2e]" : "text-gray-400"
+                          }`}
+                        >
+                          <option value="" disabled>
+                            Select a platform
+                          </option>
+                          <option value="Instagram">Instagram</option>
+                          <option value="Facebook">Facebook</option>
+                          <option value="LinkedIn">LinkedIn</option>
+                        </select>
+                      )}
+                      {heardFrom === "Other" && (
+                        <input
+                          type="text"
+                          name="heardFromOther"
+                          required
+                          placeholder="Please specify"
+                          className="mt-3 w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
+                        />
+                      )}
                     </div>
 
                     {!simpleForm && (
