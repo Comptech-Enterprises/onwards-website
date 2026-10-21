@@ -13,20 +13,10 @@ const footerColumns = [
     ],
   },
   {
-    title: "Locations",
-    links: [
-      { label: "Delhi", href: "/delhi" },
-      { label: "Noida", href: "/noida" },
-      { label: "Gurgaon", href: "/gurgaon" },
-      { label: "All Locations", href: "/locations" },
-    ],
-  },
-  {
     title: "Company",
     links: [
       { label: "About Us", href: "/about" },
       { label: "Blog", href: "/blog" },
-      { label: "Careers", href: "#" },
       { label: "Enterprise", href: "/enterprise" },
       { label: "Contact", href: "/#contact" },
     ],
