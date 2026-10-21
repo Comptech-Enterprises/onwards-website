@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createLead } from "@/lib/zoho";
+import { sendLeadEmail } from "@/lib/mail";
 
 function deriveLeadSource(pathname: string): string {
   const p = pathname.toLowerCase();
@@ -37,23 +38,58 @@ export async function POST(req: NextRequest) {
     const leadSource = deriveLeadSource(pathname || "/");
     const cityPreferred = deriveCityPreferred(pathname || "/");
 
-    const result = await createLead({
-      name,
-      email,
-      phone,
-      teamSize,
-      heardFrom,
-      requirements: requirements || "",
-      leadSource,
-      cityPreferred,
-    });
+    // Run Zoho + Brevo email in parallel — same as old site (Promise.allSettled)
+    const [zohoResult, mailResult] = await Promise.allSettled([
+      createLead({
+        name,
+        email,
+        phone,
+        teamSize,
+        heardFrom,
+        requirements: requirements || "",
+        leadSource,
+        cityPreferred,
+      }),
+      sendLeadEmail({
+        name,
+        email,
+        phone,
+        teamSize,
+        heardFrom,
+        requirements: requirements || "",
+        leadSource,
+        pathname: pathname || "/",
+      }),
+    ]);
 
-    if (!result.success) {
-      console.error("[API/lead] Zoho failed:", result.error);
+    const zoho =
+      zohoResult.status === "fulfilled" ? zohoResult.value : { success: false };
+    const mail =
+      mailResult.status === "fulfilled" ? mailResult.value : { success: false };
+
+    if (!zoho.success) {
+      console.error(
+        "[API/lead] Zoho failed:",
+        zohoResult.status === "rejected"
+          ? zohoResult.reason
+          : (zoho as { error?: string }).error,
+      );
+    }
+    if (!mail.success) {
+      console.error(
+        "[API/lead] Mail failed:",
+        mailResult.status === "rejected"
+          ? mailResult.reason
+          : (mail as { error?: string }).error,
+      );
     }
 
-    // Always return success to user (same as old site — Promise.allSettled approach)
-    return NextResponse.json({ message: "Enquiry Sent.", zoho: result.success });
+    // Always return success to user (same as old site)
+    return NextResponse.json({
+      message: "Enquiry Sent.",
+      zoho: zoho.success,
+      mail: mail.success,
+    });
   } catch (error) {
     console.error("[API/lead] Error:", error);
     return NextResponse.json(
