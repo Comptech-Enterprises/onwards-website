@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   motion,
   AnimatePresence,
@@ -70,7 +71,8 @@ export default function ContactSection({
   simpleForm?: boolean;
 } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">(
+  const pathname = usePathname();
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle",
   );
   const [heardFrom, setHeardFrom] = useState("");
@@ -92,12 +94,46 @@ export default function ContactSection({
   const orb2Y = useTransform(smoothProgress, [0, 1], [100, -100]);
   const formOffset = useTransform(smoothProgress, [0, 1], [40, -40]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
-    setTimeout(() => {
-      setStatus("success");
-    }, 900);
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+
+    let heardFromValue = fd.get("heardFrom") as string;
+    if (heardFromValue === "Social") {
+      heardFromValue = `Social - ${fd.get("socialPlatform") || ""}`;
+    } else if (heardFromValue === "Other") {
+      heardFromValue = `Other - ${fd.get("heardFromOther") || ""}`;
+    }
+
+    try {
+      const res = await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fd.get("name"),
+          email: fd.get("email"),
+          phone: fd.get("phone"),
+          teamSize: fd.get("teamSize"),
+          heardFrom: heardFromValue,
+          requirements: fd.get("requirements") || "",
+          pathname,
+        }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+        setHeardFrom("");
+        setSocialPlatform("");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -261,6 +297,7 @@ export default function ContactSection({
                           </label>
                           <input
                             type="text"
+                            name="name"
                             required
                             placeholder="John Doe"
                             className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
@@ -272,6 +309,7 @@ export default function ContactSection({
                           </label>
                           <input
                             type="email"
+                            name="email"
                             required
                             placeholder="john@company.com"
                             className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
@@ -287,6 +325,7 @@ export default function ContactSection({
                         </label>
                         <input
                           type="tel"
+                          name="phone"
                           required
                           placeholder="+91 XXXXX XXXXX"
                           className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
@@ -298,6 +337,7 @@ export default function ContactSection({
                         </label>
                         <input
                           type="text"
+                          name="teamSize"
                           required
                           placeholder="e.g. 15-50 Desks"
                           className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
@@ -362,11 +402,18 @@ export default function ContactSection({
                         Requirements or Specific Location
                       </label>
                       <textarea
+                        name="requirements"
                         rows={3}
                         placeholder="Tell us about your timeline, preferred location, or special amenities..."
                         className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm resize-none"
                       />
                     </div>
+                    )}
+
+                    {status === "error" && (
+                      <p className="text-red-600 text-sm text-center">
+                        Something went wrong. Please try again.
+                      </p>
                     )}
 
                     <motion.button
