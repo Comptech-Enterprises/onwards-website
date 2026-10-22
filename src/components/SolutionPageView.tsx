@@ -93,7 +93,30 @@ export default function SolutionPageView({
               transition={{ duration: 0.7, ease }}
               className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-white max-w-3xl"
             >
-              {getSeo(`/offices/${sol.path}`)?.h1 ?? sol.h1 ?? sol.title}
+              {(() => {
+                const raw = getSeo(`/offices/${sol.path}`)?.h1 ?? sol.h1 ?? sol.title;
+                const breakIdx = raw.search(/\s+in\s+/i);
+                if (breakIdx > 0) {
+                  return (
+                    <>
+                      {raw.slice(0, breakIdx)}
+                      <br />
+                      {raw.slice(breakIdx).trimStart()}
+                    </>
+                  );
+                }
+                const ampIdx = raw.search(/\s+[&|]\s+/);
+                if (ampIdx > 0) {
+                  return (
+                    <>
+                      {raw.slice(0, ampIdx)}
+                      <br />
+                      {raw.slice(ampIdx).trimStart()}
+                    </>
+                  );
+                }
+                return raw;
+              })()}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 25 }}

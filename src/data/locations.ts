@@ -41,6 +41,7 @@ export interface AreaDetail {
   h1?: string;
   cardCopy?: {
     managed?: { title: string; subline: string; tag?: "h2" | "h3" };
+    managed2?: { title: string; subline: string; tag?: "h2" | "h3" };
     coworking?: { title: string; subline: string; tag?: "h2" | "h3" };
   };
   description: string;
@@ -244,6 +245,7 @@ export const delhiCity: CityData = {
       h1: "Office spaces in Okhla Phase 3",
       cardCopy: {
         managed: { title: "Custom-Built Office", subline: "300+ Seats" },
+        managed2: { title: "Custom-Built Office", subline: "200+ Seats" },
         coworking: { title: "Coworking Centre", subline: "870+ Seats" },
       },
       description:

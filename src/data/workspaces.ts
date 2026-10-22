@@ -22,6 +22,7 @@ const areaWorkspaceAssetMap: Record<
   string,
   {
     managed?: { img: string; banner: string };
+    managed2?: { img: string; banner: string };
     coworking?: { img: string; banner: string };
   }
 > = {
@@ -39,6 +40,10 @@ const areaWorkspaceAssetMap: Record<
     managed: {
       img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-1.webp",
       banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-1-banner-centre-page.webp",
+    },
+    managed2: {
+      img: "https://pub-3753dd0ec9c040e6b5f489f12eca4aa5.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-2.webp",
+      banner: "https://pub-3753dd0ec9c040e6b5f489f12eca4aa5.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-2-banner-centre-page-v2.webp",
     },
     coworking: {
       img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/coworking.webp",
@@ -106,6 +111,7 @@ const areaWorkspaceAssetMap: Record<
 };
 
 export function getWorkspacesForArea(area: AreaDetail): WorkspaceUnit[] {
+  const assets = areaWorkspaceAssetMap[area.slug] || {};
   const base = getBaseWorkspaces(area).map((w) => ({ ...w, centreKey: w.category as string }));
   const first = base.find((w) => w.category === "managed");
   if (area.secondManaged && first) {
@@ -113,12 +119,14 @@ export function getWorkspacesForArea(area: AreaDetail): WorkspaceUnit[] {
       ...first,
       id: `${area.slug}-managed-2`,
       centreKey: "managed-2",
+      ...(assets.managed2 ? { img: assets.managed2.img, bannerImg: assets.managed2.banner } : {}),
     });
   }
   return base.map((w) => {
-    const card = area.cardCopy?.[w.category];
+    const isSecondManaged = w.centreKey === "managed-2";
+    const card = isSecondManaged ? (area.cardCopy?.managed2 ?? area.cardCopy?.managed) : area.cardCopy?.[w.category];
     const baseCopy = area.centreCopy?.[w.category];
-    const copy = baseCopy && w.centreKey === "managed-2" ? { ...baseCopy, ...area.secondManaged } : baseCopy;
+    const copy = baseCopy && isSecondManaged ? { ...baseCopy, ...area.secondManaged } : baseCopy;
     return { ...w, centreKey: copy?.slug ?? w.centreKey, ...(card ? { cardTitle: card.title, cardSubline: card.subline, cardTag: card.tag } : {}), ...(copy ? { copy } : {}) };
   });
 }

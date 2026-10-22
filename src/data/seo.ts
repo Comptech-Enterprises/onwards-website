@@ -232,35 +232,35 @@ export const pageSeo: Record<string, PageSeo> = {
     ogDescription: "Discover managed office space in delhi with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     h1: "Managed Office Space in Delhi NCR",
   },
-  "/offices/private-suites-in-delhi-ncr": {
+  "/offices/private-suites-in-delhi": {
     title: "Private Suites in Delhi NCR | Onward Workspaces",
-    description: "Discover Private Suites in Delhi NCR ncr with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    description: "Discover Private Suites in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     ogTitle: "Private Suites in Delhi NCR | Onward Workspaces",
     ogDescription: "Discover Private Suites in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     h1: "Private Suites in Delhi NCR",
   },
-  "/offices/private-cabins-in-delhi-ncr": {
+  "/offices/private-cabins-in-delhi": {
     title: "Private cabins in Delhi NCR | Onward Workspaces",
-    description: "Discover Private cabins in Delhi NCR ncr with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
+    description: "Discover Private cabins in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     ogTitle: "Private cabins in Delhi NCR | Onward Workspaces",
     ogDescription: "Discover Private cabins in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     h1: "Private cabins in Delhi NCR",
   },
-  "/offices/virtual-office-in-delhi-ncr": {
+  "/offices/virtual-office-in-delhi": {
     title: "Virtual Office in Delhi NCR | Onward Workspaces",
     description: "Discover virtual office in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     ogTitle: "Virtual Office in Delhi NCR | Onward Workspaces",
     ogDescription: "Discover virtual office in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     h1: "Virtual Office in Delhi NCR",
   },
-  "/offices/meeting-rooms/day-passes": {
+  "/offices/meeting-rooms-in-delhi/day-passes-in-delhi": {
     title: "Meeting Rooms | Day Passes | Onward Workspaces",
     description: "Discover meeting rooms & day passes with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     ogTitle: "Meeting Rooms | Day Passes | Onward Workspaces",
     ogDescription: "Discover meeting rooms & day passes with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     h1: "Meeting Rooms & Day Passes",
   },
-  "/offices/custom-built-in-delhi-ncr": {
+  "/offices/custom-built-in-delhi": {
     title: "Custom Built in Delhi NCR | Onward Workspaces",
     description: "Discover Custom Built in Delhi NCR with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
     ogTitle: "Custom Built in Delhi NCR | Onward Workspaces",

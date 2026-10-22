@@ -1075,7 +1075,7 @@ export default function Home() {
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full my-auto">
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
               Workspace built around{" "}
-              <span className="relative inline-grid text-left align-baseline">
+              <span className="relative inline-grid text-center align-baseline">
                 <span aria-hidden className="invisible col-start-1 row-start-1">Ambition</span>
                 <AnimatePresence mode="wait">
                   <motion.span

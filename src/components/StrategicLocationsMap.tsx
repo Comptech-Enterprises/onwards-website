@@ -206,7 +206,7 @@ export default function StrategicLocationsMap() {
       </div>
 
       {/* ━━━ RIGHT COLUMN: SEAMLESS BORDERLESS ANIMATED DARK NERVE MAP ━━━ */}
-      <div className="relative min-w-0 w-full aspect-[1110/770] lg:aspect-auto lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 flex items-center justify-end overflow-hidden select-none">
+      <div className="relative min-w-0 w-full aspect-[4/3] sm:aspect-[1110/770] lg:aspect-auto lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-1/2 flex items-center justify-end overflow-hidden select-none">
         <svg
           viewBox="-100 -30 1110 770"
           className="w-full h-full overflow-hidden"
@@ -231,9 +231,9 @@ export default function StrategicLocationsMap() {
           <path
             d={backgroundNerves}
             fill="none"
-            stroke="#ddd6cb"
-            strokeWidth="0.65"
-            opacity={0.9}
+            stroke="#c9bfb0"
+            strokeWidth="0.9"
+            opacity={0.95}
           />
 
           {/* 2. Animated Pulsing Neural Arteries ("Nerves Coming Alive") */}
@@ -241,7 +241,7 @@ export default function StrategicLocationsMap() {
             d={nerveArteries1}
             fill="none"
             stroke="#1a1a2e"
-            strokeWidth="1.1"
+            strokeWidth="1.4"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{
               pathLength: [0, 1],
@@ -261,7 +261,7 @@ export default function StrategicLocationsMap() {
             d={nerveArteries2}
             fill="none"
             stroke="#d4622b"
-            strokeWidth="1.3"
+            strokeWidth="1.5"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{
               pathLength: [0, 1],
@@ -282,7 +282,7 @@ export default function StrategicLocationsMap() {
             d={nerveArteries3}
             fill="none"
             stroke="#1a1a2e"
-            strokeWidth="1.1"
+            strokeWidth="1.4"
             initial={{ pathLength: 0, opacity: 0 }}
             whileInView={{
               pathLength: [0, 1],
@@ -303,11 +303,11 @@ export default function StrategicLocationsMap() {
           <motion.path
             d={delhiBoundaryPath}
             fill="none"
-            stroke="#8c8273"
-            strokeWidth="1.3"
+            stroke="#7a7063"
+            strokeWidth="1.6"
             strokeDasharray="4 4"
             initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 0.8 }}
+            whileInView={{ pathLength: 1, opacity: 0.9 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.8, ease: "easeInOut" }}
           />
@@ -333,21 +333,21 @@ export default function StrategicLocationsMap() {
               >
                 {/* Crosshair Targeting Lines */}
                 <line
-                  x1={pt.x - 14}
+                  x1={pt.x - 16}
                   y1={pt.y}
-                  x2={pt.x + 14}
+                  x2={pt.x + 16}
                   y2={pt.y}
                   stroke="#d4622b"
-                  strokeWidth="1"
-                  strokeOpacity={isSelected ? 0.9 : 0.45}
+                  strokeWidth="1.2"
+                  strokeOpacity={isSelected ? 0.9 : 0.5}
                 />
                 <line
                   x1={pt.x}
-                  y1={pt.y - 14}
+                  y1={pt.y - 16}
                   x2={pt.x}
-                  y2={pt.y + 14}
+                  y2={pt.y + 16}
                   stroke="#d4622b"
-                  strokeWidth="1"
+                  strokeWidth="1.2"
                   strokeOpacity={isSelected ? 0.9 : 0.45}
                 />
 

@@ -49,7 +49,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "private-suites",
-    path: "private-suites-in-delhi-ncr",
+    path: "private-suites-in-delhi",
     title: "Private Suites",
     tagline: "Fully-managed private office suites for high-velocity teams of 10 to 100+ members.",
     desc: "Fully-managed private cabins for high-velocity teams of 10 to 100+ members.",
@@ -79,7 +79,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "private-cabins",
-    path: "private-cabins-in-delhi-ncr",
+    path: "private-cabins-in-delhi",
     title: "Private Cabins",
     tagline: "Fully-equipped executive cabins crafted specifically for partners, directors, and CXOs.",
     desc: "Fully-equipped executive space crafted specifically for partners and directors.",
@@ -109,7 +109,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "virtual-office",
-    path: "virtual-office-in-delhi-ncr",
+    path: "virtual-office-in-delhi",
     title: "Virtual Office",
     tagline: "A prestigious CBD business address with mail handling, GST registration & zero overhead costs.",
     desc: "Prestigious CBD business address with mail handling & zero overhead costs.",
@@ -139,7 +139,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "on-demand",
-    path: "meeting-rooms/day-passes",
+    path: "meeting-rooms-in-delhi/day-passes-in-delhi",
     title: "On-Demand",
     tagline: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
@@ -169,7 +169,7 @@ export const solutions: Solution[] = [
   },
   {
     slug: "custom-built",
-    path: "custom-built-in-delhi-ncr",
+    path: "custom-built-in-delhi",
     title: "Custom Built",
     tagline: "End-to-end bespoke interior architecture tailored to your company identity and culture.",
     desc: "End-to-end bespoke interior architecture tailored to your company identity.",
