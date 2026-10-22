@@ -11,6 +11,7 @@ export interface LocationHub {
   labelPos?: "left" | "right" | "top" | "bottom";
   img: string;
   description: string;
+  href: string;
 }
 
 export const ncrHubs: LocationHub[] = [
@@ -22,6 +23,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-cp.webp",
     description: "A landmark address in the heart of Delhi for forward-thinking teams.",
+    href: "/delhi/connaught-place",
   },
   {
     id: "noida132",
@@ -31,6 +33,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.webp",
     description: "An expressway-facing location for growing teams.",
+    href: "/noida/noida-sector-132",
   },
   {
     id: "noida126",
@@ -40,6 +43,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/img-0331-1.webp",
     description: "A modern business address close to the Noida Expressway.",
+    href: "/noida/noida-sector-126",
   },
   {
     id: "okhla",
@@ -49,6 +53,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/okhla-phase-2-delhi.webp",
     description: "A well-connected business hub in South Delhi.",
+    href: "/delhi/okhla-phase-2",
   },
   {
     id: "mohan",
@@ -58,6 +63,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-mohan-estate.webp",
     description: "A practical, well-connected address on Mathura Road.",
+    href: "/delhi/mohan-estate",
   },
   {
     id: "udyog",
@@ -67,6 +73,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
     description: "Gurgaon's established corporate corridor.",
+    href: "/gurgaon",
   },
   {
     id: "okhla3",
@@ -76,6 +83,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/okhla-phase-2-delhi.webp",
     description: "An established commercial district with easy access to Okhla NSIC metro.",
+    href: "/delhi/okhla-phase-3",
   },
   {
     id: "janakpuri",
@@ -85,6 +93,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "left",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-cp.webp",
     description: "A growing business district in West Delhi with strong metro connectivity.",
+    href: "/delhi/janakpuri",
   },
   {
     id: "noida4",
@@ -94,6 +103,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/img-0331-1.webp",
     description: "An established commercial address in the heart of Noida.",
+    href: "/noida/noida-sector-4",
   },
   {
     id: "sohna",
@@ -103,6 +113,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "right",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
     description: "A fast-growing business corridor in Gurgaon for scaling teams.",
+    href: "/gurgaon",
   },
   {
     id: "mgroad",
@@ -112,6 +123,7 @@ export const ncrHubs: LocationHub[] = [
     labelPos: "left",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
     description: "A prime Gurgaon address with strong metro connectivity.",
+    href: "/gurgaon/mg-road",
   },
 ];
 
@@ -150,32 +162,6 @@ export default function StrategicLocationsMap() {
             Premium workspaces in Delhi NCR&apos;s established business districts, placing your team close to clients, talent and opportunity.
           </p>
 
-          {/* Explore All Locations Button */}
-          <div className="pt-6 sm:pt-8">
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-3.5 group cursor-pointer"
-            >
-              <span className="w-11 h-11 rounded-full border border-gray-300 bg-white group-hover:border-[#d4622b] group-hover:bg-[#d4622b] flex items-center justify-center transition-all duration-300 shadow-sm">
-                <svg
-                  className="w-4 h-4 text-gray-700 group-hover:text-white group-hover:translate-x-0.5 transition-all duration-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 5l7 7m0 0l-7 7m7-7H3"
-                  />
-                </svg>
-              </span>
-              <span className="text-sm font-semibold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors">
-                Explore All Locations
-              </span>
-            </a>
-          </div>
         </div>
 
         {/* Dynamic Active Location Thumbnail Card */}
@@ -188,8 +174,7 @@ export default function StrategicLocationsMap() {
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
               onClick={() => {
-                const el = document.getElementById("contact");
-                el?.scrollIntoView({ behavior: "smooth" });
+                window.location.href = activeHub.href;
               }}
               className="flex items-center gap-4 bg-white border border-gray-200/90 hover:border-[#d4622b]/60 rounded-2xl p-3.5 pr-6 backdrop-blur-md max-w-xl group transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg"
             >
