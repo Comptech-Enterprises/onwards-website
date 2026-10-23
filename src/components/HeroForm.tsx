@@ -7,8 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function HeroForm() {
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [heardFrom, setHeardFrom] = useState("");
-  const [socialPlatform, setSocialPlatform] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,13 +14,6 @@ export default function HeroForm() {
 
     const form = e.currentTarget;
     const fd = new FormData(form);
-
-    let heardFromValue = fd.get("heardFrom") as string;
-    if (heardFromValue === "Social") {
-      heardFromValue = `Social - ${fd.get("socialPlatform") || ""}`;
-    } else if (heardFromValue === "Other") {
-      heardFromValue = `Other - ${fd.get("heardFromOther") || ""}`;
-    }
 
     try {
       const res = await fetch("/api/lead", {
@@ -33,7 +24,7 @@ export default function HeroForm() {
           email: fd.get("email"),
           phone: fd.get("phone"),
           teamSize: fd.get("teamSize"),
-          heardFrom: heardFromValue,
+          heardFrom: "",
           requirements: "",
           pathname,
         }),
@@ -42,8 +33,6 @@ export default function HeroForm() {
       if (res.ok) {
         setStatus("success");
         form.reset();
-        setHeardFrom("");
-        setSocialPlatform("");
       } else {
         setStatus("error");
       }
@@ -54,8 +43,6 @@ export default function HeroForm() {
 
   const inputClass =
     "w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder:text-white/50 focus:outline-none focus:border-[#d4622b] focus:bg-white/15 transition-all text-sm";
-  const selectClass = (hasValue: boolean) =>
-    `w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2.5 focus:outline-none focus:border-[#d4622b] focus:bg-white/15 transition-all text-sm cursor-pointer ${hasValue ? "text-white" : "text-white/50"}`;
 
   return (
     <AnimatePresence mode="wait">
@@ -100,46 +87,6 @@ export default function HeroForm() {
             <input type="tel" name="phone" required placeholder="Phone *" className={inputClass} />
             <input type="text" name="teamSize" required placeholder="Team Size *" className={inputClass} />
           </div>
-
-          <select
-            name="heardFrom"
-            required
-            value={heardFrom}
-            onChange={(e) => setHeardFrom(e.target.value)}
-            className={selectClass(!!heardFrom)}
-          >
-            <option value="" disabled>How did you hear about us? *</option>
-            <option value="Google">Google</option>
-            <option value="Social">Social</option>
-            <option value="Referred by someone">Referred by someone</option>
-            <option value="Saw your hoarding or poster">Saw your hoarding or poster</option>
-            <option value="Other">Other (please specify)</option>
-          </select>
-
-          {heardFrom === "Social" && (
-            <select
-              name="socialPlatform"
-              required
-              value={socialPlatform}
-              onChange={(e) => setSocialPlatform(e.target.value)}
-              className={selectClass(!!socialPlatform)}
-            >
-              <option value="" disabled>Select a platform</option>
-              <option value="Instagram">Instagram</option>
-              <option value="Facebook">Facebook</option>
-              <option value="LinkedIn">LinkedIn</option>
-            </select>
-          )}
-
-          {heardFrom === "Other" && (
-            <input
-              type="text"
-              name="heardFromOther"
-              required
-              placeholder="Please specify"
-              className={inputClass}
-            />
-          )}
 
           {status === "error" && (
             <p className="text-red-300 text-xs text-center">Something went wrong. Please try again.</p>

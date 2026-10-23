@@ -13,6 +13,14 @@ const footerColumns = [
     ],
   },
   {
+    title: "Locations",
+    links: [
+      { label: "Delhi", href: "/delhi" },
+      { label: "Noida", href: "/noida" },
+      { label: "Gurgaon", href: "/gurgaon" },
+    ],
+  },
+  {
     title: "Company",
     links: [
       { label: "About Us", href: "/about" },

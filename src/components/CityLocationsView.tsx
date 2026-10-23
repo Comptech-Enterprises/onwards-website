@@ -312,9 +312,9 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                       onClick={() => setOpenFaq(isOpen ? null : i)}
                       className="w-full flex items-center justify-between gap-6 py-6 text-left"
                     >
-                      <span className="text-lg sm:text-xl font-bold text-black">
+                      <h3 className="text-lg sm:text-xl font-bold text-black">
                         {f.q}
-                      </span>
+                      </h3>
                       <span className="shrink-0 w-7 h-7 rounded-full border border-gray-300 flex items-center justify-center text-black">
                         {isOpen ? (
                           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">

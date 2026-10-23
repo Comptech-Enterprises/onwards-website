@@ -99,9 +99,9 @@ export default function SolutionPageView({
                 if (breakIdx > 0) {
                   return (
                     <>
-                      {raw.slice(0, breakIdx)}
+                      <span className="whitespace-nowrap">{raw.slice(0, breakIdx)}</span>
                       <br />
-                      {raw.slice(breakIdx).trimStart()}
+                      <span className="whitespace-nowrap">{raw.slice(breakIdx).trimStart()}</span>
                     </>
                   );
                 }
@@ -109,9 +109,9 @@ export default function SolutionPageView({
                 if (ampIdx > 0) {
                   return (
                     <>
-                      {raw.slice(0, ampIdx)}
+                      <span className="whitespace-nowrap">{raw.slice(0, ampIdx)}</span>
                       <br />
-                      {raw.slice(ampIdx).trimStart()}
+                      <span className="whitespace-nowrap">{raw.slice(ampIdx).trimStart()}</span>
                     </>
                   );
                 }

@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     const { name, email, phone, teamSize, heardFrom, requirements, pathname } =
       body;
 
-    if (!name || !email || !phone || !teamSize || !heardFrom) {
+    if (!name || !email || !phone || !teamSize) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 },
