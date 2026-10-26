@@ -81,7 +81,7 @@ export default function ThankYouPage() {
         {/* Right column — workspace image */}
         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 hidden md:block">
           <Image
-            src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/okhla-phase-3-page/managed-space-1.webp"
+            src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/thank-you/onward-lounge.webp"
             alt="Onward Workspaces office"
             fill
             className="object-cover"
