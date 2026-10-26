@@ -1075,7 +1075,7 @@ export default function Home() {
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full my-auto">
             <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-[4.25rem] font-bold text-white leading-tight tracking-tight text-center px-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]">
               Workspace built around{" "}
-              <span className="relative inline-grid text-center align-baseline">
+              <span className="relative inline-grid text-left align-baseline">
                 <span aria-hidden className="invisible col-start-1 row-start-1">Ambition</span>
                 <AnimatePresence mode="wait">
                   <motion.span
@@ -1124,12 +1124,12 @@ export default function Home() {
           className="relative z-20 w-full border-t border-white/15 bg-black/25 backdrop-blur-md"
         >
           <div className="max-w-5xl mx-auto px-6 py-6 sm:py-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-white/15">
+            <div className="grid grid-cols-2 md:grid-cols-4 md:divide-x divide-white/15">
               {stats.map((s, idx) => (
                 <div
                   key={s.label}
                   className={`flex flex-col items-center justify-center text-center py-3 md:py-0 px-3 sm:px-6 ${
-                    idx >= 2 ? "pt-4 md:pt-0" : ""
+                    idx >= 2 ? "border-t border-white/15 md:border-t-0 pt-4 md:pt-0" : ""
                   }`}
                 >
                   <div className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-none text-center">
@@ -1259,7 +1259,7 @@ export default function Home() {
               </span>
             </Reveal>
             <AnimatedHeading
-              text="Our Top Cities in Delhi NCR"
+              text="Locations in Delhi NCR"
               highlight="Delhi NCR"
 
               className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"

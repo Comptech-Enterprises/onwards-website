@@ -58,7 +58,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
                 </p>
               </div>
 
-              <div className="hidden lg:block">
+              <div>
                 <HeroForm />
               </div>
             </div>

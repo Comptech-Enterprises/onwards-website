@@ -63,7 +63,7 @@ export default function CentreDetailView({
                 </p>
               </div>
 
-              <div className="hidden lg:block">
+              <div>
                 <HeroForm />
               </div>
             </div>

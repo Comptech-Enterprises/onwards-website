@@ -130,7 +130,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                 </p>
               </div>
 
-              <div className="hidden lg:block">
+              <div>
                 <HeroForm />
               </div>
             </div>
