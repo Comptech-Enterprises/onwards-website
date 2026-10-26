@@ -713,10 +713,10 @@ function TrustedLeadersSection() {
   );
 }
 
-const enterpriseLeaderLogos = [
+const enterpriseLeaderLogos: { id: number; src: string; scale?: number }[] = [
   { id: 1, src: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/enterprise-leaders/1.webp" },
   { id: 2, src: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/enterprise-leaders/2.webp" },
-  { id: 3, src: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/enterprise-leaders/3.webp" },
+  { id: 3, src: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/enterprise-leaders/3.webp", scale: 1.6 },
   { id: 4, src: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/enterprise-leaders/4.webp" },
   { id: 5, src: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/enterprise-leaders/5.webp" },
   { id: 6, src: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/enterprise-leaders/6.webp" },
@@ -779,6 +779,7 @@ function EnterprisesSection() {
                   src={brand.src}
                   alt={`Enterprise Partner ${brand.id}`}
                   className="h-7 sm:h-14 md:h-16 w-auto max-w-[60px] sm:max-w-[200px] md:max-w-[230px] object-contain transition-transform duration-300 group-hover:scale-105"
+                  style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
                 />
               </div>
             )),
