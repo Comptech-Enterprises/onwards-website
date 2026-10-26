@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   motion,
   AnimatePresence,
@@ -72,6 +72,7 @@ export default function ContactSection({
 } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle",
   );
@@ -117,8 +118,7 @@ export default function ContactSection({
       });
 
       if (res.ok) {
-        setStatus("success");
-        form.reset();
+        router.push("/thank-you");
       } else {
         setStatus("error");
       }

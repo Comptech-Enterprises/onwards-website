@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function HeroForm() {
   const pathname = usePathname();
+  const router = useRouter();
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,8 +32,7 @@ export default function HeroForm() {
       });
 
       if (res.ok) {
-        setStatus("success");
-        form.reset();
+        router.push("/thank-you");
       } else {
         setStatus("error");
       }
