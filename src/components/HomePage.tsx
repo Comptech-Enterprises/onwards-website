@@ -609,7 +609,7 @@ function TrustedLeadersSection() {
   };
 
   return (
-    <section id="testimonials" className="py-14 sm:py-20 lg:py-28 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+    <section id="testimonials" className="py-10 sm:py-14 lg:py-20 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       {/* Ambient background glows matching website theme */}
       <div className="pointer-events-none absolute top-1/4 -left-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
       <div className="pointer-events-none absolute bottom-1/4 -right-20 w-[500px] h-[500px] rounded-full bg-[#d4622b]/5 blur-[120px]" />
@@ -737,7 +737,7 @@ const enterpriseLeaderLogos: { id: number; src: string; scale?: number }[] = [
 
 function EnterprisesSection() {
   return (
-    <section className="py-14 sm:py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+    <section className="py-10 sm:py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto text-center mb-8 sm:mb-12">
           <Reveal>
@@ -792,7 +792,7 @@ function EnterprisesSection() {
 
 function NewsMediaSection() {
   return (
-    <section className="py-20 lg:py-24 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
+    <section className="py-10 sm:py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/70 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-12">
           <Reveal>
@@ -1155,7 +1155,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ SOLUTIONS — 3D SPOTLIGHT BENTO GRID ━━━ */}
-      <section id="solutions" className="py-14 sm:py-16 lg:py-20 bg-[#faf8f5] border-t border-gray-200/60">
+      <section id="solutions" className="py-10 sm:py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-12">
             <Reveal>
@@ -1198,7 +1198,7 @@ export default function Home() {
       </section>
 
       {/* ━━━ WHY CHOOSE US ━━━ */}
-      <section id="why-choose-us" className="py-14 sm:py-16 lg:py-20 bg-white border-t border-gray-200/60">
+      <section id="why-choose-us" className="py-10 sm:py-14 lg:py-18 bg-white border-t border-gray-200/60">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mx-auto text-center mb-8 sm:mb-12 max-w-4xl">
             <Reveal>
@@ -1250,7 +1250,7 @@ export default function Home() {
 
       {/* ━━━ OUR TOP CITIES IN DELHI NCR ━━━ */}
       <section
-        className="py-14 sm:py-16 lg:py-20 bg-white relative overflow-hidden border-t border-gray-100"
+        className="py-10 sm:py-14 lg:py-18 bg-white relative overflow-hidden border-t border-gray-100"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-8 sm:mb-10">
@@ -1327,7 +1327,7 @@ export default function Home() {
       {/* ━━━ STRATEGIC LOCATIONS SECTION (LIGHT THEME SEAMLESS NERVE MAP) ━━━ */}
       <section
         id="locations"
-        className="py-14 sm:py-20 lg:py-28 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-t border-gray-200/80"
+        className="py-10 sm:py-14 lg:py-20 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-t border-gray-200/80"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <StrategicLocationsMap />
@@ -1338,7 +1338,7 @@ export default function Home() {
       <EnterprisesSection />
 
       {/* ━━━ GALLERY ━━━ */}
-      <section className="py-14 sm:py-16 lg:py-20 bg-white overflow-hidden">
+      <section className="py-10 sm:py-14 lg:py-18 bg-white overflow-hidden">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-8 sm:mb-12 text-center">
           <Reveal>
             <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
