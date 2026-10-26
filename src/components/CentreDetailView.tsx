@@ -108,7 +108,7 @@ export default function CentreDetailView({
 
 
         {/* 3. LOCATION MAP */}
-        {area.mapEmbed && (
+        {(centre.copy?.mapEmbed || area.mapEmbed) && (
           <section className="py-14 lg:py-18 bg-white border-b border-gray-200/80">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <Reveal>
@@ -119,7 +119,7 @@ export default function CentreDetailView({
               </Reveal>
               <div className="rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm">
                 <iframe
-                  src={area.mapEmbed}
+                  src={centre.copy?.mapEmbed || area.mapEmbed}
                   width="100%"
                   height="450"
                   style={{ border: 0 }}

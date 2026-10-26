@@ -11,6 +11,7 @@ export interface CentreCopy {
   connectivity: string;
   capacity: string;
   features: string[];
+  mapEmbed?: string;
 }
 
 export interface AreaDetail {
@@ -157,6 +158,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Govindpuri Metro Station",
           capacity: "130+ Seats",
           features: ["Dedicated Entrance", "Custom Layout and IT", "Power Backup", "Branded Workspace"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d886!2d77.2713204!3d28.5607212!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3933b5e12f1%3A0xcc4ec74f441a4958!2se+40%2C+7%2C+Okhla+Rd%2C+Sarai+Jullena%2C+Okhla%2C+New+Delhi%2C+Delhi+110025!5e1!3m2!1sen!2sin!4v1",
         },
         coworking: {
           slug: "onward-workspaces-44",
@@ -166,6 +168,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Govindpuri Metro Station",
           capacity: "550+ Desks",
           features: ["Power Backup", "Meeting Rooms", "Parking Available", "Fully Furnished Workstations"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1773!2d77.2608127!3d28.5354842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce15eeab4f8df%3A0x59d58a0733101e7b!2sOnward+Workspaces-+Okhla+Industrial+Area!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office spaces in Okhla Phase 2",
@@ -175,7 +178,7 @@ export const delhiCity: CityData = {
       },
       description:
         "Looking for a coworking space in Okhla Phase 2 or a private office in Okhla Phase 2, Delhi? Onward Workspaces helps growing teams assess practical workspace options in this business district. Review how many seats you need, the level of privacy you prefer and the facilities required for your day-to-day operations, then request a location-specific proposal.",
-      mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3504.8!2d77.2716!3d28.5312!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3e1a4b0b0b1%3A0x1234567890!2sOkhla+Phase+2%2C+New+Delhi!5e0!3m2!1sen!2sin!4v1",
+      mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1773!2d77.2608127!3d28.5354842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce15eeab4f8df%3A0x59d58a0733101e7b!2sOnward+Workspaces-+Okhla+Industrial+Area!5e0!3m2!1sen!2sin!4v1",
     },
     {
       slug: "okhla-phase-3",
@@ -221,7 +224,7 @@ export const delhiCity: CityData = {
         { q: "Can I visit the workspace before booking?", a: "Yes. Submit a tour request and confirm a suitable visit time with the Onward Workspaces team." },
         { q: "What should I check before signing?", a: "Review the complete inclusions list, deposit, lock-in, notice period, access hours, connectivity and meeting room policy." },
       ],
-      secondManaged: { slug: "onward-workspaces-151", address: "Plot No. 151, Okhla Industrial Estate, Phase III, New Delhi, 110020" },
+      secondManaged: { slug: "onward-workspaces-151", address: "Plot No. 151, Okhla Industrial Estate, Phase III, New Delhi, 110020", mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505!2d77.2515362!3d28.5514101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce36f3a624753%3A0x25a0e624bd575ed5!2sOnward+Workspaces+-+Office+Space+in+Okhla+Phase+3!5e0!3m2!1sen!2sin!4v1" },
       centreCopy: {
         managed: {
           slug: "onward-workspaces-41",
@@ -231,6 +234,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Okhla NSIC Metro Station",
           capacity: "300+ Seats",
           features: ["Dedicated Entrance", "Custom Layout and IT", "Power Backup", "Branded Workspace"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505!2d77.2604666!3d28.5535876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce3d68a7b73c1%3A0x9876a14d32981ea5!2sOnward+Workspaces+-+Okhla+Phase+3!5e0!3m2!1sen!2sin!4v1",
         },
         coworking: {
           slug: "onward-workspaces-20",
@@ -240,6 +244,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Okhla NSIC Metro Station",
           capacity: "870+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505!2d77.264432!3d28.5535863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce30c7f783cb1%3A0xcbb8b1da41205f9f!2sOnward+Workspaces+-+NSIC+Okhla+Phase+3!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office spaces in Okhla Phase 3",
@@ -294,6 +299,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Mohan Estate Metro Station",
           capacity: "480+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505!2d77.2924615!3d28.5092562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce7ea642fcfc9%3A0xaa4d12b765032085!2sOnward+Workspaces+Mohan+Cooperative!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Mohan Estate",
@@ -343,6 +349,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Rajiv Chowk Metro Station",
           capacity: "240+ Seats",
           features: ["Custom Layout and IT", "Branded Workspace", "Dedicated Entrance", "24/7 Access", "Power Backup"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501!2d77.2218464!3d28.6351729!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfdf963a51833%3A0x1be2ff4cc835d362!2sOnward+Workspaces+-+Office+space+in+Connaught+Place!5e0!3m2!1sen!2sin!4v1",
         },
         coworking: {
           slug: "onward-workspaces-ece-house",
@@ -352,6 +359,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Rajiv Chowk Metro Station",
           capacity: "250+ Seats",
           features: ["Central Delhi Address", "Meeting Rooms", "Power Backup", "Pantry and Café Area"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501!2d77.2218626!3d28.6300416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfdbccfa0bb37%3A0x8b66f007c4fd4383!2sOnward+Workspaces+-+Coworking+Space+in+Connaught+Place!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Connaught Place",
@@ -408,6 +416,7 @@ export const delhiCity: CityData = {
           connectivity: "Close to Rajiv Chowk Metro Station",
           capacity: "250+ Seats",
           features: ["Central Delhi Address", "Meeting Rooms", "Power Backup", "Pantry and Café Area"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3502!2d77.074238!3d28.627846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2z!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Janakpuri",
@@ -495,6 +504,7 @@ export const noidaCity: CityData = {
           connectivity: "Nearest metro station: Noida Sector 16",
           capacity: "900+ Seats",
           features: ["Custom Layout and IT", "Branded Workspace", "24/7 Access", "Power Backup"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3503!2d77.3210315!3d28.5820177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce5994e48bce3%3A0xf973352989a0181b!2sOnward+Workspaces-+Sector+4+Noida!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Sector 4",
@@ -550,6 +560,7 @@ export const noidaCity: CityData = {
           connectivity: "Near Noida Sector 142 Metro Station",
           capacity: "480+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506!2d77.3394919!3d28.5427405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce77ee8c7b4e5%3A0xb28e92472e1dc15c!2sOnward+Workspaces+-+Coworking+Space+in+Noida!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Sector 126",
@@ -606,6 +617,7 @@ export const noidaCity: CityData = {
           connectivity: "Direct access to the Noida-Greater Noida Expressway",
           capacity: "3,300+ Seats",
           features: ["Large Team Floors", "Expressway Access", "Power Backup", "Custom Layout and IT"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506!2d77.3788333!3d28.5167237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce9f592e07dd7%3A0xe39a6505b5353f93!2sOnward+Workspaces+-+Ace+Capitol!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Sector 132",
@@ -694,6 +706,7 @@ export const gurgaonCity: CityData = {
           connectivity: "Close to Sikanderpur Metro Station",
           capacity: "350+ Seats",
           features: ["Custom Layout and IT", "Branded Workspace", "Premium Tower Address", "Power Backup"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507!2d77.107188!3d28.481319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1ffb822e2bed%3A0x75edade0f82c126a!2sOnward+Workspaces+-+MG+Road!5e0!3m2!1sen!2sin!4v1",
           contactBody:
             "Ready to explore MG road, Gurgaon? Share your team size, budget, preferred move-in date and contact details. Onward Workspaces can help you shortlist a practical option and arrange a discussion.",
           faqs: [
@@ -762,6 +775,7 @@ export const gurgaonCity: CityData = {
           connectivity: "Near Sector 18 and DLF Phase IV, Udyog Vihar",
           capacity: "900+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507!2d77.076377!3d28.4935357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19003fae5d35%3A0x672d50fb2808f6bb!2sOnward+Workspaces+-+Premium+Coworking+Space+in+Gurgaon!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Udyog Vihar",
@@ -817,6 +831,7 @@ export const gurgaonCity: CityData = {
           connectivity: "On the Sohna Road corridor, Gurgaon",
           capacity: "700+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
+          mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3509!2d77.0344655!3d28.4156817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d23776c51cacd%3A0x7077dd947071569f!2sCAPITAL+BUSINESS+PARK!5e0!3m2!1sen!2sin!4v1",
         },
       },
       h1: "Office space in Sohna Road",
