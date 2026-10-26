@@ -18,7 +18,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: Date = now
   ) {
     const cleanPath = path.startsWith("/") ? path : `/${path}`;
-    const url = cleanPath === "/" ? BASE_URL : `${BASE_URL}${cleanPath}`;
+    let url = cleanPath === "/" ? BASE_URL : `${BASE_URL}${cleanPath}`;
+    url = url.replace(/\u00a0/g, "").replace(/&/g, "&amp;");
     if (seenUrls.has(url)) return;
     seenUrls.add(url);
 

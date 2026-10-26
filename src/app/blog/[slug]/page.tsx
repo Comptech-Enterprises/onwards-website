@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import Header from "@/components/Header";
 import BlogArticleView from "@/components/BlogArticleView";
 import { blogPosts } from "@/data/blogPosts";
@@ -101,6 +101,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPostDetailPage({ params }: PageProps) {
   const { slug } = await params;
+
+  if (slug.includes("&") || slug.includes("%26")) {
+    permanentRedirect(`/blog/${slug.replace(/%26/g, "and").replace(/&/g, "and")}`);
+  }
+
   const post = await fetchPostData(slug);
 
   if (!post) {
