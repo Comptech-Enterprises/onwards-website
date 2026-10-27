@@ -140,7 +140,7 @@ const stats: Array<{
   footnote?: string;
 }> = [
   { value: 3, suffix: "+", label: "CITIES", decimals: 0 },
-  { value: 1, suffix: "", label: "MILLION SQ FT", decimals: 0 },
+  { value: 1, suffix: "+", label: "MILLION SQ FT", decimals: 0 },
   { value: 250, suffix: "+", label: "CLIENTS", decimals: 0 },
   { value: 15, suffix: "+", label: "CENTRES", decimals: 0 },
 ];
@@ -1260,8 +1260,8 @@ export default function Home() {
               </span>
             </Reveal>
             <AnimatedHeading
-              text="Locations in Delhi NCR"
-              highlight="Delhi NCR"
+              text="Our Prime Locations"
+              highlight="Prime Locations"
 
               className="text-2xl sm:text-4xl lg:text-5xl font-bold text-black mt-2"
             />

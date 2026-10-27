@@ -26,16 +26,6 @@ export const ncrHubs: LocationHub[] = [
     href: "/delhi/connaught-place",
   },
   {
-    id: "noida132",
-    name: "Noida Sector 132",
-    x: 754.3,
-    y: 468.2,
-    labelPos: "right",
-    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/9bdc3c13-14d9-4de0-a660-540a03adf91e.webp",
-    description: "An expressway-facing location for growing teams.",
-    href: "/noida/noida-sector-132",
-  },
-  {
     id: "noida126",
     name: "Noida Sector 126",
     x: 677.1,
@@ -56,16 +46,6 @@ export const ncrHubs: LocationHub[] = [
     href: "/delhi/okhla-phase-2",
   },
   {
-    id: "mohan",
-    name: "Mohan Cooperative",
-    x: 600.0,
-    y: 453.6,
-    labelPos: "right",
-    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/delhi-mohan-estate.webp",
-    description: "A practical, well-connected address on Mathura Road.",
-    href: "/delhi/mohan-estate",
-  },
-  {
     id: "udyog",
     name: "Udyog Vihar",
     x: 139.3,
@@ -74,16 +54,6 @@ export const ncrHubs: LocationHub[] = [
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
     description: "Gurgaon's established corporate corridor.",
     href: "/gurgaon",
-  },
-  {
-    id: "okhla3",
-    name: "Okhla Phase 3",
-    x: 560.0,
-    y: 420.0,
-    labelPos: "right",
-    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/delhi/okhla-phase-2-delhi.webp",
-    description: "An established commercial district with easy access to Okhla NSIC metro.",
-    href: "/delhi/okhla-phase-3",
   },
   {
     id: "janakpuri",
@@ -96,16 +66,6 @@ export const ncrHubs: LocationHub[] = [
     href: "/delhi/janakpuri",
   },
   {
-    id: "noida4",
-    name: "Noida Sector 4",
-    x: 650.0,
-    y: 320.0,
-    labelPos: "right",
-    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/noida/img-0331-1.webp",
-    description: "An established commercial address in the heart of Noida.",
-    href: "/noida/noida-sector-4",
-  },
-  {
     id: "sohna",
     name: "Sohna Road",
     x: 160.0,
@@ -114,16 +74,6 @@ export const ncrHubs: LocationHub[] = [
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
     description: "A fast-growing business corridor in Gurgaon for scaling teams.",
     href: "/gurgaon",
-  },
-  {
-    id: "mgroad",
-    name: "MG Road",
-    x: 200.0,
-    y: 430.0,
-    labelPos: "left",
-    img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/udyog-vihar/img-0504.webp",
-    description: "A prime Gurgaon address with strong metro connectivity.",
-    href: "/gurgaon/mg-road",
   },
 ];
 
@@ -145,7 +95,7 @@ export default function StrategicLocationsMap() {
           {/* Top Tag with Orange Dash */}
           <div className="flex items-center gap-3 mb-5 sm:mb-6">
             <span className="text-[#d4622b] text-xs font-bold tracking-[0.25em] uppercase">
-              OUR LOCATIONS
+              OUR PRIME LOCATIONS
             </span>
           </div>
 
