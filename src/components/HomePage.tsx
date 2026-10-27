@@ -1368,6 +1368,89 @@ export default function Home() {
       {/* ━━━ NEWS & MEDIA TICKER ━━━ */}
       <NewsMediaSection />
 
+      {/* ━━━ SEO: WHAT IS A COWORKING SPACE ━━━ */}
+      <section className="py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/80">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <Reveal>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight mb-6">
+              What is a Coworking Space?
+            </h2>
+          </Reveal>
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-10">
+            <Reveal delay={0.05}>
+              <div className="space-y-4 text-sm sm:text-base text-gray-600 leading-relaxed">
+                <p>A coworking space is a shared working environment where individuals from diverse backgrounds, professions, and industries come together to work independently or collaboratively. Unlike traditional offices, coworking spaces are characterized by their flexible and open layout, fostering a sense of community, collaboration, and creativity.</p>
+                <p>In a coworking space, individuals, freelancers, startups, and small businesses can rent desks, private offices, or meeting rooms on a flexible basis, allowing them to work in a professional environment without the overhead costs and long-term commitments associated with leasing a traditional office space.</p>
+              </div>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <div className="space-y-4 text-sm sm:text-base text-gray-600 leading-relaxed">
+                <p>Coworking spaces typically provide amenities such as high-speed internet, office furniture, meeting rooms, printing facilities, and communal areas like kitchens and lounges. Beyond the physical infrastructure, coworking spaces offer intangible benefits such as networking opportunities, knowledge sharing, and a supportive community of like-minded individuals.</p>
+                <p>The rise of coworking spaces is fueled by the changing nature of work, with more people opting for remote work, freelancing, or entrepreneurship. Coworking spaces cater to these modern work styles by providing a flexible, collaborative, and inspiring environment where individuals can thrive professionally and personally.</p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ SEO: WHY CHOOSE ONWARD ━━━ */}
+      <section className="py-14 lg:py-18 bg-white border-t border-gray-200/80 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <Reveal>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight mb-8">
+              Why Choose Onward Workspaces?
+            </h2>
+          </Reveal>
+        </div>
+        <div className="relative">
+          <div className="flex gap-5 overflow-x-auto pb-4 px-6 lg:px-8 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
+            {[
+              { title: "Nestled in the Heart of Delhi", body: "Your workspace oasis strategically located amidst the vibrant pulse of Delhi. With easy access to key business districts, transportation hubs, and trendy hotspots, navigating your professional pursuits has never been more exhilarating.", icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" },
+              { title: "Thriving Community Vibe", body: "A community bursting with energy, creativity, and collaboration. At Onward Workspaces, you're part of a dynamic tribe of diverse professionals, entrepreneurs, and visionaries.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
+              { title: "Tailored Spaces for Every Journey", body: "Whether you're a freelancer, a burgeoning startup, or a seasoned team on the rise, we have the perfect space to match your unique needs and ambitions. From cozy hot desks to sleek private offices.", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
+              { title: "Premium Amenities", body: "State-of-the-art facilities designed to ignite your creativity, supercharge your productivity, and indulge your senses. Lightning-fast internet, plush furnishings, and gourmet coffee on tap.", icon: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" },
+              { title: "Affordable Luxury", body: "Everyone deserves to work in style without breaking the bank. Competitive pricing plans that deliver unbeatable value without compromising on quality or comfort.", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
+            ].map((item) => (
+              <div key={item.title} className="flex-none w-[300px] sm:w-[340px] snap-start rounded-2xl border border-gray-200/80 bg-[#faf8f5] p-6 hover:border-[#d4622b]/30 transition-colors">
+                <div className="w-10 h-10 rounded-full bg-[#d4622b]/10 flex items-center justify-center mb-4">
+                  <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                  </svg>
+                </div>
+                <h3 className="text-base font-bold text-[#1a1a2e] mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ SEO: FAQs ━━━ */}
+      <section className="py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/80">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <Reveal>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight mb-8">
+              Frequently Asked Questions
+            </h2>
+          </Reveal>
+          <div className="max-w-7xl space-y-6">
+            {[
+              { q: "What types of workspaces does Onward Workspaces offer?", a: "Onward Workspaces offers coworking spaces, shared office spaces, and fully-serviced managed offices across Delhi, Noida, and Gurgaon to cater to startups, SMEs, and large corporations." },
+              { q: "How do I find a coworking space or managed office near me?", a: "Visit our location-specific pages for Delhi, Noida, and Gurgaon to explore options and select the most convenient coworking space or managed office near you." },
+              { q: "Are managed offices flexible in terms of leasing?", a: "Yes. Onward Workspaces offers flexible plans ranging from daily, weekly, or monthly memberships, ensuring your office scales with your business needs." },
+              { q: "What amenities are included in Onward Workspaces coworking and managed offices?", a: "All our workspaces feature high-speed internet, meeting rooms, ergonomic furniture, 24/7 access, and community networking events for productivity and collaboration." },
+            ].map((faq, idx) => (
+              <Reveal key={faq.q} delay={idx * 0.05}>
+                <div className="border-b border-gray-200/80 pb-5">
+                  <h3 className="text-base sm:text-lg font-semibold text-[#1a1a2e] mb-2">{faq.q}</h3>
+                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{faq.a}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ━━━ FOOTER (CLEAN LIGHT THEME) ━━━ */}
       <Footer />
     </>
