@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,21 +40,6 @@ const whyChoose = [
 export default function CityLocationsView({ city }: { city: CityData }) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [openWhy, setOpenWhy] = useState<number | null>(0);
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [sliderPaused, setSliderPaused] = useState(false);
-
-  useEffect(() => {
-    if (sliderPaused) return;
-    const timer = setInterval(() => {
-      const el = sliderRef.current;
-      if (!el || el.scrollWidth <= el.clientWidth + 4) return;
-      const card = el.firstElementChild as HTMLElement | null;
-      const step = card ? card.offsetWidth + 24 : el.clientWidth / 3;
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 4;
-      el.scrollTo({ left: atEnd ? 0 : el.scrollLeft + step, behavior: "smooth" });
-    }, 1800);
-    return () => clearInterval(timer);
-  }, [sliderPaused]);
   const cityH1 = getSeo(`/${city.slug}`)?.h1 ?? city.h1;
   const { name: cityName, heroImage, heroDescription, contactDescription, areas, basePath } = city;
 
@@ -156,40 +141,33 @@ export default function CityLocationsView({ city }: { city: CityData }) {
               </h2>
             </div>
 
-            {/* Desktop Slider */}
-            <div className="hidden sm:block relative">
-              <div
-                ref={sliderRef}
-                onMouseEnter={() => setSliderPaused(true)}
-                onMouseLeave={() => setSliderPaused(false)}
-                className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-              >
-                {areas.map((area) => (
-                  <Link
-                    key={area.slug}
-                    href={`${basePath}/${area.slug}`}
-                    className="group block snap-start shrink-0 sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-3rem)/3)]"
-                  >
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
-                      <Image
-                        src={area.img}
-                        alt={area.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                      />
-                    </div>
-                    <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#d4622b] transition-colors">
-                      {area.cardHeading ?? area.name}
-                    </h3>
-                    <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
-                      {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
-                    </p>
-                    <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#d4622b] group-hover:text-black transition-colors">
-                      {area.centres ? "View Micro Market" : "View Centre"} &rarr;
-                    </span>
-                  </Link>
-                ))}
-              </div>
+            {/* Desktop Grid */}
+            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+              {areas.map((area) => (
+                <Link
+                  key={area.slug}
+                  href={`${basePath}/${area.slug}`}
+                  className="group block"
+                >
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
+                    <Image
+                      src={area.img}
+                      alt={area.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                  </div>
+                  <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#d4622b] transition-colors">
+                    {area.cardHeading ?? area.name}
+                  </h3>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
+                    {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
+                  </p>
+                  <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#d4622b] group-hover:text-black transition-colors">
+                    {area.centres ? "View Micro Market" : "View Centre"} &rarr;
+                  </span>
+                </Link>
+              ))}
             </div>
 
             {/* Mobile AutoSlider */}

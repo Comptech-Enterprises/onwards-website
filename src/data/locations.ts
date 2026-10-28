@@ -12,6 +12,7 @@ export interface CentreCopy {
   capacity: string;
   features: string[];
   mapEmbed?: string;
+  price?: string;
 }
 
 export interface AreaDetail {
@@ -169,6 +170,7 @@ export const delhiCity: CityData = {
           capacity: "550+ Desks",
           features: ["Power Backup", "Meeting Rooms", "Parking Available", "Fully Furnished Workstations"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1773!2d77.2608127!3d28.5354842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce15eeab4f8df%3A0x59d58a0733101e7b!2sOnward+Workspaces-+Okhla+Industrial+Area!5e0!3m2!1sen!2sin!4v1",
+          price: "₹8,000/seat",
         },
       },
       h1: "Office spaces in Okhla Phase 2",
@@ -245,6 +247,7 @@ export const delhiCity: CityData = {
           capacity: "870+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505!2d77.264432!3d28.5535863!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce30c7f783cb1%3A0xcbb8b1da41205f9f!2sOnward+Workspaces+-+NSIC+Okhla+Phase+3!5e0!3m2!1sen!2sin!4v1",
+          price: "₹12,000/seat",
         },
       },
       h1: "Office spaces in Okhla Phase 3",
@@ -300,6 +303,7 @@ export const delhiCity: CityData = {
           capacity: "480+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3505!2d77.2924615!3d28.5092562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce7ea642fcfc9%3A0xaa4d12b765032085!2sOnward+Workspaces+Mohan+Cooperative!5e0!3m2!1sen!2sin!4v1",
+          price: "₹7,000/seat",
         },
       },
       h1: "Office space in Mohan Estate",
@@ -360,6 +364,7 @@ export const delhiCity: CityData = {
           capacity: "250+ Seats",
           features: ["Central Delhi Address", "Meeting Rooms", "Power Backup", "Pantry and Café Area"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501!2d77.2218626!3d28.6300416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfdbccfa0bb37%3A0x8b66f007c4fd4383!2sOnward+Workspaces+-+Coworking+Space+in+Connaught+Place!5e0!3m2!1sen!2sin!4v1",
+          price: "₹39,000/seat",
         },
       },
       h1: "Office space in Connaught Place",
@@ -417,6 +422,7 @@ export const delhiCity: CityData = {
           capacity: "250+ Seats",
           features: ["Central Delhi Address", "Meeting Rooms", "Power Backup", "Pantry and Café Area"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3502!2d77.074238!3d28.627846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2z!5e0!3m2!1sen!2sin!4v1",
+          price: "₹12,000/seat",
         },
       },
       h1: "Office space in Janakpuri",
@@ -561,6 +567,7 @@ export const noidaCity: CityData = {
           capacity: "480+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506!2d77.3394919!3d28.5427405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce77ee8c7b4e5%3A0xb28e92472e1dc15c!2sOnward+Workspaces+-+Coworking+Space+in+Noida!5e0!3m2!1sen!2sin!4v1",
+          price: "₹8,500/seat",
         },
       },
       h1: "Office space in Sector 126",
@@ -776,6 +783,7 @@ export const gurgaonCity: CityData = {
           capacity: "900+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507!2d77.076377!3d28.4935357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19003fae5d35%3A0x672d50fb2808f6bb!2sOnward+Workspaces+-+Premium+Coworking+Space+in+Gurgaon!5e0!3m2!1sen!2sin!4v1",
+          price: "₹9,500/seat",
         },
       },
       h1: "Office space in Udyog Vihar",
@@ -832,6 +840,7 @@ export const gurgaonCity: CityData = {
           capacity: "700+ Seats",
           features: ["Power Backup", "Meeting Rooms", "Pantry and Café Area", "Parking Available"],
           mapEmbed: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3509!2d77.0344655!3d28.4156817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d23776c51cacd%3A0x7077dd947071569f!2sCAPITAL+BUSINESS+PARK!5e0!3m2!1sen!2sin!4v1",
+          price: "₹9,500/seat",
         },
       },
       h1: "Office space in Sohna Road",

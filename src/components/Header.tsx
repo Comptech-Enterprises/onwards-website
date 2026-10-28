@@ -17,7 +17,7 @@ const solutionsData = [
   { name: "Private Suites", href: "/offices/private-suites-in-delhi" },
   { name: "Private Cabins", href: "/offices/private-cabins-in-delhi" },
   { name: "Virtual Office", href: "/offices/virtual-office-in-delhi" },
-  { name: "On-Demand", href: "/offices/meeting-rooms-in-delhi/day-passes-in-delhi" },
+  { name: "Meeting Rooms & Day Passes", href: "/offices/meeting-rooms-in-delhi/day-passes-in-delhi" },
   { name: "Custom Built", href: "/offices/custom-built-in-delhi" },
 ];
 

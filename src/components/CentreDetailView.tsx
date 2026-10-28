@@ -73,7 +73,7 @@ export default function CentreDetailView({
         {/* 2. INFO STRIP */}
         <section className="bg-white border-b border-gray-200/80">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 sm:py-10">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+            <div className={`grid grid-cols-1 gap-6 sm:gap-8 ${centre.copy?.price ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}>
               <div>
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Address</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.address ?? area.address}</p>
@@ -86,6 +86,12 @@ export default function CentreDetailView({
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Capacity</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.capacity ?? centre.seats}</p>
               </div>
+              {centre.copy?.price && (
+                <div>
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Starting From</span>
+                  <p className="mt-1 text-lg sm:text-xl font-bold text-[#1a1a2e]">{centre.copy.price}</p>
+                </div>
+              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5 mt-6 pt-6 border-t border-gray-200/80">

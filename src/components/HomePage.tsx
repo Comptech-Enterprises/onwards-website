@@ -202,11 +202,11 @@ const solutions = [
   },
   {
     slug: "on-demand",
-    title: "On-Demand",
+    title: "Meeting Rooms & Day Passes",
     desc: "Boardrooms, meeting suites and flexible day passes, available when you need them across Delhi NCR.",
     tag: "FLEXIBLE",
     features: ["Instant Booking", "Video Conferencing", "Complimentary Beverages"],
-    cta: "Book On-Demand Space",
+    cta: "Book Meeting Room",
     img: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/office-space-solutions/on-demand.webp",
   },
   {
@@ -850,7 +850,7 @@ function NewsMediaSection() {
 function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
   return (
     <Link href={solutionHref(sol.slug)} className="block h-full">
-    <SpotlightCard className="h-full min-h-[340px] sm:min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white transition-all duration-500 flex flex-col justify-between">
+    <SpotlightCard className="h-full min-h-[340px] sm:min-h-[360px] cursor-pointer group relative overflow-hidden border border-gray-200 bg-white transition-all duration-500 flex flex-col">
       {/* Top Image Container with zoom & gradient overlay */}
       <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-gray-100">
         <Image
@@ -864,27 +864,25 @@ function SolutionCard({ sol }: { sol: (typeof solutions)[number] }) {
       </div>
 
       {/* Card Content Area */}
-      <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between">
-        <div>
-          <h3 className="text-lg sm:text-2xl font-bold text-black">
-            {sol.title}
-          </h3>
-          <p className="mt-1.5 sm:mt-2.5 text-gray-600 text-xs sm:text-sm leading-relaxed">
-            {sol.desc}
-          </p>
+      <div className="p-4 sm:p-6 flex-1 flex flex-col">
+        <h3 className="text-lg sm:text-2xl font-bold text-black">
+          {sol.title}
+        </h3>
+        <p className="mt-1.5 sm:mt-2.5 text-gray-600 text-xs sm:text-sm leading-relaxed flex-1">
+          {sol.desc}
+        </p>
 
-          {/* Silversquare-style info reveal badges */}
-          <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-gray-100">
-            <div className="flex flex-wrap gap-1 sm:gap-1.5">
-              {sol.features.map((feat, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center text-[10px] sm:text-[11px] font-semibold text-gray-600 bg-gray-100 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md group-hover:bg-[#d4622b]/10 group-hover:text-[#d4622b] transition-colors duration-300"
-                >
-                  &bull; {feat}
-                </span>
-              ))}
-            </div>
+        {/* Silversquare-style info reveal badges */}
+        <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-gray-100">
+          <div className="flex flex-wrap gap-1 sm:gap-1.5">
+            {sol.features.map((feat, i) => (
+              <span
+                key={i}
+                className="inline-flex items-center text-[10px] sm:text-[11px] font-semibold text-gray-600 bg-gray-100 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-md group-hover:bg-[#d4622b]/10 group-hover:text-[#d4622b] transition-colors duration-300"
+              >
+                &bull; {feat}
+              </span>
+            ))}
           </div>
         </div>
 
@@ -1189,7 +1187,7 @@ export default function Home() {
           {/* Desktop horizontal scroll */}
           <div className="hidden md:flex gap-5 lg:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {solutions.map((sol) => (
-              <div key={sol.title} className="w-[85%] sm:w-[340px] lg:w-[360px] shrink-0 snap-start">
+              <div key={sol.title} className="w-[85%] sm:w-[340px] lg:w-[360px] shrink-0 snap-start self-stretch">
                 <SolutionCard sol={sol} />
               </div>
             ))}
@@ -1394,32 +1392,32 @@ export default function Home() {
       </section>
 
       {/* ━━━ SEO: WHY CHOOSE ONWARD ━━━ */}
-      <section className="py-14 lg:py-18 bg-white border-t border-gray-200/80 overflow-hidden">
+      <section className="py-14 lg:py-18 bg-white border-t border-gray-200/80">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Reveal>
             <h2 className="text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight mb-8">
               Why Choose Onward Workspaces?
             </h2>
           </Reveal>
-        </div>
-        <div className="relative">
-          <div className="flex gap-5 overflow-x-auto pb-4 px-6 lg:px-8 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none", WebkitOverflowScrolling: "touch" }}>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
               { title: "Nestled in the Heart of Delhi", body: "Your workspace oasis strategically located amidst the vibrant pulse of Delhi. With easy access to key business districts, transportation hubs, and trendy hotspots, navigating your professional pursuits has never been more exhilarating.", icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" },
               { title: "Thriving Community Vibe", body: "A community bursting with energy, creativity, and collaboration. At Onward Workspaces, you're part of a dynamic tribe of diverse professionals, entrepreneurs, and visionaries.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
               { title: "Tailored Spaces for Every Journey", body: "Whether you're a freelancer, a burgeoning startup, or a seasoned team on the rise, we have the perfect space to match your unique needs and ambitions. From cozy hot desks to sleek private offices.", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
               { title: "Premium Amenities", body: "State-of-the-art facilities designed to ignite your creativity, supercharge your productivity, and indulge your senses. Lightning-fast internet, plush furnishings, and gourmet coffee on tap.", icon: "M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" },
               { title: "Affordable Luxury", body: "Everyone deserves to work in style without breaking the bank. Competitive pricing plans that deliver unbeatable value without compromising on quality or comfort.", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
-            ].map((item) => (
-              <div key={item.title} className="flex-none w-[300px] sm:w-[340px] snap-start rounded-2xl border border-gray-200/80 bg-[#faf8f5] p-6 hover:border-[#d4622b]/30 transition-colors">
-                <div className="w-10 h-10 rounded-full bg-[#d4622b]/10 flex items-center justify-center mb-4">
-                  <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
-                  </svg>
+            ].map((item, idx) => (
+              <Reveal key={item.title} delay={idx * 0.05}>
+                <div className="rounded-2xl border border-gray-200/80 bg-[#faf8f5] p-6 h-full hover:border-[#d4622b]/30 transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-[#d4622b]/10 flex items-center justify-center mb-4">
+                    <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                    </svg>
+                  </div>
+                  <h3 className="text-base font-bold text-[#1a1a2e] mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
                 </div>
-                <h3 className="text-base font-bold text-[#1a1a2e] mb-2">{item.title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

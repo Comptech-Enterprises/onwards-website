@@ -30,6 +30,11 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
       <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
         {ws.cardSubline ?? `${ws.badge} · ${ws.seats}`}
       </p>
+      {ws.copy?.price && (
+        <p className="mt-2 text-base font-bold text-[#1a1a2e]">
+          Starting from <span className="text-[#d4622b]">{ws.copy.price}</span>
+        </p>
+      )}
       <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#d4622b] group-hover:text-black transition-colors">
         View Centre &rarr;
       </span>

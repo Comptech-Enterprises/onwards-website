@@ -140,7 +140,7 @@ export const solutions: Solution[] = [
   {
     slug: "on-demand",
     path: "meeting-rooms-in-delhi/day-passes-in-delhi",
-    title: "On-Demand",
+    title: "Meeting Rooms & Day Passes",
     tagline: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     desc: "Boardrooms, meeting suites & flexible day passes on the go across NCR.",
     tag: "FLEXIBLE",

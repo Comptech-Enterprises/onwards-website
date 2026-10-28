@@ -64,7 +64,7 @@ export default function SpotlightCard({
       className={`relative rounded-3xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:border-[#d4622b] hover:shadow-[0_20px_40px_-15px_rgba(212,98,43,0.12)] transition-all duration-500 ${className}`}
     >
       {/* Content wrapper */}
-      <div className="relative z-10 h-full">{children}</div>
+      <div className="relative z-10 h-full flex flex-col">{children}</div>
     </motion.div>
   );
 }
