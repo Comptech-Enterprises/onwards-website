@@ -1425,6 +1425,66 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ━━━ SEO: WORKSPACES OFFERED ━━━ */}
+      <section className="py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/80">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <Reveal>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight mb-8">
+              Workspaces Offered by Onward Workspaces
+            </h2>
+          </Reveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { title: "Flexi Desk", body: "For the free-spirited professionals who crave flexibility, our Flexi Desk option provides the ultimate workspace freedom. Grab a hot desk in our vibrant coworking environment whenever inspiration strikes, and enjoy the flexibility to come and go as you please.", icon: "M4 6h16M4 12h8m-8 6h16" },
+              { title: "Dedicated Desk", body: "Seeking a sense of ownership and stability in your workspace? Our Dedicated Desk option offers a personalized workstation reserved just for you. Settle into your own ergonomic oasis amidst our bustling coworking community, complete with lockable storage for your peace of mind.", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+              { title: "Private Offices", body: "Elevate your professional presence with a fully furnished private office at Onward Workspaces. Whether you're a small team or a growing startup, our modern offices offer privacy, comfort, and a touch of prestige. Customize your space to reflect your brand identity.", icon: "M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" },
+              { title: "Meeting Rooms", body: "Impress clients, host brainstorming sessions, or conduct presentations in style with our state-of-the-art meeting rooms. Equipped with cutting-edge technology and stylish furnishings, our meeting rooms provide the perfect backdrop for productive collaboration.", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" },
+              { title: "Virtual Office", body: "Need a prestigious business address without the physical space? Our Virtual Office solution offers the perfect blend of professionalism and convenience. Benefit from mail handling services, call forwarding, and access to our exclusive business lounges.", icon: "M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" },
+            ].map((item, idx) => (
+              <Reveal key={item.title} delay={idx * 0.05}>
+                <div className="rounded-2xl border border-gray-200/80 bg-white p-6 h-full hover:border-[#d4622b]/30 transition-colors">
+                  <div className="w-10 h-10 rounded-full bg-[#d4622b]/10 flex items-center justify-center mb-4">
+                    <svg className="w-5 h-5 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={item.icon} />
+                    </svg>
+                  </div>
+                  <h3 className="text-base font-bold text-[#1a1a2e] mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{item.body}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ━━━ SEO: DISCOVER MODERN WORKSPACES ━━━ */}
+      <section className="py-14 lg:py-18 bg-white border-t border-gray-200/80">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <Reveal>
+            <h2 className="text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight mb-6">
+              Discover Modern Workspaces for Leaders Across Delhi, Noida &amp; Gurgaon
+            </h2>
+          </Reveal>
+          <div className="space-y-4 text-sm sm:text-base text-gray-600 leading-relaxed">
+            <Reveal delay={0.05}>
+              <p>Onward Workspaces offers a range of modern, fully equipped workspaces designed for founders, CEOs, entrepreneurs, and enterprise teams, including Fortune 500 companies, across Delhi NCR&apos;s prime business districts.</p>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p>Experience the flexibility and sophistication of our <Link href="/delhi" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Coworking space in Delhi</Link>, perfect for businesses seeking a strategic presence in the capital. Our <Link href="/offices/managed-office-space-in-delhi" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Office space in Delhi</Link> provides scalable, professional environments to support your company&apos;s growth.</p>
+            </Reveal>
+            <Reveal delay={0.15}>
+              <p>In Noida, we bring premium options with our <Link href="/noida" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Coworking space in Noida</Link>, ideal for enterprise teams and business leaders looking for modern infrastructure and seamless connectivity. For companies seeking a dedicated base, our <Link href="/noida" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Office space in Noida</Link> offers strategically located, fully equipped offices to enhance productivity and business operations.</p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p>Gurgaon-based businesses can benefit from our <Link href="/gurgaon" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Coworking space in Gurgaon</Link>, designed for entrepreneurs, CXOs, and corporate teams who value flexibility and proximity to top corporate hubs. Our <Link href="/gurgaon" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Office space in Gurgaon</Link> further provides a professional, scalable workspace solution in one of the city&apos;s most sought-after business locations.</p>
+            </Reveal>
+            <Reveal delay={0.25}>
+              <p>Across all locations, Onward Workspaces combines modern design, premium amenities, and strategic connectivity to ensure your business thrives in a professional and dynamic environment.</p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
       {/* ━━━ SEO: FAQs ━━━ */}
       <section className="py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/80">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
