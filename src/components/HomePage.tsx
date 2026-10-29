@@ -1052,6 +1052,7 @@ export default function Home() {
         {/* Background video / image — Onward hero video from redesigned assets */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-gray-900">
           <video
+            ref={(el) => { el?.play().catch(() => {}); }}
             autoPlay
             muted
             loop

@@ -102,12 +102,19 @@ export default function CentreDetailView({
               ))}
             </div>
 
-            <button
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-              className="mt-6 inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
-            >
-              {centre.copy?.cta ?? "Schedule a Site Visit"} <span>&rarr;</span>
-            </button>
+            <div className="flex flex-wrap items-center gap-3 mt-6">
+              {centre.copy?.price && (
+                <span className="inline-flex items-center px-5 py-3 rounded-full border-2 border-[#d4622b] text-sm font-bold text-[#d4622b]">
+                  {centre.copy.price}
+                </span>
+              )}
+              <button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
+              >
+                {centre.copy?.cta ?? "Schedule a Site Visit"} <span>&rarr;</span>
+              </button>
+            </div>
           </div>
         </section>
 
