@@ -82,16 +82,16 @@ export default function CentreDetailView({
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Connectivity</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.connectivity ?? centre.transit}</p>
               </div>
+              {centre.copy?.price && (
+                <div>
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Starting From</span>
+                  <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy.price}</p>
+                </div>
+              )}
               <div>
                 <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Capacity</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.capacity ?? centre.seats}</p>
               </div>
-              {centre.copy?.price && (
-                <div>
-                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Starting From</span>
-                  <p className="mt-1 text-lg sm:text-xl font-bold text-[#1a1a2e]">{centre.copy.price}</p>
-                </div>
-              )}
             </div>
 
             <div className="flex flex-wrap items-center gap-2.5 mt-6 pt-6 border-t border-gray-200/80">
@@ -104,8 +104,9 @@ export default function CentreDetailView({
 
             <div className="flex flex-wrap items-center gap-3 mt-6">
               {centre.copy?.price && (
-                <span className="inline-flex items-center px-5 py-3 rounded-full border-2 border-[#d4622b] text-sm font-bold text-[#d4622b]">
-                  {centre.copy.price}
+                <span className="inline-flex flex-col items-center px-5 py-2 rounded-full border-2 border-[#d4622b]">
+                  <span className="text-[9px] font-semibold uppercase tracking-wider text-[#d4622b]">Starts from</span>
+                  <span className="text-sm font-bold text-[#d4622b]">{centre.copy.price}</span>
                 </span>
               )}
               <button

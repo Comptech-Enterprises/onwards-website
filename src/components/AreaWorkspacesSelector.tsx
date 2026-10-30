@@ -35,8 +35,9 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
           View Centre &rarr;
         </span>
         {ws.copy?.price && (
-          <span className="text-sm font-bold text-[#d4622b]">
-            {ws.copy.price}
+          <span className="inline-flex flex-col items-center px-3 py-1.5 rounded-full border-2 border-[#d4622b]">
+            <span className="text-[9px] font-semibold uppercase tracking-wider text-[#d4622b]">Starts from</span>
+            <span className="text-xs font-bold text-[#d4622b]">{ws.copy.price}</span>
           </span>
         )}
       </div>
