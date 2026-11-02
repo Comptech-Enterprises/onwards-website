@@ -24,6 +24,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
             alt={`Onward Workspaces ${area.name}`}
             fill
             priority
+            sizes="100vw"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
@@ -120,6 +121,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
                         src={src}
                         alt={`${area.name} gallery ${i + 1}`}
                         fill
+                        sizes="(max-width: 640px) 50vw, 33vw"
                         className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
                       />
                     </div>

@@ -34,6 +34,7 @@ export default function CentreDetailView({
             alt={centre.title}
             fill
             priority
+            sizes="100vw"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />

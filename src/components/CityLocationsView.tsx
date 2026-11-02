@@ -75,6 +75,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             alt={`Onward Workspaces ${cityName}`}
             fill
             priority
+            sizes="100vw"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
@@ -154,6 +155,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                       src={area.img}
                       alt={area.name}
                       fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>
@@ -180,6 +182,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                         src={area.img}
                         alt={area.name}
                         fill
+                        sizes="85vw"
                         className="object-cover"
                       />
                     </div>
@@ -221,6 +224,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                   src={city.whyChooseImage || heroImage}
                   alt={`Why Choose Onward ${cityName}`}
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>

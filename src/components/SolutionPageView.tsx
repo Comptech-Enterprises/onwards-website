@@ -73,6 +73,7 @@ export default function SolutionPageView({
               alt={sol.title}
               fill
               priority
+              sizes="100vw"
               className="object-cover scale-105"
             />
           </motion.div>
@@ -166,6 +167,7 @@ export default function SolutionPageView({
                           src={city.img}
                           alt={city.name}
                           fill
+                          sizes="33vw"
                           className="object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>

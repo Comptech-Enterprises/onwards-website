@@ -21,6 +21,7 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
           src={ws.img}
           alt={ws.title}
           fill
+          sizes="(max-width: 640px) 85vw, (max-width: 1024px) 48vw, 32vw"
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
       </div>
