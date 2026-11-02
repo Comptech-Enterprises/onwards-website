@@ -28,10 +28,18 @@ export default function AutoSlider({
 
   useEffect(() => {
     if (paused || total <= 1) return;
-    const timer = setInterval(() => {
+    let timer: NodeJS.Timeout | null = null;
+    const initialDelay = setTimeout(() => {
       setCurrent((p) => (p + 1) % total);
-    }, interval);
-    return () => clearInterval(timer);
+      timer = setInterval(() => {
+        setCurrent((p) => (p + 1) % total);
+      }, interval);
+    }, 5000);
+
+    return () => {
+      clearTimeout(initialDelay);
+      if (timer) clearInterval(timer);
+    };
   }, [paused, total, interval]);
 
   const handleTouchStart = (e: React.TouchEvent) => {

@@ -24,7 +24,8 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
             alt={`Onward Workspaces ${area.name}`}
             fill
             priority
-            sizes="100vw"
+            fetchPriority="high"
+            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, 1920px"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
@@ -34,11 +35,11 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
               <div>
                 <nav aria-label="Breadcrumb" className="mb-3">
                   <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider">
-                    <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+                    <li><Link href="/" prefetch={false} className="hover:text-white transition-colors">Home</Link></li>
                     <li>/</li>
-                    <li><Link href="/locations" className="hover:text-white transition-colors">Locations</Link></li>
+                    <li><Link href="/locations" prefetch={false} className="hover:text-white transition-colors">Locations</Link></li>
                     <li>/</li>
-                    <li><Link href={city.basePath} className="hover:text-white transition-colors">{city.name}</Link></li>
+                    <li><Link href={city.basePath} prefetch={false} className="hover:text-white transition-colors">{city.name}</Link></li>
                     <li>/</li>
                     <li className="text-white font-semibold">{area.name}</li>
                   </ol>
@@ -50,7 +51,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
                   ) : (
                     <>
                       <span className="text-white">Onward in</span>{" "}
-                      <span className="text-[#d4622b]">{area.name}</span>
+                      <span className="text-[#c24f1c]">{area.name}</span>
                     </>
                   )}
                 </h1>
@@ -74,7 +75,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
           <section className="py-12 bg-white border-b border-gray-200/80">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <Reveal>
-                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">
                   Community &amp; Clients
                 </span>
                 <h2 className="mt-1 mb-8 text-xl sm:text-3xl font-bold text-[#1a1a2e] tracking-tight">
@@ -85,12 +86,13 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
               <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                 {area.clients.map((logoSrc, idx) => (
                   <Reveal key={`${logoSrc}-${idx}`} delay={idx * 0.05}>
-                    <div className="px-6 py-4 rounded-2xl bg-[#faf8f5] border border-gray-200/80 flex items-center justify-center h-20 min-w-[140px] hover:border-[#d4622b] transition-colors">
+                    <div className="px-6 py-4 rounded-2xl bg-[#faf8f5] border border-gray-200/80 flex items-center justify-center h-20 min-w-[140px] hover:border-[#c24f1c] transition-colors">
                       <Image
                         src={logoSrc}
                         alt={`${area.name} client ${idx + 1}`}
                         width={120}
                         height={40}
+                        loading="lazy"
                         className="max-h-10 w-auto object-contain"
                       />
                     </div>
@@ -108,7 +110,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
           <section className="py-14 lg:py-18 bg-[#faf8f5] border-b border-gray-200/80">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <Reveal>
-                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Gallery</span>
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Gallery</span>
                 <h2 className="mt-1 mb-8 text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight">
                   Inside {area.name}
                 </h2>
@@ -121,6 +123,7 @@ export default function AreaDetailView({ city, area }: { city: CityData; area: A
                         src={src}
                         alt={`${area.name} gallery ${i + 1}`}
                         fill
+                        loading="lazy"
                         sizes="(max-width: 640px) 50vw, 33vw"
                         className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
                       />

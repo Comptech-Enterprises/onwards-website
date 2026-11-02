@@ -9,6 +9,7 @@ import ContactSection from "@/components/ContactSection";
 import FaqSection from "@/components/FaqSection";
 import AmenitiesTicker from "@/components/AmenitiesTicker";
 import HeroForm from "@/components/HeroForm";
+import LazyGoogleMap from "@/components/LazyGoogleMap";
 import type { CityData, AreaDetail } from "@/data/locations";
 import type { WorkspaceUnit } from "@/data/workspaces";
 import { getSeo } from "@/data/seo";
@@ -34,7 +35,8 @@ export default function CentreDetailView({
             alt={centre.title}
             fill
             priority
-            sizes="100vw"
+            fetchPriority="high"
+            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, 1920px"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
@@ -44,13 +46,13 @@ export default function CentreDetailView({
               <div>
                 <nav aria-label="Breadcrumb" className="mb-3">
                   <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider flex-wrap">
-                    <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+                    <li><Link href="/" prefetch={false} className="hover:text-white transition-colors">Home</Link></li>
                     <li>/</li>
-                    <li><Link href="/locations" className="hover:text-white transition-colors">Locations</Link></li>
+                    <li><Link href="/locations" prefetch={false} className="hover:text-white transition-colors">Locations</Link></li>
                     <li>/</li>
-                    <li><Link href={city.basePath} className="hover:text-white transition-colors">{city.name}</Link></li>
+                    <li><Link href={city.basePath} prefetch={false} className="hover:text-white transition-colors">{city.name}</Link></li>
                     <li>/</li>
-                    <li><Link href={`${city.basePath}/${area.slug}`} className="hover:text-white transition-colors">{area.name}</Link></li>
+                    <li><Link href={`${city.basePath}/${area.slug}`} prefetch={false} className="hover:text-white transition-colors">{area.name}</Link></li>
                     <li>/</li>
                     <li className="text-white font-semibold">{centre.badge}</li>
                   </ol>
@@ -76,21 +78,21 @@ export default function CentreDetailView({
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 sm:py-10">
             <div className={`grid grid-cols-1 gap-6 sm:gap-8 ${centre.copy?.price ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}>
               <div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Address</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Address</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.address ?? area.address}</p>
               </div>
               <div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Connectivity</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Connectivity</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.connectivity ?? centre.transit}</p>
               </div>
               {centre.copy?.price && (
                 <div>
-                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Starting From</span>
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Starting From</span>
                   <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy.price}</p>
                 </div>
               )}
               <div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Capacity</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Capacity</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.capacity ?? centre.seats}</p>
               </div>
             </div>
@@ -105,14 +107,14 @@ export default function CentreDetailView({
 
             <div className="flex flex-wrap items-center gap-3 mt-6">
               {centre.copy?.price && (
-                <span className="inline-flex flex-col items-center px-5 py-2 rounded-full border-2 border-[#d4622b]">
-                  <span className="text-[9px] font-semibold uppercase tracking-wider text-[#d4622b]">Starts from</span>
-                  <span className="text-sm font-bold text-[#d4622b]">{centre.copy.price}</span>
+                <span className="inline-flex flex-col items-center px-5 py-2 rounded-full border-2 border-[#c24f1c]">
+                  <span className="text-[9px] font-semibold uppercase tracking-wider text-[#c24f1c]">Starts from</span>
+                  <span className="text-sm font-bold text-[#c24f1c]">{centre.copy.price}</span>
                 </span>
               )}
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center gap-2 bg-[#d4622b] hover:bg-[#b8531f] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
+                className="inline-flex items-center gap-2 bg-[#c24f1c] hover:bg-[#a84114] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
               >
                 {centre.copy?.cta ?? "Schedule a Site Visit"} <span>&rarr;</span>
               </button>
@@ -120,30 +122,20 @@ export default function CentreDetailView({
           </div>
         </section>
 
-
-
         {/* 3. LOCATION MAP */}
         {(centre.copy?.mapEmbed || area.mapEmbed) && (
           <section className="py-14 lg:py-18 bg-white border-b border-gray-200/80">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <Reveal>
-                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#d4622b]">Location</span>
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Location</span>
                 <h2 className="mt-1 mb-8 text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight">
                   Find Us Here
                 </h2>
               </Reveal>
-              <div className="rounded-2xl overflow-hidden border border-gray-200/80 shadow-sm">
-                <iframe
-                  src={centre.copy?.mapEmbed || area.mapEmbed}
-                  width="100%"
-                  height="450"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title={`${area.name} location map`}
-                />
-              </div>
+              <LazyGoogleMap
+                src={(centre.copy?.mapEmbed || area.mapEmbed)!}
+                title={`${area.name} location map`}
+              />
             </div>
           </section>
         )}

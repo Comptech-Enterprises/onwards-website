@@ -2,17 +2,19 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
-import ContactSection from "@/components/ContactSection";
 import AutoSlider from "@/components/AutoSlider";
 import HeroForm from "@/components/HeroForm";
-import CityMicroMarketsMap from "@/components/CityMicroMarketsMap";
+import LazyCityMicroMarketsMap from "@/components/LazyCityMicroMarketsMap";
 import type { CityData } from "@/data/locations";
 import { getSeo } from "@/data/seo";
+
+const ContactSection = dynamic(() => import("@/components/ContactSection"));
 
 const whyChoose = [
   {
@@ -75,7 +77,8 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             alt={`Onward Workspaces ${cityName}`}
             fill
             priority
-            sizes="100vw"
+            fetchPriority="high"
+            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, 1920px"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
@@ -86,13 +89,13 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                 <nav aria-label="Breadcrumb" className="mb-3">
                   <ol className="flex items-center gap-2 text-[11px] sm:text-xs text-white/70 font-medium uppercase tracking-wider">
                     <li>
-                      <Link href="/" className="hover:text-white transition-colors">
+                      <Link href="/" prefetch={false} className="hover:text-white transition-colors">
                         Home
                       </Link>
                     </li>
                     <li>/</li>
                     <li>
-                      <Link href="/locations" className="hover:text-white transition-colors">
+                      <Link href="/locations" prefetch={false} className="hover:text-white transition-colors">
                         Locations
                       </Link>
                     </li>
@@ -107,7 +110,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                   ) : (
                     <>
                       <span className="text-white">Managed Office Space</span>{" "}
-                      <span className="text-[#d4622b]">in {cityName}</span>
+                      <span className="text-[#c24f1c]">in {cityName}</span>
                     </>
                   )}
                 </h1>
@@ -124,7 +127,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
         </section>
 
         {/* ━━━ INTERACTIVE MICRO-MARKETS MAP SECTION ━━━ */}
-        <CityMicroMarketsMap city={city} />
+        <LazyCityMicroMarketsMap city={city} />
 
         {/* ━━━ CENTRES (PHOTO GALLERY) ━━━ */}
         <section className="py-10 sm:py-12 lg:py-14 bg-white border-t border-gray-200/80">
@@ -132,7 +135,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             <div className="max-w-2xl mb-6 sm:mb-8">
               {!city.centresHeading && (
                 <Reveal>
-                  <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
+                  <span className="text-[#c24f1c] text-xs sm:text-sm font-semibold tracking-widest uppercase">
                     {cityName} &middot; {areas.length} Centres
                   </span>
                 </Reveal>
@@ -148,6 +151,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                 <Link
                   key={area.slug}
                   href={`${basePath}/${area.slug}`}
+                  prefetch={false}
                   className="group block"
                 >
                   <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
@@ -155,17 +159,18 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                       src={area.img}
                       alt={area.name}
                       fill
+                      loading="lazy"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>
-                  <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#d4622b] transition-colors">
+                  <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#c24f1c] transition-colors">
                     {area.cardHeading ?? area.name}
                   </h3>
                   <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
                     {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
                   </p>
-                  <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#d4622b] group-hover:text-black transition-colors">
+                  <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#c24f1c] group-hover:text-black transition-colors">
                     {area.centres ? "View Micro Market" : "View Centre"} &rarr;
                   </span>
                 </Link>
@@ -176,24 +181,25 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             <div className="sm:hidden">
               <AutoSlider interval={3500}>
                 {areas.map((area) => (
-                  <Link key={area.slug} href={`${basePath}/${area.slug}`} className="group block">
+                  <Link key={area.slug} href={`${basePath}/${area.slug}`} prefetch={false} className="group block">
                     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
                       <Image
                         src={area.img}
                         alt={area.name}
                         fill
+                        loading="lazy"
                         sizes="85vw"
                         className="object-cover"
                       />
                     </div>
                     <div className="pt-3">
-                      <h3 className="text-base font-bold text-black group-hover:text-[#d4622b] transition-colors">
+                      <h3 className="text-base font-bold text-black group-hover:text-[#c24f1c] transition-colors">
                         {area.cardHeading ?? area.name}
                       </h3>
                       <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mt-0.5">
                         {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
                       </p>
-                      <span className="inline-flex items-center gap-1 mt-1 text-xs font-semibold text-[#d4622b]">
+                      <span className="inline-flex items-center gap-1 mt-1 text-xs font-semibold text-[#c24f1c]">
                         {area.centres ? "View Micro Market" : "View Centre"} &rarr;
                       </span>
                     </div>
@@ -213,7 +219,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
               ) : (
                 <>
                   Why Choose Onward for Your Workspace in{" "}
-                  <span className="text-[#d4622b]">{cityName}</span>?
+                  <span className="text-[#c24f1c]">{cityName}</span>?
                 </>
               )}
             </h2>
@@ -270,7 +276,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             <div className="text-center mb-8 sm:mb-12">
               {!city.faqs && (
               <Reveal>
-                <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase">
+                <span className="text-[#c24f1c] text-xs sm:text-sm font-semibold tracking-widest uppercase">
                   Got Questions?
                 </span>
               </Reveal>
