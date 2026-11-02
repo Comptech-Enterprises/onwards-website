@@ -77,6 +77,15 @@ h1, h2, h3, h4, h5, h6 {
   color: #d4622b;
 }
 
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 @keyframes gradient-pan {
   0%,
   100% {

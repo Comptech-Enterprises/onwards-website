@@ -34,14 +34,16 @@ export default function Reveal({
     hidden: {
       opacity: 0,
       ...offset[from],
-      filter: blur ? "blur(8px)" : "blur(0px)",
+      filter: blur ? "blur(4px)" : "blur(0px)",
+      willChange: "transform, opacity, filter",
     },
     show: {
       opacity: 1,
       x: 0,
       y: 0,
       filter: "blur(0px)",
-      transition: { duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] },
+      willChange: "auto",
+      transition: { duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] },
     },
   };
 

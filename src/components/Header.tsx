@@ -61,11 +61,8 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
   };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 animate-[slideDown_0.6s_cubic-bezier(0.22,1,0.36,1)_both] ${
         scrolled || locationsOpen || solutionsOpen
           ? "bg-black/25 backdrop-blur-md border-b border-white/10 shadow-sm"
           : "bg-transparent border-b border-transparent"
@@ -402,6 +399,6 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

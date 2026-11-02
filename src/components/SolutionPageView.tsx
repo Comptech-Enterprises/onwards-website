@@ -80,18 +80,12 @@ export default function SolutionPageView({
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/70" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-36 sm:pt-40 lg:pt-44 pb-20 sm:pb-28 lg:pb-32">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease }}
+            <div
               className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d4622b] mb-3"
             >
               Office Space Solution
-            </motion.div>
-            <motion.h1
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease }}
+            </div>
+            <h1
               className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] text-white max-w-3xl"
             >
               {(() => {
@@ -118,15 +112,12 @@ export default function SolutionPageView({
                 }
                 return raw;
               })()}
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease }}
+            </h1>
+            <p
               className="mt-5 text-base sm:text-lg text-white/80 max-w-xl leading-relaxed"
             >
               {sol.heroBody ?? sol.tagline}
-            </motion.p>
+            </p>
           </div>
         </section>
 
