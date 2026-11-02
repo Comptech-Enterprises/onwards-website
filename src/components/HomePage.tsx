@@ -468,8 +468,6 @@ function GallerySlider() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 1280px) 100vw, 1280px"
-                quality={95}
-                priority
               />
             </div>
           </motion.div>
