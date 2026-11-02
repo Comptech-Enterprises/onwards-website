@@ -61,6 +61,13 @@ else
   nginx -t && systemctl reload nginx
 fi
 
+echo -e "\n${YELLOW}Step 6: Pre-warming key pages in cache...${NC}"
+curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/ &
+curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/delhi &
+curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/noida &
+curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/gurgaon &
+curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/locations &
+
 echo -e "\n${GREEN}========================================${NC}"
 echo -e "${GREEN}  DEPLOYMENT COMPLETED SUCCESSFULLY!    ${NC}"
 echo -e "${GREEN}========================================${NC}"
