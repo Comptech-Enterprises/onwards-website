@@ -6,7 +6,6 @@ import Link from "next/link";
 import type { AreaDetail } from "@/data/locations";
 import { getWorkspacesForArea } from "@/data/workspaces";
 import type { WorkspaceUnit } from "@/data/workspaces";
-import AutoSlider from "@/components/AutoSlider";
 export type { WorkspaceUnit } from "@/data/workspaces";
 export { getWorkspacesForArea } from "@/data/workspaces";
 
@@ -21,6 +20,7 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
           src={ws.img}
           alt={ws.title}
           fill
+          loading="lazy"
           sizes="(max-width: 640px) 85vw, (max-width: 1024px) 48vw, 32vw"
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
@@ -47,12 +47,12 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
 
   if (centreHref) {
     return (
-      <Link href={centreHref} prefetch={false} className="group block">
+      <Link href={centreHref} prefetch={false} className="group block w-[85vw] sm:w-auto shrink-0 snap-start">
         {inner}
       </Link>
     );
   }
-  return <div className="group">{inner}</div>;
+  return <div className="group w-[85vw] sm:w-auto shrink-0 snap-start">{inner}</div>;
 }
 
 export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: AreaDetail; cityBasePath?: string }) {
@@ -161,33 +161,12 @@ export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: A
           </div>
         </div>
 
-        {/* Cards: static grid if <=2 on desktop, auto-scroll if more */}
-        {filteredWorkspaces.length <= 3 ? (
-          <>
-            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-              {filteredWorkspaces.map((ws) => (
-                <WorkspaceCard key={ws.id} ws={ws} area={area} cityBasePath={cityBasePath} />
-              ))}
-            </div>
-            <div className="sm:hidden">
-              <AutoSlider interval={3500}>
-                {filteredWorkspaces.map((ws) => (
-                  <WorkspaceCard key={ws.id} ws={ws} area={area} cityBasePath={cityBasePath} />
-                ))}
-              </AutoSlider>
-            </div>
-          </>
-        ) : (
-          <AutoSlider
-            interval={3500}
-            showArrows
-            slideClassName="w-[85%] sm:w-[48%] lg:w-[32%] flex-shrink-0 px-2"
-          >
-            {filteredWorkspaces.map((ws) => (
-              <WorkspaceCard key={ws.id} ws={ws} area={area} cityBasePath={cityBasePath} />
-            ))}
-          </AutoSlider>
-        )}
+        {/* Workspaces Responsive Carousel / Grid */}
+        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-x-6 sm:gap-y-10 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 snap-x snap-mandatory scrollbar-none">
+          {filteredWorkspaces.map((ws) => (
+            <WorkspaceCard key={ws.id} ws={ws} area={area} cityBasePath={cityBasePath} />
+          ))}
+        </div>
       </div>
     </section>
   );

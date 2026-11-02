@@ -136,7 +136,14 @@ export default function ContactSection({
       {/* ━━━ OPTIONAL BACKGROUND IMAGE ━━━ */}
       {bgImage && (
         <div className="absolute inset-0 z-0">
-          <Image src={bgImage} alt="" fill sizes="100vw" className="object-cover" />
+          <Image
+            src={bgImage}
+            alt=""
+            fill
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 1920px"
+            className="object-cover"
+          />
           <div className="absolute inset-0 bg-[#faf8f5]/90" />
         </div>
       )}

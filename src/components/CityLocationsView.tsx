@@ -8,7 +8,6 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
-import AutoSlider from "@/components/AutoSlider";
 import HeroForm from "@/components/HeroForm";
 import LazyCityMicroMarketsMap from "@/components/LazyCityMicroMarketsMap";
 import type { CityData } from "@/data/locations";
@@ -145,14 +144,14 @@ export default function CityLocationsView({ city }: { city: CityData }) {
               </h2>
             </div>
 
-            {/* Desktop Grid */}
-            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+            {/* Centres Responsive Carousel / Grid */}
+            <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-x-6 sm:gap-y-10 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 snap-x snap-mandatory scrollbar-none">
               {areas.map((area) => (
                 <Link
                   key={area.slug}
                   href={`${basePath}/${area.slug}`}
                   prefetch={false}
-                  className="group block"
+                  className="group block w-[85vw] sm:w-auto shrink-0 snap-start"
                 >
                   <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100">
                     <Image
@@ -160,11 +159,11 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                       alt={area.name}
                       fill
                       loading="lazy"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      sizes="(max-width: 640px) 85vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>
-                  <h3 className="mt-4 text-lg font-bold text-black group-hover:text-[#c24f1c] transition-colors">
+                  <h3 className="mt-4 text-base sm:text-lg font-bold text-black group-hover:text-[#c24f1c] transition-colors">
                     {area.cardHeading ?? area.name}
                   </h3>
                   <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
@@ -175,37 +174,6 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                   </span>
                 </Link>
               ))}
-            </div>
-
-            {/* Mobile AutoSlider */}
-            <div className="sm:hidden">
-              <AutoSlider interval={3500}>
-                {areas.map((area) => (
-                  <Link key={area.slug} href={`${basePath}/${area.slug}`} prefetch={false} className="group block">
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-100 shadow-sm">
-                      <Image
-                        src={area.img}
-                        alt={area.name}
-                        fill
-                        loading="lazy"
-                        sizes="85vw"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="pt-3">
-                      <h3 className="text-base font-bold text-black group-hover:text-[#c24f1c] transition-colors">
-                        {area.cardHeading ?? area.name}
-                      </h3>
-                      <p className="text-[11px] font-semibold uppercase tracking-wider text-gray-500 mt-0.5">
-                        {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
-                      </p>
-                      <span className="inline-flex items-center gap-1 mt-1 text-xs font-semibold text-[#c24f1c]">
-                        {area.centres ? "View Micro Market" : "View Centre"} &rarr;
-                      </span>
-                    </div>
-                  </Link>
-                ))}
-              </AutoSlider>
             </div>
           </div>
         </section>
