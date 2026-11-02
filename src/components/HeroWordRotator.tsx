@@ -9,8 +9,13 @@ export default function HeroWordRotator() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const id = setInterval(() => setIndex((p) => (p + 1) % heroWords.length), 2200);
-    return () => clearInterval(id);
+    // Delay first rotation by 5s so initial paint and Core Web Vitals LCP are recorded on initial render
+    const timeout = setTimeout(() => {
+      setIndex((p) => (p + 1) % heroWords.length);
+      const id = setInterval(() => setIndex((p) => (p + 1) % heroWords.length), 2600);
+      return () => clearInterval(id);
+    }, 5000);
+    return () => clearTimeout(timeout);
   }, []);
 
   return (

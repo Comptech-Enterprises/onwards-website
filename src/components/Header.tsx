@@ -72,12 +72,13 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         {/* Brand Logo */}
         <Link href="/" id="header-logo" className="flex items-center group py-1">
           <Image
-            src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/onward-logo-white.webp"
+            src="/onward-logo-white.webp"
             alt="Onward Workspaces"
             width={160}
             height={36}
             className="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity"
             priority
+            fetchPriority="high"
           />
         </Link>
 
@@ -236,7 +237,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         <div className="flex items-center gap-4">
           <MagneticButton
             href="/#contact"
-            className="hidden lg:inline-flex items-center gap-2 bg-[#d4622b] text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-all shadow-md group"
+            className="hidden lg:inline-flex items-center gap-2 bg-[#c24f1c] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#a84114] transition-all shadow-md group"
           >
             <span>Enquire Now</span>
             <svg

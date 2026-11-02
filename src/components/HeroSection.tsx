@@ -19,9 +19,10 @@ export default function HeroSection() {
       <div className="absolute inset-0 z-0 overflow-hidden bg-gray-900">
         <Image
           src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/gallery/1.webp"
-          alt=""
+          alt="Onward Workspaces Delhi NCR"
           fill
           priority
+          fetchPriority="high"
           sizes="100vw"
           className="object-cover"
         />
@@ -44,7 +45,7 @@ export default function HeroSection() {
           <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full sm:w-auto px-4">
             <Link
               href="#contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#d4622b] text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full text-xs sm:text-base md:text-lg font-semibold hover:bg-[#b8501f] transition-colors shadow-[0_0_40px_rgba(212,98,43,0.25)]"
+              className="w-full sm:w-auto inline-flex items-center justify-center bg-[#c24f1c] text-white px-5 py-3 sm:px-8 sm:py-4 rounded-full text-sm sm:text-base md:text-lg font-bold hover:bg-[#a84114] transition-colors shadow-[0_0_40px_rgba(194,79,28,0.25)]"
             >
               Schedule a Site Visit
               <svg className="ml-2 w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>

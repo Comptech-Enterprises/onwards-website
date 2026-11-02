@@ -98,7 +98,7 @@ export default function AutoSlider({
             </button>
           )}
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center -space-x-1">
             {children.map((_, i) => (
               <button
                 key={i}
@@ -108,14 +108,18 @@ export default function AutoSlider({
                   setCurrent(i);
                   setPaused(false);
                 }}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  current === i
-                    ? "w-6 bg-[#d4622b]"
-                    : `w-1.5 ${
-                        dotColor === "dark" ? "bg-white/40" : "bg-gray-300 hover:bg-gray-400"
-                      }`
-                }`}
-              />
+                className="min-w-[28px] min-h-[28px] flex items-center justify-center p-1 cursor-pointer"
+              >
+                <span
+                  className={`h-1.5 rounded-full transition-all duration-300 block ${
+                    current === i
+                      ? "w-6 bg-[#d4622b]"
+                      : `w-1.5 ${
+                          dotColor === "dark" ? "bg-white/40" : "bg-gray-300 hover:bg-gray-400"
+                        }`
+                  }`}
+                />
+              </button>
             ))}
           </div>
 

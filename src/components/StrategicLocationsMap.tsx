@@ -139,9 +139,9 @@ export default function StrategicLocationsMap() {
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
-                  <h4 className="text-sm sm:text-base font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors truncate">
+                  <h3 className="text-sm sm:text-base font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors truncate">
                     {activeHub.name}
-                  </h4>
+                  </h3>
                   <span className="text-[#d4622b] text-sm group-hover:translate-x-1 transition-transform">
                     →
                   </span>

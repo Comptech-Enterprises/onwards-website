@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -37,7 +37,35 @@ import AutoSlider from "@/components/AutoSlider";
 const FeatureTimeline = dynamic(() => import("@/components/FeatureTimeline"));
 const ContactSection = dynamic(() => import("@/components/ContactSection"));
 const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"));
-const StrategicLocationsMap = dynamic(() => import("@/components/StrategicLocationsMap"));
+const StrategicLocationsMap = dynamic(() => import("@/components/StrategicLocationsMap"), {
+  loading: () => <div className="min-h-[420px] flex items-center justify-center text-gray-400" />,
+});
+
+function LazyStrategicLocationsMap() {
+  const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "350px" }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="min-h-[420px]">
+      {inView ? <StrategicLocationsMap /> : null}
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════
    PRIMITIVES & MARQUEE
@@ -467,7 +495,7 @@ function GallerySlider() {
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
         </button>
-        <div className="flex items-center gap-1.5 max-w-[200px] sm:max-w-none overflow-x-auto py-1 px-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex items-center -space-x-1 max-w-[200px] sm:max-w-none overflow-x-auto py-1 px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {gallerySlides.map((_, idx) => (
             <button
               key={idx}
@@ -476,11 +504,15 @@ function GallerySlider() {
                 setDir(idx > current ? 1 : -1);
                 setCurrent(idx);
               }}
-              className={`h-2 rounded-full transition-all duration-300 shrink-0 ${
-                idx === current ? "w-7 bg-[#d4622b]" : "w-2 bg-gray-300 hover:bg-gray-400"
-              }`}
+              className="min-w-[28px] min-h-[28px] flex items-center justify-center p-1 cursor-pointer shrink-0"
               aria-label={`Go to slide ${idx + 1}`}
-            />
+            >
+              <span
+                className={`h-2 rounded-full transition-all duration-300 block ${
+                  idx === current ? "w-7 bg-[#d4622b]" : "w-2 bg-gray-300 hover:bg-gray-400"
+                }`}
+              />
+            </button>
           ))}
         </div>
         <button
@@ -595,7 +627,7 @@ function TrustedLeadersSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-14">
           <Reveal>
-            <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+            <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Testimonials
             </span>
           </Reveal>
@@ -632,7 +664,7 @@ function TrustedLeadersSection() {
                   </div>
                   <p className="text-sm sm:text-[15px] text-gray-600 leading-relaxed font-normal text-justify">
                     &ldquo;{isExpanded ? t.fullQuote : t.shortQuote}&rdquo;
-                    <button type="button" onClick={() => toggleExpand(t.id)} className="ml-2 font-semibold text-[#d4622b] hover:text-[#b8501f] transition-colors inline-flex items-center gap-0.5 text-xs group/btn">
+                    <button type="button" onClick={() => toggleExpand(t.id)} className="ml-2 font-semibold text-[#ba4c17] hover:text-[#9e3f11] transition-colors inline-flex items-center gap-0.5 text-xs group/btn">
                       {isExpanded ? "Read Less" : "Read More"}
                       <span className="transition-transform group-hover/btn:translate-x-0.5">&rarr;</span>
                     </button>
@@ -641,7 +673,7 @@ function TrustedLeadersSection() {
                 <div className="flex items-center gap-4 pt-6 mt-6 border-t border-gray-100">
                   {t.logo}
                   <div className="min-w-0">
-                    <h4 className="font-bold text-[#1a1a2e] text-sm sm:text-base leading-snug">{t.name}</h4>
+                    <h3 className="font-bold text-[#1a1a2e] text-sm sm:text-base leading-snug">{t.name}</h3>
                     <p className="text-xs sm:text-sm text-gray-500 font-normal leading-snug mt-0.5 truncate">{t.role}</p>
                   </div>
                 </div>
@@ -662,14 +694,14 @@ function TrustedLeadersSection() {
                   <div>
                     <div className="flex items-center gap-1 mb-3">
                       {[...Array(t.rating)].map((_, i) => (
-                        <svg key={i} className="w-3.5 h-3.5 text-[#d4622b] fill-current" viewBox="0 0 20 20">
+                        <svg key={i} className="w-3.5 h-3.5 text-[#ba4c17] fill-current" viewBox="0 0 20 20">
                           <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                         </svg>
                       ))}
                     </div>
                     <p className="text-xs text-gray-600 leading-relaxed font-normal text-justify">
                       &ldquo;{isExpanded ? t.fullQuote : t.shortQuote}&rdquo;
-                      <button type="button" onClick={() => toggleExpand(t.id)} className="ml-1.5 font-semibold text-[#d4622b] inline-flex items-center gap-0.5 text-[11px]">
+                      <button type="button" onClick={() => toggleExpand(t.id)} className="ml-1.5 font-semibold text-[#ba4c17] inline-flex items-center gap-0.5 text-[11px]">
                         {isExpanded ? "Read Less" : "Read More"}<span>&rarr;</span>
                       </button>
                     </p>
@@ -677,7 +709,7 @@ function TrustedLeadersSection() {
                   <div className="flex items-center gap-3 pt-4 mt-4 border-t border-gray-100">
                     {t.logo}
                     <div className="min-w-0">
-                      <h4 className="font-bold text-[#1a1a2e] text-xs leading-snug">{t.name}</h4>
+                      <h3 className="font-bold text-[#1a1a2e] text-xs leading-snug">{t.name}</h3>
                       <p className="text-[11px] text-gray-500 font-normal leading-snug mt-0.5 truncate">{t.role}</p>
                     </div>
                   </div>
@@ -719,7 +751,7 @@ function EnterprisesSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto text-center mb-8 sm:mb-12">
           <Reveal>
-            <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+            <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Enterprise Network
             </span>
           </Reveal>
@@ -756,6 +788,10 @@ function EnterprisesSection() {
                 <img
                   src={brand.src}
                   alt={`Enterprise Partner ${brand.id}`}
+                  loading="lazy"
+                  decoding="async"
+                  width={200}
+                  height={64}
                   className="h-7 sm:h-14 md:h-16 w-auto max-w-[60px] sm:max-w-[200px] md:max-w-[230px] object-contain transition-transform duration-300 group-hover:scale-105"
                   style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
                 />
@@ -774,7 +810,7 @@ function NewsMediaSection() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="text-center max-w-4xl mx-auto mb-10 sm:mb-12">
           <Reveal>
-            <span className="text-[#d4622b] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+            <span className="text-[#ba4c17] text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Press &amp; Recognition
             </span>
           </Reveal>
@@ -814,6 +850,10 @@ function NewsMediaSection() {
                 <img
                   src={item.img}
                   alt={item.name}
+                  loading="lazy"
+                  decoding="async"
+                  width={200}
+                  height={64}
                   className="h-7 sm:h-14 md:h-16 w-auto max-w-[60px] sm:max-w-[200px] md:max-w-[230px] object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </a>
@@ -940,25 +980,25 @@ function LocationCard({
       {/* Content */}
       <div className="p-5">
         {/* Tag & City */}
-        <span className="text-[10px] font-bold tracking-widest text-[#d4622b] uppercase">
+        <span className="text-[10px] font-bold tracking-widest text-[#ba4c17] uppercase">
           {hub.tag} &bull; {city}
         </span>
 
-        <h3 className="mt-1 text-lg font-bold text-[#1a1a2e] group-hover:text-[#d4622b] transition-colors duration-300">
+        <h3 className="mt-1 text-lg font-bold text-[#1a1a2e] group-hover:text-[#ba4c17] transition-colors duration-300">
           {hub.spot}
         </h3>
 
-        <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-400">
-          <svg className="w-3 h-3 shrink-0 text-[#d4622b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-500">
+          <svg className="w-3 h-3 shrink-0 text-[#ba4c17]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           {hub.transit}
         </div>
 
-        <p className="mt-1.5 text-xs text-gray-400 leading-relaxed">{hub.highlight}</p>
+        <p className="mt-1.5 text-xs text-gray-500 leading-relaxed">{hub.highlight}</p>
 
         <div className="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-          <span className="text-xs font-semibold text-[#d4622b]">Schedule a Site Visit</span>
+          <span className="text-xs font-semibold text-[#ba4c17]">Schedule a Site Visit</span>
           <motion.div
             whileHover={{ rotate: 45 }}
             transition={{ type: "spring", stiffness: 400, damping: 15 }}
@@ -986,7 +1026,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-12">
             <Reveal>
-              <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 Solutions
               </span>
             </Reveal>
@@ -1029,7 +1069,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="mx-auto text-center mb-8 sm:mb-12 max-w-4xl">
             <Reveal>
-              <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 Why Choose Us
               </span>
             </Reveal>
@@ -1082,7 +1122,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-8 sm:mb-10">
             <Reveal>
-              <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+              <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
                 NCR Presence
               </span>
             </Reveal>
@@ -1108,10 +1148,14 @@ export default function Home() {
                 className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col"
               >
                 <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                  <img
+                  <Image
                     src={city.img}
                     alt={city.name}
+                    width={500}
+                    height={312}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
                   />
                 </div>
                 <div className="py-5 text-center bg-white border-t border-gray-100">
@@ -1133,10 +1177,14 @@ export default function Home() {
                   className="rounded-2xl border border-gray-200 bg-white overflow-hidden shadow-sm flex flex-col"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                    <img
+                    <Image
                       src={city.img}
                       alt={city.name}
+                      width={500}
+                      height={312}
+                      sizes="100vw"
                       className="w-full h-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                   <div className="py-3.5 text-center bg-white border-t border-gray-100">
@@ -1157,7 +1205,7 @@ export default function Home() {
         className="py-10 sm:py-14 lg:py-20 bg-[#faf8f5] text-[#1a1a2e] relative overflow-hidden border-t border-gray-200/80"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <StrategicLocationsMap />
+          <LazyStrategicLocationsMap />
         </div>
       </section>
 
@@ -1168,7 +1216,7 @@ export default function Home() {
       <section className="py-10 sm:py-14 lg:py-18 bg-white overflow-hidden">
         <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-8 sm:mb-12 text-center">
           <Reveal>
-            <span className="text-[#d4622b] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+            <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
               Gallery
             </span>
           </Reveal>
@@ -1297,13 +1345,13 @@ export default function Home() {
               <p>Onward Workspaces offers a range of modern, fully equipped workspaces designed for founders, CEOs, entrepreneurs, and enterprise teams, including Fortune 500 companies, across Delhi NCR&apos;s prime business districts.</p>
             </Reveal>
             <Reveal delay={0.1}>
-              <p>Experience the flexibility and sophistication of our <Link href="/delhi" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Coworking space in Delhi</Link>, perfect for businesses seeking a strategic presence in the capital. Our <Link href="/offices/managed-office-space-in-delhi" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Office space in Delhi</Link> provides scalable, professional environments to support your company&apos;s growth.</p>
+              <p>Experience the flexibility and sophistication of our <Link href="/delhi" className="text-[#ba4c17] font-medium underline underline-offset-2 hover:text-[#9e3f11]">Coworking space in Delhi</Link>, perfect for businesses seeking a strategic presence in the capital. Our <Link href="/offices/managed-office-space-in-delhi" className="text-[#ba4c17] font-medium underline underline-offset-2 hover:text-[#9e3f11]">Office space in Delhi</Link> provides scalable, professional environments to support your company&apos;s growth.</p>
             </Reveal>
             <Reveal delay={0.15}>
-              <p>In Noida, we bring premium options with our <Link href="/noida" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Coworking space in Noida</Link>, ideal for enterprise teams and business leaders looking for modern infrastructure and seamless connectivity. For companies seeking a dedicated base, our <Link href="/noida" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Office space in Noida</Link> offers strategically located, fully equipped offices to enhance productivity and business operations.</p>
+              <p>In Noida, we bring premium options with our <Link href="/noida" className="text-[#ba4c17] font-medium underline underline-offset-2 hover:text-[#9e3f11]">Coworking space in Noida</Link>, ideal for enterprise teams and business leaders looking for modern infrastructure and seamless connectivity. For companies seeking a dedicated base, our <Link href="/noida" className="text-[#ba4c17] font-medium underline underline-offset-2 hover:text-[#9e3f11]">Office space in Noida</Link> offers strategically located, fully equipped offices to enhance productivity and business operations.</p>
             </Reveal>
             <Reveal delay={0.2}>
-              <p>Gurgaon-based businesses can benefit from our <Link href="/gurgaon" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Coworking space in Gurgaon</Link>, designed for entrepreneurs, CXOs, and corporate teams who value flexibility and proximity to top corporate hubs. Our <Link href="/gurgaon" className="text-[#d4622b] font-medium underline underline-offset-2 hover:text-[#b8521f]">Office space in Gurgaon</Link> further provides a professional, scalable workspace solution in one of the city&apos;s most sought-after business locations.</p>
+              <p>Gurgaon-based businesses can benefit from our <Link href="/gurgaon" className="text-[#ba4c17] font-medium underline underline-offset-2 hover:text-[#9e3f11]">Coworking space in Gurgaon</Link>, designed for entrepreneurs, CXOs, and corporate teams who value flexibility and proximity to top corporate hubs. Our <Link href="/gurgaon" className="text-[#ba4c17] font-medium underline underline-offset-2 hover:text-[#9e3f11]">Office space in Gurgaon</Link> further provides a professional, scalable workspace solution in one of the city&apos;s most sought-after business locations.</p>
             </Reveal>
             <Reveal delay={0.25}>
               <p>Across all locations, Onward Workspaces combines modern design, premium amenities, and strategic connectivity to ensure your business thrives in a professional and dynamic environment.</p>

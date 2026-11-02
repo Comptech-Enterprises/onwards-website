@@ -1,14 +1,29 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 export default function HeroVideo() {
+  const [canLoadVideo, setCanLoadVideo] = useState(false);
+
+  useEffect(() => {
+    // Only load video on desktop devices (width >= 768px) and after mount to avoid choking initial LCP & mobile bandwidth
+    if (typeof window !== "undefined" && window.innerWidth >= 768) {
+      const timer = setTimeout(() => {
+        setCanLoadVideo(true);
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  if (!canLoadVideo) return null;
+
   return (
     <video
-      ref={(el) => { el?.play().catch(() => {}); }}
       autoPlay
       muted
       loop
       playsInline
-      preload="none"
+      preload="auto"
       className="absolute inset-0 w-full h-full object-cover"
     >
       <source
