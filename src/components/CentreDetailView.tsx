@@ -36,7 +36,7 @@ export default function CentreDetailView({
             fill
             priority
             fetchPriority="high"
-            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, 1920px"
+            sizes="(max-width: 640px) 480px, (max-width: 1200px) 100vw, 1920px"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
@@ -78,21 +78,21 @@ export default function CentreDetailView({
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8 sm:py-10">
             <div className={`grid grid-cols-1 gap-6 sm:gap-8 ${centre.copy?.price ? "sm:grid-cols-4" : "sm:grid-cols-3"}`}>
               <div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Address</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#b44512]">Address</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.address ?? area.address}</p>
               </div>
               <div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Connectivity</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#b44512]">Connectivity</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.connectivity ?? centre.transit}</p>
               </div>
               {centre.copy?.price && (
                 <div>
-                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Starting From</span>
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#b44512]">Starting From</span>
                   <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy.price}</p>
                 </div>
               )}
               <div>
-                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Capacity</span>
+                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-[#b44512]">Capacity</span>
                 <p className="mt-1 text-sm sm:text-base font-medium text-[#1a1a2e]">{centre.copy?.capacity ?? centre.seats}</p>
               </div>
             </div>
@@ -107,14 +107,14 @@ export default function CentreDetailView({
 
             <div className="flex flex-wrap items-center gap-3 mt-6">
               {centre.copy?.price && (
-                <span className="inline-flex flex-col items-center px-5 py-2 rounded-full border-2 border-[#c24f1c]">
-                  <span className="text-[9px] font-semibold uppercase tracking-wider text-[#c24f1c]">Starts from</span>
-                  <span className="text-sm font-bold text-[#c24f1c]">{centre.copy.price}</span>
+                <span className="inline-flex flex-col items-center px-5 py-2 rounded-full border-2 border-[#b44512]">
+                  <span className="text-[9px] font-semibold uppercase tracking-wider text-[#b44512]">Starts from</span>
+                  <span className="text-sm font-bold text-[#b44512]">{centre.copy.price}</span>
                 </span>
               )}
               <button
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                className="inline-flex items-center gap-2 bg-[#c24f1c] hover:bg-[#a84114] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
+                className="inline-flex items-center gap-2 bg-[#b44512] hover:bg-[#a84114] text-white text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer shadow-md"
               >
                 {centre.copy?.cta ?? "Schedule a Site Visit"} <span>&rarr;</span>
               </button>
@@ -127,7 +127,7 @@ export default function CentreDetailView({
           <section className="py-14 lg:py-18 bg-white border-b border-gray-200/80">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
               <Reveal>
-                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#c24f1c]">Location</span>
+                <span className="text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[#b44512]">Location</span>
                 <h2 className="mt-1 mb-8 text-2xl sm:text-4xl font-black text-[#1a1a2e] tracking-tight">
                   Find Us Here
                 </h2>

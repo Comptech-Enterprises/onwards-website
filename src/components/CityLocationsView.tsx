@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -77,7 +76,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             fill
             priority
             fetchPriority="high"
-            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, 1920px"
+            sizes="(max-width: 640px) 480px, (max-width: 1200px) 100vw, 1920px"
             className="object-cover object-[center_30%]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/55 to-black/35" />
@@ -109,7 +108,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                   ) : (
                     <>
                       <span className="text-white">Managed Office Space</span>{" "}
-                      <span className="text-[#c24f1c]">in {cityName}</span>
+                      <span className="text-[#b44512]">in {cityName}</span>
                     </>
                   )}
                 </h1>
@@ -134,7 +133,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             <div className="max-w-2xl mb-6 sm:mb-8">
               {!city.centresHeading && (
                 <Reveal>
-                  <span className="text-[#c24f1c] text-xs sm:text-sm font-semibold tracking-widest uppercase">
+                  <span className="text-[#b44512] text-xs sm:text-sm font-semibold tracking-widest uppercase">
                     {cityName} &middot; {areas.length} Centres
                   </span>
                 </Reveal>
@@ -163,13 +162,13 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                       className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                   </div>
-                  <h3 className="mt-4 text-base sm:text-lg font-bold text-black group-hover:text-[#c24f1c] transition-colors">
+                  <h3 className="mt-4 text-base sm:text-lg font-bold text-black group-hover:text-[#b44512] transition-colors">
                     {area.cardHeading ?? area.name}
                   </h3>
                   <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
                     {area.centres ? `${area.centres} ${area.centres === 1 ? "centre" : "centres"}` : `${area.type} · ${area.seats}`}
                   </p>
-                  <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#c24f1c] group-hover:text-black transition-colors">
+                  <span className="inline-flex items-center gap-1 mt-2 text-sm font-semibold text-[#b44512] group-hover:text-black transition-colors">
                     {area.centres ? "View Micro Market" : "View Centre"} &rarr;
                   </span>
                 </Link>
@@ -187,7 +186,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
               ) : (
                 <>
                   Why Choose Onward for Your Workspace in{" "}
-                  <span className="text-[#c24f1c]">{cityName}</span>?
+                  <span className="text-[#b44512]">{cityName}</span>?
                 </>
               )}
             </h2>
@@ -219,17 +218,18 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                           {isOpen ? "−" : "+"}
                         </span>
                       </button>
-                      <motion.div
- initial={false}
- animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
- transition={{ duration: 0.3 }}
- aria-hidden={!isOpen}
- className="overflow-hidden"
- >
-                            <p className="text-gray-600 text-xs sm:text-sm leading-relaxed pb-5 max-w-xl">
-                              {item.desc}
-                            </p>
-                          </motion.div>
+                      <div
+                        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                        }`}
+                        aria-hidden={!isOpen}
+                      >
+                        <div className="overflow-hidden">
+                          <p className="text-gray-600 text-xs sm:text-sm leading-relaxed pb-5 max-w-xl">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
@@ -244,7 +244,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             <div className="text-center mb-8 sm:mb-12">
               {!city.faqs && (
               <Reveal>
-                <span className="text-[#c24f1c] text-xs sm:text-sm font-semibold tracking-widest uppercase">
+                <span className="text-[#b44512] text-xs sm:text-sm font-semibold tracking-widest uppercase">
                   Got Questions?
                 </span>
               </Reveal>
@@ -283,17 +283,18 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                         )}
                       </span>
                     </button>
-                    <motion.div
- initial={false}
- animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
- transition={{ duration: 0.3 }}
- aria-hidden={!isOpen}
- className="overflow-hidden"
- >
-                          <p className="text-gray-600 text-base leading-relaxed pb-6">
-                            {f.a}
-                          </p>
-                        </motion.div>
+                    <div
+                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      }`}
+                      aria-hidden={!isOpen}
+                    >
+                      <div className="overflow-hidden">
+                        <p className="text-gray-600 text-base leading-relaxed pb-6">
+                          {f.a}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 );
               })}

@@ -42,7 +42,7 @@ export default function HeroForm() {
   };
 
   const inputClass =
-    "w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder:text-white/50 focus:outline-none focus:border-[#c24f1c] focus:bg-white/15 transition-all text-sm";
+    "w-full bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg px-3 py-2.5 text-white placeholder:text-white/50 focus:outline-none focus:border-[#b44512] focus:bg-white/15 transition-all text-sm";
 
   return (
     <AnimatePresence mode="wait">
@@ -54,7 +54,7 @@ export default function HeroForm() {
           exit={{ opacity: 0 }}
           className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-center"
         >
-          <div className="w-12 h-12 mx-auto rounded-full bg-[#c24f1c]/20 text-[#c24f1c] flex items-center justify-center text-2xl font-bold mb-3">
+          <div className="w-12 h-12 mx-auto rounded-full bg-[#b44512]/20 text-[#b44512] flex items-center justify-center text-2xl font-bold mb-3">
             ✓
           </div>
           <h2 className="text-lg font-bold text-white">Request Received!</h2>
@@ -64,7 +64,7 @@ export default function HeroForm() {
           <button
             type="button"
             onClick={() => setStatus("idle")}
-            className="mt-3 px-4 py-1.5 rounded-full text-xs font-semibold bg-[#c24f1c] text-white hover:bg-[#a84114] transition-colors"
+            className="mt-3 px-4 py-1.5 rounded-full text-xs font-semibold bg-[#b44512] text-white hover:bg-[#a84114] transition-colors"
           >
             Submit Another
           </button>
@@ -94,7 +94,7 @@ export default function HeroForm() {
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="w-full bg-gradient-to-r from-[#c24f1c] to-[#d4622b] text-white py-2.5 rounded-lg font-bold text-sm hover:shadow-lg transition-all disabled:opacity-70 cursor-pointer"
+            className="w-full bg-gradient-to-r from-[#b44512] to-[#d4622b] text-white py-2.5 rounded-lg font-bold text-sm hover:shadow-lg transition-all disabled:opacity-70 cursor-pointer"
           >
             {status === "submitting" ? "Processing..." : "Schedule a Visit →"}
           </button>

@@ -7,10 +7,11 @@ import type { CityData } from "@/data/locations";
 const CityMicroMarketsMap = dynamic(
   () => import("@/components/CityMicroMarketsMap"),
   {
+    ssr: false,
     loading: () => (
       <div className="min-h-[400px] flex items-center justify-center text-gray-400">
         <div className="flex flex-col items-center gap-2">
-          <div className="w-8 h-8 rounded-full border-2 border-[#c24f1c] border-t-transparent animate-spin" />
+          <div className="w-8 h-8 rounded-full border-2 border-[#b44512] border-t-transparent animate-spin" />
           <span className="text-xs text-gray-500 font-medium">Loading Map...</span>
         </div>
       </div>
@@ -24,17 +25,34 @@ export default function LazyCityMicroMarketsMap({ city }: { city: CityData }) {
 
   useEffect(() => {
     if (!ref.current) return;
+    let idleId: number | undefined;
+
+    const load = () => {
+      if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+        idleId = (window as Window).requestIdleCallback(() => setInView(true), {
+          timeout: 2500,
+        });
+      } else {
+        setInView(true);
+      }
+    };
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true);
+          load();
           observer.disconnect();
         }
       },
-      { rootMargin: "350px" }
+      { rootMargin: "100px" }
     );
     observer.observe(ref.current);
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (idleId && typeof window !== "undefined" && "cancelIdleCallback" in window) {
+        (window as Window).cancelIdleCallback(idleId);
+      }
+    };
   }, []);
 
   return (

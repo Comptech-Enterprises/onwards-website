@@ -77,8 +77,6 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             width={160}
             height={36}
             className="h-8 sm:h-9 w-auto object-contain group-hover:opacity-90 transition-opacity"
-            priority
-            fetchPriority="high"
           />
         </Link>
 

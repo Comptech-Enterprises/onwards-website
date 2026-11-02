@@ -25,20 +25,20 @@ function WorkspaceCard({ ws, area, cityBasePath }: { ws: WorkspaceUnit; area: Ar
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         />
       </div>
-      <Heading className="mt-4 text-lg font-bold text-black group-hover:text-[#c24f1c] transition-colors">
+      <Heading className="mt-4 text-lg font-bold text-black group-hover:text-[#b44512] transition-colors">
         {ws.cardTitle ?? ws.title}
       </Heading>
       <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 mt-1">
         {ws.cardSubline ?? `${ws.badge} · ${ws.seats}`}
       </p>
       <div className="flex items-center justify-between mt-3">
-        <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#c24f1c] group-hover:text-black transition-colors">
+        <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#b44512] group-hover:text-black transition-colors">
           View Centre &rarr;
         </span>
         {ws.copy?.price && (
-          <span className="inline-flex flex-col items-center px-3 py-1 rounded-full border-2 border-[#c24f1c] leading-tight -mt-5">
-            <span className="text-[8px] font-semibold uppercase tracking-wider text-[#c24f1c]">Starts from</span>
-            <span className="text-[11px] font-bold text-[#c24f1c]">{ws.copy.price}</span>
+          <span className="inline-flex flex-col items-center px-3 py-1 rounded-full border-2 border-[#b44512] leading-tight -mt-5">
+            <span className="text-[8px] font-semibold uppercase tracking-wider text-[#b44512]">Starts from</span>
+            <span className="text-[11px] font-bold text-[#b44512]">{ws.copy.price}</span>
           </span>
         )}
       </div>
@@ -92,10 +92,10 @@ export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: A
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Micro-market overview card */}
         <div className="bg-[#f6f1e8] rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-[#e8dfd2] mb-6 sm:mb-8">
-          <span className="text-[#c24f1c] text-[10px] sm:text-xs font-bold tracking-widest uppercase">
+          <span className="text-[#b44512] text-[10px] sm:text-xs font-bold tracking-widest uppercase">
             Micro-Market Overview
           </span>
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#c24f1c] mt-1">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#b44512] mt-1">
             {area.name}
           </h2>
           <p className="text-xs sm:text-sm text-gray-600 font-medium mt-1">
@@ -110,7 +110,7 @@ export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: A
                 onClick={() => handleFilterClick("all")}
                 className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
                   activeFilter === "all"
-                    ? "bg-[#c24f1c] text-white shadow-md"
+                    ? "bg-[#b44512] text-white shadow-md"
                     : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200/80"
                 }`}
               >
@@ -127,7 +127,7 @@ export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: A
                   onClick={() => handleFilterClick("managed")}
                   className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
                     activeFilter === "managed"
-                      ? "bg-[#c24f1c] text-white shadow-md"
+                      ? "bg-[#b44512] text-white shadow-md"
                       : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200/80"
                   }`}
                 >
@@ -145,7 +145,7 @@ export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: A
                   onClick={() => handleFilterClick("coworking")}
                   className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-200 flex items-center gap-2 cursor-pointer ${
                     activeFilter === "coworking"
-                      ? "bg-[#c24f1c] text-white shadow-md"
+                      ? "bg-[#b44512] text-white shadow-md"
                       : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-200/80"
                   }`}
                 >

@@ -121,11 +121,11 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title Header */}
         <div className="mb-5 sm:mb-6">
-          <span className="text-[#c24f1c] text-[11px] sm:text-xs font-bold tracking-widest uppercase">
+          <span className="text-[#b44512] text-[11px] sm:text-xs font-bold tracking-widest uppercase">
             Micro-Markets in {cityName}
           </span>
           <h2 className="mt-0.5 text-xl sm:text-2xl lg:text-3xl font-bold text-[#1a1a2e] tracking-tight">
-            Pick a micro-market <span className="text-[#c24f1c]">to explore its workspaces.</span>
+            Pick a micro-market <span className="text-[#b44512]">to explore its workspaces.</span>
           </h2>
         </div>
 
@@ -437,10 +437,10 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <span className="text-[9px] font-bold tracking-wider text-[#c24f1c] uppercase block truncate">
+                    <span className="text-[9px] font-bold tracking-wider text-[#b44512] uppercase block truncate">
                       {activeArea.type}
                     </span>
-                    <h3 className="text-xs sm:text-sm font-bold text-[#1a1a2e] group-hover:text-[#c24f1c] transition-colors truncate leading-tight">
+                    <h3 className="text-xs sm:text-sm font-bold text-[#1a1a2e] group-hover:text-[#b44512] transition-colors truncate leading-tight">
                       {activeArea.name}
                     </h3>
                     <p className="text-[10px] sm:text-[11px] text-gray-500 truncate mt-0.5">
@@ -453,7 +453,7 @@ export default function CityMicroMarketsMap({ city }: { city: CityData }) {
                 <Link
                   href={`${basePath}/${activeArea.slug}`}
                   aria-label={`Go to ${activeArea.name} page`}
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#1a1a2e] hover:bg-[#c24f1c] text-white flex items-center justify-center transition-all duration-200 shadow-sm hover:scale-105 active:scale-95 shrink-0 group/btn"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#1a1a2e] hover:bg-[#b44512] text-white flex items-center justify-center transition-all duration-200 shadow-sm hover:scale-105 active:scale-95 shrink-0 group/btn"
                 >
                   <svg
                     className="w-3.5 h-3.5 sm:w-4 sm:h-4 transform group-hover/btn:translate-x-0.5 transition-transform"

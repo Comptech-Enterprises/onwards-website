@@ -52,9 +52,9 @@ export default function LazyGoogleMap({ src, title }: LazyGoogleMapProps) {
         />
       ) : (
         <div className="flex flex-col items-center gap-3 text-gray-500 p-6 text-center">
-          <div className="w-12 h-12 rounded-full bg-[#c24f1c]/10 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-[#b44512]/10 flex items-center justify-center">
             <svg
-              className="w-6 h-6 text-[#c24f1c]"
+              className="w-6 h-6 text-[#b44512]"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
