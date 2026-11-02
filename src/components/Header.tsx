@@ -6,19 +6,63 @@ import Image from "next/image";
 import Link from "next/link";
 import MagneticButton from "./MagneticButton";
 
+const prefetchedImages = new Set<string>();
+function prefetchBanner(url?: string) {
+  if (!url || typeof window === "undefined" || prefetchedImages.has(url)) return;
+  prefetchedImages.add(url);
+  const img = new (window as any).Image();
+  img.src = `/_next/image?url=${encodeURIComponent(url)}&w=1200&q=75`;
+}
+
 const locationsData = [
-  { name: "Delhi", href: "/delhi" },
-  { name: "Noida", href: "/noida" },
-  { name: "Gurgaon", href: "/gurgaon" },
+  {
+    name: "Delhi",
+    href: "/delhi",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.webp",
+  },
+  {
+    name: "Noida",
+    href: "/noida",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/noida/top-section-hero-image-managed-office-space-in-noida.webp",
+  },
+  {
+    name: "Gurgaon",
+    href: "/gurgaon",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/gurgaon/top-section-hero-image-managed-office-space-in-gurgaon.webp",
+  },
 ];
 
 const solutionsData = [
-  { name: "Managed Office", href: "/offices/managed-office-space-in-delhi" },
-  { name: "Private Suites", href: "/offices/private-suites-in-delhi" },
-  { name: "Private Cabins", href: "/offices/private-cabins-in-delhi" },
-  { name: "Virtual Office", href: "/offices/virtual-office-in-delhi" },
-  { name: "Meeting Rooms & Day Passes", href: "/offices/meeting-rooms-in-delhi/day-passes-in-delhi" },
-  { name: "Custom Built", href: "/offices/custom-built-in-delhi" },
+  {
+    name: "Managed Office",
+    href: "/offices/managed-office-space-in-delhi",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/managed-office.webp",
+  },
+  {
+    name: "Private Suites",
+    href: "/offices/private-suites-in-delhi",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/private-suites.webp",
+  },
+  {
+    name: "Private Cabins",
+    href: "/offices/private-cabins-in-delhi",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/private-cabins.webp",
+  },
+  {
+    name: "Virtual Office",
+    href: "/offices/virtual-office-in-delhi",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/virtual-office.webp",
+  },
+  {
+    name: "Meeting Rooms & Day Passes",
+    href: "/offices/meeting-rooms-in-delhi/day-passes-in-delhi",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/on-demand.webp",
+  },
+  {
+    name: "Custom Built",
+    href: "/offices/custom-built-in-delhi",
+    banner: "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/solutions/custom-built.webp",
+  },
 ];
 
 export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean }) {
@@ -143,9 +187,11 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                         key={loc.name}
                         href={loc.href}
                         onClick={() => setLocationsOpen(false)}
+                        onMouseEnter={() => prefetchBanner(loc.banner)}
+                        onTouchStart={() => prefetchBanner(loc.banner)}
                         className="flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition-colors group text-sm font-medium text-gray-200 hover:text-white"
                       >
-                        <span className="group-hover:text-[#d4622b] transition-colors font-medium">
+                        <span className="group-hover:text-[#b44512] transition-colors font-medium">
                           {loc.name}
                         </span>
                       </Link>
@@ -203,9 +249,11 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                         key={sol.name}
                         href={sol.href}
                         onClick={() => setSolutionsOpen(false)}
+                        onMouseEnter={() => prefetchBanner(sol.banner)}
+                        onTouchStart={() => prefetchBanner(sol.banner)}
                         className="flex items-center px-3.5 py-2.5 rounded-xl hover:bg-white/10 transition-colors group text-sm font-medium text-gray-200 hover:text-white"
                       >
-                        <span className="group-hover:text-[#d4622b] transition-colors font-medium">
+                        <span className="group-hover:text-[#b44512] transition-colors font-medium">
                           {sol.name}
                         </span>
                       </Link>
@@ -320,13 +368,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   </svg>
                 </button>
                 {mobileLocationsOpen && (
-                  <div className="pl-4 mt-2 space-y-2 border-l-2 border-[#d4622b]/50">
+                  <div className="pl-4 mt-2 space-y-2 border-l-2 border-[#b44512]/50">
                     {locationsData.map((loc) => (
                       <Link
                         key={loc.name}
                         href={loc.href}
                         onClick={() => setMobileMenu(false)}
-                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#d4622b] py-2"
+                        onTouchStart={() => prefetchBanner(loc.banner)}
+                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#b44512] py-2"
                       >
                         {loc.name}
                       </Link>
@@ -344,7 +393,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   <span>Our Solutions</span>
                   <svg
                     className={`w-4 h-4 transition-transform ${
-                      mobileSolutionsOpen ? "rotate-180 text-[#d4622b]" : ""
+                      mobileSolutionsOpen ? "rotate-180 text-[#b44512]" : ""
                     }`}
                     fill="none"
                     viewBox="0 0 24 24"
@@ -354,13 +403,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                   </svg>
                 </button>
                 {mobileSolutionsOpen && (
-                  <div className="pl-4 mt-2 space-y-2 border-l-2 border-[#d4622b]/50">
+                  <div className="pl-4 mt-2 space-y-2 border-l-2 border-[#b44512]/50">
                     {solutionsData.map((sol) => (
                       <Link
                         key={sol.name}
                         href={sol.href}
                         onClick={() => setMobileMenu(false)}
-                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#d4622b] py-2"
+                        onTouchStart={() => prefetchBanner(sol.banner)}
+                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#b44512] py-2"
                       >
                         {sol.name}
                       </Link>
