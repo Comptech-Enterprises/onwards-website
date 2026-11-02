@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import dynamic from "next/dynamic";
 import {
   motion,
   AnimatePresence,
@@ -17,11 +18,7 @@ import Reveal from "@/components/Reveal";
 import AnimatedHeading from "@/components/AnimatedHeading";
 import MagneticButton from "@/components/MagneticButton";
 import SpotlightCard from "@/components/SpotlightCard";
-import FeatureTimeline from "@/components/FeatureTimeline";
-import ContactSection from "@/components/ContactSection";
 import { solutionHref } from "@/data/solutions";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import StrategicLocationsMap from "@/components/StrategicLocationsMap";
 import {
   brandPartners,
   RazorpayLogo,
@@ -43,6 +40,11 @@ import {
   TvsSupplyChainLogo,
 } from "@/components/BrandLogos";
 import AutoSlider from "@/components/AutoSlider";
+
+const FeatureTimeline = dynamic(() => import("@/components/FeatureTimeline"));
+const ContactSection = dynamic(() => import("@/components/ContactSection"));
+const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"));
+const StrategicLocationsMap = dynamic(() => import("@/components/StrategicLocationsMap"));
 
 /* ═══════════════════════════════════════════
    PRIMITIVES & MARQUEE
@@ -1039,16 +1041,24 @@ export default function Home() {
         className="relative min-h-screen flex flex-col justify-between overflow-hidden"
         id="home"
       >
-        {/* Background video / image — Onward hero video from redesigned assets */}
+        {/* Background: priority image + deferred video */}
         <div className="absolute inset-0 z-0 overflow-hidden bg-gray-900">
+          <Image
+            src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/gallery/1.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
           <video
             ref={(el) => { el?.play().catch(() => {}); }}
             autoPlay
             muted
             loop
             playsInline
-            poster="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/gallery/1.webp"
-            className="w-full h-full object-cover"
+            preload="none"
+            className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/hero-video-at-the-top.mp4" type="video/mp4" />
           </video>

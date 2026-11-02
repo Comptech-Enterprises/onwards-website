@@ -44,7 +44,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <link rel="preconnect" href="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev" />
         <link rel="dns-prefetch" href="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev" />
-        <link rel="preload" as="image" href="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/gallery/1.webp" />
       </head>
       <body className="min-h-full flex flex-col">
         <ScrollToTop />
