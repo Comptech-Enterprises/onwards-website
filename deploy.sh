@@ -61,12 +61,14 @@ else
   nginx -t && systemctl reload nginx
 fi
 
-echo -e "\n${YELLOW}Step 6: Pre-warming key pages in cache...${NC}"
+echo -e "\n${YELLOW}Step 6: Pre-warming key pages and images in cache...${NC}"
 curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/ &
 curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/delhi &
 curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/noida &
 curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/gurgaon &
 curl -s -k -o /dev/null -H "Host: onwardworkspaces.com" https://127.0.0.1/locations &
+nohup node scripts/warmup-images.mjs > /tmp/warmup.log 2>&1 &
+echo -e "${GREEN}✓ Image pre-warming launched in background (logging to /tmp/warmup.log)!${NC}"
 
 echo -e "\n${GREEN}========================================${NC}"
 echo -e "${GREEN}  DEPLOYMENT COMPLETED SUCCESSFULLY!    ${NC}"

@@ -66,22 +66,23 @@ export default function SolutionPageView({
 
       <main className="bg-[#faf8f5] min-h-screen text-[#1a1a2e]">
         {/* ━━━ 1. BANNER ━━━ */}
-        <section ref={heroRef} className="relative overflow-hidden">
+        <section ref={heroRef} className="relative overflow-hidden bg-[#1a1a2e]">
           <motion.div className="absolute inset-0" style={{ y: heroImgY }}>
             <Image
               src={sol.img}
               alt={sol.title}
               fill
               priority
-              sizes="100vw"
+              fetchPriority="high"
+              sizes="(max-width: 640px) 100vw, (max-width: 1200px) 100vw, 1920px"
               className="object-cover scale-105"
             />
           </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/80" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 pt-36 sm:pt-40 lg:pt-44 pb-20 sm:pb-28 lg:pb-32">
             <div
-              className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#d4622b] mb-3"
+              className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#b44512] mb-3"
             >
               Office Space Solution
             </div>
