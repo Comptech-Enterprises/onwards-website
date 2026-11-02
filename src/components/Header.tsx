@@ -85,14 +85,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         <nav className="hidden lg:flex items-center gap-8">
           <Link
             href="/"
-            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
+            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-3"
           >
             Home
           </Link>
 
           <Link
             href="/about"
-            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
+            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-3"
           >
             About Us
           </Link>
@@ -104,7 +104,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             onMouseLeave={handleMouseLeave}
           >
             <span
-              className={`relative inline-flex items-center gap-1.5 text-sm font-medium py-2 transition-colors cursor-default ${
+              className={`relative inline-flex items-center gap-1.5 text-sm font-medium py-3 transition-colors cursor-default ${
                 locationsOpen ? "text-[#d4622b]" : "text-white/90 hover:text-white"
               }`}
             >
@@ -112,7 +112,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <button
                 type="button"
                 onClick={() => setLocationsOpen((v) => !v)}
-                className="cursor-pointer"
+                className="cursor-pointer p-1"
                 aria-label="Toggle locations menu"
               >
                 <svg
@@ -164,7 +164,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
             onMouseLeave={handleSolutionsLeave}
           >
             <span
-              className={`relative inline-flex items-center gap-1.5 text-sm font-medium py-2 transition-colors cursor-default ${
+              className={`relative inline-flex items-center gap-1.5 text-sm font-medium py-3 transition-colors cursor-default ${
                 solutionsOpen ? "text-[#d4622b]" : "text-white/90 hover:text-white"
               }`}
             >
@@ -172,7 +172,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <button
                 type="button"
                 onClick={() => setSolutionsOpen((v) => !v)}
-                className="cursor-pointer"
+                className="cursor-pointer p-1"
                 aria-label="Toggle solutions menu"
               >
                 <svg
@@ -219,14 +219,14 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
 
           <Link
             href="/enterprise"
-            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
+            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-3"
           >
             Enterprise
           </Link>
 
           <Link
             href="/blog"
-            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-2"
+            className="relative text-sm font-medium text-white/90 hover:text-white transition-colors py-3"
           >
             Blog
           </Link>
@@ -289,7 +289,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <Link
                 href="/"
                 onClick={() => setMobileMenu(false)}
-                className="block text-white font-medium text-base hover:text-[#d4622b]"
+                className="block text-white font-medium text-base hover:text-[#d4622b] py-2"
               >
                 Home
               </Link>
@@ -297,7 +297,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <Link
                 href="/about"
                 onClick={() => setMobileMenu(false)}
-                className="block text-white font-medium text-base hover:text-[#d4622b]"
+                className="block text-white font-medium text-base hover:text-[#d4622b] py-2"
               >
                 About Us
               </Link>
@@ -306,7 +306,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <div>
                 <button
                   onClick={() => setMobileLocationsOpen(!mobileLocationsOpen)}
-                  className="w-full flex items-center justify-between text-white font-medium text-base py-1"
+                  className="w-full flex items-center justify-between text-white font-medium text-base py-2"
                 >
                   <span>Locations</span>
                   <svg
@@ -327,7 +327,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                         key={loc.name}
                         href={loc.href}
                         onClick={() => setMobileMenu(false)}
-                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#d4622b] py-1"
+                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#d4622b] py-2"
                       >
                         {loc.name}
                       </Link>
@@ -340,7 +340,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <div>
                 <button
                   onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                  className="w-full flex items-center justify-between text-white font-medium text-base py-1"
+                  className="w-full flex items-center justify-between text-white font-medium text-base py-2"
                 >
                   <span>Our Solutions</span>
                   <svg
@@ -361,7 +361,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
                         key={sol.name}
                         href={sol.href}
                         onClick={() => setMobileMenu(false)}
-                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#d4622b] py-1"
+                        className="block text-xs sm:text-sm text-gray-200 hover:text-[#d4622b] py-2"
                       >
                         {sol.name}
                       </Link>
@@ -373,7 +373,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <Link
                 href="/enterprise"
                 onClick={() => setMobileMenu(false)}
-                className="block text-white font-medium text-base hover:text-[#d4622b]"
+                className="block text-white font-medium text-base hover:text-[#d4622b] py-2"
               >
                 Enterprise
               </Link>
@@ -381,7 +381,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
               <Link
                 href="/blog"
                 onClick={() => setMobileMenu(false)}
-                className="block text-white font-medium text-base hover:text-[#d4622b]"
+                className="block text-white font-medium text-base hover:text-[#d4622b] py-2"
               >
                 Blog
               </Link>
