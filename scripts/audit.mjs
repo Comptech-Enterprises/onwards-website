@@ -54,10 +54,11 @@ const strategy = isDesktop ? "desktop" : "mobile";
 const reportHtmlPath = path.join(os.tmpdir(), `lighthouse-${strategy}-${timestamp}.report.html`);
 const reportJsonPath = path.join(os.tmpdir(), `lighthouse-${strategy}-${timestamp}.report.json`);
 
+const browserName = browserPath.split("/").find((p) => p.endsWith(".app"))?.replace(/\.app$/, "") || "Chromium";
 console.log("\n========================================================");
 console.log(`🚀 RUNNING LIGHTHOUSE AUDIT: ${targetUrl}`);
 console.log(`📱 Mode: ${strategy.toUpperCase()}`);
-console.log(`🌐 Browser: ${path.basename(path.dirname(path.dirname(browserPath)))}`);
+console.log(`🌐 Browser: ${browserName}`);
 console.log("========================================================\n");
 console.log("⏳ Running audits (this takes about 15-25 seconds)...");
 

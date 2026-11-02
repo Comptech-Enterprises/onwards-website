@@ -42,3 +42,8 @@ next-env.d.ts
 
 # IDE / local configs
 .claude/
+CLAUDE.md
+claude.md
+AGENTS.md
+agents.md
+agent.md
