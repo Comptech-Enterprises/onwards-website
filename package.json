@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "audit:live": "node scripts/audit.mjs",
+    "audit:live:desktop": "node scripts/audit.mjs --desktop",
+    "audit:live:open": "node scripts/audit.mjs --open"
   },
   "dependencies": {
     "framer-motion": "^13.2.0",
