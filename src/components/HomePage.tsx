@@ -4,7 +4,6 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import {
   motion,
   AnimatePresence,
-  useScroll,
   useTransform,
   useMotionValue,
   useSpring,
@@ -13,7 +12,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { IntroAnimation } from "@/components/IntroAnimation";
+
 import Reveal from "@/components/Reveal";
 import AnimatedHeading from "@/components/AnimatedHeading";
 import MagneticButton from "@/components/MagneticButton";
@@ -997,16 +996,9 @@ function LocationCard({
 
 
 export default function Home() {
-  const [introComplete] = useState(true);
   const [heroWord, setHeroWord] = useState(0);
   const [activeCity, setActiveCity] = useState<"Delhi" | "Noida" | "Gurgaon">("Delhi");
   const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, 180]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
 
   // Hero Mouse Parallax with Multi-Layer Springs
@@ -1066,8 +1058,7 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-0 z-[1] bg-black/50" />
 
         {/* Hero Content Area */}
-        <motion.div
-          style={{ y: heroY, opacity: heroOpacity }}
+        <div
           className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-28 sm:pt-36 pb-10 sm:pb-12 text-center flex flex-col items-center justify-center flex-1 my-auto"
         >
           <div className="max-w-6xl xl:max-w-7xl mx-auto flex flex-col items-center text-center w-full my-auto">
@@ -1075,7 +1066,7 @@ export default function Home() {
               Workspace built around{" "}
               <span className="relative inline-grid text-left align-baseline">
                 <span aria-hidden className="invisible col-start-1 row-start-1">Ambition</span>
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" initial={false}>
                   <motion.span
                     key={heroWord}
                     initial={{ y: 35, opacity: 0 }}
@@ -1090,19 +1081,13 @@ export default function Home() {
               </span>
             </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0, duration: 0.4 }}
+            <p
               className="mt-3 sm:mt-6 text-xs sm:text-base md:text-lg lg:text-xl text-white max-w-3xl mx-auto text-center leading-relaxed px-4 drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]"
             >
               Enterprise-grade workspaces across Delhi NCR, delivered with speed, transparency and operational reliability.
-            </motion.p>
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0, duration: 0.4 }}
+            <div
               className="mt-6 sm:mt-10 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 w-full sm:w-auto px-4"
             >
               <MagneticButton
@@ -1112,9 +1097,9 @@ export default function Home() {
                 Schedule a Site Visit
                 <svg className="ml-2 w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
               </MagneticButton>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* ━━━ TABULAR STATS STRIP PINNED AT THE BOTTOM OF HERO ━━━ */}
         <motion.div
