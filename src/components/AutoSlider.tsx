@@ -116,12 +116,12 @@ export default function AutoSlider({
                   setCurrent(i);
                   setPaused(false);
                 }}
-                className="min-w-[28px] min-h-[28px] flex items-center justify-center p-1 cursor-pointer"
+                className="w-7 h-7 flex items-center justify-center cursor-pointer"
               >
                 <span
                   className={`h-1.5 rounded-full transition-all duration-300 block ${
                     current === i
-                      ? "w-6 bg-[#d4622b]"
+                      ? "w-5 bg-[#d4622b]"
                       : `w-1.5 ${
                           dotColor === "dark" ? "bg-white/40" : "bg-gray-300 hover:bg-gray-400"
                         }`
