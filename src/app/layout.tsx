@@ -41,10 +41,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <head>
-        <link rel="preconnect" href="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev" />
-        <link rel="dns-prefetch" href="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev" />
-      </head>
+      <head />
       <body className="min-h-full flex flex-col">
         <ScrollToTop />
         {children}
