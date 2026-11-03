@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import HeroForm from "@/components/HeroForm";
 import LazyCityMicroMarketsMap from "@/components/LazyCityMicroMarketsMap";
+import MobileScrollButtons from "@/components/MobileScrollButtons";
 import type { CityData } from "@/data/locations";
 import { getSeo } from "@/data/seo";
 
@@ -144,7 +145,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
             </div>
 
             {/* Centres Responsive Carousel / Grid */}
-            <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-x-6 sm:gap-y-10 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 snap-x snap-mandatory scrollbar-none">
+            <MobileScrollButtons>
               {areas.map((area) => (
                 <Link
                   key={area.slug}
@@ -173,7 +174,7 @@ export default function CityLocationsView({ city }: { city: CityData }) {
                   </span>
                 </Link>
               ))}
-            </div>
+            </MobileScrollButtons>
           </div>
         </section>
 

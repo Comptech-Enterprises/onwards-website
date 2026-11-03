@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { AreaDetail } from "@/data/locations";
 import { getWorkspacesForArea } from "@/data/workspaces";
+import MobileScrollButtons from "@/components/MobileScrollButtons";
 import type { WorkspaceUnit } from "@/data/workspaces";
 export type { WorkspaceUnit } from "@/data/workspaces";
 export { getWorkspacesForArea } from "@/data/workspaces";
@@ -162,11 +163,11 @@ export default function AreaWorkspacesSelector({ area, cityBasePath }: { area: A
         </div>
 
         {/* Workspaces Responsive Carousel / Grid */}
-        <div className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-x-6 sm:gap-y-10 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 snap-x snap-mandatory scrollbar-none">
+        <MobileScrollButtons>
           {filteredWorkspaces.map((ws) => (
             <WorkspaceCard key={ws.id} ws={ws} area={area} cityBasePath={cityBasePath} />
           ))}
-        </div>
+        </MobileScrollButtons>
       </div>
     </section>
   );
