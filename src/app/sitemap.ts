@@ -34,6 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // 1. Core Pages
   addUrl("/", "daily", 1.0);
   addUrl("/about", "monthly", 0.8);
+  addUrl("/contact-us", "monthly", 0.8);
   addUrl("/enterprise", "monthly", 0.8);
   addUrl("/team", "monthly", 0.7);
   addUrl("/blog", "daily", 0.9);

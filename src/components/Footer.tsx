@@ -26,7 +26,7 @@ const footerColumns = [
       { label: "About Us", href: "/about" },
       { label: "Blog", href: "/blog" },
       { label: "Enterprise", href: "/enterprise" },
-      { label: "Contact", href: "/#contact" },
+      { label: "Contact Us", href: "/contact-us" },
     ],
   },
 ];

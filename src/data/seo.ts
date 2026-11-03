@@ -22,6 +22,13 @@ export const pageSeo: Record<string, PageSeo> = {
     ogTitle: "About Onward Workspaces | Onward Workspaces",
     ogDescription: "Discover about onward workspaces with Onward Workspaces. Explore suitable options, discuss your team requirements and request a tailored proposal.",
   },
+  "/contact-us": {
+    title: "Contact Us | Onward Workspaces — Coworking & Managed Offices in Delhi NCR",
+    description: "Get in touch with Onward Workspaces. Enquire about managed offices, private suites, and coworking spaces across Delhi, Gurgaon, and Noida, or schedule a tour.",
+    ogTitle: "Contact Us | Onward Workspaces — Coworking & Managed Offices in Delhi NCR",
+    ogDescription: "Get in touch with Onward Workspaces. Enquire about managed offices, private suites, and coworking spaces across Delhi, Gurgaon, and Noida, or schedule a tour.",
+    h1: "Contact Onward Workspaces",
+  },
   "/delhi": {
     title: "Office Spaces in Delhi | Onward Workspaces",
     description: "Explore coworking space and office space in Delhi with Onward Workspaces. Compare workspace options, request pricing and book a site visit.",

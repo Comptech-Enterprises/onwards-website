@@ -282,7 +282,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
         {/* Right CTA Button & Mobile Hamburger */}
         <div className="flex items-center gap-4">
           <MagneticButton
-            href="/#contact"
+            href="/contact-us"
             className="hidden lg:inline-flex items-center gap-2 bg-[#c24f1c] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#a84114] transition-all shadow-md group"
           >
             <span>Enquire Now</span>
@@ -437,7 +437,7 @@ export default function Header({ alwaysSolid = false }: { alwaysSolid?: boolean 
 
               <div className="pt-2">
                 <Link
-                  href="/#contact"
+                  href="/contact-us"
                   onClick={() => setMobileMenu(false)}
                   className="block bg-[#d4622b] text-white text-center py-2.5 rounded-full text-sm font-semibold hover:bg-[#b8501f] transition-colors shadow-md"
                 >

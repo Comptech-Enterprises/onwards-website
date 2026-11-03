@@ -70,7 +70,8 @@ const nextConfig: NextConfig = {
       ["on-demand", "meeting-rooms/day-passes"],
       ["custom-built", "custom-built-in-delhi-ncr"],
     ].map(([from, to]) => ({ source: `/solutions/${from}`, destination: `/offices/${to}`, permanent: true }));
-    return [...city, ...areas, ...solutions];
+    const contact = [{ source: "/contact", destination: "/contact-us", permanent: true }];
+    return [...city, ...areas, ...solutions, ...contact];
   },
 };
 
