@@ -723,26 +723,28 @@ function TrustedLeadersSection() {
   );
 }
 
+const R2 = "https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev";
+
 const enterpriseLeaderLogos: { id: number; src: string; scale?: number }[] = [
-  { id: 1, src: "/r2/images/redesigned/home-page/enterprise-leaders/1.webp" },
-  { id: 2, src: "/r2/images/redesigned/home-page/enterprise-leaders/2.webp" },
-  { id: 3, src: "/r2/images/redesigned/home-page/enterprise-leaders/3.webp", scale: 1.6 },
-  { id: 4, src: "/r2/images/redesigned/home-page/enterprise-leaders/4.webp" },
-  { id: 5, src: "/r2/images/redesigned/home-page/enterprise-leaders/5.webp" },
-  { id: 6, src: "/r2/images/redesigned/home-page/enterprise-leaders/6.webp" },
-  { id: 7, src: "/r2/images/redesigned/home-page/enterprise-leaders/7.webp" },
-  { id: 8, src: "/r2/images/redesigned/home-page/enterprise-leaders/8.webp" },
-  { id: 9, src: "/r2/images/redesigned/home-page/enterprise-leaders/9.webp" },
-  { id: 10, src: "/r2/images/redesigned/home-page/enterprise-leaders/10.webp" },
-  { id: 11, src: "/r2/images/redesigned/home-page/enterprise-leaders/11.webp" },
-  { id: 12, src: "/r2/images/redesigned/home-page/enterprise-leaders/12.webp" },
-  { id: 13, src: "/r2/images/redesigned/home-page/enterprise-leaders/13.webp" },
-  { id: 14, src: "/r2/images/redesigned/home-page/enterprise-leaders/14.webp" },
-  { id: 15, src: "/r2/images/redesigned/home-page/enterprise-leaders/15.webp" },
-  { id: 16, src: "/r2/images/redesigned/home-page/enterprise-leaders/16.webp" },
-  { id: 17, src: "/r2/images/redesigned/home-page/enterprise-leaders/17.webp" },
-  { id: 18, src: "/r2/images/redesigned/home-page/enterprise-leaders/18.webp" },
-  { id: 19, src: "/r2/images/redesigned/home-page/enterprise-leaders/19.webp" },
+  { id: 1, src: `${R2}/images/redesigned/home-page/enterprise-leaders/1.webp` },
+  { id: 2, src: `${R2}/images/redesigned/home-page/enterprise-leaders/2.webp` },
+  { id: 3, src: `${R2}/images/redesigned/home-page/enterprise-leaders/3.webp`, scale: 1.6 },
+  { id: 4, src: `${R2}/images/redesigned/home-page/enterprise-leaders/4.webp` },
+  { id: 5, src: `${R2}/images/redesigned/home-page/enterprise-leaders/5.webp` },
+  { id: 6, src: `${R2}/images/redesigned/home-page/enterprise-leaders/6.webp` },
+  { id: 7, src: `${R2}/images/redesigned/home-page/enterprise-leaders/7.webp` },
+  { id: 8, src: `${R2}/images/redesigned/home-page/enterprise-leaders/8.webp` },
+  { id: 9, src: `${R2}/images/redesigned/home-page/enterprise-leaders/9.webp` },
+  { id: 10, src: `${R2}/images/redesigned/home-page/enterprise-leaders/10.webp` },
+  { id: 11, src: `${R2}/images/redesigned/home-page/enterprise-leaders/11.webp` },
+  { id: 12, src: `${R2}/images/redesigned/home-page/enterprise-leaders/12.webp` },
+  { id: 13, src: `${R2}/images/redesigned/home-page/enterprise-leaders/13.webp` },
+  { id: 14, src: `${R2}/images/redesigned/home-page/enterprise-leaders/14.webp` },
+  { id: 15, src: `${R2}/images/redesigned/home-page/enterprise-leaders/15.webp` },
+  { id: 16, src: `${R2}/images/redesigned/home-page/enterprise-leaders/16.webp` },
+  { id: 17, src: `${R2}/images/redesigned/home-page/enterprise-leaders/17.webp` },
+  { id: 18, src: `${R2}/images/redesigned/home-page/enterprise-leaders/18.webp` },
+  { id: 19, src: `${R2}/images/redesigned/home-page/enterprise-leaders/19.webp` },
 ];
 
 function EnterprisesSection() {
@@ -785,13 +787,12 @@ function EnterprisesSection() {
                 title={`Enterprise Partner ${brand.id}`}
                 className="shrink-0 px-3 sm:px-9 py-2 sm:py-5 rounded-xl sm:rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[72px] sm:min-w-[240px] md:min-w-[280px] h-[56px] sm:h-[110px] md:h-[120px] group cursor-default"
               >
-                <img
+                <Image
                   src={brand.src}
                   alt={`Enterprise Partner ${brand.id}`}
-                  loading="lazy"
-                  decoding="async"
                   width={200}
                   height={64}
+                  sizes="(max-width: 640px) 60px, 230px"
                   className="h-7 sm:h-14 md:h-16 w-auto max-w-[60px] sm:max-w-[200px] md:max-w-[230px] object-contain transition-transform duration-300 group-hover:scale-105"
                   style={brand.scale ? { transform: `scale(${brand.scale})` } : undefined}
                 />
@@ -847,13 +848,12 @@ function NewsMediaSection() {
                 title={item.name}
                 className="shrink-0 px-3 sm:px-9 py-2 sm:py-5 rounded-xl sm:rounded-2xl bg-white border border-gray-200/90 shadow-[0_8px_24px_-16px_rgba(26,26,46,0.18)] hover:border-[#d4622b] hover:shadow-[0_12px_30px_-12px_rgba(212,98,43,0.3)] hover:-translate-y-0.5 transition-all duration-300 flex items-center justify-center min-w-[72px] sm:min-w-[240px] md:min-w-[280px] h-[56px] sm:h-[110px] md:h-[120px] group"
               >
-                <img
+                <Image
                   src={item.img}
                   alt={item.name}
-                  loading="lazy"
-                  decoding="async"
                   width={200}
                   height={64}
+                  sizes="(max-width: 640px) 60px, 230px"
                   className="h-7 sm:h-14 md:h-16 w-auto max-w-[60px] sm:max-w-[200px] md:max-w-[230px] object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </a>
