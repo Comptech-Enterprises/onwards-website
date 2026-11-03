@@ -39,7 +39,7 @@ export default function MobileScrollButtons({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={className}>
       <div
         ref={scrollRef}
         className="flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-x-6 sm:gap-y-10 overflow-x-auto sm:overflow-visible pb-4 sm:pb-0 snap-x snap-mandatory scrollbar-none"
@@ -47,28 +47,29 @@ export default function MobileScrollButtons({
         {children}
       </div>
 
-      {/* Mobile-only scroll arrows */}
-      {canLeft && (
-        <button
-          onClick={() => scroll(-1)}
-          aria-label="Scroll left"
-          className="sm:hidden absolute left-1 top-[35%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-200 shadow-md flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
-        >
-          <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-      )}
-      {canRight && (
-        <button
-          onClick={() => scroll(1)}
-          aria-label="Scroll right"
-          className="sm:hidden absolute right-1 top-[35%] -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white/90 border border-gray-200 shadow-md flex items-center justify-center cursor-pointer active:scale-95 transition-transform"
-        >
-          <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+      {(canLeft || canRight) && (
+        <div className="sm:hidden flex items-center justify-center gap-4 mt-3">
+          <button
+            onClick={() => scroll(-1)}
+            aria-label="Scroll left"
+            disabled={!canLeft}
+            className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center cursor-pointer active:scale-95 transition-all disabled:opacity-30 disabled:cursor-default"
+          >
+            <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={() => scroll(1)}
+            aria-label="Scroll right"
+            disabled={!canRight}
+            className="w-9 h-9 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center cursor-pointer active:scale-95 transition-all disabled:opacity-30 disabled:cursor-default"
+          >
+            <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
       )}
     </div>
   );
