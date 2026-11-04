@@ -61,6 +61,7 @@ export default function ContactSection({
   description = "Our workspace specialists will assess your requirements, from large enterprise floors to private executive cabins, and present a tailored proposal within one business day.",
   hideDirectContacts = false,
   simpleForm = false,
+  breadcrumb,
 }: {
   bgImage?: string;
   formOnly?: boolean;
@@ -69,6 +70,7 @@ export default function ContactSection({
   description?: string;
   hideDirectContacts?: boolean;
   simpleForm?: boolean;
+  breadcrumb?: React.ReactNode;
 } = {}) {
   const sectionRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
@@ -131,7 +133,7 @@ export default function ContactSection({
     <section
       id="contact"
       ref={sectionRef}
-      className="relative py-20 lg:py-28 bg-[#faf8f5] overflow-hidden"
+      className={`relative bg-[#faf8f5] overflow-hidden ${breadcrumb ? "pt-24 pb-20 lg:pt-28 lg:pb-28" : "py-20 lg:py-28"}`}
     >
       {/* ━━━ OPTIONAL BACKGROUND IMAGE ━━━ */}
       {bgImage && (
@@ -167,6 +169,12 @@ export default function ContactSection({
           backgroundSize: "64px 64px",
         }}
       />
+
+      {breadcrumb && (
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 mb-4">
+          {breadcrumb}
+        </div>
+      )}
 
       <div className={`max-w-7xl mx-auto px-6 lg:px-8 relative z-10 ${formOnly ? "max-w-2xl" : ""}`}>
         <div className={formOnly ? "" : "grid md:grid-cols-2 gap-12 lg:gap-20 items-start"}>
