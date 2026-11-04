@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   motion,
@@ -10,6 +10,7 @@ import {
   useSpring,
 } from "framer-motion";
 import Image from "next/image";
+import Script from "next/script";
 import Reveal from "./Reveal";
 import AnimatedHeading from "./AnimatedHeading";
 import SpotlightCard from "./SpotlightCard";
@@ -82,6 +83,23 @@ export default function ContactSection({
   const [heardFrom] = useState("");
   const [socialPlatform] = useState("");
   const loadedAt = useRef(Date.now());
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const turnstileRef = useRef<HTMLDivElement>(null);
+
+  const renderTurnstile = useCallback(() => {
+    if (!turnstileRef.current || !(window as any).turnstile) return;
+    turnstileRef.current.innerHTML = "";
+    (window as any).turnstile.render(turnstileRef.current, {
+      sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+      callback: (token: string) => setTurnstileToken(token),
+      "expired-callback": () => setTurnstileToken(""),
+      size: "invisible",
+    });
+  }, []);
+
+  useEffect(() => {
+    if ((window as any).turnstile) renderTurnstile();
+  }, [renderTurnstile]);
 
   // Multi-plane scrolling parallax
   const { scrollYProgress } = useScroll({
@@ -156,6 +174,7 @@ export default function ContactSection({
           requirements: (fd.get("requirements") as string || "").trim(),
           pathname,
           _t: loadedAt.current,
+          "cf-turnstile-response": turnstileToken,
         }),
       });
 
@@ -423,6 +442,14 @@ export default function ContactSection({
                       />
                     </div>
                     )}
+
+                    {/* Invisible Turnstile widget */}
+                    <div ref={turnstileRef} />
+                    <Script
+                      src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad"
+                      strategy="afterInteractive"
+                      onReady={() => renderTurnstile()}
+                    />
 
                     {status === "error" && (
                       <p className="text-red-600 text-sm text-center">

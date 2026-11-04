@@ -67,6 +67,27 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "Enquiry Sent.", zoho: true, mail: true });
     }
 
+    // Cloudflare Turnstile verification
+    const turnstileToken = body["cf-turnstile-response"];
+    if (process.env.TURNSTILE_SECRET_KEY && turnstileToken) {
+      const turnstileRes = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret: process.env.TURNSTILE_SECRET_KEY,
+          response: turnstileToken,
+        }),
+      });
+      const turnstileData = await turnstileRes.json();
+      if (!turnstileData.success) {
+        console.error("[API/lead] Turnstile failed:", turnstileData);
+        return NextResponse.json(
+          { error: "Bot verification failed", errors: { _form: "Verification failed. Please refresh and try again." } },
+          { status: 403 },
+        );
+      }
+    }
+
     const fieldErrors = validateLead(body);
     if (Object.keys(fieldErrors).length > 0) {
       return NextResponse.json(
