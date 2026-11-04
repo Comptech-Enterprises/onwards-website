@@ -386,7 +386,9 @@ export default function ContactSection({
                           name="phone"
                           required
                           placeholder="+91 XXXXX XXXXX"
-                          onChange={() => setErrors((e) => { const { phone: _, ...rest } = e; return rest; })}
+                          inputMode="numeric"
+                          onKeyDown={(e) => { if (!/[\d+\-\s\(\)Backspace Tab Delete ArrowLeft ArrowRight Home End]/.test(e.key) && !e.ctrlKey && !e.metaKey) e.preventDefault(); }}
+                          onChange={(e) => { e.target.value = e.target.value.replace(/[^\d+\-\s\(\)]/g, ""); setErrors((prev) => { const { phone: _, ...rest } = prev; return rest; }); }}
                           className={`w-full bg-[#faf8f5] border rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm ${errors.phone ? "border-red-400" : "border-gray-200"}`}
                         />
                         {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
