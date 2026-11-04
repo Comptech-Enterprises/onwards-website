@@ -78,8 +78,10 @@ export default function ContactSection({
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle",
   );
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [heardFrom] = useState("");
   const [socialPlatform] = useState("");
+  const loadedAt = useRef(Date.now());
 
   // Multi-plane scrolling parallax
   const { scrollYProgress } = useScroll({
@@ -97,32 +99,72 @@ export default function ContactSection({
   const orb2Y = useTransform(smoothProgress, [0, 1], [100, -100]);
   const formOffset = useTransform(smoothProgress, [0, 1], [40, -40]);
 
+  const validateFields = (fd: FormData): Record<string, string> => {
+    const errs: Record<string, string> = {};
+    const name = (fd.get("name") as string || "").trim();
+    const email = (fd.get("email") as string || "").trim();
+    const phone = (fd.get("phone") as string || "").trim();
+    const teamSize = (fd.get("teamSize") as string || "").trim();
+
+    if (!name || name.length < 2) errs.name = "Enter a valid name";
+    else if (/\d/.test(name)) errs.name = "Name should not contain numbers";
+    else if (name.length > 100) errs.name = "Name is too long";
+
+    if (!email) errs.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) errs.email = "Enter a valid email";
+    else if (/\.(test|example|invalid)$/i.test(email)) errs.email = "Enter a real email address";
+
+    const digits = phone.replace(/\D/g, "");
+    if (!digits) errs.phone = "Phone number is required";
+    else if (digits.length < 10 || digits.length > 15) errs.phone = "Enter a valid phone number";
+
+    if (!teamSize) errs.teamSize = "Team size is required";
+    else if (teamSize.length > 50) errs.teamSize = "Invalid team size";
+
+    return errs;
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("submitting");
-
     const form = e.currentTarget;
     const fd = new FormData(form);
+
+    // Honeypot check
+    if (fd.get("company_url")) return;
+
+    // Time-based bot check (form filled in under 3 seconds)
+    if (Date.now() - loadedAt.current < 3000) return;
+
+    const fieldErrors = validateFields(fd);
+    if (Object.keys(fieldErrors).length > 0) {
+      setErrors(fieldErrors);
+      return;
+    }
+    setErrors({});
+    setStatus("submitting");
 
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: fd.get("name"),
-          email: fd.get("email"),
-          phone: fd.get("phone"),
-          teamSize: fd.get("teamSize"),
+          name: (fd.get("name") as string).trim(),
+          email: (fd.get("email") as string).trim(),
+          phone: (fd.get("phone") as string).trim(),
+          teamSize: (fd.get("teamSize") as string).trim(),
           heardFrom: "",
-          requirements: fd.get("requirements") || "",
+          requirements: (fd.get("requirements") as string || "").trim(),
           pathname,
+          _t: loadedAt.current,
         }),
       });
 
       if (res.ok) {
         router.push("/thank-you");
       } else {
+        const data = await res.json().catch(() => ({}));
         setStatus("error");
+        if (data.errors) setErrors(data.errors);
       }
     } catch {
       setStatus("error");
@@ -292,6 +334,11 @@ export default function ContactSection({
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Honeypot — hidden from humans, bots fill it */}
+                    <div className="absolute -left-[9999px]" aria-hidden="true">
+                      <input type="text" name="company_url" tabIndex={-1} autoComplete="off" />
+                    </div>
+
                     <div>
                       <span className="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-3">
                         Your Contact Details
@@ -306,8 +353,11 @@ export default function ContactSection({
                             name="name"
                             required
                             placeholder="John Doe"
-                            className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
+                            maxLength={100}
+                            onChange={() => setErrors((e) => { const { name: _, ...rest } = e; return rest; })}
+                            className={`w-full bg-[#faf8f5] border rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm ${errors.name ? "border-red-400" : "border-gray-200"}`}
                           />
+                          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                         </div>
                         <div>
                           <label className="text-xs font-medium text-gray-500 block mb-1.5">
@@ -318,8 +368,10 @@ export default function ContactSection({
                             name="email"
                             required
                             placeholder="john@company.com"
-                            className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
+                            onChange={() => setErrors((e) => { const { email: _, ...rest } = e; return rest; })}
+                            className={`w-full bg-[#faf8f5] border rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm ${errors.email ? "border-red-400" : "border-gray-200"}`}
                           />
+                          {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                         </div>
                       </div>
                     </div>
@@ -334,8 +386,10 @@ export default function ContactSection({
                           name="phone"
                           required
                           placeholder="+91 XXXXX XXXXX"
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
+                          onChange={() => setErrors((e) => { const { phone: _, ...rest } = e; return rest; })}
+                          className={`w-full bg-[#faf8f5] border rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm ${errors.phone ? "border-red-400" : "border-gray-200"}`}
                         />
+                        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
                       </div>
                       <div>
                         <label className="text-xs font-medium text-gray-500 block mb-1.5">
@@ -346,8 +400,11 @@ export default function ContactSection({
                           name="teamSize"
                           required
                           placeholder="e.g. 15-50 Desks"
-                          className="w-full bg-[#faf8f5] border border-gray-200 rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm"
+                          maxLength={50}
+                          onChange={() => setErrors((e) => { const { teamSize: _, ...rest } = e; return rest; })}
+                          className={`w-full bg-[#faf8f5] border rounded-xl px-4 py-3.5 text-[#1a1a2e] placeholder:text-gray-400 focus:outline-none focus:border-[#d4622b] focus:bg-white transition-all shadow-inner text-sm ${errors.teamSize ? "border-red-400" : "border-gray-200"}`}
                         />
+                        {errors.teamSize && <p className="text-red-500 text-xs mt-1">{errors.teamSize}</p>}
                       </div>
                     </div>
 
