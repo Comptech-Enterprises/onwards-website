@@ -85,20 +85,42 @@ export default function ContactSection({
   const loadedAt = useRef(Date.now());
   const [turnstileToken, setTurnstileToken] = useState("");
   const turnstileRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<string | null>(null);
 
   const renderTurnstile = useCallback(() => {
     if (!turnstileRef.current || !(window as any).turnstile) return;
-    turnstileRef.current.innerHTML = "";
-    (window as any).turnstile.render(turnstileRef.current, {
-      sitekey: process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY,
-      callback: (token: string) => setTurnstileToken(token),
-      "expired-callback": () => setTurnstileToken(""),
-      size: "invisible",
-    });
+    if (widgetIdRef.current) return;
+    const sitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+    if (!sitekey) return;
+
+    try {
+      const id = (window as any).turnstile.render(turnstileRef.current, {
+        sitekey,
+        callback: (token: string) => setTurnstileToken(token),
+        "expired-callback": () => setTurnstileToken(""),
+        "error-callback": () => setTurnstileToken(""),
+      });
+      widgetIdRef.current = id;
+    } catch (e) {
+      console.warn("Turnstile render error:", e);
+    }
   }, []);
 
   useEffect(() => {
-    if ((window as any).turnstile) renderTurnstile();
+    (window as any).onTurnstileLoad = renderTurnstile;
+    if ((window as any).turnstile) {
+      renderTurnstile();
+    }
+    return () => {
+      if (widgetIdRef.current && (window as any).turnstile) {
+        try {
+          (window as any).turnstile.remove(widgetIdRef.current);
+        } catch {
+          // ignore
+        }
+        widgetIdRef.current = null;
+      }
+    };
   }, [renderTurnstile]);
 
   // Multi-plane scrolling parallax
@@ -184,9 +206,15 @@ export default function ContactSection({
         const data = await res.json().catch(() => ({}));
         setStatus("error");
         if (data.errors) setErrors(data.errors);
+        if (widgetIdRef.current && (window as any).turnstile) {
+          (window as any).turnstile.reset(widgetIdRef.current);
+        }
       }
     } catch {
       setStatus("error");
+      if (widgetIdRef.current && (window as any).turnstile) {
+        (window as any).turnstile.reset(widgetIdRef.current);
+      }
     }
   };
 
@@ -443,10 +471,10 @@ export default function ContactSection({
                     </div>
                     )}
 
-                    {/* Invisible Turnstile widget */}
-                    <div ref={turnstileRef} />
+                    {/* Turnstile widget container */}
+                    <div ref={turnstileRef} className="my-1 flex justify-center" />
                     <Script
-                      src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad"
+                      src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
                       strategy="afterInteractive"
                       onReady={() => renderTurnstile()}
                     />
