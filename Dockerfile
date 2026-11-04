@@ -17,11 +17,13 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN mkdir -p /app/public
 
+ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY=0x4AAAAAAFzLDZnYnIHdlY34
+ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 
-# 3. Production image, copy all the files and run next
+# 3. Production runner
 FROM base AS runner
 WORKDIR /app
 
@@ -41,5 +43,8 @@ USER nextjs
 EXPOSE 3000
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
+  CMD wget -q --spider http://127.0.0.1:3000/ || exit 1
 
 CMD ["node", "server.js"]
