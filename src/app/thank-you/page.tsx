@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -107,6 +108,13 @@ export default function ThankYouPage() {
         </svg>
       </a>
       </main>
+      <Script
+        id="gads-conversion"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `gtag('event','conversion',{'send_to':'AW-11144813402/d5UTCIrQ9ZcYENq2ocIp'});`,
+        }}
+      />
       <Footer />
     </>
   );
