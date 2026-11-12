@@ -93,7 +93,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p>&copy; {new Date().getFullYear()} Onward Workspaces. All rights reserved.</p>
+          <p>Copyright &copy; {new Date().getFullYear()}, Onward Coworkx Private Limited. All Rights Reserved.</p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((l) => (
               <a
