@@ -103,19 +103,13 @@ export default function BlogClient({ posts }: BlogClientProps) {
 
   // Paginated cards for the grid
   const gridPosts = useMemo(() => {
-    const source =
-      selectedCategory === "All" && searchQuery.trim() === ""
-        ? filteredPosts.slice(1)
-        : filteredPosts;
+    const source = filteredPosts;
 
     const start = (currentPage - 1) * POSTS_PER_PAGE;
     return source.slice(start, start + POSTS_PER_PAGE);
   }, [filteredPosts, currentPage, selectedCategory, searchQuery]);
 
-  const totalFilteredForGrid =
-    selectedCategory === "All" && searchQuery.trim() === ""
-      ? Math.max(0, filteredPosts.length - 1)
-      : filteredPosts.length;
+  const totalFilteredForGrid = filteredPosts.length;
 
   const totalPages = Math.max(
     1,
