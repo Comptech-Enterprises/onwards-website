@@ -53,9 +53,7 @@ async function fetchPostData(slug: string) {
     (p) => p.href.endsWith(slug) || p.href === `/blog/${slug}`
   );
   if (local) {
-    return {
-      title: local.title,
-      desc: `
+    const genericDesc = `
         <p>${local.desc}</p>
         <h4>Transforming Modern Work in Delhi NCR</h4>
         <p>In today's fast-evolving business landscape, having access to an agile, high-performing workspace is essential for team productivity and enterprise agility. Onward Workspaces offers turnkey, fully managed office environments designed around flexibility, high-speed IT infrastructure, and premium hospitality standards.</p>
@@ -66,12 +64,15 @@ async function fetchPostData(slug: string) {
           <li><strong>Scalable Membership Models:</strong> Seamlessly adjust your desk footprint as your headcount expands.</li>
         </ul>
         <p>Whether you need private enterprise suites, on-demand meeting rooms, or dynamic coworking setups, Onward delivers the infrastructure your company needs to thrive.</p>
-      `,
+      `;
+    return {
+      title: local.title,
+      desc: (local as any).content || genericDesc,
       titleShort: local.desc,
       banner: (local as any).banner || local.img,
       createdAt: local.date,
       author: local.author,
-      seo: "",
+      seo: (local as any).seo || "",
     };
   }
 
@@ -128,7 +129,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
 
   return (
     <>
-      <Header />
+      <Header alwaysSolid />
       <BlogArticleView
         post={post}
         relatedPosts={relatedPosts}

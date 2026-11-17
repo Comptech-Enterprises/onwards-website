@@ -192,6 +192,42 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #faf8f5;
   border-radius: 0 0.75rem 0.75rem 0;
 }
+.blog-article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+.blog-article-content thead {
+  background: #1a1a2e;
+  color: #fff;
+}
+
+.blog-article-content th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.blog-article-content td {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e5e7eb;
+  vertical-align: top;
+}
+
+.blog-article-content tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.blog-article-content tbody tr:hover {
+  background: #f3f4f6;
+}
+
 .blog-article-content img {
   border-radius: 1rem;
   margin: 2rem 0;
