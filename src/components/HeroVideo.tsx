@@ -38,6 +38,7 @@ export default function HeroVideo() {
       loop
       playsInline
       preload="metadata"
+      poster="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/home-page/gallery/1.webp"
       className="absolute inset-0 w-full h-full object-cover pointer-events-none"
     >
       <source
