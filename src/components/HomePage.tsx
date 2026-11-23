@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
@@ -9,30 +9,10 @@ import Footer from "@/components/Footer";
 
 import Reveal from "@/components/Reveal";
 import AnimatedHeading from "@/components/AnimatedHeading";
-import MagneticButton from "@/components/MagneticButton";
 import SpotlightCard from "@/components/SpotlightCard";
 import { solutionHref } from "@/data/solutions";
-import {
-  brandPartners,
-  RazorpayLogo,
-  JioLogo,
-  AramexLogo,
-  BcgLogo,
-  LvmhLogo,
-  BacardiLogo,
-  PernodRicardLogo,
-  ItcLogo,
-  ThermaxGridLogo,
-  RadicoLogo,
-  DangalGamesLogo,
-  StarWorldLogo,
-  DpWorldLogo,
-  ClarksonsLogo,
-  OpraahLogo,
-  SageLogo,
-  TvsSupplyChainLogo,
-} from "@/components/BrandLogos";
 import AutoSlider from "@/components/AutoSlider";
+import LazySection from "@/components/LazySection";
 
 const FeatureTimeline = dynamic(() => import("@/components/FeatureTimeline"));
 const ContactSection = dynamic(() => import("@/components/ContactSection"));
@@ -1210,40 +1190,49 @@ export default function Home() {
       </section>
 
       {/* ━━━ ENTERPRISES USING ONWARD WORKSPACES ━━━ */}
-      <EnterprisesSection />
+      <LazySection minHeight="300px">
+        <EnterprisesSection />
+      </LazySection>
 
       {/* ━━━ GALLERY ━━━ */}
-      <section className="py-10 sm:py-14 lg:py-18 bg-white overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-8 sm:mb-12 text-center">
-          <Reveal>
-            <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-              Gallery
-            </span>
-          </Reveal>
-          <AnimatedHeading
-            text="Explore Our Workspace Gallery"
-            highlight="Workspace Gallery"
-            className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2"
-          />
-          <Reveal delay={0.1}>
-            <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto">
-              Step inside Onward Workspaces and experience the design, community and quality of service that define our centres.
-            </p>
-          </Reveal>
-        </div>
-        <GallerySlider />
-      </section>
+      <LazySection minHeight="500px">
+        <section className="py-10 sm:py-14 lg:py-18 bg-white overflow-hidden">
+          <div className="max-w-5xl mx-auto px-6 lg:px-8 mb-8 sm:mb-12 text-center">
+            <Reveal>
+              <span className="text-[#ba4c17] text-xs sm:text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
+                Gallery
+              </span>
+            </Reveal>
+            <AnimatedHeading
+              text="Explore Our Workspace Gallery"
+              highlight="Workspace Gallery"
+              className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black mt-2"
+            />
+            <Reveal delay={0.1}>
+              <p className="mt-3 text-gray-700 text-sm sm:text-base lg:text-lg leading-relaxed max-w-3xl mx-auto">
+                Step inside Onward Workspaces and experience the design, community and quality of service that define our centres.
+              </p>
+            </Reveal>
+          </div>
+          <GallerySlider />
+        </section>
+      </LazySection>
 
       {/* ━━━ CONTACT SECTION WITH SCROLLING PARALLAX ━━━ */}
       <ContactSection bgImage="https://pub-3b83e50fb69e4560821c6dd2d4c277a1.r2.dev/images/redesigned/locations/delhi/top-section-hero-image-managed-office-space-in-delhi.webp" />
 
       {/* ━━━ TRUSTED BY ENTERPRISE LEADERS ━━━ */}
-      <TrustedLeadersSection />
+      <LazySection minHeight="400px">
+        <TrustedLeadersSection />
+      </LazySection>
 
       {/* ━━━ NEWS & MEDIA TICKER ━━━ */}
-      <NewsMediaSection />
+      <LazySection minHeight="300px">
+        <NewsMediaSection />
+      </LazySection>
 
       {/* ━━━ SEO: WHAT IS A COWORKING SPACE ━━━ */}
+      <LazySection minHeight="200px">
       <section className="py-14 lg:py-18 bg-[#faf8f5] border-t border-gray-200/80">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <Reveal>
@@ -1387,6 +1376,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </LazySection>
 
       {/* ━━━ FOOTER (CLEAN LIGHT THEME) ━━━ */}
       <Footer />

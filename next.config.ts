@@ -47,6 +47,23 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          {
+            key: "Content-Security-Policy",
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net https://www.google.com https://www.gstatic.com https://maps.googleapis.com https://www.clarity.ms",
+              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+              "img-src 'self' data: blob: https://*.r2.dev https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://maps.gstatic.com https://maps.googleapis.com https://*.doubleclick.net https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.clarity.ms",
+              "font-src 'self' https://fonts.gstatic.com data:",
+              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://www.googletagmanager.com https://region1.google-analytics.com https://*.r2.dev https://*.cloudflarestorage.com https://*.doubleclick.net https://www.clarity.ms https://*.clarity.ms",
+              "frame-src 'self' https://www.googletagmanager.com https://www.google.com https://td.doubleclick.net https://maps.google.com",
+              "media-src 'self' https://*.r2.dev",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'self'",
+            ].join("; "),
+          },
         ],
       },
     ];
